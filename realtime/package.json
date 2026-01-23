@@ -25,6 +25,22 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.20.0",
     "@google/genai": "^0.7.0",
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-store": "^8.1.0",
+    "electron-updater": "^6.1.7",
+    "socket.io-client": "^4.7.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/Sales.git"
+  },
+  "build": {
+    "appId": "com.vendingpreneurs.salesassistant",
+    "productName": "VendingPreneurs Sales Assistant",
+    "publish": {
+      "provider": "github",
+      "owner": "YOUR_USERNAME",
+      "repo": "Sales"
+    }
   }
 }

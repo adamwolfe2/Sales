@@ -1,5 +1,6 @@
 /**
  * Preload script - Secure bridge between main and renderer
+ * Includes server sync capabilities for centralized content management
  */
 
 const { contextBridge, ipcRenderer } = require('electron');
@@ -11,6 +12,19 @@ contextBridge.exposeInMainWorld('api', {
   togglePin: () => ipcRenderer.invoke('window-toggle-pin'),
   getVersion: () => ipcRenderer.invoke('get-app-version'),
 
+  // Authentication
+  checkAuth: () => ipcRenderer.invoke('check-auth'),
+  redeemInvite: (code, name, serverUrl) => ipcRenderer.invoke('redeem-invite', { code, name, serverUrl }),
+  logout: () => ipcRenderer.invoke('logout'),
+  getUserInfo: () => ipcRenderer.invoke('get-user-info'),
+
+  // Server sync
+  connectServer: () => ipcRenderer.invoke('connect-server'),
+  disconnectServer: () => ipcRenderer.invoke('disconnect-server'),
+  syncContent: () => ipcRenderer.invoke('sync-content'),
+  getServerUrl: () => ipcRenderer.invoke('get-server-url'),
+  setServerUrl: (url) => ipcRenderer.invoke('set-server-url', url),
+
   // Gemini controls
   connect: (apiKey) => ipcRenderer.invoke('gemini-connect', apiKey),
   disconnect: () => ipcRenderer.invoke('gemini-disconnect'),
@@ -21,8 +35,31 @@ contextBridge.exposeInMainWorld('api', {
   // Data loading
   loadObjectionData: () => ipcRenderer.invoke('load-objection-data'),
   loadPlaybookData: () => ipcRenderer.invoke('load-playbook-data'),
+  loadTestimonialData: () => ipcRenderer.invoke('load-testimonial-data'),
+  getSystemPrompt: () => ipcRenderer.invoke('get-system-prompt'),
 
-  // Event listeners
+  // Auto-updates
+  checkForUpdates: () => ipcRenderer.invoke('check-for-updates'),
+  installUpdate: () => ipcRenderer.invoke('install-update'),
+
+  // Event listeners - Server
+  onServerConnected: (callback) => {
+    ipcRenderer.on('server-connected', (event) => callback());
+  },
+  onServerDisconnected: (callback) => {
+    ipcRenderer.on('server-disconnected', (event, reason) => callback(reason));
+  },
+  onServerError: (callback) => {
+    ipcRenderer.on('server-error', (event, error) => callback(error));
+  },
+  onContentSynced: (callback) => {
+    ipcRenderer.on('content-synced', (event, data) => callback(data));
+  },
+  onContentUpdated: (callback) => {
+    ipcRenderer.on('content-updated', (event, data) => callback(data));
+  },
+
+  // Event listeners - Gemini
   onStatusUpdate: (callback) => {
     ipcRenderer.on('status-update', (event, data) => callback(data));
   },
@@ -55,6 +92,17 @@ contextBridge.exposeInMainWorld('api', {
   },
   onAlwaysOnTopChanged: (callback) => {
     ipcRenderer.on('always-on-top-changed', (event, data) => callback(data));
+  },
+
+  // Event listeners - Auto-update
+  onUpdateAvailable: (callback) => {
+    ipcRenderer.on('update-available', (event, data) => callback(data));
+  },
+  onUpdateProgress: (callback) => {
+    ipcRenderer.on('update-progress', (event, data) => callback(data));
+  },
+  onUpdateDownloaded: (callback) => {
+    ipcRenderer.on('update-downloaded', (event, data) => callback(data));
   },
 
   // Remove listeners

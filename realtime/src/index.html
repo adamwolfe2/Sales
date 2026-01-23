@@ -413,6 +413,154 @@
       border-radius: 3px;
       border: 1px solid var(--border);
     }
+
+    /* Onboarding Screen */
+    .onboarding-screen {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: calc(100vh - 48px);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .onboarding-screen.hidden {
+      display: none;
+    }
+
+    .onboarding-logo {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .onboarding-screen h2 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .onboarding-screen p {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      max-width: 280px;
+    }
+
+    .onboarding-form {
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .onboarding-form .form-group {
+      margin-bottom: 12px;
+    }
+
+    .onboarding-form label {
+      display: block;
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+      text-align: left;
+    }
+
+    .onboarding-form input {
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-primary);
+      font-size: 13px;
+    }
+
+    .onboarding-form input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .onboarding-form input.error {
+      border-color: var(--danger);
+    }
+
+    .onboarding-form .error-message {
+      font-size: 11px;
+      color: var(--danger);
+      margin-top: 4px;
+      text-align: left;
+    }
+
+    .onboarding-form .btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+    }
+
+    .onboarding-form .advanced-toggle {
+      font-size: 11px;
+      color: var(--text-muted);
+      cursor: pointer;
+      margin-top: 16px;
+    }
+
+    .onboarding-form .advanced-toggle:hover {
+      color: var(--text-secondary);
+    }
+
+    .onboarding-form .advanced-options {
+      margin-top: 12px;
+      display: none;
+    }
+
+    .onboarding-form .advanced-options.visible {
+      display: block;
+    }
+
+    /* Server sync indicator */
+    .sync-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      color: var(--text-muted);
+      padding: 4px 8px;
+      background: var(--bg-tertiary);
+      border-radius: 4px;
+      margin-left: auto;
+    }
+
+    .sync-indicator .sync-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .sync-indicator .sync-dot.synced {
+      background: var(--success);
+    }
+
+    .sync-indicator .sync-dot.syncing {
+      background: var(--warning);
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* User info in title bar */
+    .user-info {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-left: 8px;
+    }
+
+    /* Main app hidden when onboarding */
+    .main-app.hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -421,15 +569,50 @@
       <div class="titlebar-title">
         <span class="status-dot" id="status-dot"></span>
         <span>VendingPreneurs Assistant</span>
+        <span class="user-info" id="user-info"></span>
       </div>
       <div class="titlebar-controls">
+        <div class="sync-indicator" id="sync-indicator" style="display: none;">
+          <span class="sync-dot" id="sync-dot"></span>
+          <span id="sync-text">Synced</span>
+        </div>
         <button class="titlebar-btn pin" id="pin-btn" title="Toggle Always on Top">&#x1F4CC;</button>
         <button class="titlebar-btn" id="min-btn" title="Minimize">&#x2212;</button>
         <button class="titlebar-btn" id="close-btn" title="Close">&#x2715;</button>
       </div>
     </div>
 
-    <div class="connect-section">
+    <!-- Onboarding Screen -->
+    <div class="onboarding-screen" id="onboarding-screen">
+      <div class="onboarding-logo">&#x1F3AF;</div>
+      <h2>Welcome to VendingPreneurs</h2>
+      <p>Enter your invite code to connect to your team's coaching system.</p>
+
+      <div class="onboarding-form">
+        <div class="form-group">
+          <label for="invite-name">Your Name</label>
+          <input type="text" id="invite-name" placeholder="John Smith" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="invite-code">Invite Code</label>
+          <input type="text" id="invite-code" placeholder="ABC123" autocomplete="off" style="text-transform: uppercase;">
+          <div class="error-message" id="invite-error" style="display: none;"></div>
+        </div>
+        <button class="btn btn-primary" id="redeem-btn">Join Team</button>
+
+        <div class="advanced-toggle" id="advanced-toggle">Advanced Settings</div>
+        <div class="advanced-options" id="advanced-options">
+          <div class="form-group">
+            <label for="server-url">Server URL</label>
+            <input type="text" id="server-url" placeholder="http://localhost:3000">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main App (hidden until authenticated) -->
+    <div class="main-app hidden" id="main-app">
+      <div class="connect-section">
       <div class="api-input">
         <input type="password" id="api-key" placeholder="Gemini API Key" autocomplete="off">
         <button class="btn btn-primary" id="connect-btn">Connect</button>
@@ -452,19 +635,23 @@
       </div>
     </div>
 
-    <div class="shortcuts">
-      <span><kbd>Ctrl+Shift+V</kbd> Toggle</span>
-      <span><kbd>Ctrl+Shift+T</kbd> Pin</span>
+      <div class="shortcuts">
+        <span><kbd>Ctrl+Shift+V</kbd> Toggle</span>
+        <span><kbd>Ctrl+Shift+T</kbd> Pin</span>
+      </div>
     </div>
   </div>
 
   <script>
     // State
+    let isAuthenticated = false;
+    let isServerConnected = false;
     let isConnected = false;
     let isPinned = true;
     let currentSuggestion = '';
     let detectedObjections = [];
     let conversationHistory = [];
+    let currentUser = null;
 
     // Quick scripts database
     const quickScripts = {
@@ -490,7 +677,18 @@
       }
     };
 
-    // DOM Elements
+    // DOM Elements - Onboarding
+    const onboardingScreen = document.getElementById('onboarding-screen');
+    const mainApp = document.getElementById('main-app');
+    const inviteNameInput = document.getElementById('invite-name');
+    const inviteCodeInput = document.getElementById('invite-code');
+    const inviteError = document.getElementById('invite-error');
+    const redeemBtn = document.getElementById('redeem-btn');
+    const advancedToggle = document.getElementById('advanced-toggle');
+    const advancedOptions = document.getElementById('advanced-options');
+    const serverUrlInput = document.getElementById('server-url');
+
+    // DOM Elements - Main
     const statusDot = document.getElementById('status-dot');
     const statusText = document.getElementById('status-text');
     const apiKeyInput = document.getElementById('api-key');
@@ -499,6 +697,139 @@
     const pinBtn = document.getElementById('pin-btn');
     const minBtn = document.getElementById('min-btn');
     const closeBtn = document.getElementById('close-btn');
+    const userInfoEl = document.getElementById('user-info');
+    const syncIndicator = document.getElementById('sync-indicator');
+    const syncDot = document.getElementById('sync-dot');
+    const syncText = document.getElementById('sync-text');
+
+    // Onboarding handlers
+    advancedToggle.addEventListener('click', () => {
+      advancedOptions.classList.toggle('visible');
+    });
+
+    redeemBtn.addEventListener('click', async () => {
+      const name = inviteNameInput.value.trim();
+      const code = inviteCodeInput.value.trim().toUpperCase();
+      const serverUrl = serverUrlInput.value.trim() || null;
+
+      // Validation
+      if (!name) {
+        showInviteError('Please enter your name');
+        inviteNameInput.classList.add('error');
+        return;
+      }
+      if (!code) {
+        showInviteError('Please enter your invite code');
+        inviteCodeInput.classList.add('error');
+        return;
+      }
+
+      inviteNameInput.classList.remove('error');
+      inviteCodeInput.classList.remove('error');
+      hideInviteError();
+
+      redeemBtn.disabled = true;
+      redeemBtn.textContent = 'Joining...';
+
+      try {
+        const result = await window.api.redeemInvite(code, name, serverUrl);
+
+        if (result.success) {
+          currentUser = result.user;
+          showMainApp();
+        } else {
+          showInviteError(result.error || 'Invalid invite code');
+        }
+      } catch (err) {
+        showInviteError('Connection failed. Check server URL.');
+      }
+
+      redeemBtn.disabled = false;
+      redeemBtn.textContent = 'Join Team';
+    });
+
+    function showInviteError(msg) {
+      inviteError.textContent = msg;
+      inviteError.style.display = 'block';
+    }
+
+    function hideInviteError() {
+      inviteError.style.display = 'none';
+    }
+
+    function showOnboarding() {
+      onboardingScreen.classList.remove('hidden');
+      mainApp.classList.add('hidden');
+      syncIndicator.style.display = 'none';
+      userInfoEl.textContent = '';
+    }
+
+    function showMainApp() {
+      onboardingScreen.classList.add('hidden');
+      mainApp.classList.remove('hidden');
+      isAuthenticated = true;
+
+      if (currentUser) {
+        userInfoEl.textContent = currentUser.name || '';
+      }
+
+      syncIndicator.style.display = 'flex';
+    }
+
+    // Check authentication on startup
+    async function checkAuth() {
+      try {
+        const result = await window.api.checkAuth();
+
+        if (result.authenticated) {
+          currentUser = result.user;
+          showMainApp();
+        } else {
+          showOnboarding();
+        }
+      } catch (err) {
+        showOnboarding();
+      }
+    }
+
+    // Server sync event listeners
+    window.api.onServerConnected(() => {
+      isServerConnected = true;
+      syncDot.classList.add('synced');
+      syncDot.classList.remove('syncing');
+      syncText.textContent = 'Connected';
+    });
+
+    window.api.onServerDisconnected((reason) => {
+      isServerConnected = false;
+      syncDot.classList.remove('synced');
+      syncText.textContent = 'Disconnected';
+    });
+
+    window.api.onServerError((error) => {
+      syncDot.classList.remove('synced', 'syncing');
+      syncText.textContent = 'Error';
+    });
+
+    window.api.onContentSynced((data) => {
+      syncDot.classList.add('synced');
+      syncDot.classList.remove('syncing');
+      syncText.textContent = 'Synced';
+      console.log('Content synced:', data);
+    });
+
+    window.api.onContentUpdated((data) => {
+      syncDot.classList.add('syncing');
+      syncText.textContent = 'Updating...';
+      console.log('Content updated:', data.type, data.action);
+
+      // Brief flash then back to synced
+      setTimeout(() => {
+        syncDot.classList.remove('syncing');
+        syncDot.classList.add('synced');
+        syncText.textContent = 'Synced';
+      }, 1000);
+    });
 
     // Window controls
     pinBtn.addEventListener('click', async () => {
@@ -799,6 +1130,9 @@
         startMicrophoneCapture();
       }
     });
+
+    // Initialize app - check authentication
+    checkAuth();
   </script>
 </body>
 </html>
