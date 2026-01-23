@@ -62,7 +62,7 @@
     }
 
     .status-dot.listening { background: var(--success); animation: pulse 2s infinite; }
-    .status-dot.processing { background: var(--warning); animation: pulse 0.5s infinite; }
+    .status-dot.analyzing { background: var(--warning); animation: pulse 0.5s infinite; }
 
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
@@ -75,20 +75,6 @@
     }
 
     .setup-section h2 { font-size: 16px; margin-bottom: 16px; color: var(--text-secondary); }
-
-    .input-group { display: flex; gap: 10px; margin-bottom: 12px; }
-
-    .input-group input {
-      flex: 1;
-      padding: 12px 16px;
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text-primary);
-      font-size: 14px;
-    }
-
-    .input-group input:focus { outline: none; border-color: var(--accent); }
 
     .btn {
       padding: 12px 24px;
@@ -107,7 +93,6 @@
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
     .hint { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
-    .hint a { color: var(--accent); }
 
     .coaching-area { display: none; }
     .coaching-area.active { display: block; }
@@ -123,12 +108,87 @@
       border: 1px solid var(--border);
     }
 
-    .stat-item { text-align: center; }
+    .stat-item { text-align: center; flex: 1; }
     .stat-value { font-size: 24px; font-weight: 600; }
     .stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
     .stat-item.danger .stat-value { color: var(--danger); }
     .stat-item.warning .stat-value { color: var(--warning); }
     .stat-item.success .stat-value { color: var(--success); }
+
+    /* AI Insight Card - Primary focus */
+    .ai-insight {
+      background: linear-gradient(135deg, rgba(88, 166, 255, 0.15), rgba(163, 113, 247, 0.1));
+      border: 2px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .ai-insight.active { display: block; animation: slideIn 0.3s ease; }
+
+    .ai-insight .insight-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .ai-insight .insight-icon { font-size: 20px; }
+    .ai-insight .insight-title { font-size: 14px; font-weight: 600; color: var(--accent); }
+    .ai-insight .insight-time { font-size: 11px; color: var(--text-muted); margin-left: auto; }
+
+    .ai-insight .insight-content {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      padding: 16px;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+    }
+
+    .ai-insight .say-this {
+      background: var(--bg-primary);
+      border-left: 3px solid var(--success);
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 12px;
+    }
+
+    .ai-insight .say-this-label {
+      font-size: 11px;
+      color: var(--success);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .ai-insight .say-this-text {
+      font-size: 15px;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    .ai-insight .context-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .context-tag {
+      padding: 4px 10px;
+      background: var(--bg-tertiary);
+      border-radius: 12px;
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    .context-tag.danger { background: rgba(248, 81, 73, 0.2); color: var(--danger); }
+    .context-tag.warning { background: rgba(210, 153, 34, 0.2); color: var(--warning); }
+    .context-tag.success { background: rgba(63, 185, 80, 0.2); color: var(--success); }
+
+    @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
     /* Transcription */
     .transcription-box {
@@ -137,7 +197,7 @@
       border-radius: var(--radius);
       padding: 16px;
       margin-bottom: 20px;
-      max-height: 120px;
+      max-height: 200px;
       overflow-y: auto;
     }
 
@@ -147,161 +207,48 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-bottom: 8px;
-    }
-
-    .transcription-text { font-size: 14px; color: var(--text-secondary); min-height: 30px; }
-
-    /* Danger Alert */
-    .danger-alert {
-      background: linear-gradient(135deg, rgba(248, 81, 73, 0.2), rgba(248, 81, 73, 0.1));
-      border: 2px solid var(--danger);
-      border-radius: var(--radius);
-      padding: 20px;
-      margin-bottom: 20px;
-      display: none;
-      animation: dangerPulse 2s infinite;
-    }
-
-    .danger-alert.active { display: block; }
-
-    @keyframes dangerPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(248, 81, 73, 0.4); }
-      50% { box-shadow: 0 0 20px 10px rgba(248, 81, 73, 0.2); }
-    }
-
-    .danger-alert h3 {
-      color: var(--danger);
-      font-size: 16px;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .danger-alert p { color: var(--text-secondary); font-size: 14px; margin-bottom: 12px; }
-    .danger-alert .action-script {
-      background: var(--bg-primary);
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 14px;
-      color: var(--text-primary);
-    }
-
-    /* Buyer Type Badge */
-    .buyer-type-badge {
-      display: none;
-      padding: 8px 16px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      font-size: 13px;
-    }
-
-    .buyer-type-badge.active { display: flex; align-items: center; gap: 10px; }
-    .buyer-type-badge.escapee { background: rgba(163, 113, 247, 0.2); border: 1px solid var(--purple); }
-    .buyer-type-badge.builder { background: rgba(88, 166, 255, 0.2); border: 1px solid var(--accent); }
-    .buyer-type-badge.provider { background: rgba(63, 185, 80, 0.2); border: 1px solid var(--success); }
-
-    /* Objection Alert */
-    .objection-alert {
-      background: rgba(248, 81, 73, 0.1);
-      border: 2px solid var(--danger);
-      border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 20px;
-      display: none;
-      animation: slideIn 0.3s ease;
-    }
-
-    .objection-alert.active { display: block; }
-
-    @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-    .objection-alert .alert-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-
-    .objection-alert .alert-icon { font-size: 20px; }
-    .objection-alert .alert-title { font-size: 16px; font-weight: 600; color: var(--danger); }
-    .objection-alert .alert-subtitle { font-size: 12px; color: var(--text-muted); }
-    .objection-alert .win-rate { font-size: 11px; color: var(--warning); margin-top: 4px; }
-
-    /* Suggestion Card */
-    .suggestion-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--accent);
-      border-radius: var(--radius);
-      padding: 20px;
-      margin-bottom: 20px;
-      display: none;
-    }
-
-    .suggestion-card.active { display: block; animation: slideIn 0.3s ease; }
-
-    .suggestion-card .card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
     }
 
-    .suggestion-card .card-title {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--accent);
-    }
+    .transcription-box .word-count { font-weight: normal; }
 
-    .suggestion-card .copy-btn {
-      padding: 6px 12px;
-      background: var(--bg-tertiary);
+    .transcription-text { font-size: 14px; color: var(--text-secondary); min-height: 30px; }
+
+    /* Prospect Profile */
+    .prospect-profile {
+      background: var(--bg-secondary);
       border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-secondary);
-      font-size: 12px;
-      cursor: pointer;
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 20px;
+      display: none;
     }
 
-    .suggestion-card .copy-btn:hover { background: var(--bg-primary); color: var(--text-primary); }
+    .prospect-profile.active { display: block; }
 
-    .suggestion-card .script {
-      font-size: 15px;
-      line-height: 1.6;
-      color: var(--text-primary);
+    .prospect-profile h3 {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
       margin-bottom: 12px;
-      padding: 16px;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .profile-item {
+      padding: 10px;
       background: var(--bg-tertiary);
       border-radius: 8px;
     }
 
-    .suggestion-card .key-point {
-      font-size: 12px;
-      color: var(--text-secondary);
-      font-style: italic;
-    }
-
-    .suggestion-card .key-point strong { color: var(--success); }
-
-    /* Follow-up Section */
-    .followup-section {
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid var(--border);
-      display: none;
-    }
-
-    .followup-section.active { display: block; }
-    .followup-section h4 { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
-    .followup-section .followup-script {
-      font-size: 13px;
-      color: var(--text-secondary);
-      padding: 10px;
-      background: var(--bg-primary);
-      border-radius: 6px;
-    }
+    .profile-item .label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
+    .profile-item .value { font-size: 13px; color: var(--text-primary); margin-top: 4px; }
 
     /* Quick Scripts */
     .quick-scripts {
@@ -351,27 +298,6 @@
     .script-btn .script-title { font-weight: 500; margin-bottom: 4px; }
     .script-btn .script-category { font-size: 11px; color: var(--text-muted); }
 
-    /* False Positive Detector */
-    .false-positive {
-      background: rgba(210, 153, 34, 0.15);
-      border: 1px solid var(--warning);
-      border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 20px;
-      display: none;
-    }
-
-    .false-positive.active { display: block; }
-    .false-positive h4 { color: var(--warning); font-size: 14px; margin-bottom: 8px; }
-    .false-positive p { font-size: 13px; color: var(--text-secondary); }
-    .false-positive .test-question {
-      margin-top: 10px;
-      padding: 10px;
-      background: var(--bg-primary);
-      border-radius: 6px;
-      font-size: 13px;
-    }
-
     .toast {
       position: fixed;
       bottom: 20px;
@@ -417,9 +343,22 @@
     @keyframes audioWave { 0%, 100% { height: 10px; } 50% { height: 25px; } }
     .audio-visualizer.paused .audio-bar { animation: none; height: 10px; }
 
+    .copy-btn {
+      padding: 6px 12px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-secondary);
+      font-size: 12px;
+      cursor: pointer;
+      float: right;
+    }
+
+    .copy-btn:hover { background: var(--bg-primary); color: var(--text-primary); }
+
     @media (max-width: 600px) {
       .script-grid { grid-template-columns: 1fr; }
-      .input-group { flex-direction: column; }
+      .profile-grid { grid-template-columns: 1fr; }
       .stats-bar { flex-wrap: wrap; }
     }
   </style>
@@ -444,7 +383,7 @@
     <!-- Setup -->
     <section class="setup-section" id="setup-section">
       <h2>Ready to Coach</h2>
-      <p style="color: var(--text-secondary); margin-bottom: 20px;">Click below to start listening to your call. The coach will automatically detect objections and show you what to say.</p>
+      <p style="color: var(--text-secondary); margin-bottom: 20px;">Click below to start listening to your call. The AI coach analyzes the full conversation context and provides real-time suggestions.</p>
       <button class="btn btn-primary btn-large" id="start-btn">Start Listening</button>
       <p class="hint" style="margin-top: 12px;">Works best in Chrome. Make sure your microphone is enabled.</p>
     </section>
@@ -463,60 +402,62 @@
           <div class="stat-label">Duration</div>
         </div>
         <div class="stat-item" id="readiness-stat">
-          <div class="stat-value" id="readiness-score">?</div>
+          <div class="stat-value" id="readiness-score">--</div>
           <div class="stat-label">Readiness</div>
         </div>
+        <div class="stat-item" id="sentiment-stat">
+          <div class="stat-value" id="sentiment">--</div>
+          <div class="stat-label">Sentiment</div>
+        </div>
       </div>
 
-      <!-- Buyer Type Badge -->
-      <div class="buyer-type-badge" id="buyer-type-badge">
-        <span id="buyer-type-icon"></span>
-        <span><strong id="buyer-type-name"></strong>: <span id="buyer-type-tip"></span></span>
+      <!-- AI Insight Card - Primary coaching interface -->
+      <div class="ai-insight" id="ai-insight">
+        <div class="insight-header">
+          <span class="insight-icon">🧠</span>
+          <span class="insight-title" id="insight-title">AI Analysis</span>
+          <span class="insight-time" id="insight-time"></span>
+        </div>
+        <div class="insight-content" id="insight-content">
+          Listening to your call... AI analysis will appear here based on the full conversation context.
+        </div>
+        <div class="say-this" id="say-this-box" style="display: none;">
+          <div class="say-this-label">Say This Now</div>
+          <div class="say-this-text" id="say-this-text"></div>
+          <button class="copy-btn" onclick="copySuggestion()">Copy</button>
+        </div>
+        <div class="context-tags" id="context-tags"></div>
       </div>
 
-      <!-- Danger Alert -->
-      <div class="danger-alert" id="danger-alert">
-        <h3><span>⚠️</span> <span id="danger-title"></span></h3>
-        <p id="danger-message"></p>
-        <div class="action-script" id="danger-script"></div>
-      </div>
-
-      <!-- False Positive Warning -->
-      <div class="false-positive" id="false-positive">
-        <h4>⚡ Possible Soft No - Test It</h4>
-        <p id="false-positive-msg"></p>
-        <div class="test-question" id="false-positive-test"></div>
-      </div>
-
-      <!-- Objection Alert -->
-      <div class="objection-alert" id="objection-alert">
-        <div class="alert-header">
-          <span class="alert-icon">🚨</span>
-          <div>
-            <div class="alert-title" id="objection-type"></div>
-            <div class="alert-subtitle" id="objection-heard"></div>
-            <div class="win-rate" id="objection-winrate"></div>
+      <!-- Prospect Profile (built from conversation) -->
+      <div class="prospect-profile" id="prospect-profile">
+        <h3>Prospect Profile (AI-Detected)</h3>
+        <div class="profile-grid">
+          <div class="profile-item">
+            <div class="label">Buyer Type</div>
+            <div class="value" id="profile-buyer-type">Analyzing...</div>
           </div>
-        </div>
-      </div>
-
-      <!-- Suggestion Card -->
-      <div class="suggestion-card" id="suggestion-card">
-        <div class="card-header">
-          <span class="card-title">Suggested Response</span>
-          <button class="copy-btn" onclick="copyScript()">Copy</button>
-        </div>
-        <div class="script" id="suggestion-script"></div>
-        <div class="key-point"><strong>KEY:</strong> <span id="suggestion-key"></span></div>
-        <div class="followup-section" id="followup-section">
-          <h4>If They Push Back:</h4>
-          <div class="followup-script" id="followup-script"></div>
+          <div class="profile-item">
+            <div class="label">Main Concern</div>
+            <div class="value" id="profile-main-concern">Analyzing...</div>
+          </div>
+          <div class="profile-item">
+            <div class="label">Decision Maker?</div>
+            <div class="value" id="profile-decision-maker">Unknown</div>
+          </div>
+          <div class="profile-item">
+            <div class="label">Budget Signals</div>
+            <div class="value" id="profile-budget">Unknown</div>
+          </div>
         </div>
       </div>
 
       <!-- Transcription -->
       <div class="transcription-box">
-        <h3>Live Transcription</h3>
+        <h3>
+          Live Transcription
+          <span class="word-count" id="word-count">0 words</span>
+        </h3>
         <div class="transcription-text" id="transcription"></div>
       </div>
 
@@ -541,292 +482,76 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    // ============ COMPREHENSIVE OBJECTION DATABASE ============
-    const OBJECTIONS = {
-      // PRICE/AFFORDABILITY (84% of calls)
-      "price_cant_afford": {
-        name: "Can't Afford / Price Too High",
-        category: "price",
-        frequency: "84%",
-        variations: [
-          "can't afford", "too expensive", "don't have the money", "don't have the capital",
-          "price is a big thing", "that's a lot of money", "price price price",
-          "don't have 6000", "don't have six thousand", "not in my budget",
-          "that's too expensive", "i cannot afford", "out of my price range"
-        ],
-        winRate: 0.42,
-        response: {
-          script: "I hear you. Let me ask - is it the total number that's the issue, or the monthly payment? Because we have financing options that bring this down to around $600/month, which is less than most car payments. And since machines typically generate $400-800 each monthly, your first 2 machines cover the payment.",
-          key: "Separate the TOTAL from the MONTHLY - most can afford monthly",
-          followup: "Fair enough. What monthly number would work for your budget right now? Let's see if we can structure something that makes sense."
-        }
-      },
-      "price_compare_diy": {
-        name: "I Could Do It Myself",
-        category: "price",
-        variations: [
-          "do it myself", "figure it out myself", "do my own research",
-          "watch youtube", "learn myself", "don't need coaching",
-          "could probably just do this myself", "self taught"
-        ],
-        winRate: 0.61,
-        response: {
-          script: "You absolutely could. Here's what that typically looks like: 3-4 months finding your first location through cold calling, another $2-3k in mistakes on the wrong machine or wrong location. Our average member has their first location within 30 days. So it's really: do you want to spend 6 months and potentially more money learning, or 30 days with a proven system?",
-          key: "Don't fight it - show the TIME and MONEY cost of DIY",
-          followup: "The information is all out there - that's true. But let me ask: what's the cost of spending 6 more months figuring it out vs. having a proven roadmap that gets you cash-flowing in 60 days?"
-        }
-      },
-      "price_roi_concern": {
-        name: "ROI / Numbers Concern",
-        category: "price",
-        variations: [
-          "how much can i make", "what's the roi", "what if the numbers don't work",
-          "what if i'm only making", "prove the numbers", "show me the math",
-          "what's my return", "how long to break even"
-        ],
-        winRate: 0.55,
-        response: {
-          script: "Great question. Conservative scenario: Machine does $400-600/month in sales, at 35% margin you net $140-210 per machine per month. Average is $210-350 net. Strong locations net $350-525. With 5 machines at conservative numbers, you're netting $700-1000/month. What monthly number would make this worth the time and investment for you?",
-          key: "Give REAL ranges, not best-case. Then ask their target number.",
-          followup: "And keep in mind, you're buying income-generating assets. The machines have resale value, and the locations you build have value. This is equity, not spending."
-        }
-      },
+    // ============ CONFIG ============
+    const GEMINI_API_KEY = 'AIzaSyB6RKagdAunFoIvNQ3q97E1XKvPgIkqEv8';
+    const ANALYSIS_INTERVAL = 12000; // Analyze every 12 seconds
+    const MIN_WORDS_FOR_ANALYSIS = 15; // Need at least 15 words before analyzing
 
-      // SPOUSE/AUTHORITY (40% - HIGH INTENSITY)
-      "spouse_need_talk": {
-        name: "Need to Talk to Spouse",
-        category: "spouse",
-        variations: [
-          "talk to my wife", "talk to my husband", "ask my spouse",
-          "check with my wife", "check with my husband", "need to discuss with",
-          "can't jump into something this expensive without talking to her",
-          "my partner", "need spouse approval", "married"
-        ],
-        winRate: 0.52,
-        response: {
-          script: "Of course. Let me ask - when you've discussed business investments before, what does that conversation typically look like? Do you usually present the info and then decide together, or does one of you typically take the lead?",
-          key: "Find out if they're the decision-maker or not FIRST",
-          followup: "Most successful members have their spouse on the next call so they hear the details directly rather than trying to explain it secondhand. Does Tuesday or Thursday work better to get 20 minutes with both of you?"
-        }
-      },
-      "spouse_skeptical": {
-        name: "Spouse is Skeptical",
-        category: "spouse",
-        variations: [
-          "wife is skeptical", "husband doesn't believe", "spouse thinks it's a scam",
-          "she's been burned before", "he doesn't trust these things",
-          "partner is hesitant"
-        ],
-        winRate: 0.38,
-        response: {
-          script: "I respect that. She's probably seen the 'business opportunity' pitches that promise everything and deliver a PDF. What would help her see this is different? Would it be talking to other members' spouses who were skeptical at first? Seeing the actual program structure? Something else?",
-          key: "Validate the skepticism, offer PROOF options",
-          followup: "Rather than having you try to sell this to her, why don't we get her on a call so she can ask me directly? That way she's making the decision based on the full picture."
-        }
-      },
+    // ============ SALES PLAYBOOK (for AI context) ============
+    const SALES_PLAYBOOK = `
+You are a real-time sales coach for VendingPreneurs, a vending machine coaching business.
+Your job is to analyze the live conversation and provide actionable coaching.
 
-      // TIMING/STALLS (70% of calls)
-      "think_about_it": {
-        name: "Need to Think About It",
-        category: "stall",
-        variations: [
-          "think about it", "need to think", "sleep on it", "consider it",
-          "mull it over", "give it some thought", "think it over",
-          "need a few days", "need time to decide"
-        ],
-        winRate: 0.35,
-        response: {
-          script: "Totally fair. When you say you need to think about it, what specifically needs more consideration? Is it: How to structure the payment? Confidence in the ROI? Getting spouse buy-in? Or something else?",
-          key: "'Think about it' is ALWAYS a mask - force them to name the REAL objection",
-          followup: "I'll call you in a week? No, you won't. You'll no-show me. Come on now, what's really going on?"
-        }
-      },
-      "bad_timing": {
-        name: "Bad Timing / Not Now",
-        category: "stall",
-        variations: [
-          "not the right time", "bad timing", "maybe later", "next month",
-          "next year", "after the holidays", "too busy right now",
-          "lot going on", "maybe in a few months", "not right now"
-        ],
-        winRate: 0.48,
-        response: {
-          script: "I hear you. But let me ask - if not now, when? What specifically needs to change in your life for the timing to be 'right'? Because here's the truth: there's never a perfect time. The people who succeed are the ones who start despite imperfect timing.",
-          key: "Timing objection often masks FEAR - dig for the real blocker",
-          followup: "What's your timeline look like? Is there a specific date when things clear up, or is it more of a vague 'later'?"
-        }
-      },
-      "need_research": {
-        name: "Need to Do More Research",
-        category: "stall",
-        variations: [
-          "do my research", "due diligence", "look into it more",
-          "compare options", "need more information", "want to research",
-          "going to look around"
-        ],
-        winRate: 0.40,
-        response: {
-          script: "Totally fair. Let me help you research effectively. What are you actually researching? Are you comparing us to other programs? Trying to understand if the market is good? Validating that members are real? Because I can answer your actual questions right now rather than you spending 2 weeks googling.",
-          key: "Don't let them disappear into 'research' - find out WHAT they need to know",
-          followup: "What are the 3 things you need to verify before you'd be ready to move forward?"
-        }
-      },
+PRODUCT: $6,000 vending machine coaching program
+- Includes training, community, location leads, support
+- Financing available (~$600/month)
+- Members typically get first location in 30 days
+- Average machine nets $200-400/month profit
 
-      // FEAR/SELF-DOUBT (56% of calls)
-      "fear_failure": {
-        name: "Fear of Failure",
-        category: "fear",
-        variations: [
-          "what if it doesn't work", "afraid i'll fail", "scared",
-          "self doubt", "don't think i can", "what if i can't",
-          "fear of failure", "worried", "nervous about failing"
-        ],
-        winRate: 0.45,
-        response: {
-          script: "Can I be straight with you? That feeling - that self-doubt - literally everyone successful in this community felt that before they started. The difference? They did it scared. They started at 40% ready instead of waiting to feel 100% ready. So what specifically do you think you can't do? The sales calls? Finding locations? Managing machines?",
-          key: "Normalize the fear, then break down SPECIFIC concerns",
-          followup: "Nobody is 100% ready. The difference is having support when you start."
-        }
-      },
-      "fear_no_experience": {
-        name: "No Experience",
-        category: "fear",
-        variations: [
-          "no experience", "never done this", "don't know anything about vending",
-          "no business experience", "don't know how", "never owned a business",
-          "i'm not a salesperson"
-        ],
-        winRate: 0.50,
-        response: {
-          script: "We have teachers, mailmen, security guards with no business experience doing this successfully. The step-by-step process means you're never guessing what to do next. And the community has already made the mistakes so you don't have to. What specifically about the experience gap concerns you most?",
-          key: "Show similar success stories, emphasize the SYSTEM",
-          followup: "You're not building a rocket - you're buying and restocking snacks. The hard part is finding locations, and we give you that system."
-        }
-      },
-      "fear_no_locations": {
-        name: "Fear of Not Finding Locations",
-        category: "fear",
-        variations: [
-          "can't find locations", "what if i can't get locations",
-          "machines will sit in my garage", "no good locations",
-          "don't know where to put", "how do i find locations"
-        ],
-        winRate: 0.48,
-        response: {
-          script: "That only happens if you don't actually work the leads. There are thousands of businesses in your city that either have vending or could use it. You're not convincing someone to try something new - vending is established. You're just offering a better option. Our average close rate is about 1 in 20 calls. With a list of 100 qualified businesses, how many would you be willing to call?",
-          key: "It's a numbers game - they can't fail if they work the leads",
-          followup: "The only way you can't get locations is if you stop trying. And the community won't let you stop."
-        }
-      },
+CRITICAL OBJECTIONS TO WATCH FOR (with win rates):
+1. "Can't afford it" / Price concerns (84% of calls, 42% win rate)
+   - Reframe: Total vs Monthly. $600/month, machines pay for themselves
+2. "Need to talk to spouse" (40% of calls, 52% win rate)
+   - Get spouse on next call, don't let them sell secondhand
+3. "Need to think about it" (70% of calls, 35% win rate)
+   - This ALWAYS masks the real objection - dig deeper
+4. "Bad timing" (48% win rate)
+   - There's never a perfect time. What specifically needs to change?
+5. "Fear of failure" / Self-doubt (45% win rate)
+   - Normalize it. Everyone successful felt this before starting.
 
-      // TRUST/LEGITIMACY (28% of calls)
-      "scam_concern": {
-        name: "Sounds Like a Scam",
-        category: "fear",
-        variations: [
-          "sounds like a scam", "too good to be true", "is this legit",
-          "how do i know", "pyramid scheme", "mlm", "seen things like this",
-          "is this real"
-        ],
-        winRate: 0.38,
-        response: {
-          script: "I appreciate you saying that because skepticism is smart. Let me tell you what would make this a scam: if we took your money and disappeared, if the testimonials were fake, if we locked you in with no way out. Here's what's actually true: You can talk to active members before you pay anything. There's no long-term contract. We're real people, not some landing page operation.",
-          key: "Validate skepticism, offer PROOF before purchase",
-          followup: "Before you decide anything, get on a Q&A call with current members. Ask them if they felt this was legit. If they tell you it's a scam, don't join."
-        }
-      }
-    };
+BUYER TYPES:
+- Escapee: Hates their job, wants out. Emphasize freedom.
+- Builder: Already entrepreneurial. Emphasize portfolio/scale.
+- Provider: Family-focused. Emphasize legacy for kids.
 
-    // ============ BUYER TYPES ============
-    const BUYER_TYPES = {
-      escapee: {
-        name: "The Escapee",
-        icon: "🚪",
-        tip: "They want OUT of their job. Emphasize 'You've given enough. It's time.'",
-        triggers: ["hate my job", "burned out", "corporate", "stuck", "escape", "quit my job", "tired of working for", "want out"]
-      },
-      builder: {
-        name: "The Builder",
-        icon: "🏗️",
-        tip: "Already entrepreneurial. Emphasize 'Smart entrepreneurs add this to their portfolio.'",
-        triggers: ["side hustle", "other business", "entrepreneur", "already own", "portfolio", "scale", "passive income stream"]
-      },
-      provider: {
-        name: "The Provider",
-        icon: "👨‍👩‍👧‍👦",
-        tip: "Family-focused. Emphasize 'Build something your kids can inherit.'",
-        triggers: ["family", "kids", "wife", "husband", "provide", "inherit", "leave something", "children"]
-      }
-    };
+DANGER SIGNALS:
+- 3+ objections = win rate drops to 31%. Re-qualify.
+- Spouse + Money concerns together = they're not the decision maker
+- Vague "I'll think about it" with no specifics = soft no
 
-    // ============ FALSE POSITIVE PATTERNS ============
-    const FALSE_POSITIVES = {
-      "spouse_vague": {
-        trigger: ["talk to my spouse", "talk to my wife", "talk to my husband"],
-        without: ["tuesday", "wednesday", "thursday", "tomorrow", "next week", "specific time"],
-        message: "Vague spouse mention with no follow-up date = likely soft no",
-        test: "Ask: 'When specifically can you discuss this with them? Can we schedule our follow-up now for Thursday?'"
-      },
-      "interested_no_action": {
-        trigger: ["definitely interested", "i see the value", "this is great"],
-        without: ["what's next", "where do i sign", "how do i start", "link", "enroll"],
-        message: "Positive words without action = possible soft no",
-        test: "Ask: 'Great! So what's holding you back from starting today?'"
-      },
-      "think_vague": {
-        trigger: ["need to think", "think about it"],
-        without: ["specific", "numbers", "spouse", "financing"],
-        message: "Vague 'thinking' = mask for real objection",
-        test: "Ask: 'What specifically do you need to think about? Payment structure? ROI? Getting spouse buy-in?'"
-      }
-    };
-
-    // ============ DANGER PATTERNS ============
-    const DANGER_PATTERNS = {
-      threeObjections: {
-        title: "3+ Objections - Win Rate Drops to 31%!",
-        message: "Time to re-qualify. They may not be a real buyer.",
-        script: "On a scale of 1-10, how serious are you about starting a vending business in the next 90 days? [If <7, qualify out. If 7+, say 'Let's identify the ONE thing really holding you back']"
-      },
-      spouseCapital: {
-        title: "Spouse + Capital Combo = DANGER",
-        message: "They are likely NOT the decision-maker. Spouse controls finances.",
-        script: "What specific concerns does your spouse have about the investment? I can address those directly on our next call with both of you."
-      },
-      repeatedStalls: {
-        title: "Multiple Stalls - They're Being Polite",
-        message: "Each time you address something, there's a new concern. They're not actually interested.",
-        script: "I'm noticing each time I address something, there's another concern. That's usually a sign this isn't the right fit or timing. Am I reading that right?"
-      }
-    };
+RESPONSE FORMAT - Always provide:
+1. What's happening (brief analysis)
+2. Exact script to say (word for word)
+3. Why this works (the psychology)
+`;
 
     // ============ QUICK SCRIPTS ============
     const QUICK_SCRIPTS = [
-      { id: "three-path", title: "Capital - Three Path", category: "price", script: "Is it a case you've got the full $6,000 that's just a little bit difficult or scary to invest? Or do you have some of it when you look at breaking it up into a more manageable structure? Or you've got none of it at all, and we need to go to the bank?", key: "Categorizes into 3 paths, normalizes all scenarios" },
-      { id: "franchise-compare", title: "Compare to Franchise", category: "price", script: "Most people compare this to franchise fees of $30-50k. You're getting similar support - lead generation, community, training - at a fraction of that cost. The question is: what's it worth to shortcut 6 months of trial and error?", key: "Reframe against expensive alternatives" },
-      { id: "monthly-reframe", title: "Monthly Payment Reframe", category: "price", script: "Let's look at the financing options that make this $600/month instead of $6,000 upfront. Since machines typically generate $400-800 each monthly, your first 2 machines cover the payment.", key: "Switch from total to monthly thinking" },
-      { id: "spouse-responsibility", title: "Spouse - Responsibility Frame", category: "spouse", script: "When she's at work making decisions to do her job well, she doesn't rely on you to make those decisions for her, right? Why would it be fair to put the decision for YOUR future, YOUR family, onto her?", key: "Win the responsibility frame" },
-      { id: "spouse-call", title: "Spouse - Get on Call", category: "spouse", script: "Most successful members have their spouse on the next call so they hear the details directly rather than trying to explain it secondhand. Does Tuesday or Thursday work better?", key: "Always try to get spouse on next call" },
-      { id: "think-crack", title: "Think About It - Crack It", category: "stall", script: "When you say you need to think about it, what specifically needs more consideration? Is it the payment structure? Confidence in ROI? Getting spouse buy-in? Or something else?", key: "Force them to name the REAL objection" },
-      { id: "timing-push", title: "Bad Timing - Push", category: "stall", script: "If not now, when? What specifically needs to change for the timing to be 'right'? There's never a perfect time. The people who succeed start despite imperfect timing.", key: "Challenge the vague 'later'" },
-      { id: "fear-normalize", title: "Fear - Normalize It", category: "fear", script: "That self-doubt you're feeling? Everyone successful in this community felt that before they started. The difference? They did it scared. They started at 40% ready instead of waiting for 100%.", key: "Normalize fear, don't fight it" },
-      { id: "no-experience", title: "No Experience - Proof", category: "fear", script: "We have teachers, mailmen, security guards with no business experience doing this successfully. The step-by-step process means you're never guessing what to do next.", key: "Show similar success stories" },
-      { id: "readiness-scale", title: "1-10 Readiness Check", category: "close", script: "On a scale of 1-10, how ready are you to move forward? [If 7+] What would get you from [X] to 10? [If <7] What's actually holding you back?", key: "Quantify readiness, find the gap" },
-      { id: "permission-no", title: "Permission to Say No", category: "close", script: "I want to be respectful of your time and mine. If this isn't the right fit or timing, that's totally fine - just tell me. But if there's a real concern I can address right now, let's address it.", key: "Permission to say no reveals real objection" },
-      { id: "whats-next", title: "Close - What's Next", category: "close", script: "Based on everything we've discussed, it sounds like this could work for you. What questions do you have before we get you started?", key: "Assumptive close" }
+      { id: "three-path", title: "Capital - Three Path", category: "price", script: "Is it a case you've got the full $6,000 that's just a little bit difficult or scary to invest? Or do you have some of it when you look at breaking it up into a more manageable structure? Or you've got none of it at all, and we need to go to the bank?" },
+      { id: "franchise-compare", title: "Compare to Franchise", category: "price", script: "Most people compare this to franchise fees of $30-50k. You're getting similar support - lead generation, community, training - at a fraction of that cost." },
+      { id: "monthly-reframe", title: "Monthly Payment Reframe", category: "price", script: "Let's look at the financing options that make this $600/month instead of $6,000 upfront. Since machines typically generate $400-800 each monthly, your first 2 machines cover the payment." },
+      { id: "spouse-responsibility", title: "Spouse - Responsibility Frame", category: "spouse", script: "When she's at work making decisions to do her job well, she doesn't rely on you to make those decisions for her, right? Why would it be fair to put the decision for YOUR future, YOUR family, onto her?" },
+      { id: "spouse-call", title: "Spouse - Get on Call", category: "spouse", script: "Most successful members have their spouse on the next call so they hear the details directly rather than trying to explain it secondhand. Does Tuesday or Thursday work better?" },
+      { id: "think-crack", title: "Think About It - Crack It", category: "stall", script: "When you say you need to think about it, what specifically needs more consideration? Is it the payment structure? Confidence in ROI? Getting spouse buy-in?" },
+      { id: "timing-push", title: "Bad Timing - Push", category: "stall", script: "If not now, when? What specifically needs to change for the timing to be 'right'? There's never a perfect time." },
+      { id: "fear-normalize", title: "Fear - Normalize It", category: "fear", script: "That self-doubt you're feeling? Everyone successful in this community felt that before they started. The difference? They did it scared." },
+      { id: "no-experience", title: "No Experience - Proof", category: "fear", script: "We have teachers, mailmen, security guards with no business experience doing this successfully. The step-by-step process means you're never guessing." },
+      { id: "readiness-scale", title: "1-10 Readiness Check", category: "close", script: "On a scale of 1-10, how ready are you to move forward? [If 7+] What would get you to a 10? [If <7] What's actually holding you back?" },
+      { id: "permission-no", title: "Permission to Say No", category: "close", script: "If this isn't the right fit or timing, that's totally fine - just tell me. But if there's a real concern I can address right now, let's address it." },
+      { id: "whats-next", title: "Close - What's Next", category: "close", script: "Based on everything we've discussed, it sounds like this could work for you. What questions do you have before we get you started?" }
     ];
-
-    // ============ CONFIG ============
-    const GEMINI_API_KEY = 'AIzaSyB6RKagdAunFoIvNQ3q97E1XKvPgIkqEv8';
 
     // ============ STATE ============
     let isListening = false;
+    let fullTranscript = ''; // FULL conversation history
+    let lastAnalyzedTranscript = '';
     let objectionCount = 0;
-    let lastObjections = [];
-    let detectedBuyerType = null;
     let callStartTime = null;
     let durationInterval = null;
+    let analysisInterval = null;
     let currentCategory = 'all';
+    let isAnalyzing = false;
 
     // ============ DOM ELEMENTS ============
     const $ = id => document.getElementById(id);
@@ -838,18 +563,14 @@
     const statusText = $('status-text');
     const audioViz = $('audio-viz');
     const transcription = $('transcription');
-    const objectionAlert = $('objection-alert');
-    const suggestionCard = $('suggestion-card');
-    const dangerAlert = $('danger-alert');
-    const falsePositive = $('false-positive');
-    const buyerTypeBadge = $('buyer-type-badge');
+    const aiInsight = $('ai-insight');
+    const prospectProfile = $('prospect-profile');
     const scriptGrid = $('script-grid');
     const toast = $('toast');
 
     // ============ INITIALIZE ============
     function init() {
       renderQuickScripts();
-
       startBtn.addEventListener('click', startListening);
       stopBtn.addEventListener('click', stopListening);
 
@@ -886,14 +607,21 @@
         startSpeechRecognition();
 
         isListening = true;
+        fullTranscript = '';
         callStartTime = Date.now();
         durationInterval = setInterval(updateDuration, 1000);
+
+        // Start AI analysis loop
+        analysisInterval = setInterval(runAIAnalysis, ANALYSIS_INTERVAL);
 
         setupSection.style.display = 'none';
         coachingArea.classList.add('active');
         statusDot.classList.add('listening');
         statusText.textContent = 'Listening...';
         audioViz.classList.remove('paused');
+
+        aiInsight.classList.add('active');
+        $('insight-content').textContent = 'Listening to your call... AI analysis will appear here once the conversation gets going.';
       } catch (err) {
         showToast('Microphone access denied');
         startBtn.disabled = false;
@@ -910,21 +638,26 @@
       recognition.interimResults = true;
       recognition.lang = 'en-US';
 
-      let finalTranscript = '';
+      let interimTranscript = '';
 
       recognition.onresult = (event) => {
-        let interimTranscript = '';
+        interimTranscript = '';
         for (let i = event.resultIndex; i < event.results.length; i++) {
           const transcript = event.results[i][0].transcript;
           if (event.results[i].isFinal) {
-            finalTranscript += transcript + ' ';
-            analyzeText(transcript);
+            fullTranscript += transcript + ' ';
           } else {
-            interimTranscript += transcript;
+            interimTranscript = transcript;
           }
         }
-        transcription.innerHTML = finalTranscript + '<span style="color: var(--text-muted)">' + interimTranscript + '</span>';
+
+        // Update display
+        transcription.innerHTML = fullTranscript + '<span style="color: var(--text-muted)">' + interimTranscript + '</span>';
         transcription.scrollTop = transcription.scrollHeight;
+
+        // Update word count
+        const wordCount = fullTranscript.trim().split(/\s+/).filter(w => w).length;
+        $('word-count').textContent = wordCount + ' words';
       };
 
       recognition.onerror = (e) => {
@@ -936,97 +669,149 @@
       window.currentRecognition = recognition;
     }
 
-    // ============ ANALYSIS ============
-    function analyzeText(text) {
-      const lower = text.toLowerCase();
+    // ============ AI ANALYSIS (Full Context) ============
+    async function runAIAnalysis() {
+      // Skip if no new content or already analyzing
+      if (isAnalyzing) return;
+      if (fullTranscript === lastAnalyzedTranscript) return;
 
-      // Check for buyer type
-      for (const [type, data] of Object.entries(BUYER_TYPES)) {
-        if (data.triggers.some(t => lower.includes(t)) && detectedBuyerType !== type) {
-          detectedBuyerType = type;
-          showBuyerType(type, data);
-        }
-      }
+      const wordCount = fullTranscript.trim().split(/\s+/).filter(w => w).length;
+      if (wordCount < MIN_WORDS_FOR_ANALYSIS) return;
 
-      // Check for objections
-      for (const [key, obj] of Object.entries(OBJECTIONS)) {
-        if (obj.variations.some(v => lower.includes(v.toLowerCase()))) {
-          handleObjection(key, obj, text);
-          return;
-        }
-      }
+      isAnalyzing = true;
+      statusDot.classList.add('analyzing');
+      statusText.textContent = 'Analyzing...';
 
-      // Check for false positives
-      for (const [key, fp] of Object.entries(FALSE_POSITIVES)) {
-        if (fp.trigger.some(t => lower.includes(t)) && !fp.without.some(w => lower.includes(w))) {
-          showFalsePositive(fp);
-        }
+      try {
+        const analysis = await callGeminiAPI(fullTranscript);
+        lastAnalyzedTranscript = fullTranscript;
+        displayAnalysis(analysis);
+      } catch (err) {
+        console.error('AI Analysis error:', err);
+      } finally {
+        isAnalyzing = false;
+        statusDot.classList.remove('analyzing');
+        statusText.textContent = 'Listening...';
       }
     }
 
-    function handleObjection(key, objection, text) {
-      objectionCount++;
-      $('objection-count').textContent = objectionCount;
-      lastObjections.push(key);
+    async function callGeminiAPI(transcript) {
+      const prompt = `${SALES_PLAYBOOK}
 
-      // Update stat color
-      const statEl = $('objection-count-stat');
-      if (objectionCount >= 3) statEl.classList.add('danger');
-      else if (objectionCount >= 2) statEl.classList.add('warning');
+FULL CONVERSATION TRANSCRIPT SO FAR:
+"""
+${transcript}
+"""
 
-      // Check danger patterns
-      if (objectionCount >= 3) {
-        showDangerAlert(DANGER_PATTERNS.threeObjections);
+Based on this FULL conversation context, provide real-time coaching. Respond in this exact JSON format:
+{
+  "situation": "Brief 1-sentence summary of where we are in the call",
+  "objection_detected": "specific objection if any, or null",
+  "objection_count": number of distinct objections so far,
+  "say_this": "Exact word-for-word script the rep should say RIGHT NOW based on full context",
+  "why_this_works": "1-sentence explanation of the psychology",
+  "buyer_type": "Escapee, Builder, Provider, or Unknown",
+  "main_concern": "Their primary concern/hesitation",
+  "is_decision_maker": "Yes, No, or Unclear",
+  "budget_signal": "Has money, Needs financing, No budget, or Unknown",
+  "readiness_score": number 1-10,
+  "sentiment": "Positive, Neutral, Skeptical, or Resistant",
+  "danger_signals": ["list of any danger signals detected"],
+  "tags": ["relevant situation tags like 'price_objection', 'spouse_concern', 'ready_to_close']"
+}
+
+Be specific and actionable. The "say_this" should be something they can literally read word-for-word.`;
+
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature: 0.3,
+            maxOutputTokens: 1000
+          }
+        })
+      });
+
+      const data = await response.json();
+      const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+      // Extract JSON from response
+      const jsonMatch = text.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        return JSON.parse(jsonMatch[0]);
+      }
+      throw new Error('Could not parse AI response');
+    }
+
+    function displayAnalysis(analysis) {
+      // Update insight card
+      $('insight-title').textContent = analysis.objection_detected
+        ? `Objection: ${analysis.objection_detected}`
+        : 'Situation Analysis';
+      $('insight-time').textContent = new Date().toLocaleTimeString();
+      $('insight-content').textContent = analysis.situation + (analysis.why_this_works ? '\n\n' + analysis.why_this_works : '');
+
+      // Show the "say this" box
+      if (analysis.say_this) {
+        $('say-this-box').style.display = 'block';
+        $('say-this-text').textContent = analysis.say_this;
       }
 
-      if (lastObjections.includes('spouse_need_talk') && (key.includes('price') || lastObjections.some(o => o.includes('price')))) {
-        showDangerAlert(DANGER_PATTERNS.spouseCapital);
+      // Update tags
+      const tagsHtml = (analysis.tags || []).map(tag => {
+        let tagClass = '';
+        if (tag.includes('danger') || tag.includes('objection')) tagClass = 'danger';
+        else if (tag.includes('ready') || tag.includes('positive')) tagClass = 'success';
+        else if (tag.includes('spouse') || tag.includes('stall')) tagClass = 'warning';
+        return `<span class="context-tag ${tagClass}">${tag.replace('_', ' ')}</span>`;
+      }).join('');
+
+      // Add danger signals as tags
+      const dangerHtml = (analysis.danger_signals || []).map(signal =>
+        `<span class="context-tag danger">${signal}</span>`
+      ).join('');
+
+      $('context-tags').innerHTML = tagsHtml + dangerHtml;
+
+      // Update stats
+      if (analysis.objection_count !== undefined) {
+        objectionCount = analysis.objection_count;
+        $('objection-count').textContent = objectionCount;
+        const statEl = $('objection-count-stat');
+        statEl.className = 'stat-item';
+        if (objectionCount >= 3) statEl.classList.add('danger');
+        else if (objectionCount >= 2) statEl.classList.add('warning');
       }
 
-      // Show objection
-      $('objection-type').textContent = objection.name;
-      $('objection-heard').textContent = 'Detected in: "...' + text.slice(-50) + '"';
-      $('objection-winrate').textContent = 'Historical Win Rate: ' + Math.round(objection.winRate * 100) + '%';
-      objectionAlert.classList.add('active');
-
-      // Show suggestion
-      $('suggestion-script').textContent = objection.response.script;
-      $('suggestion-key').textContent = objection.response.key;
-
-      if (objection.response.followup) {
-        $('followup-script').textContent = objection.response.followup;
-        $('followup-section').classList.add('active');
-      } else {
-        $('followup-section').classList.remove('active');
+      if (analysis.readiness_score !== undefined) {
+        $('readiness-score').textContent = analysis.readiness_score + '/10';
+        const readinessStat = $('readiness-stat');
+        readinessStat.className = 'stat-item';
+        if (analysis.readiness_score >= 7) readinessStat.classList.add('success');
+        else if (analysis.readiness_score <= 4) readinessStat.classList.add('danger');
+        else readinessStat.classList.add('warning');
       }
 
-      suggestionCard.classList.add('active');
+      if (analysis.sentiment) {
+        $('sentiment').textContent = analysis.sentiment;
+        const sentimentStat = $('sentiment-stat');
+        sentimentStat.className = 'stat-item';
+        if (analysis.sentiment === 'Positive') sentimentStat.classList.add('success');
+        else if (analysis.sentiment === 'Resistant') sentimentStat.classList.add('danger');
+        else if (analysis.sentiment === 'Skeptical') sentimentStat.classList.add('warning');
+      }
 
-      setTimeout(() => objectionAlert.classList.remove('active'), 30000);
+      // Update prospect profile
+      prospectProfile.classList.add('active');
+      $('profile-buyer-type').textContent = analysis.buyer_type || 'Unknown';
+      $('profile-main-concern').textContent = analysis.main_concern || 'Unknown';
+      $('profile-decision-maker').textContent = analysis.is_decision_maker || 'Unknown';
+      $('profile-budget').textContent = analysis.budget_signal || 'Unknown';
     }
 
-    function showDangerAlert(pattern) {
-      $('danger-title').textContent = pattern.title;
-      $('danger-message').textContent = pattern.message;
-      $('danger-script').textContent = pattern.script;
-      dangerAlert.classList.add('active');
-      setTimeout(() => dangerAlert.classList.remove('active'), 45000);
-    }
-
-    function showBuyerType(type, data) {
-      $('buyer-type-icon').textContent = data.icon;
-      $('buyer-type-name').textContent = data.name;
-      $('buyer-type-tip').textContent = data.tip;
-      buyerTypeBadge.className = 'buyer-type-badge active ' + type;
-    }
-
-    function showFalsePositive(fp) {
-      $('false-positive-msg').textContent = fp.message;
-      $('false-positive-test').textContent = fp.test;
-      falsePositive.classList.add('active');
-      setTimeout(() => falsePositive.classList.remove('active'), 20000);
-    }
-
+    // ============ UTILITIES ============
     function updateDuration() {
       const elapsed = Math.floor((Date.now() - callStartTime) / 1000);
       const mins = Math.floor(elapsed / 60);
@@ -1034,51 +819,49 @@
       $('call-duration').textContent = mins + ':' + secs.toString().padStart(2, '0');
     }
 
-    // ============ QUICK SCRIPTS ============
     window.showQuickScript = function(id) {
       const script = QUICK_SCRIPTS.find(s => s.id === id);
       if (!script) return;
 
-      $('suggestion-script').textContent = script.script;
-      $('suggestion-key').textContent = script.key;
-      $('followup-section').classList.remove('active');
-      suggestionCard.classList.add('active');
-      objectionAlert.classList.remove('active');
+      $('say-this-box').style.display = 'block';
+      $('say-this-text').textContent = script.script;
+      $('insight-title').textContent = script.title;
+      $('insight-content').textContent = 'Quick script selected. Use this response now.';
+      showToast('Script loaded!', true);
     };
 
-    window.copyScript = function() {
-      navigator.clipboard.writeText($('suggestion-script').textContent)
+    window.copySuggestion = function() {
+      navigator.clipboard.writeText($('say-this-text').textContent)
         .then(() => showToast('Copied!', true));
     };
 
-    // ============ STOP ============
     function stopListening() {
       isListening = false;
       if (window.currentRecognition) { window.currentRecognition.stop(); window.currentRecognition = null; }
       if (durationInterval) { clearInterval(durationInterval); durationInterval = null; }
+      if (analysisInterval) { clearInterval(analysisInterval); analysisInterval = null; }
 
       setupSection.style.display = 'block';
       coachingArea.classList.remove('active');
-      statusDot.classList.remove('listening');
+      statusDot.classList.remove('listening', 'analyzing');
       statusText.textContent = 'Not Connected';
       audioViz.classList.add('paused');
       startBtn.disabled = false;
       startBtn.textContent = 'Start Listening';
 
       // Reset state
+      fullTranscript = '';
+      lastAnalyzedTranscript = '';
       objectionCount = 0;
-      lastObjections = [];
-      detectedBuyerType = null;
       $('objection-count').textContent = '0';
       $('objection-count-stat').className = 'stat-item';
       $('call-duration').textContent = '0:00';
-      $('readiness-score').textContent = '?';
+      $('readiness-score').textContent = '--';
+      $('sentiment').textContent = '--';
+      $('word-count').textContent = '0 words';
       transcription.innerHTML = '';
-      objectionAlert.classList.remove('active');
-      suggestionCard.classList.remove('active');
-      dangerAlert.classList.remove('active');
-      falsePositive.classList.remove('active');
-      buyerTypeBadge.classList.remove('active');
+      aiInsight.classList.remove('active');
+      prospectProfile.classList.remove('active');
     }
 
     function showToast(msg, success = false) {
