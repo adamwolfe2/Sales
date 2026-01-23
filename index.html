@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VendingPreneurs Sales Command Center</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>V</text></svg>">
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <div class="header-content">
+        <div class="logo">
+          <span>V</span>endingPreneurs <span>Command Center</span>
+        </div>
+
+        <div class="search-container">
+          <div class="search-input-wrapper">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search objections, scripts, testimonials..."
+              autocomplete="off"
+            >
+            <span class="search-shortcut">/</span>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <button class="nav-btn active" data-nav="objections">Objections</button>
+          <button class="nav-btn" data-nav="playbooks">Playbooks</button>
+          <button class="nav-btn" data-nav="reps">Reps</button>
+          <button class="nav-btn" data-nav="testimonials">Testimonials</button>
+          <button class="nav-btn" data-nav="analyzer">Analyzer</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main" id="main-content">
+      <div class="empty-state">
+        <h3>Loading...</h3>
+        <p>Initializing Sales Command Center</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-container">
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script src="src/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,391 @@
+{
+  "metadata": {
+    "total_calls_analyzed": 1491,
+    "sample_size": 30,
+    "last_updated": "2025-01-23"
+  },
+  "team_averages": {
+    "objections_per_call": 1.5,
+    "overall_win_rate": 0.56,
+    "capital_objection_win_rate": 0.42,
+    "authority_objection_win_rate": 0.54,
+    "timing_objection_win_rate": 0.48,
+    "diy_objection_win_rate": 0.76
+  },
+  "reps": [
+    {
+      "id": "matt_chubb",
+      "name": "Matt Chubb",
+      "email": "matt@modern-amenities.com",
+      "total_calls": 187,
+      "total_objections_faced": 289,
+      "objections_per_call": 1.5,
+      "overall_win_rate": 0.58,
+      "top_objections": [
+        {"objection": "I don't have the capital right now", "count": 38, "percentage": 20, "win_rate": 0.61},
+        {"objection": "It's more expensive than I expected", "count": 19, "percentage": 10, "win_rate": 0.68},
+        {"objection": "I need to talk to my wife/spouse", "count": 12, "percentage": 6, "win_rate": 0.42}
+      ],
+      "strengths": [
+        "Best on team at handling price/budget objections (61% win rate vs 42% team average)",
+        "Excellent at explaining financing options with specific numbers",
+        "Strong ROI/value demonstration skills"
+      ],
+      "development_areas": [
+        "Authority objections (42% win rate vs 52% team average)",
+        "Needs to improve getting spouse/partner on three-way calls",
+        "Sometimes accepts 'I'll talk to them' without securing next call"
+      ],
+      "best_call": {
+        "call_id": "c7d1da0c-a2f2-426c-a5ac-f42d3f9bc7b4",
+        "objection": "I don't have capital",
+        "response": "Immediately pivoted to financing, showed multiple options, gave specific numbers",
+        "outcome": "Closed-Won"
+      },
+      "coaching_recommendations": [
+        "Implement new spouse protocol immediately",
+        "Practice getting spouse on three-way call",
+        "Send follow-up emails addressed to BOTH parties"
+      ],
+      "shadowing": {
+        "should_shadow": "Scott Seymour",
+        "reason": "Authority objection handling"
+      }
+    },
+    {
+      "id": "lyle_hubbard",
+      "name": "Lyle Hubbard",
+      "email": "lyle@modern-amenities.com",
+      "total_calls": 164,
+      "total_objections_faced": 267,
+      "objections_per_call": 1.6,
+      "overall_win_rate": 0.52,
+      "top_objections": [
+        {"objection": "I don't have the capital right now", "count": 31, "percentage": 19, "win_rate": 0.48},
+        {"objection": "It's more expensive than I expected", "count": 24, "percentage": 15, "win_rate": 0.54},
+        {"objection": "I need to talk to my wife/spouse", "count": 10, "percentage": 6, "win_rate": 0.40}
+      ],
+      "strengths": [
+        "Best on team at technical/logistics questions (84% win rate)",
+        "Excellent at explaining lead generation process",
+        "Strong product knowledge"
+      ],
+      "development_areas": [
+        "'I can figure this out on my own' objections (25% win rate vs 76% team average) - CRITICAL GAP",
+        "Sometimes offers to unbundle program (VenHub only) which devalues offering",
+        "Needs to defend full program value more assertively"
+      ],
+      "critical_issue": "When prospects say they have resources/connections, Lyle offers 'just VenHub access' instead of showing value of full program. This devalues the offering and creates precedent for discounts.",
+      "best_call": {
+        "call_id": "0a543fba-6523-4fba-b481-446388d211b9",
+        "objection": "Technical questions about leads",
+        "response": "Clear, detailed explanation with specifics",
+        "outcome": "Closed-Won"
+      },
+      "worst_call": {
+        "call_id": "583693eb-63ed-47cb-b5c9-ed65935ef739",
+        "objection": "I can figure this out with my resources",
+        "response": "Offered VenHub-only access",
+        "outcome": "Lost"
+      },
+      "coaching_recommendations": [
+        "1-on-1 coaching session this week",
+        "Study Matt's calls where DIY objection surfaces",
+        "Shadow Matt on 2 calls",
+        "Practice NOT offering unbundled solutions",
+        "Role-play defending full program value"
+      ],
+      "shadowing": {
+        "should_shadow": "Matt Chubb",
+        "reason": "DIY/capital objections"
+      },
+      "target_improvement": "Bring DIY win rate to 45%+ by end of month"
+    },
+    {
+      "id": "christian_hartwell",
+      "name": "Christian Hartwell",
+      "email": "christian@modern-amenities.com",
+      "total_calls": 143,
+      "total_objections_faced": 221,
+      "objections_per_call": 1.5,
+      "overall_win_rate": 0.49,
+      "top_objections": [
+        {"objection": "I don't have the capital right now", "count": 27, "percentage": 19, "win_rate": 0.44},
+        {"objection": "I want to test this first before investing", "count": 7, "percentage": 5, "win_rate": 0.29},
+        {"objection": "I need time to think about it", "count": 6, "percentage": 4, "win_rate": 0.50}
+      ],
+      "strengths": [
+        "Excellent at logistics questions (78% win rate)",
+        "Strong empathy and rapport building",
+        "Good at directing to community for solutions"
+      ],
+      "development_areas": [
+        "'I want to test first' objections (29% win rate vs 76% team average) - CRITICAL GAP",
+        "Capital objections (44% win rate vs 58% team average)",
+        "Needs to show cost of DIY/testing more effectively"
+      ],
+      "critical_issue": "Christian empathizes with DIY mindset but doesn't effectively show the time/money cost of testing alone. He accepts the objection too easily without reframing.",
+      "best_call": {
+        "call_id": "d704e31a-6e02-4c0d-8efc-615ba2dd516f",
+        "objection": "How do I stock with 9-5 job?",
+        "response": "Directed to community, explained time commitment",
+        "outcome": "Closed-Won"
+      },
+      "worst_call": {
+        "call_id": "cb9f5ad7-e220-4d4c-afab-95b36608e07b",
+        "objection": "I don't have capital",
+        "response": "Empathized but provided no solution",
+        "outcome": "No-show"
+      },
+      "coaching_recommendations": [
+        "1-on-1 coaching session this week",
+        "Study Jordan's approach to competitive/DIY objections",
+        "Practice showing cost of testing: time (6-9 months), money ($3-5K in mistakes), opportunity cost",
+        "Offer Bronze as 'guided test' rather than accepting full DIY"
+      ],
+      "shadowing": {
+        "should_shadow": "Jordan Humphrey",
+        "reason": "Competitive/DIY objections"
+      },
+      "target_improvement": "Bring 'test first' win rate to 45%+ by end of month"
+    },
+    {
+      "id": "jordan_humphrey",
+      "name": "Jordan Humphrey",
+      "email": "jordan@modern-amenities.com",
+      "total_calls": 156,
+      "total_objections_faced": 241,
+      "objections_per_call": 1.5,
+      "overall_win_rate": 0.64,
+      "status": "HIGHEST ON TEAM",
+      "top_objections": [
+        {"objection": "For that price, I'd expect you to find locations for me", "count": 12, "percentage": 8, "win_rate": 0.33},
+        {"objection": "I don't have the capital right now", "count": 19, "percentage": 12, "win_rate": 0.58},
+        {"objection": "It's more expensive than I expected", "count": 16, "percentage": 10, "win_rate": 0.63}
+      ],
+      "strengths": [
+        "BEST on team at competitive/saturation objections (78% win rate)",
+        "Excellent at showing empathy while maintaining momentum",
+        "Strong at theft/risk objections (82% win rate)",
+        "Outstanding call where prospect's mom had died - showed empathy and still closed"
+      ],
+      "development_areas": [
+        "'For that price, find locations for me' (33% win rate - but BEST on team, objection is very challenging)",
+        "Faces this objection 3x more than other reps (8% vs 2.8% team average)"
+      ],
+      "investigation_needed": "Jordan faces 'for that price, find locations' objection 8% of his calls vs 2.8% team average. Need to investigate lead sources or call flow.",
+      "best_call": {
+        "call_id": "82f7ba03-5a27-4776-973d-4f9b24d1d74c",
+        "context": "Prospect's mom had just died",
+        "objections": ["I'm not ready to start right now", "I heard market is saturated"],
+        "response": "Showed empathy, reframed timing, explained competitive advantage",
+        "outcome": "Closed-Won"
+      },
+      "should_train_team_on": [
+        "Competitive positioning",
+        "Saturation objection handling",
+        "Empathy + momentum balance"
+      ]
+    },
+    {
+      "id": "adrian_sherrod",
+      "name": "Adrian Sherrod",
+      "email": "adrian@modern-amenities.com",
+      "total_calls": 128,
+      "total_objections_faced": 197,
+      "objections_per_call": 1.5,
+      "overall_win_rate": 0.56,
+      "top_objections": [
+        {"objection": "I don't have the capital right now", "count": 15, "percentage": 12, "win_rate": 0.53},
+        {"objection": "It's more expensive than I expected", "count": 10, "percentage": 8, "win_rate": 0.60},
+        {"objection": "Where do I store inventory?", "count": 4, "percentage": 3, "win_rate": 1.0}
+      ],
+      "strengths": [
+        "BEST on team at logistics questions (91% win rate)",
+        "Perfect 100% win rate on storage questions",
+        "Excellent at providing practical solutions"
+      ],
+      "development_areas": [
+        "'I want to test first' objections (38% win rate vs 76% team average)"
+      ],
+      "coaching_opportunity": "When 'test first' objection surfaces, Adrian should pivot to logistics complexity: 'Let me show you what testing looks like: finding wholesale suppliers, negotiating with 10+ locations, learning which products sell where, managing cash flow.'",
+      "best_call": {
+        "call_id": "2750cf3c-2daa-4c96-bbe9-be5f1711ac49",
+        "objection": "Where do I store inventory? I don't want people coming to my home.",
+        "response": "Practical solutions (garage, storage unit, delivery requirements)",
+        "outcome": "Closed-Won"
+      },
+      "shadowing": {
+        "should_shadow": "Jordan Humphrey",
+        "reason": "Test first objections"
+      }
+    },
+    {
+      "id": "scott_seymour",
+      "name": "Scott Seymour",
+      "email": "scott@modern-amenities.com",
+      "total_calls": 119,
+      "total_objections_faced": 184,
+      "objections_per_call": 1.5,
+      "overall_win_rate": 0.61,
+      "top_objections": [
+        {"objection": "I want to wait until my business can pay for it", "count": 12, "percentage": 10, "win_rate": 0.42},
+        {"objection": "I don't have the capital right now", "count": 12, "percentage": 10, "win_rate": 0.58},
+        {"objection": "I need to talk to my wife/spouse", "count": 8, "percentage": 7, "win_rate": 0.50}
+      ],
+      "strengths": [
+        "BEST on team at 'wait until business is profitable' objections (42% vs 35% team average)",
+        "Excellent framing: 'gas on fire vs starting fire'",
+        "Strong at authority objections when he gets spouse on call"
+      ],
+      "development_areas": [
+        "Sometimes accepts timing objection too easily without uncovering root concern"
+      ],
+      "best_call": {
+        "call_id": "85db94ca-d4c9-4473-b938-9ca8885681ba",
+        "objection": "Wait until business is profitable",
+        "response": "Perfect framing - 'gas on fire vs start the fire'",
+        "outcome": "Acknowledged, scheduled 60-day follow-up"
+      },
+      "should_train_team_on": [
+        "His 'gas on fire' framing for timing objections",
+        "His approach to authority objections"
+      ]
+    },
+    {
+      "id": "ategeka_musinguzi",
+      "name": "Ategeka Musinguzi",
+      "email": "ategeka@modern-amenities.com",
+      "total_calls": 97,
+      "total_objections_faced": 151,
+      "objections_per_call": 1.6,
+      "overall_win_rate": 0.54,
+      "top_objections": [
+        {"objection": "I don't have the capital right now", "count": 18, "percentage": 19, "win_rate": 0.50},
+        {"objection": "It's more expensive than I expected", "count": 11, "percentage": 11, "win_rate": 0.55},
+        {"objection": "I need time to think about it", "count": 7, "percentage": 7, "win_rate": 0.57}
+      ],
+      "strengths": [
+        "Strong at technical questions (79% win rate)",
+        "Good at finding answers to questions he doesn't know",
+        "Solid follow-through"
+      ],
+      "development_areas": [
+        "Authority objections (45% win rate vs 52% team average)",
+        "Needs to secure three-way calls more consistently"
+      ],
+      "best_call": {
+        "call_id": "d18e65a8-6d48-4c02-a12d-936768a12a63",
+        "objection": "How does financing work? Will I be charged full interest if I pay off early?",
+        "response": "Admitted he didn't know, committed to finding answer, followed through",
+        "outcome": "Closed-Won"
+      },
+      "shadowing": {
+        "should_shadow": "Matt Chubb",
+        "reason": "Authority objections"
+      }
+    },
+    {
+      "id": "jason_aaron",
+      "name": "Jason Aaron",
+      "email": "jasonaaron@modern-amenities.com",
+      "total_calls": 89,
+      "total_objections_faced": 138,
+      "objections_per_call": 1.6,
+      "overall_win_rate": 0.57,
+      "status": "NEW TO TEAM",
+      "joined": "October 14, 2025",
+      "top_objections": [
+        {"objection": "I don't have the capital right now", "count": 16, "percentage": 18, "win_rate": 0.56},
+        {"objection": "It's more expensive than I expected", "count": 9, "percentage": 10, "win_rate": 0.67},
+        {"objection": "I need to talk to my wife/spouse", "count": 7, "percentage": 8, "win_rate": 0.43}
+      ],
+      "strengths": [
+        "Strong price objection handling with ROI breakdown (67% win rate)",
+        "Good at showing value",
+        "Learning quickly"
+      ],
+      "development_areas": [
+        "Authority objections (43% win rate)",
+        "Still building objection handling skills",
+        "Needs more shadowing and coaching"
+      ],
+      "coaching_recommendations": [
+        "Pair with Matt for shadowing (high call volume, strong price handling)",
+        "Focus on authority objection protocol",
+        "Daily check-ins with sales leadership"
+      ],
+      "shadowing": {
+        "should_shadow": "Matt Chubb",
+        "reason": "General objection handling (new to team)"
+      }
+    },
+    {
+      "id": "jeremy_williams",
+      "name": "Jeremy Williams",
+      "email": "jeremy@modern-amenities.com",
+      "total_calls": 76,
+      "total_objections_faced": 119,
+      "objections_per_call": 1.6,
+      "overall_win_rate": 0.59,
+      "top_objections": [
+        {"objection": "I want to start in 2026, not now", "count": 8, "percentage": 11, "win_rate": 0.63},
+        {"objection": "I don't have the capital right now", "count": 11, "percentage": 14, "win_rate": 0.55},
+        {"objection": "I need to consult with my business team/lawyers", "count": 6, "percentage": 8, "win_rate": 0.67}
+      ],
+      "strengths": [
+        "BEST on team at future timing objections (63% win rate)",
+        "Excellent at professional consultation objections (67%)",
+        "Good at scheduling long-term follow-ups"
+      ],
+      "development_areas": [
+        "Logistics questions (52% win rate vs 81% team average) - CRITICAL GAP",
+        "Storage, stocking, hiring questions"
+      ],
+      "coaching_recommendations": [
+        "Study Adrian's logistics responses (91% win rate)",
+        "Create logistics FAQ cheat sheet",
+        "Shadow Adrian on calls"
+      ],
+      "shadowing": {
+        "should_shadow": "Adrian Sherrod",
+        "reason": "Logistics questions"
+      }
+    }
+  ],
+  "shadowing_pairs": [
+    {"from": "Lyle Hubbard", "to": "Matt Chubb", "focus": "Capital/DIY objections", "target": "48% to 61%"},
+    {"from": "Christian Hartwell", "to": "Jordan Humphrey", "focus": "Competitive/DIY objections", "target": "29% to 55%"},
+    {"from": "Adrian Sherrod", "to": "Jordan Humphrey", "focus": "Test first objections", "target": "38% to 55%"},
+    {"from": "Jeremy Williams", "to": "Adrian Sherrod", "focus": "Logistics questions", "target": "52% to 75%"},
+    {"from": "Matt Chubb", "to": "Scott Seymour", "focus": "Authority objections", "target": "42% to 55%"},
+    {"from": "Ategeka Musinguzi", "to": "Matt Chubb", "focus": "Authority objections", "target": "45% to 55%"},
+    {"from": "Jason Aaron", "to": "Matt Chubb", "focus": "General objection handling", "target": "Maintain 57%, improve authority"}
+  ],
+  "critical_gaps": [
+    {
+      "rep": "Lyle Hubbard",
+      "objection": "I can figure this out on my own",
+      "current_rate": 0.25,
+      "team_average": 0.76,
+      "gap": 0.51,
+      "priority": "CRITICAL"
+    },
+    {
+      "rep": "Christian Hartwell",
+      "objection": "I want to test this first",
+      "current_rate": 0.29,
+      "team_average": 0.76,
+      "gap": 0.47,
+      "priority": "CRITICAL"
+    },
+    {
+      "rep": "Jeremy Williams",
+      "objection": "Logistics questions",
+      "current_rate": 0.52,
+      "team_average": 0.81,
+      "gap": 0.29,
+      "priority": "HIGH"
+    }
+  ]
+}
