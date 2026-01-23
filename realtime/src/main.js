@@ -4,6 +4,11 @@
  * With server sync for centralized content management
  */
 
+// Handle Squirrel.Windows installer events (must be first!)
+if (require('electron-squirrel-startup')) {
+  process.exit(0);
+}
+
 const { app, BrowserWindow, ipcMain, globalShortcut, screen } = require('electron');
 const path = require('path');
 const { setupGeminiHandlers, stopAudioCapture } = require('./utils/gemini');

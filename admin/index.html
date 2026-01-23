@@ -566,6 +566,7 @@
                   <td>${p.priority}</td>
                   <td>
                     <button class="btn btn-secondary btn-sm" onclick='editPattern(${JSON.stringify(p)})'>Edit</button>
+                    <button class="btn btn-danger btn-sm" onclick="deletePattern('${p.id}')">Delete</button>
                   </td>
                 </tr>
               `).join('') || '<tr><td colspan="5" style="text-align:center">No patterns yet</td></tr>'}
@@ -936,12 +937,180 @@
       setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
-    // Stub functions for playbooks and patterns
-    function openPlaybookModal(p = null) { showToast('Playbook editor coming soon', 'info'); }
+    // Playbook modal
+    function openPlaybookModal(p = null) {
+      const title = p ? 'Edit Playbook' : 'Add Playbook';
+      const content = `
+        <input type="hidden" id="pb-id" value="${p?.id || ''}">
+        <div class="form-group">
+          <label class="form-label">Author</label>
+          <input type="text" class="form-input" id="pb-author" value="${p?.author || ''}" placeholder="Eric, Matt, Scott">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phase</label>
+          <select class="form-select" id="pb-phase">
+            <option value="opening" ${p?.phase === 'opening' ? 'selected' : ''}>Opening</option>
+            <option value="discovery" ${p?.phase === 'discovery' ? 'selected' : ''}>Discovery</option>
+            <option value="presentation" ${p?.phase === 'presentation' ? 'selected' : ''}>Presentation</option>
+            <option value="objection_handling" ${p?.phase === 'objection_handling' ? 'selected' : ''}>Objection Handling</option>
+            <option value="closing" ${p?.phase === 'closing' ? 'selected' : ''}>Closing</option>
+            <option value="philosophy" ${p?.phase === 'philosophy' ? 'selected' : ''}>Philosophy</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-input" id="pb-name" value="${p?.name || ''}" placeholder="WFS Overview">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-textarea" id="pb-description" placeholder="What this phase covers...">${p?.description || ''}</textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Duration (minutes)</label>
+          <input type="number" class="form-input" id="pb-duration" value="${p?.duration_minutes || ''}" placeholder="10">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Content (JSON)</label>
+          <textarea class="form-textarea" id="pb-content" style="min-height:200px;font-family:monospace" placeholder='{"scripts": [], "techniques": []}'>${p?.content ? JSON.stringify(typeof p.content === 'string' ? JSON.parse(p.content) : p.content, null, 2) : ''}</textarea>
+        </div>
+      `;
+      openModal(title, content, 'savePlaybook()');
+    }
+
+    async function savePlaybook() {
+      const id = document.getElementById('pb-id').value;
+      let content;
+      try {
+        content = JSON.parse(document.getElementById('pb-content').value || '{}');
+      } catch (e) {
+        showToast('Invalid JSON in content field', 'error');
+        return;
+      }
+
+      const playbook = {
+        author: document.getElementById('pb-author').value,
+        phase: document.getElementById('pb-phase').value,
+        name: document.getElementById('pb-name').value,
+        description: document.getElementById('pb-description').value,
+        duration_minutes: parseInt(document.getElementById('pb-duration').value) || null,
+        content
+      };
+
+      try {
+        if (id) {
+          await api(\`/api/admin/playbooks/\${id}\`, { method: 'PUT', body: JSON.stringify(playbook) });
+        } else {
+          await api('/api/admin/playbooks', { method: 'POST', body: JSON.stringify(playbook) });
+        }
+        closeModal();
+        showToast('Playbook saved', 'success');
+        loadData();
+      } catch (err) {
+        showToast('Failed to save: ' + err.message, 'error');
+      }
+    }
+
     function editPlaybook(p) { openPlaybookModal(p); }
-    async function deletePlaybook(id) { showToast('Delete coming soon', 'info'); }
-    function openPatternModal(p = null) { showToast('Pattern editor coming soon', 'info'); }
+
+    async function deletePlaybook(id) {
+      if (!confirm('Delete this playbook?')) return;
+      try {
+        await api(\`/api/admin/playbooks/\${id}\`, { method: 'DELETE' });
+        showToast('Playbook deleted', 'success');
+        loadData();
+      } catch (err) {
+        showToast('Failed to delete: ' + err.message, 'error');
+      }
+    }
+
+    // Pattern modal
+    function openPatternModal(p = null) {
+      const title = p ? 'Edit Pattern' : 'Add Pattern';
+      const content = `
+        <input type="hidden" id="pat-id" value="${p?.id || ''}">
+        <div class="form-group">
+          <label class="form-label">Type</label>
+          <select class="form-select" id="pat-type">
+            <option value="danger" ${p?.type === 'danger' ? 'selected' : ''}>Danger Pattern</option>
+            <option value="opportunity" ${p?.type === 'opportunity' ? 'selected' : ''}>Opportunity Pattern</option>
+            <option value="script" ${p?.type === 'script' ? 'selected' : ''}>Script Pattern</option>
+            <option value="combo" ${p?.type === 'combo' ? 'selected' : ''}>Combo Pattern</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-input" id="pat-name" value="${p?.name || ''}" placeholder="Triple Objection Alert">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-textarea" id="pat-description">${p?.description || ''}</textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Priority (higher = more important)</label>
+          <input type="number" class="form-input" id="pat-priority" value="${p?.priority || 0}" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Win Rate (0-1)</label>
+          <input type="number" class="form-input" id="pat-winrate" value="${p?.win_rate || ''}" min="0" max="1" step="0.01" placeholder="0.31">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Action Script (what to say/do)</label>
+          <textarea class="form-textarea" id="pat-action" style="min-height:100px">${p?.action_script || ''}</textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Trigger Conditions (JSON)</label>
+          <textarea class="form-textarea" id="pat-triggers" style="font-family:monospace" placeholder='{"objection_count": 3}'>${p?.trigger_conditions ? JSON.stringify(typeof p.trigger_conditions === 'string' ? JSON.parse(p.trigger_conditions) : p.trigger_conditions, null, 2) : ''}</textarea>
+        </div>
+      `;
+      openModal(title, content, 'savePattern()');
+    }
+
+    async function savePattern() {
+      const id = document.getElementById('pat-id').value;
+      let trigger_conditions;
+      try {
+        trigger_conditions = JSON.parse(document.getElementById('pat-triggers').value || '{}');
+      } catch (e) {
+        showToast('Invalid JSON in trigger conditions', 'error');
+        return;
+      }
+
+      const pattern = {
+        type: document.getElementById('pat-type').value,
+        name: document.getElementById('pat-name').value,
+        description: document.getElementById('pat-description').value,
+        priority: parseInt(document.getElementById('pat-priority').value) || 0,
+        win_rate: parseFloat(document.getElementById('pat-winrate').value) || null,
+        action_script: document.getElementById('pat-action').value,
+        trigger_conditions
+      };
+
+      try {
+        if (id) {
+          await api(\`/api/admin/patterns/\${id}\`, { method: 'PUT', body: JSON.stringify(pattern) });
+        } else {
+          await api('/api/admin/patterns', { method: 'POST', body: JSON.stringify(pattern) });
+        }
+        closeModal();
+        showToast('Pattern saved', 'success');
+        loadData();
+      } catch (err) {
+        showToast('Failed to save: ' + err.message, 'error');
+      }
+    }
+
     function editPattern(p) { openPatternModal(p); }
+
+    async function deletePattern(id) {
+      if (!confirm('Delete this pattern?')) return;
+      try {
+        await api(\`/api/admin/patterns/\${id}\`, { method: 'DELETE' });
+        showToast('Pattern deleted', 'success');
+        loadData();
+      } catch (err) {
+        showToast('Failed to delete: ' + err.message, 'error');
+      }
+    }
 
     // Initialize
     render();

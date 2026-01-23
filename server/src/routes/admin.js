@@ -8,9 +8,9 @@ import { Router } from 'express';
 import jwt from 'jsonwebtoken';
 import { db } from '../db/connection.js';
 import { broadcastToTeam, getConnectedClients } from '../index.js';
+import { config } from '../config.js';
 
 const router = Router();
-const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-in-production';
 
 // Admin authentication middleware
 function authenticateAdmin(req, res, next) {
@@ -22,7 +22,7 @@ function authenticateAdmin(req, res, next) {
 
   try {
     const token = authHeader.substring(7);
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, config.jwtSecret);
 
     if (decoded.role !== 'admin') {
       return res.status(403).json({ error: 'Admin access required' });
@@ -413,6 +413,63 @@ router.post('/patterns', async (req, res) => {
   } catch (err) {
     console.error('Create pattern error:', err);
     res.status(500).json({ error: 'Failed to create pattern' });
+  }
+});
+
+router.put('/patterns/:id', async (req, res) => {
+  try {
+    const { teamId } = req.user;
+    const { id } = req.params;
+    const { type, name, description, trigger_conditions, action_script, win_rate, priority, is_active } = req.body;
+
+    const result = await db.query(
+      `UPDATE patterns SET
+        type = COALESCE($1, type),
+        name = COALESCE($2, name),
+        description = $3,
+        trigger_conditions = COALESCE($4, trigger_conditions),
+        action_script = $5,
+        win_rate = COALESCE($6, win_rate),
+        priority = COALESCE($7, priority),
+        is_active = COALESCE($8, is_active),
+        updated_at = NOW()
+       WHERE id = $9 AND team_id = $10
+       RETURNING *`,
+      [type, name, description, trigger_conditions ? JSON.stringify(trigger_conditions) : null,
+       action_script, win_rate, priority, is_active, id, teamId]
+    );
+
+    const pattern = result.rows[0];
+
+    if (!pattern) {
+      return res.status(404).json({ error: 'Pattern not found' });
+    }
+
+    broadcastToTeam(teamId, 'content:pattern:updated', pattern);
+    res.json({ pattern });
+
+  } catch (err) {
+    console.error('Update pattern error:', err);
+    res.status(500).json({ error: 'Failed to update pattern' });
+  }
+});
+
+router.delete('/patterns/:id', async (req, res) => {
+  try {
+    const { teamId } = req.user;
+    const { id } = req.params;
+
+    await db.query(
+      'UPDATE patterns SET is_active = FALSE, updated_at = NOW() WHERE id = $1 AND team_id = $2',
+      [id, teamId]
+    );
+
+    broadcastToTeam(teamId, 'content:pattern:deleted', { id });
+    res.json({ success: true });
+
+  } catch (err) {
+    console.error('Delete pattern error:', err);
+    res.status(500).json({ error: 'Failed to delete pattern' });
   }
 });
 

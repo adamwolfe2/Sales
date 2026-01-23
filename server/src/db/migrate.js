@@ -143,7 +143,8 @@ const migrations = [
   `CREATE INDEX IF NOT EXISTS idx_invitations_code ON invitations(code)`,
   `CREATE INDEX IF NOT EXISTS idx_objections_updated ON objections(updated_at)`,
   `CREATE INDEX IF NOT EXISTS idx_playbooks_updated ON playbooks(updated_at)`,
-  `CREATE INDEX IF NOT EXISTS idx_testimonials_updated ON testimonials(updated_at)`
+  `CREATE INDEX IF NOT EXISTS idx_testimonials_updated ON testimonials(updated_at)`,
+  `CREATE INDEX IF NOT EXISTS idx_patterns_updated ON patterns(updated_at)`
 ];
 
 async function migrate() {

@@ -7,15 +7,13 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 
+import { config } from './config.js';
 import { db } from './db/connection.js';
 import authRoutes from './routes/auth.js';
 import contentRoutes from './routes/content.js';
 import adminRoutes from './routes/admin.js';
-
-dotenv.config();
 
 const app = express();
 const server = createServer(app);
@@ -23,13 +21,17 @@ const server = createServer(app);
 // Socket.io for real-time updates
 const io = new Server(server, {
   cors: {
-    origin: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000', 'http://localhost:5173'],
-    methods: ['GET', 'POST']
+    origin: config.corsOrigins,
+    methods: ['GET', 'POST'],
+    credentials: true
   }
 });
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: config.corsOrigins,
+  credentials: true
+}));
 app.use(express.json());
 
 // Make io available to routes
@@ -54,7 +56,7 @@ io.use((socket, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'dev-secret-change-in-production');
+    const decoded = jwt.verify(token, config.jwtSecret);
     socket.userId = decoded.userId;
     socket.teamId = decoded.teamId;
     socket.role = decoded.role;
@@ -170,9 +172,9 @@ export function getConnectedClients() {
 }
 
 // Start server
-const PORT = process.env.PORT || 3001;
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+server.listen(config.port, () => {
+  console.log(`Server running on port ${config.port}`);
+  console.log(`Environment: ${config.nodeEnv}`);
   console.log(`WebSocket server ready`);
 });
 

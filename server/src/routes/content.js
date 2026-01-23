@@ -6,9 +6,9 @@
 import { Router } from 'express';
 import jwt from 'jsonwebtoken';
 import { db } from '../db/connection.js';
+import { config } from '../config.js';
 
 const router = Router();
-const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-in-production';
 
 // Authentication middleware
 function authenticate(req, res, next) {
@@ -20,7 +20,7 @@ function authenticate(req, res, next) {
 
   try {
     const token = authHeader.substring(7);
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, config.jwtSecret);
     req.user = decoded;
     next();
   } catch (err) {

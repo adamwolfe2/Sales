@@ -8,10 +8,9 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { nanoid } from 'nanoid';
 import { db } from '../db/connection.js';
+import { config } from '../config.js';
 
 const router = Router();
-const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-in-production';
-const JWT_EXPIRES = '30d';
 
 // Admin login
 router.post('/login', async (req, res) => {
@@ -47,8 +46,8 @@ router.post('/login', async (req, res) => {
         role: user.role,
         email: user.email
       },
-      JWT_SECRET,
-      { expiresIn: JWT_EXPIRES }
+      config.jwtSecret,
+      { expiresIn: config.jwtExpiresIn }
     );
 
     res.json({
@@ -71,10 +70,14 @@ router.post('/login', async (req, res) => {
 // Redeem invite code (for new users/clients)
 router.post('/redeem', async (req, res) => {
   try {
-    const { code } = req.body;
+    const { code, name } = req.body;
 
     if (!code) {
       return res.status(400).json({ error: 'Invite code required' });
+    }
+
+    if (!name || name.trim().length < 2) {
+      return res.status(400).json({ error: 'Name required (at least 2 characters)' });
     }
 
     // Find valid invitation
@@ -108,7 +111,7 @@ router.post('/redeem', async (req, res) => {
         `INSERT INTO users (email, team_id, role, name)
          VALUES ($1, $2, $3, $4)
          RETURNING *`,
-        [invite.email.toLowerCase(), invite.team_id, invite.role, invite.email.split('@')[0]]
+        [invite.email.toLowerCase(), invite.team_id, invite.role, name.trim()]
       );
       user = result.rows[0];
     }
@@ -127,8 +130,8 @@ router.post('/redeem', async (req, res) => {
         role: user.role,
         email: user.email
       },
-      JWT_SECRET,
-      { expiresIn: JWT_EXPIRES }
+      config.jwtSecret,
+      { expiresIn: config.jwtExpiresIn }
     );
 
     res.json({
@@ -157,7 +160,7 @@ router.post('/verify', async (req, res) => {
       return res.status(400).json({ error: 'Token required' });
     }
 
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, config.jwtSecret);
 
     // Check user still exists and is active
     const user = await db.getOne(
@@ -177,8 +180,8 @@ router.post('/verify', async (req, res) => {
         role: user.role,
         email: user.email
       },
-      JWT_SECRET,
-      { expiresIn: JWT_EXPIRES }
+      config.jwtSecret,
+      { expiresIn: config.jwtExpiresIn }
     );
 
     res.json({
@@ -209,10 +212,10 @@ router.post('/invite', authenticateAdmin, async (req, res) => {
     }
 
     const invites = [];
-    const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
+    const expiresAt = new Date(Date.now() + config.inviteExpiryDays * 24 * 60 * 60 * 1000);
 
     for (const email of emails) {
-      const code = nanoid(8).toUpperCase();
+      const code = nanoid(config.inviteCodeLength).toUpperCase();
 
       await db.query(
         `INSERT INTO invitations (team_id, email, code, role, expires_at)
@@ -242,7 +245,7 @@ function authenticateAdmin(req, res, next) {
 
   try {
     const token = authHeader.substring(7);
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, config.jwtSecret);
 
     if (decoded.role !== 'admin') {
       return res.status(403).json({ error: 'Admin access required' });
