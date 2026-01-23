@@ -2,108 +2,154 @@
 
 Enterprise-grade sales coaching and objection handling tool for the VendingPreneurs sales team.
 
-## Overview
+## Two Applications
 
-A real-time sales assistant built from comprehensive analysis of 1,491+ sales calls, featuring:
+### 1. Web Dashboard (Static)
+Browser-based reference tool for objections, playbooks, rep performance, and testimonials.
 
-- **Objection Handler**: Instant access to proven scripts with win rates
-- **Playbook Library**: Complete frameworks from Eric, Matt, and Scott
-- **Rep Dashboard**: Performance tracking and coaching recommendations
-- **Testimonial Library**: Searchable success stories for social proof
-- **Call Analyzer**: Real-time pattern detection and recommendations
+### 2. Real-Time Overlay (Electron)
+Live AI coaching overlay that listens to sales calls and provides proactive suggestions using Gemini.
 
-## Quick Start
+---
 
-1. Serve the files with any HTTP server:
-   ```bash
-   # Using Python
-   python3 -m http.server 8000
+## Real-Time Overlay (The Main Product)
 
-   # Using Node.js
-   npx serve
+An always-on-top desktop overlay that:
+- Captures audio from your sales calls via microphone
+- Streams to Gemini Live API for real-time transcription
+- Detects objections as they happen
+- Shows instant script suggestions
+- Alerts on dangerous patterns (3+ objections, Price+Authority combo)
 
-   # Using PHP
-   php -S localhost:8000
-   ```
+### Quick Start - Real-Time App
 
-2. Open `http://localhost:8000` in your browser
+```bash
+cd realtime
+npm install
+npm start
+```
 
-## Features
+### Requirements
+- Node.js 18+
+- Gemini API key (get from Google AI Studio)
+- Microphone access
 
-### Objection Handler
-- 10 primary objection categories
-- Win rates from actual call data
-- Multiple response frameworks (Matt, Scott, Eric)
-- Copy-to-clipboard scripts
-- Difficulty indicators (favorable/moderate/challenging)
+### How It Works
 
-### Playbook Library
-- Eric's complete WFS (Word-For-Script) playbook
-- Matt Chubb's objection handling philosophy
+1. **Connect**: Enter your Gemini API key and click Connect
+2. **Listen**: The app captures your microphone audio
+3. **Detect**: AI identifies objections in real-time
+4. **Coach**: Get instant script suggestions overlaid on your screen
+
+### Features
+
+- **Always-on-top overlay** - Stays visible during calls
+- **Real-time transcription** - See what's being said
+- **Objection detection** - Automatic pattern matching
+- **Instant scripts** - Copy-paste ready responses
+- **Danger alerts** - Warns on 3+ objections or bad combos
+- **Quick scripts** - One-click access to key responses
+
+### Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl+Shift+V` | Toggle visibility |
+| `Ctrl+Shift+T` | Toggle always-on-top |
+
+### System Prompt
+
+The AI is trained on:
+- Matt Chubb's objection playbook
 - Scott Seymour's practical approach
-- Quick reference scripts by situation
+- Eric's WFS framework
+- Data from 1,491 analyzed calls
 
-### Rep Performance Dashboard
-- Individual scorecards with win rates
-- Gap analysis vs team averages
-- Shadowing pair recommendations
-- Critical gap alerts
+---
 
-### Call Analyzer
-- Enter objections to get real-time analysis
-- Three-objection threshold warning (31% win rate)
-- Dangerous combination detection
-- Re-qualification script recommendations
+## Web Dashboard
 
-### Testimonial Library
-- Full success stories with metrics
-- Filtered by objection type
-- Revenue proof points
-- Copy-to-clipboard quotes
+### Quick Start
 
-## Data Sources
+```bash
+# Serve the files
+python3 -m http.server 8000
 
-All data is derived from:
-- 1,491 analyzed sales conversations
-- 30+ call samples across all reps
-- 100+ unique objections identified
-- 8 primary objection categories
+# Open browser
+open http://localhost:8000
+```
 
-## Key Metrics
+### Features
+
+| Feature | Description |
+|---------|-------------|
+| Objection Handler | 10 categories with win rates and scripts |
+| Playbook Library | Eric, Matt, Scott frameworks |
+| Rep Dashboard | Performance tracking and coaching |
+| Testimonial Library | Success stories by objection type |
+| Call Analyzer | Pattern detection and recommendations |
+
+---
+
+## Data Overview
 
 | Metric | Value |
 |--------|-------|
 | Calls Analyzed | 1,491 |
-| Overall Team Win Rate | 56% |
-| Most Challenging Objection | "No capital" (42% win rate) |
-| Easiest to Overcome | "How does financing work?" (87% win rate) |
-| Danger Zone | Price + Authority combo (18% win rate) |
+| Objections Indexed | 100+ |
+| Team Win Rate | 56% |
+| Hardest Objection | "No capital" (42%) |
+| Danger Combo | Price + Authority (18%) |
 
-## Keyboard Shortcuts
-
-- `/` - Focus search
-- `Esc` - Close modal / Clear search
+---
 
 ## File Structure
 
 ```
 /
-├── index.html           # Main application
-├── src/
-│   └── app.js          # Application logic
-├── styles/
-│   └── main.css        # Styling
-└── data/
-    ├── objections.json  # Objection database
-    ├── playbooks.json   # Sales frameworks
-    ├── testimonials.json # Success stories
-    └── reps.json        # Rep performance data
+├── index.html              # Web dashboard
+├── src/app.js              # Dashboard logic
+├── styles/main.css         # Dashboard styling
+├── data/
+│   ├── objections.json     # Objection database
+│   ├── playbooks.json      # Sales frameworks
+│   ├── testimonials.json   # Success stories
+│   └── reps.json           # Rep performance
+└── realtime/
+    ├── package.json        # Electron app config
+    ├── forge.config.js     # Build config
+    └── src/
+        ├── main.js         # Electron main process
+        ├── preload.js      # IPC bridge
+        ├── index.html      # Overlay UI
+        └── utils/
+            ├── gemini.js   # Gemini Live API
+            └── prompts.js  # System prompts
 ```
 
-## Browser Support
+---
 
-Modern browsers (Chrome, Firefox, Safari, Edge) with ES6+ support.
+## Key Scripts (Quick Reference)
 
-## Development
+### Capital Objection
+> "Is it a case you've got the full $6,000 that's just a little bit difficult or scary to invest? Or do you have some of it when you look at breaking it up? Or you've got none of it at all, and we need to go to the bank?"
 
-This is a static web application with no build step required. Edit files directly and refresh to see changes.
+### Spouse Objection
+> "What does your spouse do for work? When she's at work making decisions, she doesn't rely on you to make those decisions for her, right? Why would it be fair to put the decision for YOUR future onto her?"
+
+### Think About It
+> "I'll call you in a week? No, you won't. You'll no-show me. Come on now, man. What's really going on?"
+
+### 3+ Objections (Re-qualify)
+> "On a scale of 1-10, how serious are you about starting a vending business in the next 90 days?"
+
+---
+
+## Building for Distribution
+
+```bash
+cd realtime
+npm run make
+```
+
+This creates distributable packages for Windows, macOS, and Linux.

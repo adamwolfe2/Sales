@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'">
+  <title>VendingPreneurs Sales Assistant</title>
+  <style>
+    :root {
+      --bg-primary: rgba(13, 17, 23, 0.95);
+      --bg-secondary: rgba(22, 27, 34, 0.98);
+      --bg-tertiary: rgba(33, 38, 45, 0.95);
+      --border: rgba(48, 54, 61, 0.8);
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent: #58a6ff;
+      --success: #3fb950;
+      --warning: #d29922;
+      --danger: #f85149;
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: transparent;
+      color: var(--text-primary);
+      font-size: 13px;
+      line-height: 1.4;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      background: var(--bg-primary);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    /* Title Bar */
+    .titlebar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      -webkit-app-region: drag;
+    }
+
+    .titlebar-title {
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .titlebar-title .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .titlebar-title .status-dot.connected {
+      background: var(--success);
+    }
+
+    .titlebar-controls {
+      display: flex;
+      gap: 4px;
+      -webkit-app-region: no-drag;
+    }
+
+    .titlebar-btn {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .titlebar-btn:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    .titlebar-btn.pin.pinned {
+      color: var(--accent);
+    }
+
+    /* Connect Section */
+    .connect-section {
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .api-input {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .api-input input {
+      flex: 1;
+      padding: 8px 12px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-primary);
+      font-size: 12px;
+    }
+
+    .api-input input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .api-input input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      opacity: 0.9;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .status-bar {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+    }
+
+    /* Danger Alerts */
+    .danger-alert {
+      background: rgba(248, 81, 73, 0.15);
+      border: 1px solid var(--danger);
+      border-radius: var(--radius);
+      padding: 12px;
+      margin-bottom: 12px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    .danger-alert h4 {
+      color: var(--danger);
+      font-size: 12px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .danger-alert p {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .danger-alert .action {
+      font-size: 11px;
+      color: var(--text-primary);
+      background: var(--bg-tertiary);
+      padding: 8px;
+      border-radius: 4px;
+      white-space: pre-wrap;
+    }
+
+    /* Objection Detection */
+    .objections-detected {
+      margin-bottom: 12px;
+    }
+
+    .objection-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 11px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+
+    .objection-tag.challenging {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .objection-tag.moderate {
+      border-color: var(--warning);
+      color: var(--warning);
+    }
+
+    .objection-tag.favorable {
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    /* Suggestions */
+    .suggestion-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .suggestion-card h4 {
+      font-size: 11px;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .suggestion-card .script {
+      background: var(--bg-tertiary);
+      border-left: 2px solid var(--accent);
+      padding: 10px;
+      font-size: 12px;
+      line-height: 1.5;
+      margin-bottom: 8px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .suggestion-card .key-point {
+      font-size: 11px;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    .copy-btn {
+      padding: 4px 8px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-secondary);
+      font-size: 10px;
+      cursor: pointer;
+      float: right;
+    }
+
+    .copy-btn:hover {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    /* Transcription */
+    .transcription {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius);
+      padding: 10px;
+      margin-bottom: 12px;
+      max-height: 100px;
+      overflow-y: auto;
+      font-size: 11px;
+    }
+
+    .transcription .speaker {
+      font-weight: 600;
+      margin-right: 4px;
+    }
+
+    .transcription .speaker.rep {
+      color: var(--accent);
+    }
+
+    .transcription .speaker.prospect {
+      color: var(--warning);
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-state h3 {
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+    }
+
+    .empty-state p {
+      font-size: 12px;
+    }
+
+    /* Quick Scripts */
+    .quick-scripts {
+      margin-top: 12px;
+    }
+
+    .quick-scripts h4 {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .quick-script-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 8px 10px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-primary);
+      font-size: 11px;
+      cursor: pointer;
+      margin-bottom: 6px;
+      transition: all 0.15s;
+    }
+
+    .quick-script-btn:hover {
+      border-color: var(--accent);
+      background: var(--bg-secondary);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+
+    /* Keyboard shortcuts hint */
+    .shortcuts {
+      padding: 8px 12px;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      font-size: 10px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 12px;
+    }
+
+    .shortcuts kbd {
+      background: var(--bg-tertiary);
+      padding: 2px 4px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="titlebar">
+      <div class="titlebar-title">
+        <span class="status-dot" id="status-dot"></span>
+        <span>VendingPreneurs Assistant</span>
+      </div>
+      <div class="titlebar-controls">
+        <button class="titlebar-btn pin" id="pin-btn" title="Toggle Always on Top">&#x1F4CC;</button>
+        <button class="titlebar-btn" id="min-btn" title="Minimize">&#x2212;</button>
+        <button class="titlebar-btn" id="close-btn" title="Close">&#x2715;</button>
+      </div>
+    </div>
+
+    <div class="connect-section">
+      <div class="api-input">
+        <input type="password" id="api-key" placeholder="Gemini API Key" autocomplete="off">
+        <button class="btn btn-primary" id="connect-btn">Connect</button>
+      </div>
+      <div class="status-bar" id="status-text">Not connected</div>
+    </div>
+
+    <div class="main-content" id="main-content">
+      <div class="empty-state">
+        <h3>Ready to Coach</h3>
+        <p>Enter your Gemini API key and connect to start real-time sales coaching.</p>
+      </div>
+
+      <div class="quick-scripts">
+        <h4>Quick Scripts</h4>
+        <button class="quick-script-btn" data-script="three-path">Capital Objection - Three Path Question</button>
+        <button class="quick-script-btn" data-script="spouse">Spouse Objection - Responsibility Frame</button>
+        <button class="quick-script-btn" data-script="think">Think About It - Pattern Interrupt</button>
+        <button class="quick-script-btn" data-script="requalify">3+ Objections - Re-qualify Script</button>
+      </div>
+    </div>
+
+    <div class="shortcuts">
+      <span><kbd>Ctrl+Shift+V</kbd> Toggle</span>
+      <span><kbd>Ctrl+Shift+T</kbd> Pin</span>
+    </div>
+  </div>
+
+  <script>
+    // State
+    let isConnected = false;
+    let isPinned = true;
+    let currentSuggestion = '';
+    let detectedObjections = [];
+    let conversationHistory = [];
+
+    // Quick scripts database
+    const quickScripts = {
+      'three-path': {
+        title: 'Three-Path Question (Capital)',
+        script: 'Is it a case you\'ve got the full $6,000 that\'s just a little bit difficult or scary to invest? Or do you have some of it when you look at breaking it up into a more manageable structure? Or you\'ve got none of it at all, and we need to go to the bank or something.',
+        key: 'Categorizes into 3 clear paths, normalizes all scenarios'
+      },
+      'spouse': {
+        title: 'Responsibility Frame (Spouse)',
+        script: 'What does your spouse do for work? When she\'s at work making decisions to do her job well, she doesn\'t rely on you to make those decisions for her, right? Why would it be fair to put the decision for YOUR future, YOUR family, onto her? When it comes to the decision to take the first step, whose responsibility does that fall on?',
+        key: 'Win the responsibility frame - 90% of spouse objections are masks'
+      },
+      'think': {
+        title: 'Pattern Interrupt (Think About It)',
+        script: 'I\'ll call you in a week? No, you won\'t. You\'ll no-show me. Come on now, man. What\'s really going on?',
+        key: '"Think about it" is BS - crack the mask immediately'
+      },
+      'requalify': {
+        title: 'Re-qualification (3+ Objections)',
+        script: 'On a scale of 1-10, how serious are you about starting a vending business in the next 90 days? If below 7 - qualify out. If 7+ - "Let\'s identify the ONE thing really holding you back"',
+        key: 'Win rate drops to 31% with 3+ objections - must re-qualify'
+      }
+    };
+
+    // DOM Elements
+    const statusDot = document.getElementById('status-dot');
+    const statusText = document.getElementById('status-text');
+    const apiKeyInput = document.getElementById('api-key');
+    const connectBtn = document.getElementById('connect-btn');
+    const mainContent = document.getElementById('main-content');
+    const pinBtn = document.getElementById('pin-btn');
+    const minBtn = document.getElementById('min-btn');
+    const closeBtn = document.getElementById('close-btn');
+
+    // Window controls
+    pinBtn.addEventListener('click', async () => {
+      isPinned = await window.api.togglePin();
+      pinBtn.classList.toggle('pinned', isPinned);
+    });
+
+    minBtn.addEventListener('click', () => window.api.minimize());
+    closeBtn.addEventListener('click', () => window.api.close());
+
+    // Connect/Disconnect
+    connectBtn.addEventListener('click', async () => {
+      if (isConnected) {
+        await window.api.disconnect();
+      } else {
+        const apiKey = apiKeyInput.value.trim();
+        if (!apiKey) {
+          statusText.textContent = 'Please enter your API key';
+          return;
+        }
+        localStorage.setItem('gemini_api_key', apiKey);
+        statusText.textContent = 'Connecting...';
+        connectBtn.disabled = true;
+        const result = await window.api.connect(apiKey);
+        connectBtn.disabled = false;
+        if (!result.success) {
+          statusText.textContent = 'Failed to connect';
+        }
+      }
+    });
+
+    // Load saved API key
+    const savedKey = localStorage.getItem('gemini_api_key');
+    if (savedKey) {
+      apiKeyInput.value = savedKey;
+    }
+
+    // Quick script buttons
+    document.querySelectorAll('.quick-script-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const scriptId = btn.dataset.script;
+        const script = quickScripts[scriptId];
+        if (script) {
+          showSuggestion(script.title, script.script, script.key);
+        }
+      });
+    });
+
+    // Event listeners from main process
+    window.api.onStatusUpdate((status) => {
+      statusText.textContent = status;
+    });
+
+    window.api.onSessionConnected((connected) => {
+      isConnected = connected;
+      statusDot.classList.toggle('connected', connected);
+      connectBtn.textContent = connected ? 'Disconnect' : 'Connect';
+      connectBtn.classList.toggle('btn-danger', connected);
+      connectBtn.classList.toggle('btn-primary', !connected);
+
+      if (connected) {
+        clearMainContent();
+        showListeningState();
+      }
+    });
+
+    window.api.onSessionError((error) => {
+      statusText.textContent = 'Error: ' + error;
+    });
+
+    window.api.onTranscriptionUpdate((data) => {
+      updateTranscription(data.text);
+    });
+
+    window.api.onSpeakerUpdate((data) => {
+      addSpeakerLine(data.speaker, data.text);
+    });
+
+    window.api.onNewSuggestion((text) => {
+      currentSuggestion = text;
+      updateSuggestionCard(text);
+    });
+
+    window.api.onUpdateSuggestion((text) => {
+      currentSuggestion = text;
+      updateSuggestionCard(text);
+    });
+
+    window.api.onSuggestionComplete((text) => {
+      currentSuggestion = text;
+      finalizeSuggestion(text);
+    });
+
+    window.api.onObjectionsDetected((objections) => {
+      detectedObjections = objections;
+      showDetectedObjections(objections);
+    });
+
+    window.api.onDangerAlert((alert) => {
+      showDangerAlert(alert);
+    });
+
+    window.api.onAlwaysOnTopChanged((isOnTop) => {
+      isPinned = isOnTop;
+      pinBtn.classList.toggle('pinned', isPinned);
+    });
+
+    // UI Functions
+    function clearMainContent() {
+      mainContent.innerHTML = '';
+    }
+
+    function showListeningState() {
+      const el = document.createElement('div');
+      el.className = 'empty-state';
+      el.innerHTML = '<h3>Listening...</h3><p>Speak to detect objections and get real-time coaching.</p>';
+      mainContent.appendChild(el);
+    }
+
+    function updateTranscription(text) {
+      let transcriptionEl = document.querySelector('.transcription');
+      if (!transcriptionEl) {
+        transcriptionEl = document.createElement('div');
+        transcriptionEl.className = 'transcription';
+        mainContent.insertBefore(transcriptionEl, mainContent.firstChild);
+      }
+      transcriptionEl.textContent = text;
+      transcriptionEl.scrollTop = transcriptionEl.scrollHeight;
+    }
+
+    function addSpeakerLine(speaker, text) {
+      let transcriptionEl = document.querySelector('.transcription');
+      if (!transcriptionEl) {
+        transcriptionEl = document.createElement('div');
+        transcriptionEl.className = 'transcription';
+        mainContent.insertBefore(transcriptionEl, mainContent.firstChild);
+      }
+
+      const line = document.createElement('div');
+      line.innerHTML = '<span class="speaker ' + speaker.toLowerCase() + '">[' + speaker + ']:</span> ' + text;
+      transcriptionEl.appendChild(line);
+      transcriptionEl.scrollTop = transcriptionEl.scrollHeight;
+
+      conversationHistory.push({ speaker, text });
+    }
+
+    function showDetectedObjections(objections) {
+      // Remove old objection tags
+      const oldEl = document.querySelector('.objections-detected');
+      if (oldEl) oldEl.remove();
+
+      if (objections.length === 0) return;
+
+      const container = document.createElement('div');
+      container.className = 'objections-detected';
+
+      objections.forEach(obj => {
+        const tag = document.createElement('span');
+        tag.className = 'objection-tag';
+        tag.textContent = obj.name;
+        container.appendChild(tag);
+      });
+
+      mainContent.insertBefore(container, mainContent.firstChild);
+    }
+
+    function showDangerAlert(alert) {
+      // Remove old danger alerts
+      document.querySelectorAll('.danger-alert').forEach(el => el.remove());
+
+      const el = document.createElement('div');
+      el.className = 'danger-alert';
+      el.innerHTML = `
+        <h4>&#x26A0; ${alert.message}</h4>
+        <div class="action">${alert.action}</div>
+      `;
+
+      mainContent.insertBefore(el, mainContent.firstChild);
+
+      // Auto-remove after 30 seconds
+      setTimeout(() => {
+        if (el.parentNode) el.remove();
+      }, 30000);
+    }
+
+    function showSuggestion(title, script, key) {
+      // Remove old suggestion cards
+      document.querySelectorAll('.suggestion-card').forEach(el => el.remove());
+
+      const card = document.createElement('div');
+      card.className = 'suggestion-card';
+      card.innerHTML = `
+        <h4>${title}</h4>
+        <button class="copy-btn" onclick="copyToClipboard(this.parentNode.querySelector('.script').textContent)">Copy</button>
+        <div class="script">${script}</div>
+        <div class="key-point">KEY: ${key}</div>
+      `;
+
+      // Insert after objections but before transcription
+      const objections = document.querySelector('.objections-detected');
+      const transcription = document.querySelector('.transcription');
+
+      if (objections && objections.nextSibling) {
+        mainContent.insertBefore(card, objections.nextSibling);
+      } else if (transcription) {
+        mainContent.insertBefore(card, transcription.nextSibling);
+      } else {
+        mainContent.insertBefore(card, mainContent.firstChild);
+      }
+    }
+
+    function updateSuggestionCard(text) {
+      let card = document.querySelector('.suggestion-card.streaming');
+      if (!card) {
+        card = document.createElement('div');
+        card.className = 'suggestion-card streaming';
+        card.innerHTML = `
+          <h4>AI Suggestion</h4>
+          <div class="script"></div>
+        `;
+        mainContent.insertBefore(card, mainContent.firstChild);
+      }
+      card.querySelector('.script').textContent = text;
+    }
+
+    function finalizeSuggestion(text) {
+      const card = document.querySelector('.suggestion-card.streaming');
+      if (card) {
+        card.classList.remove('streaming');
+        card.innerHTML = `
+          <h4>AI Suggestion</h4>
+          <button class="copy-btn" onclick="copyToClipboard(this.parentNode.querySelector('.script').textContent)">Copy</button>
+          <div class="script">${text}</div>
+        `;
+      }
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        statusText.textContent = 'Copied to clipboard';
+        setTimeout(() => {
+          statusText.textContent = isConnected ? 'Connected - Listening...' : 'Not connected';
+        }, 1500);
+      });
+    }
+
+    // Make copyToClipboard available globally for onclick handlers
+    window.copyToClipboard = copyToClipboard;
+
+    // Start microphone capture when connected
+    async function startMicrophoneCapture() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            sampleRate: 24000,
+            channelCount: 1,
+            echoCancellation: true,
+            noiseSuppression: true
+          }
+        });
+
+        const audioContext = new AudioContext({ sampleRate: 24000 });
+        const source = audioContext.createMediaStreamSource(stream);
+        const processor = audioContext.createScriptProcessor(4096, 1, 1);
+
+        source.connect(processor);
+        processor.connect(audioContext.destination);
+
+        processor.onaudioprocess = async (e) => {
+          if (!isConnected) return;
+
+          const inputData = e.inputBuffer.getChannelData(0);
+          const pcmData = new Int16Array(inputData.length);
+
+          for (let i = 0; i < inputData.length; i++) {
+            const s = Math.max(-1, Math.min(1, inputData[i]));
+            pcmData[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+          }
+
+          const base64 = btoa(String.fromCharCode(...new Uint8Array(pcmData.buffer)));
+
+          await window.api.sendAudio({
+            data: base64,
+            mimeType: 'audio/pcm;rate=24000'
+          });
+        };
+
+        console.log('Microphone capture started');
+      } catch (error) {
+        console.error('Failed to start microphone:', error);
+        statusText.textContent = 'Microphone access denied';
+      }
+    }
+
+    // Start mic when session connects
+    window.api.onSessionConnected((connected) => {
+      if (connected) {
+        startMicrophoneCapture();
+      }
+    });
+  </script>
+</body>
+</html>
