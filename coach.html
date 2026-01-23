@@ -443,13 +443,10 @@
 
     <!-- Setup -->
     <section class="setup-section" id="setup-section">
-      <h2>Quick Setup</h2>
-      <div class="input-group">
-        <input type="password" id="api-key" placeholder="Enter your Gemini API Key" autocomplete="off">
-      </div>
-      <p class="hint">Get your free API key at <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com/apikey</a></p>
-      <br>
+      <h2>Ready to Coach</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 20px;">Click below to start listening to your call. The coach will automatically detect objections and show you what to say.</p>
       <button class="btn btn-primary btn-large" id="start-btn">Start Listening</button>
+      <p class="hint" style="margin-top: 12px;">Works best in Chrome. Make sure your microphone is enabled.</p>
     </section>
 
     <!-- Coaching Area -->
@@ -819,6 +816,9 @@
       { id: "whats-next", title: "Close - What's Next", category: "close", script: "Based on everything we've discussed, it sounds like this could work for you. What questions do you have before we get you started?", key: "Assumptive close" }
     ];
 
+    // ============ CONFIG ============
+    const GEMINI_API_KEY = 'AIzaSyB6RKagdAunFoIvNQ3q97E1XKvPgIkqEv8';
+
     // ============ STATE ============
     let isListening = false;
     let objectionCount = 0;
@@ -830,7 +830,6 @@
 
     // ============ DOM ELEMENTS ============
     const $ = id => document.getElementById(id);
-    const apiKeyInput = $('api-key');
     const startBtn = $('start-btn');
     const stopBtn = $('stop-btn');
     const setupSection = $('setup-section');
@@ -849,9 +848,6 @@
 
     // ============ INITIALIZE ============
     function init() {
-      const savedKey = localStorage.getItem('gemini_api_key');
-      if (savedKey) apiKeyInput.value = savedKey;
-
       renderQuickScripts();
 
       startBtn.addEventListener('click', startListening);
@@ -882,10 +878,6 @@
 
     // ============ SPEECH RECOGNITION ============
     async function startListening() {
-      const apiKey = apiKeyInput.value.trim();
-      if (!apiKey) { showToast('Please enter your Gemini API key'); return; }
-
-      localStorage.setItem('gemini_api_key', apiKey);
       startBtn.disabled = true;
       startBtn.textContent = 'Connecting...';
 
