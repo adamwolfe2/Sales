@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VendingPreneurs Sales Coach</title>
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-tertiary: #21262d;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent: #58a6ff;
+      --success: #3fb950;
+      --warning: #d29922;
+      --danger: #f85149;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--bg-tertiary);
+      border-radius: 20px;
+      font-size: 13px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .status-dot.listening {
+      background: var(--success);
+      animation: pulse 2s infinite;
+    }
+
+    .status-dot.processing {
+      background: var(--warning);
+      animation: pulse 0.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Setup Section */
+    .setup-section {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .setup-section h2 {
+      font-size: 16px;
+      margin-bottom: 16px;
+      color: var(--text-secondary);
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .input-group input {
+      flex: 1;
+      padding: 12px 16px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-size: 14px;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-large {
+      padding: 16px 32px;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* Main Coaching Area */
+    .coaching-area {
+      display: none;
+    }
+
+    .coaching-area.active {
+      display: block;
+    }
+
+    /* Live Transcription */
+    .transcription-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 20px;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+
+    .transcription-box h3 {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .transcription-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      min-height: 40px;
+    }
+
+    .transcription-text .speaker-rep {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .transcription-text .speaker-prospect {
+      color: var(--warning);
+      font-weight: 500;
+    }
+
+    /* Objection Alert */
+    .objection-alert {
+      background: rgba(248, 81, 73, 0.1);
+      border: 2px solid var(--danger);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 20px;
+      animation: slideIn 0.3s ease;
+      display: none;
+    }
+
+    .objection-alert.active {
+      display: block;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .objection-alert .alert-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .objection-alert .alert-icon {
+      font-size: 24px;
+    }
+
+    .objection-alert .alert-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--danger);
+    }
+
+    .objection-alert .alert-subtitle {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* Suggestion Card */
+    .suggestion-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .suggestion-card.active {
+      display: block;
+      animation: slideIn 0.3s ease;
+    }
+
+    .suggestion-card .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .suggestion-card .card-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--accent);
+    }
+
+    .suggestion-card .copy-btn {
+      padding: 6px 12px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-secondary);
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .suggestion-card .copy-btn:hover {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    .suggestion-card .script {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      padding: 16px;
+      background: var(--bg-tertiary);
+      border-radius: 8px;
+    }
+
+    .suggestion-card .key-point {
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    .suggestion-card .key-point strong {
+      color: var(--success);
+    }
+
+    /* Quick Scripts */
+    .quick-scripts {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    .quick-scripts h3 {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .script-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .script-btn {
+      padding: 12px 16px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-size: 13px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+    }
+
+    .script-btn:hover {
+      border-color: var(--accent);
+      background: var(--bg-primary);
+    }
+
+    .script-btn .script-title {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .script-btn .script-category {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Audio Visualizer */
+    .audio-visualizer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      height: 30px;
+      margin-left: 10px;
+    }
+
+    .audio-bar {
+      width: 4px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 2px;
+      animation: audioWave 0.5s ease infinite;
+    }
+
+    .audio-bar:nth-child(1) { animation-delay: 0s; }
+    .audio-bar:nth-child(2) { animation-delay: 0.1s; }
+    .audio-bar:nth-child(3) { animation-delay: 0.2s; }
+    .audio-bar:nth-child(4) { animation-delay: 0.3s; }
+    .audio-bar:nth-child(5) { animation-delay: 0.4s; }
+
+    @keyframes audioWave {
+      0%, 100% { height: 10px; }
+      50% { height: 25px; }
+    }
+
+    .audio-visualizer.paused .audio-bar {
+      animation: none;
+      height: 10px;
+    }
+
+    /* Danger Pattern Alert */
+    .danger-pattern {
+      background: linear-gradient(135deg, rgba(248, 81, 73, 0.2), rgba(248, 81, 73, 0.1));
+      border: 2px solid var(--danger);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .danger-pattern.active {
+      display: block;
+      animation: dangerPulse 2s infinite;
+    }
+
+    @keyframes dangerPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(248, 81, 73, 0.4); }
+      50% { box-shadow: 0 0 20px 10px rgba(248, 81, 73, 0.2); }
+    }
+
+    .danger-pattern h3 {
+      color: var(--danger);
+      font-size: 16px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .danger-pattern p {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-size: 14px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast.success {
+      border-color: var(--success);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .script-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .input-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <span>VendingPreneurs Sales Coach</span>
+      </div>
+      <div class="status-badge" id="status-badge">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="status-text">Not Connected</span>
+        <div class="audio-visualizer paused" id="audio-viz">
+          <div class="audio-bar"></div>
+          <div class="audio-bar"></div>
+          <div class="audio-bar"></div>
+          <div class="audio-bar"></div>
+          <div class="audio-bar"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Setup Section -->
+    <section class="setup-section" id="setup-section">
+      <h2>Quick Setup</h2>
+      <div class="input-group">
+        <input type="password" id="api-key" placeholder="Enter your Gemini API Key" autocomplete="off">
+      </div>
+      <p class="hint">Get your free API key at <a href="https://aistudio.google.com/apikey" target="_blank" style="color: var(--accent)">aistudio.google.com/apikey</a></p>
+      <br>
+      <button class="btn btn-primary btn-large" id="start-btn">
+        Start Listening
+      </button>
+    </section>
+
+    <!-- Coaching Area (shown when connected) -->
+    <section class="coaching-area" id="coaching-area">
+
+      <!-- Danger Pattern Alert -->
+      <div class="danger-pattern" id="danger-alert">
+        <h3><span>&#x26A0;</span> <span id="danger-title">Warning</span></h3>
+        <p id="danger-message"></p>
+      </div>
+
+      <!-- Objection Detection -->
+      <div class="objection-alert" id="objection-alert">
+        <div class="alert-header">
+          <span class="alert-icon">&#x1F6A8;</span>
+          <div>
+            <div class="alert-title" id="objection-type">Objection Detected</div>
+            <div class="alert-subtitle" id="objection-heard"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Suggestion -->
+      <div class="suggestion-card" id="suggestion-card">
+        <div class="card-header">
+          <span class="card-title">Suggested Response</span>
+          <button class="copy-btn" onclick="copyScript()">Copy</button>
+        </div>
+        <div class="script" id="suggestion-script"></div>
+        <div class="key-point"><strong>KEY:</strong> <span id="suggestion-key"></span></div>
+      </div>
+
+      <!-- Live Transcription -->
+      <div class="transcription-box">
+        <h3>Live Transcription</h3>
+        <div class="transcription-text" id="transcription"></div>
+      </div>
+
+      <!-- Quick Scripts -->
+      <div class="quick-scripts">
+        <h3>Quick Scripts</h3>
+        <div class="script-grid" id="script-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <br>
+      <button class="btn btn-danger btn-large" id="stop-btn">Stop Listening</button>
+    </section>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script type="module">
+    // ========== OBJECTION DATABASE ==========
+    const OBJECTIONS = {
+      "capital": {
+        name: "Capital/Budget",
+        variations: ["don't have the capital", "can't afford", "don't have the money", "too expensive", "not in my budget", "need to save up", "don't have 6000", "don't have six thousand"],
+        winRate: 0.42,
+        response: {
+          script: "Is it a case you've got the full $6,000 that's just a little bit difficult or scary to invest? Or do you have some of it when you look at breaking it up into a more manageable structure? Or you've got none of it at all, and we need to go to the bank or something?",
+          key: "Three-path question categorizes their situation and normalizes all scenarios"
+        }
+      },
+      "spouse": {
+        name: "Spouse/Partner",
+        variations: ["talk to my wife", "talk to my husband", "ask my spouse", "partner", "need to discuss", "married", "check with my wife", "check with my husband"],
+        winRate: 0.52,
+        response: {
+          script: "What does your spouse do for work? When she's at work making decisions to do her job well, she doesn't rely on you to make those decisions for her, right? Why would it be fair to put the decision for YOUR future, YOUR family, onto her? When it comes to the decision to take the first step, whose responsibility does that fall on?",
+          key: "Win the responsibility frame - 90% of spouse objections are masks for something else"
+        }
+      },
+      "think": {
+        name: "Think About It",
+        variations: ["think about it", "need to think", "sleep on it", "consider it", "mull it over", "give it some thought", "think it over"],
+        winRate: 0.35,
+        response: {
+          script: "I'll call you in a week? No, you won't. You'll no-show me. Come on now, man. What's really going on? What specific thing do you need to think about?",
+          key: "Think about it is BS - crack the mask immediately and find the real objection"
+        }
+      },
+      "timing": {
+        name: "Bad Timing",
+        variations: ["not the right time", "bad timing", "maybe later", "next month", "next year", "after the holidays", "too busy right now", "lot going on"],
+        winRate: 0.48,
+        response: {
+          script: "I hear you. But let me ask - if not now, when? What specifically needs to change in your life for the timing to be right? Because here's the truth: there's never a perfect time. The people who succeed are the ones who start despite imperfect timing.",
+          key: "Timing objection often masks fear - dig for the real blocker"
+        }
+      },
+      "diy": {
+        name: "DIY/Research",
+        variations: ["figure it out myself", "do it on my own", "watch youtube", "don't need coaching", "self taught", "do my own research", "learn myself"],
+        winRate: 0.61,
+        response: {
+          script: "I respect that. How long have you been researching so far? And where are you at with your first machine? The information is all out there - that's true. But let me ask: what's the cost of spending 6 more months figuring it out vs. having a proven roadmap that gets you cash-flowing in 60 days?",
+          key: "Acknowledge their capability, then show the TIME cost of DIY"
+        }
+      },
+      "scam": {
+        name: "Scam/Trust",
+        variations: ["sounds like a scam", "too good to be true", "is this legit", "how do I know", "seen things like this", "pyramid scheme", "mlm"],
+        winRate: 0.38,
+        response: {
+          script: "I'm glad you're skeptical - you should be. Most coaching programs ARE garbage. Here's what makes us different: [specific proof points]. But honestly, don't take my word for it. Talk to our students directly. I'll connect you with 3 people who started exactly where you are.",
+          key: "Validate skepticism, offer social proof, suggest direct student contact"
+        }
+      }
+    };
+
+    // Quick scripts for buttons
+    const QUICK_SCRIPTS = [
+      {
+        id: "three-path",
+        title: "Capital - Three Path",
+        category: "Price Objection",
+        script: "Is it a case you've got the full $6,000 that's just a little bit difficult or scary to invest? Or do you have some of it? Or you've got none of it at all?",
+        key: "Categorizes into 3 paths, normalizes all scenarios"
+      },
+      {
+        id: "spouse",
+        title: "Spouse - Responsibility",
+        category: "Authority Objection",
+        script: "When she's at work making decisions, she doesn't rely on you. Why put YOUR decision for YOUR future onto her?",
+        key: "Win the responsibility frame"
+      },
+      {
+        id: "think",
+        title: "Think About It - Crack",
+        category: "Stall Objection",
+        script: "I'll call you in a week? No, you won't. You'll no-show me. What's really going on?",
+        key: "Crack the mask immediately"
+      },
+      {
+        id: "requalify",
+        title: "3+ Objections - Requalify",
+        category: "Danger Pattern",
+        script: "On a scale of 1-10, how serious are you about starting in the next 90 days? [If <7, qualify out. If 7+, find the ONE thing]",
+        key: "Win rate drops to 31% with 3+ objections"
+      },
+      {
+        id: "urgency",
+        title: "Create Urgency",
+        category: "Closing",
+        script: "The longer you wait, the longer you're leaving money on the table. What would an extra $2-3K per month mean for your family right now?",
+        key: "Future pace the benefits"
+      },
+      {
+        id: "success",
+        title: "Success Story",
+        category: "Social Proof",
+        script: "Just last month, [Name] started exactly where you are - same doubts, same situation. 60 days later, they placed their first machine and made $X their first month.",
+        key: "Relevant social proof reduces resistance"
+      }
+    ];
+
+    // ========== STATE ==========
+    let isListening = false;
+    let mediaRecorder = null;
+    let audioContext = null;
+    let geminiWs = null;
+    let objectionCount = 0;
+    let lastObjection = null;
+
+    // ========== DOM ELEMENTS ==========
+    const apiKeyInput = document.getElementById('api-key');
+    const startBtn = document.getElementById('start-btn');
+    const stopBtn = document.getElementById('stop-btn');
+    const setupSection = document.getElementById('setup-section');
+    const coachingArea = document.getElementById('coaching-area');
+    const statusDot = document.getElementById('status-dot');
+    const statusText = document.getElementById('status-text');
+    const audioViz = document.getElementById('audio-viz');
+    const transcription = document.getElementById('transcription');
+    const objectionAlert = document.getElementById('objection-alert');
+    const suggestionCard = document.getElementById('suggestion-card');
+    const dangerAlert = document.getElementById('danger-alert');
+    const scriptGrid = document.getElementById('script-grid');
+    const toast = document.getElementById('toast');
+
+    // ========== INITIALIZE ==========
+    function init() {
+      // Load saved API key
+      const savedKey = localStorage.getItem('gemini_api_key');
+      if (savedKey) {
+        apiKeyInput.value = savedKey;
+      }
+
+      // Render quick scripts
+      renderQuickScripts();
+
+      // Event listeners
+      startBtn.addEventListener('click', startListening);
+      stopBtn.addEventListener('click', stopListening);
+    }
+
+    function renderQuickScripts() {
+      scriptGrid.innerHTML = QUICK_SCRIPTS.map(script => `
+        <button class="script-btn" onclick="showQuickScript('${script.id}')">
+          <div class="script-title">${script.title}</div>
+          <div class="script-category">${script.category}</div>
+        </button>
+      `).join('');
+    }
+
+    // ========== GEMINI CONNECTION ==========
+    async function startListening() {
+      const apiKey = apiKeyInput.value.trim();
+      if (!apiKey) {
+        showToast('Please enter your Gemini API key');
+        return;
+      }
+
+      // Save API key
+      localStorage.setItem('gemini_api_key', apiKey);
+
+      startBtn.disabled = true;
+      startBtn.textContent = 'Connecting...';
+
+      try {
+        // Request microphone
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            sampleRate: 16000,
+            channelCount: 1,
+            echoCancellation: true,
+            noiseSuppression: true
+          }
+        });
+
+        // Connect to Gemini
+        await connectGemini(apiKey, stream);
+
+        // Update UI
+        isListening = true;
+        setupSection.style.display = 'none';
+        coachingArea.classList.add('active');
+        statusDot.classList.add('listening');
+        statusText.textContent = 'Listening...';
+        audioViz.classList.remove('paused');
+
+      } catch (err) {
+        console.error('Start error:', err);
+        showToast('Failed to start: ' + err.message);
+        startBtn.disabled = false;
+        startBtn.textContent = 'Start Listening';
+      }
+    }
+
+    async function connectGemini(apiKey, stream) {
+      // Build system prompt with objection handling context
+      const systemPrompt = buildSystemPrompt();
+
+      // For now, we'll use a simpler approach with Web Speech API for transcription
+      // and pattern matching for objection detection
+      // (Gemini Live API requires specific setup)
+
+      startSpeechRecognition(stream);
+    }
+
+    function buildSystemPrompt() {
+      return `You are an expert sales coach for VendingPreneurs, a vending machine business coaching program.
+
+Your job is to listen to sales calls and provide real-time coaching to help close deals.
+
+OBJECTIONS DATABASE:
+${Object.entries(OBJECTIONS).map(([key, obj]) => `
+- ${obj.name} (Win Rate: ${Math.round(obj.winRate * 100)}%)
+  Variations: ${obj.variations.join(', ')}
+  Response: ${obj.response.script}
+  Key: ${obj.response.key}
+`).join('\n')}
+
+CRITICAL RULES:
+1. When you detect an objection, immediately provide the suggested response
+2. If 3+ objections occur, trigger the re-qualification script
+3. "Spouse" + "Capital" combo = DANGER - they're not the decision maker
+4. "Think about it" is always a mask - crack it immediately
+5. Keep responses concise and actionable`;
+    }
+
+    // ========== SPEECH RECOGNITION ==========
+    function startSpeechRecognition(stream) {
+      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        showToast('Speech recognition not supported in this browser. Try Chrome.');
+        return;
+      }
+
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+
+      let finalTranscript = '';
+
+      recognition.onresult = (event) => {
+        let interimTranscript = '';
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+
+          if (event.results[i].isFinal) {
+            finalTranscript += transcript + ' ';
+            // Analyze for objections
+            analyzeForObjections(transcript);
+          } else {
+            interimTranscript += transcript;
+          }
+        }
+
+        // Update transcription display
+        transcription.innerHTML = finalTranscript + '<span style="color: var(--text-muted)">' + interimTranscript + '</span>';
+        transcription.scrollTop = transcription.scrollHeight;
+      };
+
+      recognition.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        if (event.error === 'not-allowed') {
+          showToast('Microphone access denied');
+          stopListening();
+        }
+      };
+
+      recognition.onend = () => {
+        // Restart if still listening
+        if (isListening) {
+          recognition.start();
+        }
+      };
+
+      recognition.start();
+      window.currentRecognition = recognition;
+    }
+
+    // ========== OBJECTION DETECTION ==========
+    function analyzeForObjections(text) {
+      const lowerText = text.toLowerCase();
+
+      for (const [key, objection] of Object.entries(OBJECTIONS)) {
+        for (const variation of objection.variations) {
+          if (lowerText.includes(variation.toLowerCase())) {
+            // Found an objection!
+            handleObjectionDetected(key, objection, variation, text);
+            return;
+          }
+        }
+      }
+    }
+
+    function handleObjectionDetected(key, objection, matchedPhrase, fullText) {
+      // Increment counter
+      objectionCount++;
+
+      // Check for danger patterns
+      if (objectionCount >= 3) {
+        showDangerAlert(
+          '3+ Objections Detected!',
+          'Win rate drops to 31%. Time to re-qualify. Ask: "On a scale of 1-10, how serious are you about starting in the next 90 days?"'
+        );
+      }
+
+      // Check for spouse + capital combo
+      if (lastObjection === 'spouse' && key === 'capital' || lastObjection === 'capital' && key === 'spouse') {
+        showDangerAlert(
+          'Spouse + Capital Combo!',
+          'DANGER: They are likely not the real decision maker. Dig deeper on who controls the finances.'
+        );
+      }
+
+      lastObjection = key;
+
+      // Show objection alert
+      document.getElementById('objection-type').textContent = objection.name + ' Objection';
+      document.getElementById('objection-heard').textContent = 'Heard: "' + matchedPhrase + '"';
+      objectionAlert.classList.add('active');
+
+      // Show suggestion
+      document.getElementById('suggestion-script').textContent = objection.response.script;
+      document.getElementById('suggestion-key').textContent = objection.response.key;
+      suggestionCard.classList.add('active');
+
+      // Auto-hide after 30 seconds
+      setTimeout(() => {
+        objectionAlert.classList.remove('active');
+      }, 30000);
+    }
+
+    function showDangerAlert(title, message) {
+      document.getElementById('danger-title').textContent = title;
+      document.getElementById('danger-message').textContent = message;
+      dangerAlert.classList.add('active');
+
+      setTimeout(() => {
+        dangerAlert.classList.remove('active');
+      }, 45000);
+    }
+
+    // ========== QUICK SCRIPTS ==========
+    window.showQuickScript = function(scriptId) {
+      const script = QUICK_SCRIPTS.find(s => s.id === scriptId);
+      if (!script) return;
+
+      document.getElementById('suggestion-script').textContent = script.script;
+      document.getElementById('suggestion-key').textContent = script.key;
+      suggestionCard.classList.add('active');
+
+      // Clear objection alert if showing
+      objectionAlert.classList.remove('active');
+    };
+
+    window.copyScript = function() {
+      const script = document.getElementById('suggestion-script').textContent;
+      navigator.clipboard.writeText(script).then(() => {
+        showToast('Copied to clipboard!', true);
+      });
+    };
+
+    // ========== STOP ==========
+    function stopListening() {
+      isListening = false;
+
+      // Stop speech recognition
+      if (window.currentRecognition) {
+        window.currentRecognition.stop();
+        window.currentRecognition = null;
+      }
+
+      // Reset UI
+      setupSection.style.display = 'block';
+      coachingArea.classList.remove('active');
+      statusDot.classList.remove('listening', 'processing');
+      statusText.textContent = 'Not Connected';
+      audioViz.classList.add('paused');
+      startBtn.disabled = false;
+      startBtn.textContent = 'Start Listening';
+
+      // Reset state
+      objectionCount = 0;
+      lastObjection = null;
+      transcription.innerHTML = '';
+      objectionAlert.classList.remove('active');
+      suggestionCard.classList.remove('active');
+      dangerAlert.classList.remove('active');
+    }
+
+    // ========== UTILITIES ==========
+    function showToast(message, isSuccess = false) {
+      toast.textContent = message;
+      toast.className = 'toast show' + (isSuccess ? ' success' : '');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    // Initialize
+    init();
+  </script>
+</body>
+</html>
