@@ -1,0 +1,45 @@
+{
+  "name": "vendingpreneurs-realtime",
+  "productName": "VendingPreneurs Sales Assistant",
+  "version": "1.0.0",
+  "description": "Real-time AI sales coaching overlay for VendingPreneurs",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --enable-logging",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "keywords": ["sales", "vending", "ai", "realtime", "coaching"],
+  "author": "VendingPreneurs",
+  "license": "MIT",
+  "devDependencies": {
+    "@electron-forge/cli": "^7.2.0",
+    "@electron-forge/maker-deb": "^7.2.0",
+    "@electron-forge/maker-rpm": "^7.2.0",
+    "@electron-forge/maker-squirrel": "^7.2.0",
+    "@electron-forge/maker-zip": "^7.2.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.2.0",
+    "electron": "^28.0.0"
+  },
+  "dependencies": {
+    "@google/genai": "^0.7.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-store": "^8.1.0",
+    "electron-updater": "^6.1.7",
+    "socket.io-client": "^4.7.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/Sales.git"
+  },
+  "build": {
+    "appId": "com.vendingpreneurs.salesassistant",
+    "productName": "VendingPreneurs Sales Assistant",
+    "publish": {
+      "provider": "github",
+      "owner": "YOUR_USERNAME",
+      "repo": "Sales"
+    }
+  }
+}

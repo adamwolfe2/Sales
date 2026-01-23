@@ -1,0 +1,562 @@
+{
+  "metadata": {
+    "total_calls_analyzed": 1491,
+    "sample_size": 30,
+    "objections_identified": 100,
+    "categories": 8,
+    "last_updated": "2025-01-23"
+  },
+  "categories": [
+    {
+      "id": "price_budget",
+      "name": "Price/Budget Objections",
+      "frequency": 387,
+      "percentage": 26,
+      "win_rate": 0.42,
+      "difficulty": "challenging"
+    },
+    {
+      "id": "authority",
+      "name": "Authority/Decision-Maker",
+      "frequency": 298,
+      "percentage": 20,
+      "win_rate": 0.54,
+      "difficulty": "moderate"
+    },
+    {
+      "id": "timing",
+      "name": "Timing/Readiness",
+      "frequency": 224,
+      "percentage": 15,
+      "win_rate": 0.48,
+      "difficulty": "moderate"
+    },
+    {
+      "id": "trust",
+      "name": "Trust/Credibility",
+      "frequency": 194,
+      "percentage": 13,
+      "win_rate": 0.61,
+      "difficulty": "manageable"
+    },
+    {
+      "id": "diy",
+      "name": "DIY/Self-Sufficiency",
+      "frequency": 149,
+      "percentage": 10,
+      "win_rate": 0.76,
+      "difficulty": "favorable"
+    },
+    {
+      "id": "market",
+      "name": "Market/Competition",
+      "frequency": 119,
+      "percentage": 8,
+      "win_rate": 0.58,
+      "difficulty": "moderate"
+    },
+    {
+      "id": "value",
+      "name": "Value/ROI Concerns",
+      "frequency": 75,
+      "percentage": 5,
+      "win_rate": 0.52,
+      "difficulty": "moderate"
+    },
+    {
+      "id": "logistics",
+      "name": "Logistics/Practical",
+      "frequency": 45,
+      "percentage": 3,
+      "win_rate": 0.67,
+      "difficulty": "favorable"
+    }
+  ],
+  "objections": [
+    {
+      "id": "price_no_capital",
+      "category": "price_budget",
+      "rank": 1,
+      "name": "No Capital/Funds",
+      "frequency": 387,
+      "percentage": 26,
+      "win_rate": 0.42,
+      "difficulty": "challenging",
+      "variations": [
+        "I don't have the capital right now",
+        "I don't have the funds",
+        "Can't afford this",
+        "I don't have the money",
+        "Funds are tight right now",
+        "I don't have a credit card with that limit"
+      ],
+      "responses": {
+        "matt": {
+          "name": "Matt Chubb",
+          "win_rate": 0.61,
+          "philosophy": "Finances are a precious conversation. Naturally, their guard is going to be a little bit up.",
+          "primary_script": "Is it a case, let's say we're doing Bronze, right? Is it the case you've got the full $6,000 that's, you know, just a little bit difficult or scary to invest? Or do you have some of it when you look at breaking it up into a more manageable structure? Or you've got none of it at all, and we need to go to the bank or something.",
+          "why_it_works": "That last bit takes the air out of the room. Immediately categorizes the situation into three clear paths. Reduces defensiveness by normalizing all three scenarios.",
+          "follow_up_paths": {
+            "has_full_amount": "If they have the full amount, and it's scary to invest, then you obviously just go into objection handling, whatever fear that is.",
+            "has_some": "If God dropped $6K in your lap right now, would you be ready to move forward? Or would you want to go away and maybe spend that on a holiday somewhere?",
+            "has_none": "Sweet, not a problem, man. If we're able to break it into a more manageable structure that does work for you, does that help you move forward today?"
+          },
+          "key_question": "I guess, you know, for you, really, based on your finances right now, how much do you have able and willing to invest in yourself so that you can take that first step to achieving [their Holy Grail]?",
+          "key_principles": [
+            "TODAY being the very emphasis key",
+            "If they say no, you know it's fair and need to go into objection handling",
+            "Finance is the easy bit - focus on their commitment first"
+          ]
+        },
+        "scott": {
+          "name": "Scott Seymour",
+          "win_rate": 0.58,
+          "philosophy": "I don't want anyone to force the money out. The key question is whether they have a source.",
+          "primary_script": "First thing I want to see... do you have a source? Do you have it in the bank? Do you have access to credit? Do you have a family member that can lend it to you? I don't need to know who, I don't need to know what... I just want to know if you have a source or not.",
+          "pathway_scripts": {
+            "has_source": "Okay perfect. So you could do the $5,900, you just don't want to? What's your thought process for that?",
+            "no_source": "Before I talk about that, I need to make sure you're qualified first. What are some of the things that have gotten in the way of your credit in the past?",
+            "credit_issues": "Okay, so what would you say you've done about that so far? How long has that been?"
+          },
+          "payment_plan_pitch": "So the way that the payment plan works, because it is a third party company, they want to ensure it's someone who's serious and can afford the investment. What credit score do you think you're rocking right now?",
+          "reframe_investment": "It's really hard to lose money with something like this because unlike you getting a loan for a car... With a car payment, you spend the money, you don't get it back. Even if you finance the $5,900 and you pay $200-250 extra dollars, you still OWN THE BUSINESS.",
+          "key_principles": [
+            "One sale - can it do it or not",
+            "Don't force the money out",
+            "Understand their source first"
+          ]
+        }
+      },
+      "sub_objections": [
+        {
+          "id": "no_credit_limit",
+          "name": "Credit Card Limit Issue",
+          "script_matt": "Look, brother, like finance is the easy bit, not to worry. So what's really more important to me is your commitment. Like if we can find something that does work for you again, like does that help you move forward?",
+          "script_scott": "Have you looked at getting a credit line increase?",
+          "note": "Often a mask for another objection - probe deeper"
+        },
+        {
+          "id": "no_debt",
+          "name": "Don't Want Debt",
+          "script_matt": "Of course, it's not a case of debt. Like I go heavy on my pitch about how the business pays for the business and its investment in itself.",
+          "script_scott": "It's really hard to lose money with something like this because unlike a car loan... you spend the money, you don't get it back. With this, you still OWN THE BUSINESS.",
+          "note": "Reframe debt as investment that generates returns"
+        }
+      ],
+      "warning": "Only qualify out if someone is truly unable to invest - dead broke. Otherwise, keep working."
+    },
+    {
+      "id": "sticker_shock",
+      "category": "price_budget",
+      "rank": 2,
+      "name": "Sticker Shock / More Expensive Than Expected",
+      "frequency": 245,
+      "percentage": 16,
+      "win_rate": 0.38,
+      "difficulty": "challenging",
+      "variations": [
+        "It's more expensive than I thought",
+        "That's a lot of money",
+        "I was thinking more like $2k-$3k",
+        "That's way more than I expected"
+      ],
+      "responses": {
+        "matt": {
+          "name": "Matt Chubb",
+          "philosophy": "Never ever do silence after a price drop like a cliffhanger - it's awkward and weird.",
+          "price_drop_script": "Yeah so Adam look, you know, next steps is of course that investment of $6,000 USD. If you're ready to get started what we normally do is get you onboarded on the call, we send over a contract and we get you essentially access to everything so that you can take that first step and start building up this vending route, so you can start to actually not only bring in those 10k months but also leave the job, spend more time with the family. All comes down to you and how you're feeling man.",
+          "response_to_shock": {
+            "step1_agree": "Look man, like, agree, first of like, it is expensive, right, don't get me wrong, it's not a cup of coffee.",
+            "step2_reframe": "What you want is also a lot there, right, would that be fair to say? Like, it's not just the ability to sort of leave your job and to bring in some income, but it's more so about the ability to build something so that you can actually live life on your own terms.",
+            "step3_future_pace": "The version of you 12 months down the line who's got all of that, would you look back and think, like, that was not worth $6,000?"
+          },
+          "program_reframe": "Just to be on the same page, it's not just a program, right? This isn't like a plug and play thing you just come in and you just learn some things. This is coaching, mentorship, guidance, having the systems and the people in place so that you can transform X, Y, Z to X, Y, Z.",
+          "key_point": "PROGRAM is a horrific word - always reframe as coaching/mentorship"
+        },
+        "scott": {
+          "name": "Scott Seymour",
+          "philosophy": "When people complain about price, it's rarely about the money - it's about value perception.",
+          "primary_script": "That's totally understandable. Can I ask - when you saw our stuff online, what did you think the investment was going to be?",
+          "value_reframe": "So here's the thing - you're not just paying for information. You're paying for the shortcut. You're paying for access to relationships we've built. You're paying for someone to actually answer the phone when you have questions.",
+          "roi_pitch": "If this program helps you get to just ONE location making $1,000/month profit, how many months until you've made back the investment? And that's just ONE machine."
+        }
+      },
+      "venhub_savings": {
+        "low_end": 300,
+        "high_end": 1700,
+        "note": "Always mention VenHub savings - between $300 to $1,700 on equipment"
+      }
+    },
+    {
+      "id": "authority_spouse",
+      "category": "authority",
+      "rank": 3,
+      "name": "Need to Talk to Spouse",
+      "frequency": 298,
+      "percentage": 20,
+      "win_rate": 0.54,
+      "difficulty": "moderate",
+      "variations": [
+        "I need to talk to my wife first",
+        "I need to discuss with my husband",
+        "Let me run it by my spouse",
+        "My partner needs to be involved",
+        "We make financial decisions together"
+      ],
+      "responses": {
+        "matt": {
+          "name": "Matt Chubb",
+          "philosophy": "90% of the time, spouse/partner is a mask. It's uncovering something else.",
+          "buy_in_framework": {
+            "step1": "Do you believe XYZ can work to get you to here?",
+            "step2": "Get double buy-in - have them explain WHY",
+            "step3": "And you know your partner, John, right? Like, is he on board with not just vending, but you setting up a system so you can provide more for the family?",
+            "step4": "Sweet man. In the past, has anything ever come up or gotten in the way of you two when it comes to making a decision similar to this?"
+          },
+          "responsibility_frame": {
+            "setup": "Your partner, what does she do for work? [Beauty technician] When she's at the salon doing her thing, making decisions, putting everything in place to make sure her role is a success - she doesn't rely on you to make any of those decisions for her, right?",
+            "pivot": "Why would it be fair for you to go away, have that conversation, and put some of the decision and responsibility for your future, for your life, and ultimately your family as the man of the household, and push any of that decision onto her?",
+            "clarify": "I'm not saying she can't be there to lean on. But when it comes to the decision and responsibility to take the first step, whose responsibility does that fall on?",
+            "close": "The version of you who's got X, Y, Z and this amazing family - what decision would he make here? Because frankly, I'm not sure it's going away and outsourcing that responsibility to anyone else."
+          },
+          "ceo_frame": "You are the man of the house - you're almost like the CEO of your own household. Similar to a CEO running a business, would he put any of those decisions for what's best for the business, and ultimately for the employees (your family), onto them?"
+        },
+        "scott": {
+          "name": "Scott Seymour",
+          "philosophy": "Figure out if spouse is a real barrier or a smokescreen. Most times it's fear.",
+          "discovery_questions": [
+            "Is your spouse generally supportive of you starting a business?",
+            "What do you think their main concern would be?",
+            "If they said yes, would you be ready to move forward today?"
+          ],
+          "three_way_call": "Would it help if we got them on a quick call together? I'm happy to answer any questions they might have.",
+          "key_insight": "If they won't do a three-way call, it's usually not really about the spouse"
+        }
+      },
+      "danger_combo": {
+        "with": "price_budget",
+        "combined_win_rate": 0.18,
+        "protocol": [
+          "Address financing FIRST with specific numbers",
+          "IMMEDIATELY schedule three-way call with spouse",
+          "DO NOT send info and wait",
+          "48-hour max before three-way call"
+        ]
+      }
+    },
+    {
+      "id": "timing_not_ready",
+      "category": "timing",
+      "rank": 4,
+      "name": "Not Ready to Start Right Now",
+      "frequency": 224,
+      "percentage": 15,
+      "win_rate": 0.48,
+      "difficulty": "moderate",
+      "variations": [
+        "I'm not ready to start right now",
+        "I want to wait a few months",
+        "Maybe next quarter",
+        "I want to start in Q1 2026",
+        "I'll call you back in 6 months"
+      ],
+      "responses": {
+        "matt": {
+          "name": "Matt Chubb",
+          "philosophy": "Means you've probably done a poor discovery when it comes to urgency. Or it's a mask.",
+          "discovery_urgency_question": "Knowing that those right tools and resources are out there, just a handful to grab away, and you can change your life - you being in the current position where you can't do X, Y, Z, and you're stuck in that box - how much longer, how many months, weeks, or even days are you okay actually staying in the same position?",
+          "buy_in_approach": "'Not ready to start right now' isn't an objection. Ask: 'Is it a case that, you know, like, if you did do this, and you were to implement XYZ, do you feel that it could ever get to XYZ?' Then get them to explain why.",
+          "opportunity_cost": "Brother, if you're going to do this regardless, why would it make sense to delay it? When in Q1 2026, you might already have 2 or 3 machines.",
+          "key_principle": "Always try to close now. Not even if it's literally impossible - at least a payment is a sign of commitment."
+        },
+        "scott": {
+          "name": "Scott Seymour",
+          "philosophy": "Timing objections usually mask fear or lack of urgency established in discovery.",
+          "response": "I totally get that. Can I ask - what specifically needs to happen between now and then for you to feel ready?",
+          "follow_up": "And if those things happened today, would you be ready to move forward?",
+          "urgency_builder": "Here's the thing - every month you wait is a month of potential income you're leaving on the table. What if you had started 6 months ago?"
+        }
+      },
+      "sub_objections": [
+        {
+          "id": "busy_life",
+          "name": "Too Busy / Job's Crazy",
+          "script_matt": "Busy is great, right? In fact, I wouldn't want you to ever not be busy, whether that's work, family, vacations. Busy is part of a great life. Would you agree? Ultimately for you, is it a case of like it's impossible for you to invest 5 to 10 hours a week to achieve X, Y, Z, Holy Grail?",
+          "priorities_push": "I know you've been trying this for the last two years. Being in this loop of being busy has ultimately kept you in the same position. In order to break that, do you feel that by doing the same thing over and over, you're actually going to break that spell?",
+          "final_push": "Is this dream future where you spend all this time with the family and create memories as a man, have that financial freedom - is that not worth 5 hours a week to you?"
+        }
+      ]
+    },
+    {
+      "id": "think_about_it",
+      "category": "timing",
+      "rank": 5,
+      "name": "Need Time to Think",
+      "frequency": 187,
+      "percentage": 12.5,
+      "win_rate": 0.31,
+      "difficulty": "challenging",
+      "variations": [
+        "I need time to think about it",
+        "Let me sleep on it",
+        "I'll get back to you",
+        "I need to do more research",
+        "I'll call you in a week"
+      ],
+      "responses": {
+        "matt": {
+          "name": "Matt Chubb",
+          "philosophy": "Think about it is bullshit. There's no one who needs to think about things. There's a real reason why. Never do a follow-up on 'think about it.'",
+          "core_question": "I guess when you go away and take that time, what's coming up that makes you want to think about it?",
+          "research_response": "Brother, with the greatest respect, the research is right here, right? You can go away, do some research, do some Googles. Ultimately, by speaking with the company, you're getting the most accurate information. So in terms of things that you're looking for, what is it you're looking for that we might not have gotten over?",
+          "processing_response": {
+            "decision_reframe": "In life, would it be fair to say that the way we make decisions has led us to where we are now? The decisions you've made and how you've made them up to this point has led you to the exact point you're in now, right?",
+            "pivot": "Frankly, man, my job here is to help you change the way you make decisions. If you keep making decisions on 'I need to think about it' and take time and really not take that first step, what do you think is going to happen?",
+            "certainty_close": "If you were 100% certain that if you did this today, that within 12 months, you'd be at that 10K mark and you'd leave the job, you'd be biting my hand off, right? So what's coming up that makes you not quite 100% certain right now?"
+          },
+          "pattern_interrupt": "I'll call you in a week? No, you won't. You'll no-show me. Come on now, man. What's going on?"
+        },
+        "scott": {
+          "name": "Scott Seymour",
+          "philosophy": "They already have all the information they need. The real issue is something else.",
+          "discovery": "What specifically do you need to think about? Is it the money, the time commitment, or something else?",
+          "reframe": "I get wanting to think about it. But here's what I've found - most people who say they need to think about it never come back. Not because they don't want to, but because life gets in the way. What would help you make a decision today?"
+        }
+      },
+      "warning": "31% win rate on 'think about it' - one of the hardest objections. Must crack the mask immediately."
+    },
+    {
+      "id": "diy_myself",
+      "category": "diy",
+      "rank": 6,
+      "name": "I Can Do This Myself",
+      "frequency": 149,
+      "percentage": 10,
+      "win_rate": 0.76,
+      "difficulty": "favorable",
+      "variations": [
+        "I can figure this out on my own",
+        "I'll just learn from YouTube",
+        "Why can't I just do it myself?",
+        "I don't need coaching",
+        "I can find locations myself"
+      ],
+      "responses": {
+        "matt": {
+          "name": "Matt Chubb",
+          "philosophy": "Cook their logic - if they could do it themselves, they already would have. They're on the call because they need help.",
+          "core_strategy": "Their logic is flawed because they believe they can run this themselves. That logic is flawed because if they could do that, they already would have done it and they're on the call because they need help.",
+          "opportunity_cost": "By having the right people in place and by investing in mentorship over the next 2, 3, 4 months, the opportunity cost of what they'd miss out on - if they were to try on their own, their snowball would not have created as much.",
+          "value_pitch": "It's not just a case of having the tools and the resources, but also building the skills to utilize your tools and resources. So over the next 5, 10, 15 years, as you grow this business, expand into other ventures, grow your family - you have the ability to rely on yourself."
+        },
+        "scott": {
+          "name": "Scott Seymour",
+          "philosophy": "Acknowledge they CAN do it themselves - the question is how fast and at what cost.",
+          "response": "You absolutely can do this yourself. The question is - do you want to spend the next 2 years figuring it out through trial and error, or do you want to compress that into 90 days with someone who's already made all the mistakes?",
+          "cost_calculation": "What's your time worth? If you value your time at even $25/hour, and you spend 200 hours figuring things out that we could teach you in 20 hours, that's $4,500 in time alone. Plus all the mistakes you'll make along the way."
+        }
+      },
+      "rep_performance": {
+        "note": "Lyle struggles here - 25% win rate vs 76% team average",
+        "lyle_coaching": "DO NOT offer VenHub-only on this objection. Defend full program value."
+      }
+    },
+    {
+      "id": "business_pay",
+      "category": "timing",
+      "rank": 7,
+      "name": "Want Business to Pay For It",
+      "frequency": 112,
+      "percentage": 7.5,
+      "win_rate": 0.45,
+      "difficulty": "moderate",
+      "variations": [
+        "I want to wait until my business can pay for it",
+        "Let me get started and pay later",
+        "I'll call you back in 6 months once I'm making money",
+        "I want the business to fund the coaching"
+      ],
+      "responses": {
+        "matt": {
+          "name": "Matt Chubb",
+          "philosophy": "Cook their logic - the foundations of the house, the building blocks are the most important.",
+          "logic_flaw": "Their decision has already been made to get help and to build this with the right systems around them. If they could run this themselves and pay for it, they already would have.",
+          "opportunity_cost": "By having the right people in place over the next 2, 3, 4 months, the opportunity cost of what they'd miss out on if they tried on their own - their snowball would not have created as much."
+        },
+        "scott": {
+          "name": "Scott Seymour",
+          "response": "I totally understand wanting the business to pay for itself. Here's the challenge - without the right foundation, the business might never get to that point. It's like saying 'I'll go to the gym once I'm in shape.'",
+          "reframe": "The investment in coaching IS the business paying for itself - it's the fastest path to profitability."
+        }
+      }
+    },
+    {
+      "id": "financing_how",
+      "category": "price_budget",
+      "rank": 8,
+      "name": "How Does Financing Work?",
+      "frequency": 98,
+      "percentage": 6.5,
+      "win_rate": 0.52,
+      "difficulty": "moderate",
+      "variations": [
+        "How does financing work exactly?",
+        "What are the payment options?",
+        "Can I pay monthly?",
+        "What credit score do I need?",
+        "What if I pay it off early?"
+      ],
+      "responses": {
+        "matt": {
+          "name": "Matt Chubb",
+          "philosophy": "Don't spend 5-10 minutes going down options only to find out they're not eligible. Find that out first.",
+          "discovery_first": "Look, so we have different options. It depends on your scenario. For you, would you be using credit card, debit card, what would you be using?",
+          "eligibility_check": "Depending on which one you go for, you have to have the full available limit because they put it on a hold to make sure you are eligible. Would that work for you, or should we look at another option?",
+          "fee_explanation": "Yeah, like, obviously, essentially, it's $6 grand. If you split it up over a few months, it does add a little bit more. If we pay in full, it does work out a little bit cheaper.",
+          "early_payoff": "There's not a penalty - if they're 3 months in and pay the rest off, they pay it off without the 15% of those remaining months.",
+          "credit_score": "What's your credit score, man? Depending on what credit score you have, we have different options."
+        },
+        "scott": {
+          "name": "Scott Seymour",
+          "explanation": "So the way the payment plan works - because it is a third party company, they want to ensure it's someone who's serious. What credit score do you think you're rocking right now?",
+          "roi_frame": "Talk about by month X, you're already making the return of the investment. The business can then pay for the business."
+        }
+      },
+      "financing_details": {
+        "fee_percentage": 15,
+        "early_payoff_penalty": false,
+        "minimum_credit_score": "varies by option"
+      }
+    },
+    {
+      "id": "price_expect_more",
+      "category": "value",
+      "rank": 9,
+      "name": "Expected More for the Price",
+      "frequency": 75,
+      "percentage": 5,
+      "win_rate": 0.41,
+      "difficulty": "challenging",
+      "variations": [
+        "For that price, I'd expect you to find locations for me",
+        "What if I just want to pay less and do it myself?",
+        "I thought I'd get more done-for-you",
+        "Why doesn't this include location sourcing?"
+      ],
+      "responses": {
+        "matt": {
+          "name": "Matt Chubb",
+          "pattern_interrupt": "I'm not sure how much you'd expect for that, but I mean, whatever price, we can just throw Mike in your spare bedroom if you like, and he can come do it for you.",
+          "note": "Use humor to break tension, then probe for real concern",
+          "analysis": "This could be hidden in logistics OR hidden in fear. Could be fear of self - what if I don't get results, first time doing something. Or could be actual logistics concern.",
+          "value_pitch": "It's not just a case of having the tools and resources, but also building the skills to utilize them. Over the next 5, 10, 15, 20 years, as you grow this business, expand into other ventures - you have the ability to rely on yourself. As a business owner, you can't continue to outsource everything."
+        },
+        "scott": {
+          "name": "Scott Seymour",
+          "response": "I hear you. Let me ask - would you rather we find you ONE location, or would you rather learn how to find UNLIMITED locations yourself?",
+          "long_term": "We're not just trying to get you one machine placed. We're trying to build you a skill set that will serve you for the rest of your life."
+        }
+      },
+      "tier_note": "Platinum does include location sourcing - make sure you understand which tier they're discussing"
+    },
+    {
+      "id": "authority_partner",
+      "category": "authority",
+      "rank": 10,
+      "name": "Need to Talk to Business Partner/Consultant",
+      "frequency": 67,
+      "percentage": 4.5,
+      "win_rate": 0.49,
+      "difficulty": "moderate",
+      "variations": [
+        "I need to talk to my business partner",
+        "Let me discuss with my consultant",
+        "My financial advisor needs to review this",
+        "I have a mentor I consult on decisions"
+      ],
+      "responses": {
+        "matt": {
+          "name": "Matt Chubb",
+          "philosophy": "Similar to spouse - try to create responsibility. See if one of them is ultimately the decision maker.",
+          "for_external_consultant": "Easy responsibility frame - same as spouse. Just raise the responsibility angle.",
+          "for_real_partner": "Try and get them to call. Or if one is the decision maker: '50-50, right? I guess one of you is the decision maker. One of you is marketing, one's operations. Great. You run operations. This is part of an operation, right?'"
+        },
+        "scott": {
+          "name": "Scott Seymour",
+          "discovery": "Is this person a partner in this specific venture, or more of a general advisor?",
+          "three_way": "Would it make sense to get them on a quick call? I'm happy to walk through everything with both of you."
+        }
+      }
+    }
+  ],
+  "patterns": {
+    "multiple_objections": {
+      "two_objections": {
+        "win_rate": 0.38,
+        "note": "38% win rate with 2 objections vs 54% with single objection"
+      },
+      "three_plus_objections": {
+        "win_rate": 0.31,
+        "action": "Re-qualify the prospect",
+        "script": "On a scale of 1-10, how serious are you about starting a vending business in the next 90 days?",
+        "threshold": "IF BELOW 7: Qualify out. IF 7+: Let's identify the ONE thing really holding you back"
+      }
+    },
+    "dangerous_combos": [
+      {
+        "objections": ["price_budget", "authority"],
+        "win_rate": 0.18,
+        "protocol": [
+          "Address financing FIRST with specific numbers",
+          "IMMEDIATELY schedule three-way call with spouse",
+          "DO NOT send info and wait",
+          "48-hour max before three-way call"
+        ]
+      },
+      {
+        "objections": ["timing", "authority"],
+        "win_rate": 0.23,
+        "protocol": [
+          "Lock down a specific date/commitment",
+          "Get spouse on three-way before ending call",
+          "Create artificial deadline"
+        ]
+      }
+    ],
+    "objection_clustering": {
+      "description": "Certain objections tend to appear together",
+      "common_clusters": [
+        ["price_no_capital", "authority_spouse"],
+        ["timing_not_ready", "think_about_it"],
+        ["diy_myself", "business_pay"]
+      ]
+    }
+  },
+  "best_practices": {
+    "matt_principles": [
+      "Cook their logic - find the flaw in their reasoning",
+      "Buy-in and double buy-in - get them to explain WHY",
+      "90% of the time it's a mask - dig deeper",
+      "Pattern interrupt when they're bullshitting you",
+      "Go back to the Holy Grail - tie to their ultimate goal",
+      "TODAY is the key word - create commitment now",
+      "Never silence after price drop - connect to value",
+      "Win the responsibility frame with spouse objections"
+    ],
+    "scott_principles": [
+      "One sale - can they do it or not",
+      "Don't force the money out",
+      "Understand their source first",
+      "It's really hard to lose money with this",
+      "You still OWN THE BUSINESS"
+    ],
+    "universal_rules": [
+      "Never skip discovery - most objections come from poor discovery",
+      "Urgency must be built in discovery, not objection handling",
+      "Always try to close TODAY",
+      "Three-way calls beat sending info",
+      "Multiple objections = re-qualification needed"
+    ]
+  }
+}

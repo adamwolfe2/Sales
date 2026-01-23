@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VendingPreneurs Admin</title>
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-tertiary: #21262d;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --accent: #58a6ff;
+      --success: #3fb950;
+      --warning: #d29922;
+      --danger: #f85149;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    .app { display: flex; min-height: 100vh; }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border);
+      padding: 20px 0;
+      flex-shrink: 0;
+    }
+
+    .logo {
+      padding: 0 20px 20px;
+      font-size: 18px;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo span { color: var(--accent); }
+
+    .nav { padding: 20px 0; }
+
+    .nav-item {
+      display: block;
+      padding: 10px 20px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .nav-item:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+    .nav-item.active { background: var(--bg-tertiary); color: var(--accent); border-left: 2px solid var(--accent); }
+
+    .nav-section {
+      padding: 10px 20px 5px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-secondary);
+    }
+
+    /* Main Content */
+    .main { flex: 1; padding: 30px; overflow-y: auto; }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 { font-size: 24px; font-weight: 600; }
+
+    /* Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .stat-value { font-size: 32px; font-weight: 600; color: var(--accent); }
+    .stat-label { font-size: 14px; color: var(--text-secondary); margin-top: 5px; }
+
+    /* Tables */
+    .table-container {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    table { width: 100%; border-collapse: collapse; }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: var(--bg-tertiary);
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-secondary);
+    }
+
+    tr:hover { background: var(--bg-tertiary); }
+
+    /* Buttons */
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { opacity: 0.9; }
+
+    .btn-secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { background: var(--bg-primary); }
+
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-danger:hover { opacity: 0.9; }
+
+    .btn-sm { padding: 4px 10px; font-size: 12px; }
+
+    /* Forms */
+    .form-group { margin-bottom: 16px; }
+
+    .form-label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .form-input, .form-textarea, .form-select {
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-primary);
+      font-size: 14px;
+    }
+
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .form-textarea { min-height: 100px; resize: vertical; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-header h2 { font-size: 18px; }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .modal-body { padding: 20px; }
+    .modal-footer { padding: 20px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; }
+
+    /* Login */
+    .login-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-primary);
+    }
+
+    .login-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-box h1 { text-align: center; margin-bottom: 30px; }
+
+    /* Status badges */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .badge-success { background: rgba(63, 185, 80, 0.2); color: var(--success); }
+    .badge-warning { background: rgba(210, 153, 34, 0.2); color: var(--warning); }
+    .badge-danger { background: rgba(248, 81, 73, 0.2); color: var(--danger); }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 2000;
+    }
+
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { border-color: var(--success); }
+    .toast.error { border-color: var(--danger); }
+
+    /* Connected indicator */
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--danger);
+    }
+
+    .status-dot.connected { background: var(--success); }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+    // Configuration
+    const API_URL = localStorage.getItem('api_url') || 'http://localhost:3001';
+
+    // State
+    let token = localStorage.getItem('admin_token');
+    let currentView = 'dashboard';
+    let data = { objections: [], playbooks: [], testimonials: [], patterns: [], users: [], invitations: [] };
+
+    // API Helper
+    async function api(endpoint, options = {}) {
+      const headers = { 'Content-Type': 'application/json' };
+      if (token) headers['Authorization'] = `Bearer ${token}`;
+
+      const res = await fetch(`${API_URL}${endpoint}`, { ...options, headers });
+      const json = await res.json();
+
+      if (!res.ok) throw new Error(json.error || 'API Error');
+      return json;
+    }
+
+    // Render functions
+    function render() {
+      const app = document.getElementById('app');
+
+      if (!token) {
+        app.innerHTML = renderLogin();
+        return;
+      }
+
+      app.innerHTML = `
+        <div class="app">
+          <aside class="sidebar">
+            <div class="logo"><span>V</span>endingPreneurs Admin</div>
+            <nav class="nav">
+              <div class="nav-section">Overview</div>
+              <a class="nav-item ${currentView === 'dashboard' ? 'active' : ''}" onclick="navigate('dashboard')">Dashboard</a>
+
+              <div class="nav-section">Content</div>
+              <a class="nav-item ${currentView === 'objections' ? 'active' : ''}" onclick="navigate('objections')">Objections</a>
+              <a class="nav-item ${currentView === 'playbooks' ? 'active' : ''}" onclick="navigate('playbooks')">Playbooks</a>
+              <a class="nav-item ${currentView === 'testimonials' ? 'active' : ''}" onclick="navigate('testimonials')">Testimonials</a>
+              <a class="nav-item ${currentView === 'patterns' ? 'active' : ''}" onclick="navigate('patterns')">Patterns</a>
+
+              <div class="nav-section">Team</div>
+              <a class="nav-item ${currentView === 'users' ? 'active' : ''}" onclick="navigate('users')">Users</a>
+              <a class="nav-item ${currentView === 'invites' ? 'active' : ''}" onclick="navigate('invites')">Invite Codes</a>
+
+              <div class="nav-section">Settings</div>
+              <a class="nav-item" onclick="broadcastRefresh()">Push Update</a>
+              <a class="nav-item" onclick="logout()">Logout</a>
+            </nav>
+            <div class="status-indicator">
+              <span class="status-dot" id="status-dot"></span>
+              <span id="status-text">Disconnected</span>
+            </div>
+          </aside>
+          <main class="main" id="main-content">
+            ${renderCurrentView()}
+          </main>
+        </div>
+        <div class="modal-overlay" id="modal"></div>
+        <div class="toast" id="toast"></div>
+      `;
+    }
+
+    function renderLogin() {
+      return `
+        <div class="login-container">
+          <div class="login-box">
+            <h1><span style="color:var(--accent)">V</span>endingPreneurs</h1>
+            <form onsubmit="handleLogin(event)">
+              <div class="form-group">
+                <label class="form-label">API URL</label>
+                <input type="text" class="form-input" id="api-url" value="${API_URL}" placeholder="http://localhost:3001">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" id="email" placeholder="admin@vendingpreneurs.com" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-input" id="password" placeholder="Password" required>
+              </div>
+              <button type="submit" class="btn btn-primary" style="width:100%">Login</button>
+            </form>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCurrentView() {
+      switch (currentView) {
+        case 'dashboard': return renderDashboard();
+        case 'objections': return renderObjections();
+        case 'playbooks': return renderPlaybooks();
+        case 'testimonials': return renderTestimonials();
+        case 'patterns': return renderPatterns();
+        case 'users': return renderUsers();
+        case 'invites': return renderInvites();
+        default: return renderDashboard();
+      }
+    }
+
+    function renderDashboard() {
+      return `
+        <div class="header">
+          <h1>Dashboard</h1>
+          <button class="btn btn-primary" onclick="broadcastRefresh()">Push Update to All Clients</button>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value">${data.stats?.objections || 0}</div>
+            <div class="stat-label">Objections</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">${data.stats?.playbooks || 0}</div>
+            <div class="stat-label">Playbook Entries</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">${data.stats?.testimonials || 0}</div>
+            <div class="stat-label">Testimonials</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">${data.stats?.connectedClients || 0}</div>
+            <div class="stat-label">Connected Clients</div>
+          </div>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr><th>Connected Client</th><th>Connected At</th></tr>
+            </thead>
+            <tbody>
+              ${(data.connectedClients || []).map(c => `
+                <tr>
+                  <td>${c.userId}</td>
+                  <td>${new Date(c.connectedAt).toLocaleString()}</td>
+                </tr>
+              `).join('') || '<tr><td colspan="2" style="text-align:center;color:var(--text-secondary)">No clients connected</td></tr>'}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderObjections() {
+      return `
+        <div class="header">
+          <h1>Objections</h1>
+          <button class="btn btn-primary" onclick="openObjectionModal()">Add Objection</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Win Rate</th>
+                <th>Difficulty</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${data.objections.map(o => `
+                <tr>
+                  <td>${o.rank || '-'}</td>
+                  <td><strong>${o.name}</strong></td>
+                  <td>${o.category}</td>
+                  <td>${o.win_rate ? Math.round(o.win_rate * 100) + '%' : 'N/A'}</td>
+                  <td><span class="badge badge-${o.difficulty === 'favorable' ? 'success' : o.difficulty === 'challenging' ? 'danger' : 'warning'}">${o.difficulty}</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick='editObjection(${JSON.stringify(o)})'>Edit</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteObjection('${o.id}')">Delete</button>
+                  </td>
+                </tr>
+              `).join('') || '<tr><td colspan="6" style="text-align:center">No objections yet</td></tr>'}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderTestimonials() {
+      return `
+        <div class="header">
+          <h1>Testimonials</h1>
+          <button class="btn btn-primary" onclick="openTestimonialModal()">Add Testimonial</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Tags</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${data.testimonials.map(t => `
+                <tr>
+                  <td><strong>${t.name}</strong></td>
+                  <td>${t.title || '-'}</td>
+                  <td>${(t.tags || []).slice(0, 3).map(tag => `<span class="badge badge-success">${tag}</span>`).join(' ')}</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick='editTestimonial(${JSON.stringify(t)})'>Edit</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteTestimonial('${t.id}')">Delete</button>
+                  </td>
+                </tr>
+              `).join('') || '<tr><td colspan="4" style="text-align:center">No testimonials yet</td></tr>'}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderPlaybooks() {
+      return `
+        <div class="header">
+          <h1>Playbooks</h1>
+          <button class="btn btn-primary" onclick="openPlaybookModal()">Add Playbook Entry</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr><th>Author</th><th>Phase</th><th>Name</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+              ${data.playbooks.map(p => `
+                <tr>
+                  <td>${p.author}</td>
+                  <td><span class="badge badge-warning">${p.phase}</span></td>
+                  <td><strong>${p.name}</strong></td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick='editPlaybook(${JSON.stringify(p)})'>Edit</button>
+                    <button class="btn btn-danger btn-sm" onclick="deletePlaybook('${p.id}')">Delete</button>
+                  </td>
+                </tr>
+              `).join('') || '<tr><td colspan="4" style="text-align:center">No playbooks yet</td></tr>'}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderPatterns() {
+      return `
+        <div class="header">
+          <h1>Danger Patterns</h1>
+          <button class="btn btn-primary" onclick="openPatternModal()">Add Pattern</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr><th>Type</th><th>Name</th><th>Win Rate</th><th>Priority</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+              ${data.patterns.map(p => `
+                <tr>
+                  <td><span class="badge badge-danger">${p.type}</span></td>
+                  <td><strong>${p.name}</strong></td>
+                  <td>${p.win_rate ? Math.round(p.win_rate * 100) + '%' : 'N/A'}</td>
+                  <td>${p.priority}</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick='editPattern(${JSON.stringify(p)})'>Edit</button>
+                    <button class="btn btn-danger btn-sm" onclick="deletePattern('${p.id}')">Delete</button>
+                  </td>
+                </tr>
+              `).join('') || '<tr><td colspan="5" style="text-align:center">No patterns yet</td></tr>'}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderUsers() {
+      return `
+        <div class="header">
+          <h1>Team Members</h1>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr><th>Email</th><th>Name</th><th>Role</th><th>Last Login</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              ${data.users.map(u => `
+                <tr>
+                  <td>${u.email}</td>
+                  <td>${u.name || '-'}</td>
+                  <td><span class="badge badge-${u.role === 'admin' ? 'danger' : 'success'}">${u.role}</span></td>
+                  <td>${u.last_login ? new Date(u.last_login).toLocaleString() : 'Never'}</td>
+                  <td><span class="badge badge-${u.is_active ? 'success' : 'warning'}">${u.is_active ? 'Active' : 'Inactive'}</span></td>
+                </tr>
+              `).join('') || '<tr><td colspan="5" style="text-align:center">No users yet</td></tr>'}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderInvites() {
+      return `
+        <div class="header">
+          <h1>Invite Codes</h1>
+          <button class="btn btn-primary" onclick="openInviteModal()">Generate Invites</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr><th>Code</th><th>Email</th><th>Role</th><th>Status</th><th>Expires</th></tr>
+            </thead>
+            <tbody>
+              ${data.invitations.map(i => `
+                <tr>
+                  <td><code style="background:var(--bg-tertiary);padding:2px 6px;border-radius:4px">${i.code}</code></td>
+                  <td>${i.email}</td>
+                  <td>${i.role}</td>
+                  <td><span class="badge badge-${i.status === 'pending' ? 'warning' : i.status === 'redeemed' ? 'success' : 'danger'}">${i.status}</span></td>
+                  <td>${new Date(i.expires_at).toLocaleDateString()}</td>
+                </tr>
+              `).join('') || '<tr><td colspan="5" style="text-align:center">No invites yet</td></tr>'}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    // Navigation
+    function navigate(view) {
+      currentView = view;
+      loadData();
+    }
+
+    // Data loading
+    async function loadData() {
+      try {
+        if (currentView === 'dashboard') {
+          const dashboard = await api('/api/admin/dashboard');
+          data.stats = dashboard.stats;
+          data.connectedClients = dashboard.connectedClients;
+        } else if (currentView === 'objections') {
+          const res = await api('/api/admin/objections');
+          data.objections = res.objections;
+        } else if (currentView === 'playbooks') {
+          const res = await api('/api/admin/playbooks');
+          data.playbooks = res.playbooks;
+        } else if (currentView === 'testimonials') {
+          const res = await api('/api/admin/testimonials');
+          data.testimonials = res.testimonials;
+        } else if (currentView === 'patterns') {
+          const res = await api('/api/admin/patterns');
+          data.patterns = res.patterns;
+        } else if (currentView === 'users') {
+          const res = await api('/api/admin/users');
+          data.users = res.users;
+        } else if (currentView === 'invites') {
+          const res = await api('/api/admin/invitations');
+          data.invitations = res.invitations;
+        }
+        render();
+      } catch (err) {
+        showToast('Failed to load data: ' + err.message, 'error');
+      }
+    }
+
+    // Auth
+    async function handleLogin(e) {
+      e.preventDefault();
+      const apiUrl = document.getElementById('api-url').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      localStorage.setItem('api_url', apiUrl);
+
+      try {
+        const res = await fetch(`${apiUrl}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const json = await res.json();
+        if (!res.ok) throw new Error(json.error);
+
+        token = json.token;
+        localStorage.setItem('admin_token', token);
+        showToast('Logged in successfully', 'success');
+        loadData();
+      } catch (err) {
+        showToast('Login failed: ' + err.message, 'error');
+      }
+    }
+
+    function logout() {
+      token = null;
+      localStorage.removeItem('admin_token');
+      render();
+    }
+
+    // Modals
+    function openModal(title, content, onSave) {
+      const modal = document.getElementById('modal');
+      modal.innerHTML = `
+        <div class="modal">
+          <div class="modal-header">
+            <h2>${title}</h2>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+          </div>
+          <div class="modal-body">${content}</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="${onSave}">Save</button>
+          </div>
+        </div>
+      `;
+      modal.classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('open');
+    }
+
+    function openObjectionModal(obj = null) {
+      const title = obj ? 'Edit Objection' : 'Add Objection';
+      const content = `
+        <input type="hidden" id="obj-id" value="${obj?.id || ''}">
+        <div class="form-group">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-input" id="obj-name" value="${obj?.name || ''}" placeholder="I don't have the capital right now">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-select" id="obj-category">
+            <option value="price_budget" ${obj?.category === 'price_budget' ? 'selected' : ''}>Price/Budget</option>
+            <option value="authority" ${obj?.category === 'authority' ? 'selected' : ''}>Authority</option>
+            <option value="timing" ${obj?.category === 'timing' ? 'selected' : ''}>Timing</option>
+            <option value="diy" ${obj?.category === 'diy' ? 'selected' : ''}>DIY/Self-Sufficiency</option>
+            <option value="trust" ${obj?.category === 'trust' ? 'selected' : ''}>Trust</option>
+            <option value="value" ${obj?.category === 'value' ? 'selected' : ''}>Value/ROI</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Variations (one per line)</label>
+          <textarea class="form-textarea" id="obj-variations" placeholder="I don't have the money\nCan't afford this">${(obj?.variations || []).join('\n')}</textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Win Rate (0-1)</label>
+          <input type="number" class="form-input" id="obj-winrate" value="${obj?.win_rate || ''}" min="0" max="1" step="0.01" placeholder="0.42">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Difficulty</label>
+          <select class="form-select" id="obj-difficulty">
+            <option value="favorable" ${obj?.difficulty === 'favorable' ? 'selected' : ''}>Favorable (>70%)</option>
+            <option value="moderate" ${obj?.difficulty === 'moderate' ? 'selected' : ''}>Moderate (50-70%)</option>
+            <option value="challenging" ${obj?.difficulty === 'challenging' ? 'selected' : ''}>Challenging (<50%)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Primary Script (what to say)</label>
+          <textarea class="form-textarea" id="obj-script" placeholder="Is it a case you've got the full $6,000...">${obj?.responses?.matt?.primary_script || obj?.responses?.primary_script || ''}</textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Key Principle</label>
+          <input type="text" class="form-input" id="obj-key" value="${obj?.responses?.matt?.key_principles?.[0] || ''}" placeholder="Find their actual number, then show financing">
+        </div>
+      `;
+      openModal(title, content, 'saveObjection()');
+    }
+
+    async function saveObjection() {
+      const id = document.getElementById('obj-id').value;
+      const objection = {
+        name: document.getElementById('obj-name').value,
+        category: document.getElementById('obj-category').value,
+        variations: document.getElementById('obj-variations').value.split('\n').filter(v => v.trim()),
+        win_rate: parseFloat(document.getElementById('obj-winrate').value) || null,
+        difficulty: document.getElementById('obj-difficulty').value,
+        responses: {
+          matt: {
+            primary_script: document.getElementById('obj-script').value,
+            key_principles: [document.getElementById('obj-key').value].filter(k => k)
+          }
+        }
+      };
+
+      try {
+        if (id) {
+          await api(`/api/admin/objections/${id}`, { method: 'PUT', body: JSON.stringify(objection) });
+        } else {
+          await api('/api/admin/objections', { method: 'POST', body: JSON.stringify(objection) });
+        }
+        closeModal();
+        showToast('Objection saved', 'success');
+        loadData();
+      } catch (err) {
+        showToast('Failed to save: ' + err.message, 'error');
+      }
+    }
+
+    function editObjection(obj) {
+      openObjectionModal(obj);
+    }
+
+    async function deleteObjection(id) {
+      if (!confirm('Delete this objection?')) return;
+      try {
+        await api(`/api/admin/objections/${id}`, { method: 'DELETE' });
+        showToast('Objection deleted', 'success');
+        loadData();
+      } catch (err) {
+        showToast('Failed to delete: ' + err.message, 'error');
+      }
+    }
+
+    // Similar functions for testimonials, playbooks, patterns...
+    function openTestimonialModal(t = null) {
+      const title = t ? 'Edit Testimonial' : 'Add Testimonial';
+      const content = `
+        <input type="hidden" id="test-id" value="${t?.id || ''}">
+        <div class="form-group">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-input" id="test-name" value="${t?.name || ''}">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Title</label>
+          <input type="text" class="form-input" id="test-title" value="${t?.title || ''}">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Quote</label>
+          <textarea class="form-textarea" id="test-quote" style="min-height:150px">${t?.quote || ''}</textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tags (comma separated)</label>
+          <input type="text" class="form-input" id="test-tags" value="${(t?.tags || []).join(', ')}">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Objection Counters (comma separated)</label>
+          <input type="text" class="form-input" id="test-counters" value="${(t?.objection_counters || []).join(', ')}" placeholder="no experience, too busy">
+        </div>
+      `;
+      openModal(title, content, 'saveTestimonial()');
+    }
+
+    async function saveTestimonial() {
+      const id = document.getElementById('test-id').value;
+      const testimonial = {
+        name: document.getElementById('test-name').value,
+        title: document.getElementById('test-title').value,
+        quote: document.getElementById('test-quote').value,
+        tags: document.getElementById('test-tags').value.split(',').map(t => t.trim()).filter(t => t),
+        objection_counters: document.getElementById('test-counters').value.split(',').map(t => t.trim()).filter(t => t)
+      };
+
+      try {
+        if (id) {
+          await api(`/api/admin/testimonials/${id}`, { method: 'PUT', body: JSON.stringify(testimonial) });
+        } else {
+          await api('/api/admin/testimonials', { method: 'POST', body: JSON.stringify(testimonial) });
+        }
+        closeModal();
+        showToast('Testimonial saved', 'success');
+        loadData();
+      } catch (err) {
+        showToast('Failed to save: ' + err.message, 'error');
+      }
+    }
+
+    function editTestimonial(t) { openTestimonialModal(t); }
+    async function deleteTestimonial(id) {
+      if (!confirm('Delete this testimonial?')) return;
+      try {
+        await api(`/api/admin/testimonials/${id}`, { method: 'DELETE' });
+        showToast('Deleted', 'success');
+        loadData();
+      } catch (err) {
+        showToast('Failed: ' + err.message, 'error');
+      }
+    }
+
+    // Invite modal
+    function openInviteModal() {
+      const content = `
+        <div class="form-group">
+          <label class="form-label">Email Addresses (one per line)</label>
+          <textarea class="form-textarea" id="invite-emails" style="min-height:150px" placeholder="rep1@company.com\nrep2@company.com"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Role</label>
+          <select class="form-select" id="invite-role">
+            <option value="rep">Rep</option>
+            <option value="coach">Coach</option>
+          </select>
+        </div>
+      `;
+      openModal('Generate Invite Codes', content, 'generateInvites()');
+    }
+
+    async function generateInvites() {
+      const emails = document.getElementById('invite-emails').value.split('\n').map(e => e.trim()).filter(e => e);
+      const role = document.getElementById('invite-role').value;
+
+      try {
+        const res = await api('/api/auth/invite', { method: 'POST', body: JSON.stringify({ emails, role }) });
+        closeModal();
+
+        // Show invite codes
+        const codesHtml = res.invites.map(i => `${i.email}: <code>${i.code}</code>`).join('<br>');
+        alert('Invite codes generated:\n\n' + res.invites.map(i => `${i.email}: ${i.code}`).join('\n'));
+
+        showToast(`Generated ${res.invites.length} invite codes`, 'success');
+        loadData();
+      } catch (err) {
+        showToast('Failed: ' + err.message, 'error');
+      }
+    }
+
+    // Broadcast refresh to all clients
+    async function broadcastRefresh() {
+      try {
+        await api('/api/admin/broadcast', { method: 'POST', body: JSON.stringify({ message: 'Content updated by admin' }) });
+        showToast('Update pushed to all clients', 'success');
+      } catch (err) {
+        showToast('Failed to broadcast: ' + err.message, 'error');
+      }
+    }
+
+    // Toast notifications
+    function showToast(message, type = 'info') {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.className = `toast show ${type}`;
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Playbook modal
+    function openPlaybookModal(p = null) {
+      const title = p ? 'Edit Playbook' : 'Add Playbook';
+      const content = `
+        <input type="hidden" id="pb-id" value="${p?.id || ''}">
+        <div class="form-group">
+          <label class="form-label">Author</label>
+          <input type="text" class="form-input" id="pb-author" value="${p?.author || ''}" placeholder="Eric, Matt, Scott">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phase</label>
+          <select class="form-select" id="pb-phase">
+            <option value="opening" ${p?.phase === 'opening' ? 'selected' : ''}>Opening</option>
+            <option value="discovery" ${p?.phase === 'discovery' ? 'selected' : ''}>Discovery</option>
+            <option value="presentation" ${p?.phase === 'presentation' ? 'selected' : ''}>Presentation</option>
+            <option value="objection_handling" ${p?.phase === 'objection_handling' ? 'selected' : ''}>Objection Handling</option>
+            <option value="closing" ${p?.phase === 'closing' ? 'selected' : ''}>Closing</option>
+            <option value="philosophy" ${p?.phase === 'philosophy' ? 'selected' : ''}>Philosophy</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-input" id="pb-name" value="${p?.name || ''}" placeholder="WFS Overview">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-textarea" id="pb-description" placeholder="What this phase covers...">${p?.description || ''}</textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Duration (minutes)</label>
+          <input type="number" class="form-input" id="pb-duration" value="${p?.duration_minutes || ''}" placeholder="10">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Content (JSON)</label>
+          <textarea class="form-textarea" id="pb-content" style="min-height:200px;font-family:monospace" placeholder='{"scripts": [], "techniques": []}'>${p?.content ? JSON.stringify(typeof p.content === 'string' ? JSON.parse(p.content) : p.content, null, 2) : ''}</textarea>
+        </div>
+      `;
+      openModal(title, content, 'savePlaybook()');
+    }
+
+    async function savePlaybook() {
+      const id = document.getElementById('pb-id').value;
+      let content;
+      try {
+        content = JSON.parse(document.getElementById('pb-content').value || '{}');
+      } catch (e) {
+        showToast('Invalid JSON in content field', 'error');
+        return;
+      }
+
+      const playbook = {
+        author: document.getElementById('pb-author').value,
+        phase: document.getElementById('pb-phase').value,
+        name: document.getElementById('pb-name').value,
+        description: document.getElementById('pb-description').value,
+        duration_minutes: parseInt(document.getElementById('pb-duration').value) || null,
+        content
+      };
+
+      try {
+        if (id) {
+          await api(\`/api/admin/playbooks/\${id}\`, { method: 'PUT', body: JSON.stringify(playbook) });
+        } else {
+          await api('/api/admin/playbooks', { method: 'POST', body: JSON.stringify(playbook) });
+        }
+        closeModal();
+        showToast('Playbook saved', 'success');
+        loadData();
+      } catch (err) {
+        showToast('Failed to save: ' + err.message, 'error');
+      }
+    }
+
+    function editPlaybook(p) { openPlaybookModal(p); }
+
+    async function deletePlaybook(id) {
+      if (!confirm('Delete this playbook?')) return;
+      try {
+        await api(\`/api/admin/playbooks/\${id}\`, { method: 'DELETE' });
+        showToast('Playbook deleted', 'success');
+        loadData();
+      } catch (err) {
+        showToast('Failed to delete: ' + err.message, 'error');
+      }
+    }
+
+    // Pattern modal
+    function openPatternModal(p = null) {
+      const title = p ? 'Edit Pattern' : 'Add Pattern';
+      const content = `
+        <input type="hidden" id="pat-id" value="${p?.id || ''}">
+        <div class="form-group">
+          <label class="form-label">Type</label>
+          <select class="form-select" id="pat-type">
+            <option value="danger" ${p?.type === 'danger' ? 'selected' : ''}>Danger Pattern</option>
+            <option value="opportunity" ${p?.type === 'opportunity' ? 'selected' : ''}>Opportunity Pattern</option>
+            <option value="script" ${p?.type === 'script' ? 'selected' : ''}>Script Pattern</option>
+            <option value="combo" ${p?.type === 'combo' ? 'selected' : ''}>Combo Pattern</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-input" id="pat-name" value="${p?.name || ''}" placeholder="Triple Objection Alert">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-textarea" id="pat-description">${p?.description || ''}</textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Priority (higher = more important)</label>
+          <input type="number" class="form-input" id="pat-priority" value="${p?.priority || 0}" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Win Rate (0-1)</label>
+          <input type="number" class="form-input" id="pat-winrate" value="${p?.win_rate || ''}" min="0" max="1" step="0.01" placeholder="0.31">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Action Script (what to say/do)</label>
+          <textarea class="form-textarea" id="pat-action" style="min-height:100px">${p?.action_script || ''}</textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Trigger Conditions (JSON)</label>
+          <textarea class="form-textarea" id="pat-triggers" style="font-family:monospace" placeholder='{"objection_count": 3}'>${p?.trigger_conditions ? JSON.stringify(typeof p.trigger_conditions === 'string' ? JSON.parse(p.trigger_conditions) : p.trigger_conditions, null, 2) : ''}</textarea>
+        </div>
+      `;
+      openModal(title, content, 'savePattern()');
+    }
+
+    async function savePattern() {
+      const id = document.getElementById('pat-id').value;
+      let trigger_conditions;
+      try {
+        trigger_conditions = JSON.parse(document.getElementById('pat-triggers').value || '{}');
+      } catch (e) {
+        showToast('Invalid JSON in trigger conditions', 'error');
+        return;
+      }
+
+      const pattern = {
+        type: document.getElementById('pat-type').value,
+        name: document.getElementById('pat-name').value,
+        description: document.getElementById('pat-description').value,
+        priority: parseInt(document.getElementById('pat-priority').value) || 0,
+        win_rate: parseFloat(document.getElementById('pat-winrate').value) || null,
+        action_script: document.getElementById('pat-action').value,
+        trigger_conditions
+      };
+
+      try {
+        if (id) {
+          await api(\`/api/admin/patterns/\${id}\`, { method: 'PUT', body: JSON.stringify(pattern) });
+        } else {
+          await api('/api/admin/patterns', { method: 'POST', body: JSON.stringify(pattern) });
+        }
+        closeModal();
+        showToast('Pattern saved', 'success');
+        loadData();
+      } catch (err) {
+        showToast('Failed to save: ' + err.message, 'error');
+      }
+    }
+
+    function editPattern(p) { openPatternModal(p); }
+
+    async function deletePattern(id) {
+      if (!confirm('Delete this pattern?')) return;
+      try {
+        await api(\`/api/admin/patterns/\${id}\`, { method: 'DELETE' });
+        showToast('Pattern deleted', 'success');
+        loadData();
+      } catch (err) {
+        showToast('Failed to delete: ' + err.message, 'error');
+      }
+    }
+
+    // Initialize
+    render();
+    if (token) loadData();
+  </script>
+</body>
+</html>

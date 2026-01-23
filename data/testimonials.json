@@ -1,0 +1,316 @@
+{
+  "metadata": {
+    "total_testimonials": 85,
+    "categories": ["full_testimonials", "quick_wins", "objection_specific"],
+    "last_updated": "2025-01-23"
+  },
+  "full_testimonials": [
+    {
+      "id": "charles_wheeler",
+      "name": "Charles Wheeler",
+      "title": "High School Football Coach and Teacher",
+      "location": "Texas",
+      "business_name": "DenCo Vending LLC",
+      "previous_experience": "none",
+      "timeline": "7 months",
+      "results": {
+        "markets_live": 5,
+        "markets_pending": 2,
+        "first_placement": "4 months after joining"
+      },
+      "quote": "I am a High School Football Coach and Teacher in Texas. I had no previous vending experience prior to joining the Vendingpreneurs. As a matter of fact, I had no formal training in business or sales at all. Joining Vendingpreneurs gave me access to nationwide network of Vendors who are learning right there along with me. The ability to bounce ideas off of each other, celebrate wins, and share mistakes made has helped me scale my business rather quickly. I placed my first market 4 months after joining, and am now 7 months in with 5 markets now live and 2 more being delivered soon!",
+      "tags": ["no_experience", "full_time_job", "teacher", "fast_growth", "family"],
+      "objection_counters": ["I don't have time", "I have no experience", "I work full-time"]
+    },
+    {
+      "id": "adam_s",
+      "name": "Adam S",
+      "title": "Entrepreneur, Owner",
+      "business_name": "Emporio Vending LLC",
+      "previous_experience": "none",
+      "results": {
+        "status": "multiple locations up and running"
+      },
+      "quote": "Vendingpreneur has been an absolute game changer for us! We knew nothing about the vending industry and Vendingpreneur welcomed us in and helped us learn and strategize a plan that would work for us. The community as a whole has been amazing with so many hard charging, intelligent entrepreneurs that share their lessons learned every day to help out others. I have texted and called others in the group that are on the other side of the country with questions and they have been more than willing to help me out. We wouldn't be where we are today, with multiple locations up and running, without Mike and the Vendingpreneur community. Mike is extremely knowledgeable and more than willing to help anyone with anything, big or small. He is selfless and very gracious with his time to help you out. He has your best interests at heart and wants nothing more than to help you succeed, while asking nothing in return! If you are interested in the vending machine business there is no better place to start then with Vendingpreneur!",
+      "tags": ["no_experience", "community_support", "multiple_locations"],
+      "objection_counters": ["I don't know anyone in this industry", "Will I have support?"]
+    },
+    {
+      "id": "lonny_carter",
+      "name": "Lonny Carter",
+      "title": "Entrepreneur",
+      "business_name": "Awesome Vend LLC",
+      "previous_experience": "none",
+      "timeline": "less than 6 months",
+      "results": {
+        "locations": 4
+      },
+      "quote": "Before Vendingpreneurs, I had no knowledge of the vending business. Mike was there every step of the way, incredibly responsive, and a true partner. I just signed my fourth location in less than six months, and I am just getting started!",
+      "tags": ["no_experience", "fast_growth", "responsive_support"],
+      "objection_counters": ["I have no experience", "This takes too long"]
+    },
+    {
+      "id": "nolan_mayfield",
+      "name": "Nolan Mayfield",
+      "title": "Cofounder, Dash ATM Services",
+      "business_name": "ATM & Vending Entrepreneur",
+      "previous_experience": "ATM experience, no vending",
+      "results": {
+        "status": "saved from buying wrong machines",
+        "outcome": "countless mistakes avoided"
+      },
+      "quote": "I had no prior experience with vending (lots of ATM experience) and Mike saved my business partner and I from buying the wrong model machine. Vendingpreneurs has since saved us countless mistakes and been an invaluable resource for learning the biz. I cannot recommend it enough and my favorite thing is how engaged everyone is. It's all timely, thoughtful engagement!",
+      "tags": ["business_owner", "mistake_prevention", "engaged_community"],
+      "objection_counters": ["I can figure this out myself", "I already have business experience"]
+    },
+    {
+      "id": "ben_sanders",
+      "name": "Ben Sanders",
+      "title": "Independent Operator",
+      "business_name": "Owner & Operator",
+      "previous_experience": "none",
+      "timeline": "1 month to first contract",
+      "quote": "In just a blink of time, Mike Hoffman and Vendingpreneurs transformed my journey from a mere dream to a tangible reality! With no prior vending experience, their guidance propelled me forward, and within a mere month, I secured my very first vending machine contract, marking the beginning of an incredible entrepreneurial adventure.",
+      "tags": ["no_experience", "fast_first_contract", "dream_to_reality"],
+      "objection_counters": ["This takes too long", "I have no experience"]
+    },
+    {
+      "id": "kelsey_corcoran",
+      "name": "Kelsey Corcoran",
+      "title": "Sales Professional",
+      "business_name": "Super Foods Distribution",
+      "previous_experience": "none",
+      "timeline": "less than 3 months",
+      "quote": "I've only been a part of the community for less than three months and have already gained much more than I expected! Not only does Mike and his team do an incredible job of laying out everything you need to have a successful vending/market business, the Skool community aspect has been really helpful in answering questions and leaning on each other for support as we have our own trial and errors. Side note: For almost 7 years I've had an article about a successful entrepreneur (making $10,000 a month in vending machines) bookmarked on my phone, always wishing I knew how to do it. So glad to have found Mike & this community to finally learn it & would recommend this to all of my friends!",
+      "tags": ["sales_professional", "exceeded_expectations", "long_time_dream"],
+      "objection_counters": ["I'm skeptical", "Is this worth it?"]
+    },
+    {
+      "id": "kyle_sharp",
+      "name": "Kyle Sharp",
+      "title": "No prior business experience",
+      "business_name": "Oceanside Vending, LLC",
+      "previous_experience": "none",
+      "quote": "Upon first joining with Mike and his team, I had no real business acumen, no experience in the vending space and so for us, my wife and I, it was a huge risk but one with reward and opportunity. Vendingpreneurs has been instrumental in providing a community to learn, progress and transition into a small business. There have been bumps along the way, hurdles to overcome and many many learnings, all of which may have been possible on our own, but with the support of the group, everyone sharing new experiences, take-aways and patterns within this space, has expedited the process. The best thing about the group is the openness, candidness of failures and successes and the opportunities made available through collaboration with one another.",
+      "tags": ["no_experience", "couple", "risk_takers", "community_collaboration"],
+      "objection_counters": ["I have no business experience", "This seems risky", "I need to talk to my spouse"]
+    },
+    {
+      "id": "abby_c",
+      "name": "Abby C",
+      "title": "Family business with four children (ages 8-14)",
+      "business_name": "Van Pelt Vending",
+      "previous_experience": "zero vending knowledge",
+      "timeline": "about a year",
+      "results": {
+        "machines": "30+"
+      },
+      "quote": "What an experience! We joined Vendingpreneurs on a whim with zero vending knowledge hoping the risk was minimal but the upside would be steep. And, we were right! We now have our four children (ages 8-14) involved, setting an example for hard yet fruitful work, and creating a future that will directly impact them. They get to test snacks, count money, pick products for restocking, clean machines, talk to customers, shop for products, and even be assigned to a certain location as the 'lead vending manager'. We have been able to go from zero vending machines to 30+ in about a year with the guidance and support from the Vendingpreneurs community.",
+      "tags": ["family_business", "kids_involved", "30_plus_machines", "zero_to_scale"],
+      "objection_counters": ["I've got kids", "This is too risky", "Can I involve my family?"]
+    },
+    {
+      "id": "dennis_michelle_dewitt",
+      "name": "Dennis and Michelle Dewitt",
+      "title": "New entrepreneurs",
+      "business_name": "JC Vending",
+      "previous_experience": "none",
+      "quote": "Before I joined the Vendingpreneurs group, I had no experience with vending machines or modern amenities. In the past, I've been intrigued about running my own vending machine business, and after following Mike on social media for several months, I thought that I should give it a try. The Vendingpreneurs community has been very helpful because they provide insight on a lot of things that occur when you place a machine or land a micromarket. The community has been a wealth of knowledge for all things that I've encountered and things that I have not yet encountered. The best thing about Vendingpreneurs is that it's a group of people that are fully aware that they are not experts, but they are willing to dive in and make mistakes and learn. Then they are willing to share about their experiences and help others not make the same mistakes.",
+      "tags": ["couple", "no_experience", "social_media_follower", "learning_community"],
+      "objection_counters": ["I have no experience", "I need to talk to my spouse"]
+    },
+    {
+      "id": "bret_bourgeois",
+      "name": "Bret Bourgeois",
+      "title": "Entrepreneur",
+      "business_name": "SC Vending",
+      "previous_experience": "none",
+      "quote": "I had no previous vending experience. Vendingpreneurs has taken me from zero knowledge about the business to being able to navigate the securing of locations, selecting machines, and deciding on inventory. They have offered excellent assistance throughout the process from start-up to a fully functional vending business. The best thing about Vendingpreneurs is the community and resources available, the relationships built with others who have come alongside me as I continue to build my venture.",
+      "tags": ["no_experience", "zero_to_functional", "community_relationships"],
+      "objection_counters": ["I have no experience", "I don't know how to start"]
+    },
+    {
+      "id": "joe_natoli",
+      "name": "Joe Natoli",
+      "title": "Car dealership employee, family man",
+      "business_name": "Vendingpreneur Platinum Member",
+      "previous_experience": "zero",
+      "timeline": "8 months",
+      "results": {
+        "locations": 2,
+        "pipeline": "6-8 more in 30 days"
+      },
+      "quote": "When I started in the vending business, I had zero experience. I've been with the program now about eight months. I signed up using the Platinum program, which I highly recommend. You get tremendous leads, the school is fantastic, there's everything you need to know about the business and getting started, so it's highly recommended. I have two locations, and I'm this close to having six or eight more, and I think that'll happen in the next 30 days. One thing I regret is working 9-to-5 and working in a car dealership for sometimes 12-13 hours a day for a long time. I missed my kids and I missed my wife. And that's something you can't get back as time. So if you're a little bit younger, especially take advantage of this program. Save some of that time with your wife and your children. You won't look back, you'll thank me later.",
+      "tags": ["platinum_member", "car_dealership", "family_man", "regret_not_starting_sooner"],
+      "objection_counters": ["I work long hours", "I don't have time for family", "Which program should I choose?"]
+    },
+    {
+      "id": "jason_priest",
+      "name": "Jason Priest",
+      "title": "Entrepreneur",
+      "business_name": "Vendingpreneur Platinum Member",
+      "previous_experience": "zero",
+      "timeline": "6 months",
+      "results": {
+        "first_deal": "4 months to close",
+        "focus": "micro markets"
+      },
+      "quote": "I actually found Mike on Twitter. I started following him. I loved what he had to say about vending, and I was very curious and interested in building a semi-passive stream of income for myself and for my family as I work in my other business. I knew it wasn't completely passive and I knew there was going to be some hard work involved, and there certainly is, but Mike has been a great help along the way. Since I've been in the program now for about six months, it did take me about four months to close my first deal. Vending leads can be quite slow, and so I was diligent about my follow-up and Mike's email sequences have been a great help, and his cold callers have also been a good help.",
+      "tags": ["twitter_follower", "platinum_member", "semi_passive_income", "micro_markets"],
+      "objection_counters": ["This takes too long", "Is this really passive?"]
+    },
+    {
+      "id": "mac",
+      "name": "Mac",
+      "title": "New entrepreneur",
+      "location": "Milwaukee, WI",
+      "business_name": "Brugge City Bites",
+      "previous_experience": "none",
+      "timeline": "3 months",
+      "results": {
+        "monthly_revenue": 7700,
+        "locations": "multiple"
+      },
+      "quote": "When I started at the beginning of a new year, I had no idea where to begin - what machines to use, what locations to go after, pricing, you name it. Even how to manage the business. But thanks to the community and the resources that vending for new years, I was able to skip a lot of that trial and error and I learned how to negotiate with property managers, set up my inventory, source my inventory, and actually how to start making money consistently with consistent margins. The advice, the mentorship, and just having a group of people who've done it before made a huge difference. I'm now in multiple locations and I'm growing every month. As it stands today, I'm grossing about $7,700 a month in revenue, and that was within three months of joining this community.",
+      "tags": ["fast_results", "7700_monthly", "multiple_locations", "3_months"],
+      "objection_counters": ["Does this actually make money?", "This takes too long", "I don't know where to start"]
+    }
+  ],
+  "by_objection_type": {
+    "no_time_full_time": [
+      {
+        "name": "Matthew DeGiacomo",
+        "title": "Teacher",
+        "summary": "Still teaching full-time, leveraged the group's scripts and accountability to land accounts and scale even with classroom workload.",
+        "key_point": "Became known as the 'Vending Guy' through networking while maintaining full-time teaching job."
+      },
+      {
+        "name": "Charles Wheeler",
+        "title": "High School Football Coach",
+        "summary": "5 markets live, 2 more pending, all while coaching football and teaching full-time.",
+        "key_point": "No formal training in business or sales - scaled quickly while working full-time."
+      }
+    ],
+    "family_kids": [
+      {
+        "name": "Andre & Nivea",
+        "title": "Family Legacy Builders",
+        "summary": "Landed first 3 locations (hotel, car dealership, barbershop). Creating a family legacy for their kids.",
+        "key_point": "Most excited about creating something their kids can grow into - generational wealth focus."
+      },
+      {
+        "name": "Abby C (Van Pelt Vending)",
+        "title": "Family of 6",
+        "summary": "30+ machines in about a year with four children (ages 8-14) involved in the business.",
+        "key_point": "Kids test snacks, count money, pick products, clean machines, and manage locations."
+      }
+    ],
+    "takes_too_long": [
+      {
+        "name": "Mason Romero",
+        "title": "Rapid Closer",
+        "summary": "In just over 2 months, did ~50 pop-ins and 350 cold calls. Landed 3 locations: fuel company, school district transportation, national mid-rise building.",
+        "key_point": "Less than 90 days to prime accounts."
+      },
+      {
+        "name": "Justin Krakow",
+        "title": "Fast Starter",
+        "summary": "Only two weeks into the group, secured his first location.",
+        "key_point": "Proof in 14 days."
+      },
+      {
+        "name": "Colby M.",
+        "title": "Week One Winner",
+        "summary": "First week locked in 2 locations. Both mid-sized office spaces with 150+ employees.",
+        "key_point": "Immediate proof the system works quickly."
+      }
+    ],
+    "does_this_make_money": [
+      {
+        "name": "Michael Hoffmann",
+        "title": "Record Breaker",
+        "summary": "Best day: $435 in one day. $1,072 in three days on 3 Stockwells and 1 Cantaloupe Market.",
+        "key_point": "Was skeptical at first - doubt was 'put to rest.'"
+      },
+      {
+        "name": "Matt Morrison",
+        "title": "Micro Market Operator",
+        "summary": "Launched second micro-market, pacing at $5k/month. Property manager referred him to another 250-unit high rise.",
+        "key_point": "One location opens doors to more revenue streams."
+      },
+      {
+        "name": "Brian D.",
+        "title": "12-Machine Operator",
+        "summary": "Hit $8,300 in sales in a single month across 12 machines.",
+        "key_point": "This is starting to feel real."
+      },
+      {
+        "name": "Mac (Brugge City Bites)",
+        "title": "3-Month Achiever",
+        "summary": "$7,700 monthly revenue within 3 months of joining.",
+        "key_point": "Grossing nearly $8k/month in under 90 days."
+      }
+    ],
+    "will_i_have_support": [
+      {
+        "name": "Community Weekly Wins",
+        "summary": "Buzzing with wins - signed contracts, new placements, exciting firsts, multiple hot leads, expanding locations.",
+        "key_point": "SO MANY people signing up multiple locations at once."
+      },
+      {
+        "name": "Sarah M.",
+        "summary": "Wouldn't have gotten first market without accountability. Scripts, weekly calls, and daily motivation made the difference.",
+        "key_point": "Support is built-in - not doing it alone."
+      }
+    ],
+    "skeptical": [
+      {
+        "name": "Cory S.",
+        "title": "Converted Skeptic",
+        "summary": "Sat on the sidelines for 6 months before joining. Wished he'd joined sooner. Within 30 days, landed 2 locations.",
+        "key_point": "Wasted half a year doubting, only to see results right after committing."
+      }
+    ],
+    "student_starting_out": [
+      {
+        "name": "Thomas Rolander",
+        "title": "Student Entrepreneur",
+        "summary": "Started vending while still in school. Within 6 months scaled and sold his route.",
+        "key_point": "Students can launch, grow, and exit a vending business before even graduating."
+      }
+    ]
+  },
+  "quick_wins": [
+    {"name": "Michele Diaz", "result": "First verbal yes; 20-employee site wants a snack machine"},
+    {"name": "Raymond Chavis", "result": "Verbal yes from outreach; site walk + contract next week"},
+    {"name": "George Zhang", "result": "Ordered first Stockwell; 1,050 leads for $149 via Vendinglocator (50+ hours saved)"},
+    {"name": "Casey Winkler", "result": "Verbal yes within a week; signed, ordered first Stockwell; 4 more in convo"},
+    {"name": "Chase Phelps", "result": "Targeted luxury apartments/offices; multiple micromarkets installed via research-driven outreach"},
+    {"name": "Justin Krakow", "result": "Auto dealership placement leads to referral; emphasizes being genuine, not salesy"},
+    {"name": "Matt Pflum", "result": "Closed two luxury student apartment installs in one week using branded renderings"},
+    {"name": "Ryan Avila", "result": "Simple Squarespace + ChatGPT site generated a free $680 lead"},
+    {"name": "Wendy Gans", "result": "4 contracts signed with PM (7 total micromarts); pipeline of 18 machines"},
+    {"name": "Mason Romero", "result": "~50 pop-ins + 350 cold calls = 3 locations (fuel co., school district, national mid-rise)"},
+    {"name": "Andrew Saunders", "result": "First yes from a 384-unit Greystar property"},
+    {"name": "Kelli Walker", "result": "First yes from a 450-employee warehouse (3 shifts); multiple combos needed"},
+    {"name": "Cindy Sorey", "result": "Contracts with police, city hall, sanitation, senior center; 450-unit apartments after 40+ days"},
+    {"name": "Kevin Kuhn", "result": "Three markets + one Stockwell live; new market next week and another in talks"},
+    {"name": "Tom Canterino", "result": "First pop-in produced a verbal yes within days"},
+    {"name": "Derek Tarrh", "result": "Three contracts signed; 1 Futura, 1 Stockwell, 3 Pico Coolers on order"},
+    {"name": "Thomas Tamez", "result": "Two contracts signed + two machines ordered; another verbal yes"},
+    {"name": "Matt Morrison", "result": "1st machine placed, 2nd ordered; two micromarkets in the funnel; later pacing ~$5k/mo"},
+    {"name": "DJ Driscoll", "result": "Landed a 500-unit apartment complex; more locations lined up"},
+    {"name": "Leo Richard", "result": "First signed contract at a 700+ bed Greystar new build (opens Aug '25)"},
+    {"name": "Charles Wheeler", "result": "Three Stockwells live + one Cantaloupe market; record $435 day, $1,072 in 3 days on 4 units"}
+  ],
+  "revenue_proof_points": [
+    {"description": "$435 in one day", "source": "Michael Hoffmann", "machines": 4},
+    {"description": "$1,072 in three days", "source": "Michael Hoffmann", "machines": 4},
+    {"description": "$7,700/month", "source": "Mac (Brugge City Bites)", "timeline": "3 months"},
+    {"description": "$8,300/month", "source": "Brian D.", "machines": 12},
+    {"description": "$5,000/month per location", "source": "Charles Wheeler", "locations": 5},
+    {"description": "$80,000/year from 2 locations", "source": "Matt (Eric's example)", "locations": 2},
+    {"description": "$85,000/month", "source": "Anthony (Eric's example)", "timeline": "18 months"},
+    {"description": "$50,000 net/month", "source": "Anthony (Eric's example)", "margin": "66%"}
+  ]
+}

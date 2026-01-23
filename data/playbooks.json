@@ -1,0 +1,600 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2025-01-23",
+    "contributors": ["Eric (WFS)", "Matt Chubb", "Scott Seymour"],
+    "call_phases": ["opening", "discovery", "pain_excavation", "qualifying", "decision_framework", "presentation", "objection_handling", "closing"]
+  },
+  "frameworks": {
+    "eric": {
+      "name": "Eric's WFS Playbook",
+      "description": "Complete word-for-script framework from opening through close",
+      "philosophy": "Follow a simple structure. Understand goals, identify where they want to go, and if we can help, show how we come into the picture.",
+      "phases": {
+        "opening": {
+          "name": "Rapport Building & Structure Setting",
+          "duration_minutes": 5,
+          "subsections": {
+            "greeting": {
+              "scripts": [
+                "Hey [Name], what's going on?",
+                "[Name], what's going on, man?",
+                "How are you? Good morning to you",
+                "Morning, how are you, [Name]?"
+              ],
+              "purpose": "Establish casual, friendly tone"
+            },
+            "personal_checkin": {
+              "scripts": [
+                "Doing well, doing really well. Staying outta trouble mainly. So good on my end.",
+                "Doing well. Staying outta trouble mainly. So good on, good on my end.",
+                "Doing well, doing well. Staying outta trouble."
+              ],
+              "purpose": "Humanize yourself, create relatability"
+            },
+            "weekend_followup": {
+              "scripts": [
+                "How was the, the week or the weekend rather?",
+                "How are you? How was the, the weekend?",
+                "How has your week been so far?",
+                "How's the week? How was the, uh, the weekend for you?"
+              ],
+              "purpose": "Show genuine interest, build rapport"
+            },
+            "rapport_extensions": {
+              "for_illness": "Awesome, man. Well, hopefully, uh, things turn around. I, I hear, um, there's a bug going around, so hopefully is it is on the tail end or you just got it?",
+              "for_vacation": "Oh, geez. Nice little, uh, vacation. / Sweet back. Uh, batteries are recharged."
+            },
+            "transition_phrases": [
+              "All right. Awesome. Well, we'll, we'll get rocking.",
+              "Great. Awesome. Well, appreciate the time. We'll, we'll keep it simple.",
+              "Yeah. All good. Well, well, we'll keep it simple then.",
+              "Got it man. Well, well, we'll keep it short and sweet.",
+              "Okay, sweet. Well, we'll keep it simple."
+            ],
+            "time_frame_setting": {
+              "script": "We usually make these calls 30, 45 minutes. It just depends on how many questions you guys have.",
+              "purpose": "Set expectations, control pace"
+            },
+            "authority_statement": {
+              "script": "I've done a few thousand of these, so definitely, uh, been been through a few different, uh, fun, fun convos",
+              "purpose": "Establish credibility through volume"
+            },
+            "process_framework": {
+              "versions": [
+                "but the, the most productive ones follow, uh, simple structure. Really just want to understand like what goals you guys have, where you're looking to go in vending. And if we can help, then I'll walk you guys through how we can come into the picture and, and assist.",
+                "the, the, the simplest ones that we'll go through a couple questions, we'll understand where you're at now, where you want to go, and if we can help, then I'll walk you through how they can come into the picture and assist.",
+                "the, the ones that are, um, they're productive that just follow a simple structure. We'll just go through like what you're looking for in the vending space, where you're at now, where you want to go. And if we can help then, uh, we'll go through the, the, how we can comment out the picture and assist."
+              ],
+              "key_elements": ["Goals discovery", "Current state", "Future vision", "If we can help (not when)"]
+            },
+            "permission_close": {
+              "script": "Does that sound good? / Sound good?",
+              "purpose": "Get micro-commitment to proceed"
+            }
+          },
+          "psychology_patterns": {
+            "authority_building": [
+              "Volume Credibility: 'few thousand of these'",
+              "Experience Credibility: 'been through a few different fun convos'",
+              "Process Credibility: 'most productive ones follow simple structure'"
+            ],
+            "control_elements": [
+              "Time Control: Sets 30-45 minute expectation",
+              "Process Control: 'simple structure'",
+              "Outcome Control: 'if we can help' (not 'when')"
+            ]
+          }
+        },
+        "discovery": {
+          "name": "Goals & Situation Discovery",
+          "duration_minutes": 15,
+          "subsections": {
+            "spark_question": {
+              "primary": "What first sparked your interest in vending?",
+              "variations": [
+                "I'm curious, like what, what's, uh, first sparked your interest in vending?",
+                "So what, what first sparked your interest in vending?",
+                "What, uh, what first sparked your interest in in vending?",
+                "I'm curious to hear like, on, on your end, I mean, what, what even sparked your interest to start exploring vending?"
+              ],
+              "purpose": "Uncover motivation and emotional drivers",
+              "followup": "Was the Instagram pages, like the fir or post, the first time you had really looked into vending?"
+            },
+            "goals_vision": {
+              "primary_question": "Let's say the, the vending business goes really well for you. What would you be hoping to achieve in the future?",
+              "variations": [
+                "And, and within the, the vending space, like let's say this vending business goes really well for you, what, what would you be hoping to achieve in the future?",
+                "Let's say this, this vending business goes really well for you. Like, what, what would you be hoping to achieve in the future?"
+              ],
+              "specific_probes": [
+                "What would the target be?",
+                "You're talking about revenue or, uh, how many machines or?",
+                "Is there like a, a specific target that you would be looking to hit in the, in the vending space?"
+              ],
+              "dream_expansion": "And you mentioned your kids too. Like, let's say this, this vending business goes well for you, what would you be hoping to achieve in the future?"
+            },
+            "timeline_urgency": {
+              "how_long_looking": [
+                "How long have you guys been looking to build your route so far?",
+                "And and how long have you been looking to build your route So far?",
+                "How, how long have you guys been looking to build your route so far?",
+                "How long have you been looking to build your route so far?"
+              ],
+              "urgency_catalyst": [
+                "And, and what do you guys feel change recently that made you really wanna start taking this more serious?",
+                "What, I mean, what, what have you guys tried so far to get in the door with, with properties?",
+                "What do you feel changed recently that made you really wanna start taking this more serious?"
+              ],
+              "seriousness_indicators": "It sounds like you're serious, more serious about this than others"
+            },
+            "current_state": {
+              "action_taken": [
+                "What, what have you guys tried so far to get in the door with, with properties?",
+                "Have you tried anything so far to, to build a route?",
+                "Have you, in the past few weeks, you said you saw, like, really started looking into this more. It sounds like you got a lot more serious recently. Have you tried anything so far to get in the door with properties?"
+              ],
+              "existing_connections": "You guys already having a few contacts that you could pursue?"
+            },
+            "obstacle_identification": {
+              "primary": "What do you feel has been keeping you from getting into vending at this point already?",
+              "variations": [
+                "Do you feel like, is there anything maybe specific that has been keeping you from getting into this space?",
+                "What, what I'd be curious on then is have you, in the past few weeks... what do you feel has been keeping you from getting into some locations?"
+              ],
+              "with_connections": "Especially with you guys already having a few contacts that you could pursue?",
+              "knowledge_gap": "I mean, you mentioned like you don't know what you don't know. Right."
+            },
+            "capacity_assessment": {
+              "time_question": [
+                "How much time do you realistically have per week to be able to build this, this vending route?",
+                "How much time realistically do you have per week to build this up?",
+                "With the, the time you have now, you said you wanna stay with a full-time job. Totally get it. Tons of people are there. How much time do you, do you realistically have per week to build this up?"
+              ],
+              "validation_responses": [
+                "Definitely doable. That's five hours plus is, is plenty.",
+                "That's fine. Yeah. There, there's, um, when there's a will, there's a way",
+                "Yeah, that's fine. Yeah. You're good."
+              ]
+            }
+          },
+          "transition_patterns": {
+            "confidence_building": [
+              "You'd be surprised. There's, there's, um, something for everyone in this space.",
+              "You'd be surprised at, at how well the vending business could, could go for you.",
+              "You'd be surprised there's, there's a lot of people that come in and like, I just wanna dip my toe in with three and then they, they blink and they're at 15"
+            ],
+            "reality_setting": [
+              "I mean, like any business, I mean, it's e exactly like you mentioned already",
+              "it's a business, right. You get out of it what you put in"
+            ]
+          }
+        },
+        "pain_excavation": {
+          "name": "Pain Point Excavation",
+          "duration_minutes": 10,
+          "purpose": "Uncover deep emotional drivers and create urgency",
+          "subsections": {
+            "obstacle_identification": {
+              "primary": "What do you feel has been keeping you from getting into vending at this point already?",
+              "knowledge_gap_excavation": {
+                "trigger": "When they say 'don't know how'",
+                "response": "Okay. What, what have you guys tried so far to get in the door with, with properties?"
+              },
+              "financial_barrier_probing": {
+                "trigger": "When money comes up",
+                "response": "That's where it gets, it gets creative. 'cause a lot of people, not many people come into these calls with 20 grand, 50 grand to deploy"
+              }
+            },
+            "urgency_creation": {
+              "recent_change_catalyst": [
+                "What do you guys feel change recently that made you really wanna start taking this more serious?",
+                "What do you feel changed recently that made you really wanna start taking this more serious?"
+              ],
+              "time_sensitivity": {
+                "age_pressure": "You're fortunate that you've hopped on a call as early as you have. 'cause I've talked to people that are 65 and are 70, and they're just now learning these things."
+              }
+            },
+            "financial_pain": {
+              "income_inadequacy": "Acknowledge and build on their financial pressure",
+              "expense_pressure": "Yeah. Yeah. It's usually university starts to come into the picture and things start to, to pop up down the line",
+              "dave_ramsey_handling": "I mean, I'm, I'm, I'm in the same boat, like, can't say I'm, I'm like all in on the day brands you might method... but there's, um, nothing wrong with that. I think, I think a good approach, at least in the beginning of, of building a business is, is if you wanted to kind of, if you want things to change, you gotta change a bit too."
+            },
+            "emotional_pain": {
+              "job_dissatisfaction": "Validate and build urgency around their frustration",
+              "freedom_desire": "Reinforce their desire for control and independence"
+            },
+            "pain_amplification": {
+              "status_quo_consequences": "And, and that's the, uh, the tough part is if nothing changes now, what does it look like in a year, two years from now, if we sort of just stay in the same approach, like in, in order to get something different, you gotta, you know, put your foot down and say, enough's enough, and then let's, let's do something with it.",
+              "age_time_pressure": "you're fortunate that you've hopped on a call as early as you have. 'cause I've talked to people that are 65 and are 70, and they're just now learning these things. And, and they've, they've gone that path for their whole life and they've gone the safe path. And they, they don't have much buffer or a, a financial cushion"
+            },
+            "validation_patterns": {
+              "acknowledgment_phrases": [
+                "Okay. Got it. That makes sense.",
+                "Yeah. Fair enough.",
+                "Okay. Understandable.",
+                "Totally get it.",
+                "Of course."
+              ],
+              "amplification_transitions": [
+                "That's where it gets, it gets creative...",
+                "And, and that's the, the one thing we ask...",
+                "The tough part is...",
+                "And it's, uh, I mean, given that five year timeline..."
+              ]
+            }
+          }
+        },
+        "qualifying": {
+          "name": "Qualifying & Confidence Check",
+          "duration_minutes": 5,
+          "subsections": {
+            "setup_question": {
+              "primary": "Just to summarize, if we could help you uncover [specific goals they mentioned], give you clarity on what kind of machines we recommend, what kind of products, and if we can help you [achieve specific goal], do you feel like that would check all the boxes that you'd be looking to achieve in this space? Or is there something still missing to give you the confidence to get started?",
+              "family_goals_version": "if we can help you build up some, some cash on the side. A a lot of people like this, this industry to build with their kids too... definitely something we can, we can help you guys on in terms of being creative",
+              "job_replacement_version": "if we could help you understand what kind of machines to order, what kind of properties to take on, how to get those deals done, and then like scale this down the line to where you could realistically leave your, your restaurant job. Like, do you feel like that would check all of your boxes?",
+              "income_goals_version": "if we can match your daily living expenses, maybe 1.5 times that, just a little bit of a buffer, uh, do you feel like that would check all the boxes that you'd be looking to achieve in this space?"
+            },
+            "confidence_gap_identification": {
+              "missing_piece_probing": [
+                "Or would there still be something missing potentially to give you the confidence to get started?",
+                "Or is there something still missing to give you the confidence to, to really get started?",
+                "would there still be something that you would need to give you the confidence to, to really get started?"
+              ]
+            },
+            "readiness_assessment": {
+              "commitment_testing": [
+                "Do you feel like this could realistically help you get to that revenue goal and ideally even surpass what your spouse is making to, to pivot into this business more full-time?",
+                "Do you feel like this could realistically get you to the point where you could leave your restaurant job?",
+                "Based on what we have gone through, do you, do you feel like this could realistically help you get to, we'll call it 50 grand a year in revenue based on the goals that you had coming into this call?"
+              ]
+            },
+            "capability_building": {
+              "experience_validation": [
+                "You'd be surprised a lot of people like to, to lean on this group",
+                "You'd be surprised. There's, there's, um, something for everyone in this space",
+                "You'd be surprised at, at how well the vending business could, could go for you"
+              ],
+              "support_reinforcement": [
+                "I would definitely lean on it heavily for the first three months, six months to really, okay. Anytime you have a roadblock that you have already looked through the resources and, and maybe you're just not sure what to do, like please reach out",
+                "the, the whole purpose of this group is to give you assistance whenever you need it"
+              ]
+            }
+          }
+        },
+        "decision_framework": {
+          "name": "Binary Choice Setup",
+          "duration_minutes": 2,
+          "critical": true,
+          "primary_script": "For efficiency at the end of the call, I'm gonna recommend the option that aligns closest to what you guys are looking for. And by that point, most people are very aware if this solution can help them achieve their goals or not. So it's totally fine to say yes or no. The one I would love to avoid is 'we'd like to think about it' or 'talk to our dog' as we both know that's a really polite way to say no. So is it cool if we try to keep it between either a yes or a no today?",
+          "variations": [
+            "For efficiency, at the end of the call, I'm gonna recommend the investment option that makes the most sense for what you're looking for. By that point, most people are, are very aware if what we can provide can even help them or not. It's, it's fine to say yes or no. The one thing I'd love to avoid is I needed to think about it or talk to my dog. 'cause we both know that's like a really polite way of just saying no. So is it cool if we try to keep it between a yes or a no today?",
+            "For efficiency, at the end of the call, Alan, I'm gonna recommend the investment option that makes the most sense. By, by that point, most people are, are very aware if, if the solution we can provide can even help them achieve their goals or not. Uh, it's, it's fine to say yes or no. The one thing I'd love to avoid is I need to think about it or talk to my dog. 'cause that's a very polite way of just saying no. So is it, is it cool if we try to keep it between a yes or a no today?"
+          ],
+          "key_elements": {
+            "efficiency_framing": "For efficiency at the end of the call...",
+            "awareness_building": "most people are very aware if this solution can help them achieve their goals or not",
+            "permission_seeking": "So it's totally fine to say yes or no",
+            "think_it_over_killer": "The one I would love to avoid is 'we'd like to think about it' or 'talk to our dog' as we both know that's a really polite way to say no"
+          },
+          "pushback_handling": {
+            "when_they_resist": {
+              "prospect_says": "Um, I'll do my best. I'll do my best. All good? Yeah.",
+              "response": "Sounds good. Yeah, just, just, uh, I think you could appreciate it. Just like, um, getting away from the maybes, just if it's like, Hey, this is in line, or no, this is way off, then totally good. Like, either, either way."
+            },
+            "clarification": {
+              "prospect_says": "Yeah. And I'm fully aware. I mean, even if I say yes, doesn't mean that, I mean, that just means yes, let's continue to, to talk. Doesn't, I'm not signing on anything today kind of thing, right?",
+              "response": "That's what we're looking for. Yeah... That, that's mainly what we're looking for is just like a, a way to save us both time. Um, versus like a, um, a yes. That was never a yes from the beginning."
+            }
+          },
+          "psychological_techniques": {
+            "time_scarcity": "For efficiency... (creates impression time is limited)",
+            "social_proof_pressure": "most people are very aware... (implies smart people decide quickly)",
+            "either_or_thinking": "totally fine to say yes or no (eliminates middle ground)"
+          }
+        },
+        "presentation": {
+          "name": "Value Presentation",
+          "duration_minutes": 15,
+          "subsections": {
+            "opening": {
+              "screen_share_setup": [
+                "So I'll, I'll share my screen here though. So that'll give you, uh, full context.",
+                "I'll share my screen here. It's really, really simple how we come into the picture, at least at a high level.",
+                "So I'll go through a couple resources that seem like it would be the, the closest to what you're looking to achieve."
+              ],
+              "vending_in_a_box": [
+                "So for, in, in a nutshell, vending preneurs is vending in a box, which really just means that we'll help you guys from end to end on getting in the door with properties and then how to set up the business the right way the first time.",
+                "The, the way a lot of people like to look at us is, is, uh, vending in a box would be a really simple way to explain it, where we'll help you end to end.",
+                "Very simply put there, the, the way to look at vending preneurs is vending in a box where we have two main, um, or, or rather three like arms that will help with"
+              ]
+            },
+            "social_proof": {
+              "revenue_examples": {
+                "matt_story": "Great example. This is not like a unicorn account. This is a very common account nowadays, especially with good machines, good products, and some decent foot traffic. I mean, this isn't like a, a 1% account. Like these are quite common nowadays. Uh, this guy did two, two accounts total, or two locations total 30 days into this, these properties, he did seven grand in sales. So we're tracking, over the year, we're doing $80,000 a year off of two locations.",
+                "anthony_story": "Anthony has been, did the exact same call that we're doing here. He had half, less than half the resources you have and he just hit 85 grand in, in in monthly sales, uh, just about, just shy of 50 grand net. He's at 65 or almost 66% gross margin.",
+                "charles_story": "Charles here, he has, he's the guy I was talking about. He has five locations, they all do $4,000 a month, so he's got two kids. He's a high school football coach and he's built his route that he wanted"
+              },
+              "daily_wins": [
+                "Like Doreen here, I'm just seeing this, she joined 30 days ago. Uh, she has two locations right now. So she's on fire.",
+                "Like Shante had three locations secured in a week. Oh wow. Like really, really cool things that we've seen.",
+                "this guy had $283 transaction in, um, one sale from one person. And then on the week before that was $200."
+              ],
+              "objection_prevention": [
+                "This isn't an, an anomaly account by the way. These are very attainable numbers if we've got foot traffic.",
+                "This is not like a unicorn account. This is a very common account nowadays",
+                "we've got 500 plus case studies now, like we know we can help"
+              ]
+            },
+            "value_stack": {
+              "community_value": {
+                "member_count": "currently 1200 members that are actively building their, their routes",
+                "daily_activity": "You'll have anywhere from 30 to 40 plus posts a day of just different topics.",
+                "diversity": "you'll have a community of people to work with on any topic around vending. We have people that have built, uh, the vending version of an Amazon. Now. There's people that have purchased routes for $2 million. There's people doing, you know, $80,000 a month and anything in between."
+              },
+              "coaching_structure": {
+                "coaches": "There's currently 15 coaches that you can reach out to one-on-one.",
+                "calls": "we have live calls every day of the week that will range in different topics. / We have like 10 to 15 calls a week, just depending on topics."
+              },
+              "educational_resources": {
+                "materials": "flyers, the scripts, the objections you'll run into, the contracts that you're gonna send over to properties, the photos to bring into the meeting",
+                "relationships": "Where we really like to help people now is we have a relationship with these manufacturers on the product side... but also on the machine side where they'll give us, you know, a couple hundred bucks off each order"
+              }
+            },
+            "discount_demonstration": {
+              "rebate_examples": [
+                "you could go to like rebate eligible and it'll give you in real time discounts or rebates that you would get. So you order a case of a hundred grand, you would get $36 18 a piece. You get 8 53 off the whole case.",
+                "Airheads, you get a dollar $48, 50 alon new, three bucks a case, uh, 10 bucks a case, you know, 16 bucks.",
+                "let's say you buy a hundred grand candy bar, you get 8 53 off the case and airhead extremes, which sell like hotcakes. You get, you know, dollar 48, uh, alanni, new energy drinks three or even $5 off of a case"
+              ],
+              "annual_savings": [
+                "we've had people pay themselves every year by just being in our community. You know, people are saving 10 grand, 20 grand a year just by or more by ordering products they would've gotten anyway.",
+                "We've got people that have already saved like 40 grand in a year, or some people over 50 grand just by ordering products they were gonna get anyway.",
+                "I've, I put 12 grand back in my pocket, um, this year already just right from that."
+              ],
+              "partnerships": [
+                "we work with Pepsi, uh, or Doritos or Alani new, uh, but also on the machine side",
+                "We partnered with Pepsi and Poppy, Doritos, Ani new, uh, companies that provide the machines as well.",
+                "we have relationships with like Pepsi and, uh, prime and Doritos."
+              ]
+            }
+          },
+          "engagement_patterns": {
+            "question_integration": [
+              "I'll pause here though, questions or maybe things I can clear up around the, the campaign side of things.",
+              "I'll, I'll pause here again though, questions on the weekly calls, the coaches, the classroom resources, anything I can give more clarity towards.",
+              "Any, any other questions around like the, the coaching or the, the machines? Anything there?"
+            ],
+            "section_transitions": [
+              "But I'll, I'll pause here though.",
+              "I'll pause here for, for a quick second.",
+              "So that's the, the nice piece is you'll have live support."
+            ]
+          }
+        },
+        "closing": {
+          "name": "Closing Patterns",
+          "duration_minutes": 10,
+          "subsections": {
+            "direct_ask": {
+              "standard_close": [
+                "How would you like to proceed?",
+                "Awesome. Well, how, how would you like to proceed?",
+                "Sweet. Well, how would you like to proceed?",
+                "Sure thing. Well, how would you like to proceed?"
+              ],
+              "confidence_check_close": [
+                "Do you feel like this could realistically help you get to that revenue goal and ideally even surpass what your spouse is making to, to pivot into this business more full-time?",
+                "Do you feel like this could realistically get you to the point where you could leave your restaurant job?",
+                "Based on what we have gone through, do you, do you feel like this could realistically help you get to, we'll call it 50 grand a year in revenue based on the goals that you had coming into this call?"
+              ],
+              "in_line_check": "really straightforward, is this in line with what you guys are looking for? Do you feel like it's off the mark somewhere? Curious to hear y'all's feedback?"
+            },
+            "pricing_presentation": {
+              "platinum_plus_12_months": "the platinum plus model would come in at 13, 9, 9, 7 for a year of cold call, cold email support and lifetime access to the group.",
+              "six_month_option": "if we did six months of outreach, that would be 9,900.",
+              "community_only": "If you wanted purely just the community access for life, that would be 5,900."
+            },
+            "installment_presentations": {
+              "when_resistance": "That would be your cash discount. If we did it in one go, if we did it over time, it would be like 2300 for the first month and then like six 50 over 11 months if we did the accelerator. Plus, if we did the accelerator plan, it'd be 1700 for the first month and then four 80 over the remaining 11 months.",
+              "standard_pattern": "Yeah, we could, we upfront would be those options. If we did installments, it would be right around like 1200 to 1500 on the top... Yeah. If we did over the year, like we could do 12 months of installments."
+            },
+            "urgency_creation": {
+              "implementation_speed": "I mean, ideally you could already have some of these contacts, um, reached out to you today and you're, you're, you're on well on your way ideally, I mean, you broke a record if you could get a deal done this week. 'cause fastest I've seen is two weeks from enrollment to live.",
+              "contact_delivery": "And I'll let the team know to start pulling your contacts. We should have them to you latest on Friday. Uh, but ideally, like mid, mid, like Wednesday, Thursday, this week, we should have everything ready to go.",
+              "price_increase_warning": "So most people who wanna just save themselves a, uh, a good bit in the beginning, they just go for platinum plus. So they're not subject to any price increases over the year, which we have raised prices consistently, uh, every year for the last four years since we've been running."
+            },
+            "close_techniques": {
+              "assumptive_close": "Okay, cool. Let me do this. I'm gonna send over a link to get rocking and then once that's authorized, man, we're, we're in the group and you're, you're ready to go.",
+              "choice_close": "Okay. Okay. Let's do that. Then. I'm gonna send over a bullet point email of that breakdown."
+            },
+            "payment_processing": {
+              "link_sending": [
+                "Cool. Let me do this. I'm gonna send over a link to get rocking and then once that's authorized, man, we're, we're in the group and you're, you're ready to go.",
+                "I just sent over the email that has a link to get started and then like I said, once that's authorized then you're in the group and then we're rocking."
+              ],
+              "onboarding": [
+                "once that's authorized, then I'll send over your invite to this community here. Okay. And I'll let the team know to start pulling your contacts.",
+                "I'll hang out for a minute or two if you have any questions.",
+                "Super. I'll, I'll walk you through the group real quick. Should take like five minutes or so just to give you like best practices of where to find everything."
+              ]
+            },
+            "close_recovery": {
+              "when_payment_fails": "Really interesting. Um, Hmm. What about, I'm curious, 'cause this is something we've done with others in the past. Have you, do you have a, like a credit card with almost, I'm just throwing a random number, like a 12 K 15 K limit?",
+              "offering_additional_resources": "You know what, actually I just remembered Mike is having a live call tomorrow with like Mike himself tomorrow. Um, why don't we just do that? Like, why don't you hop on the call, Mike is gonna have a, a, a call with anyone that just is skeptical"
+            },
+            "emotional_closing": {
+              "future_vision": "And, and imagine what that does for them for their confidence in the future too, where you've got some locations secured, a step further, revenue's come in, you've even got some benefits on the side. Like, you know, they, we can go on vacation through the money we're bringing in here",
+              "status_quo_pain": "And, and that's the, uh, the tough part is if nothing changes now, what does it look like in a year, two years from now, if we sort of just stay in the same approach"
+            }
+          }
+        }
+      }
+    },
+    "matt": {
+      "name": "Matt Chubb's Objection Playbook",
+      "description": "Complete objection handling approach with philosophy and specific techniques",
+      "core_principles": [
+        "Cook their logic - find the flaw in their reasoning and create dialogue around a new perspective",
+        "Buy-in and double buy-in - always get them to explain WHY before moving forward",
+        "90% of the time it's a mask - most objections are hiding the real concern (usually fear or finance)",
+        "Pattern interrupt - when they're bullshitting you, call them out with humor or directness",
+        "Go back to the Holy Grail - always tie decisions back to their ultimate goal",
+        "TODAY is the key word - emphasis on moving forward TODAY creates commitment",
+        "Never silence after price drop - immediately connect price to value and their goals",
+        "Win the responsibility frame - critical for spouse/authority objections"
+      ],
+      "objection_frameworks": {
+        "capital_objection": {
+          "philosophy": "Finances are a precious conversation. Naturally, their guard is going to be a little bit up.",
+          "three_path_question": "Is it a case, let's say we're doing Bronze, right? Is it the case you've got the full $6,000 that's, you know, just a little bit difficult or scary to invest? Or do you have some of it when you look at breaking it up into a more manageable structure? Or you've got none of it at all, and we need to go to the bank or something.",
+          "why_it_works": [
+            "That last bit takes the air out of the room",
+            "Immediately categorizes into three clear paths",
+            "Reduces defensiveness by normalizing all scenarios"
+          ],
+          "god_drop_test": "If God dropped $6K in your lap right now, would you be ready to move forward? Or would you want to go away and maybe spend that on a holiday somewhere?",
+          "finding_their_number": "I guess, you know, for you, really, based on your finances right now, how much do you have able and willing to invest in yourself so that you can take that first step to achieving [their Holy Grail]?",
+          "credit_card_mask": "Look, brother, like finance is the easy bit, not to worry. So what's really more important to me is your commitment. Like if we can find something that does work for you again, like does that help you move forward?",
+          "debt_reframe": "Of course, it's not a case of debt. Like I go heavy on my pitch about how the business pays for the business and its investment in itself."
+        },
+        "sticker_shock": {
+          "critical_rule": "Never, first of, never ever do I do like silence after a price drop like a cliffhanger, like awful because it's just awkward and weird",
+          "price_drop_script": "Yeah so Adam look, you know, next steps is of course that investment of $6,000 USD. If you're ready to get started what we normally do is get you onboarded on the call, we send over a contract and we get you essentially access to everything so that you can take that first step and start building up this vending route, so you can start to actually not only bring in those 10k months but also leave the job, spend more time with the family. All comes down to you and how you're feeling man.",
+          "response_framework": {
+            "step1_agree": "Look man, like, agree, first of like, it is expensive, right, don't get me wrong, it's not a cup of coffee.",
+            "step2_reframe": "What you want is also a lot there, right, would that be fair to say? Like, it's not just the ability to sort of leave your job and to bring in some income, but it's more so about the ability to build something so that you can actually live life on your own terms.",
+            "step3_future_pace": "The version of you 12 months down the line who's got all of that, would you look back and think, like, that was not worth $6,000?"
+          },
+          "program_reframe": "Just to be on the same page, it's not just a program, right? This isn't like a plug and play thing you just come in and you just learn some things. This is coaching, mentorship, guidance, having the systems and the people in place so that you can transform X, Y, Z to X, Y, Z.",
+          "key_point": "PROGRAM is a horrific word - always reframe as coaching/mentorship"
+        },
+        "spouse_objection": {
+          "philosophy": "90% of the time, spouse/partner is a mask. It's uncovering something else.",
+          "buy_in_framework": [
+            "Step 1: Do you believe XYZ can work to get you to here?",
+            "Step 2: Get double buy-in - have them explain WHY",
+            "Step 3: Partner buy-in - is he/she on board with you setting up a system to provide more for the family?",
+            "Step 4: In the past, has anything ever come up or gotten in the way of you two when it comes to making a decision similar to this?"
+          ],
+          "responsibility_frame": {
+            "setup": "Your partner, what does she do for work? When she's at the salon doing her thing, making decisions, putting everything in place to make sure her role is a success - she doesn't rely on you to make any of those decisions for her, right?",
+            "pivot": "Why would it be fair for you to go away, have that conversation, and put some of the decision and responsibility for your future, for your life, and ultimately your family as the man of the household, and push any of that decision onto her?",
+            "clarify": "I'm not saying she can't be there to lean on. But when it comes to the decision and responsibility to take the first step, whose responsibility does that fall on?",
+            "close": "The version of you who's got X, Y, Z and this amazing family - what decision would he make here?"
+          },
+          "ceo_frame": "You are the man of the house - you're almost like the CEO of your own household. Similar to a CEO running a business, would he put any of those decisions for what's best for the business, and ultimately for the employees (your family), onto them?"
+        },
+        "timing_objection": {
+          "discovery_urgency_question": "Knowing that those right tools and resources are out there, just a handful to grab away, and you can change your life - you being in the current position where you can't do X, Y, Z, and you're stuck in that box - how much longer, how many months, weeks, or even days are you okay actually staying in the same position?",
+          "buy_in_approach": "'Not ready to start right now' isn't an objection. Ask: 'Is it a case that, if you did do this and you were to implement XYZ, do you feel that it could ever get to XYZ?' Then get them to explain why.",
+          "opportunity_cost": "Brother, if you're going to do this regardless, why would it make sense to delay it? When in Q1 2026, you might already have 2 or 3 machines.",
+          "busy_life_handling": "Busy is great, right? In fact, I wouldn't want you to ever not be busy. Busy is part of a great life. Would you agree? Ultimately for you, is it a case of like it's impossible for you to invest 5 to 10 hours a week to achieve X, Y, Z, Holy Grail?"
+        },
+        "think_about_it": {
+          "philosophy": "Think about it is bullshit. There's no one who needs to think about things. There's a real reason why. Never do a follow-up on 'think about it.'",
+          "core_question": "I guess when you go away and take that time, what's coming up that makes you want to think about it?",
+          "research_response": "Brother, with the greatest respect, the research is right here, right? You can go away, do some research, do some Googles. Ultimately, by speaking with the company, you're getting the most accurate information.",
+          "decision_reframe": "In life, would it be fair to say that the way we make decisions has led us to where we are now? The decisions you've made and how you've made them up to this point has led you to the exact point you're in now, right?",
+          "certainty_close": "If you were 100% certain that if you did this today, that within 12 months you'd be at that 10K mark and you'd leave the job, you'd be biting my hand off, right? So what's coming up that makes you not quite 100% certain right now?",
+          "pattern_interrupt": "I'll call you in a week? No, you won't. You'll no-show me. Come on now, man. What's going on?"
+        },
+        "diy_objection": {
+          "philosophy": "Cook their logic - if they could do it themselves, they already would have. They're on the call because they need help.",
+          "core_strategy": "Their logic is flawed because they believe they can run this themselves. That logic is flawed because if they could do that, they already would have done it and they're on the call because they need help.",
+          "opportunity_cost": "By having the right people in place over the next 2, 3, 4 months, the opportunity cost of what they'd miss out on - if they tried on their own, their snowball would not have created as much.",
+          "value_pitch": "It's not just having the tools and resources, but also building the skills to utilize them. Over the next 5, 10, 15 years, as you grow this business, expand into other ventures - you have the ability to rely on yourself."
+        }
+      }
+    },
+    "scott": {
+      "name": "Scott Seymour's Objection Playbook",
+      "description": "Practical, numbers-focused objection handling",
+      "core_principles": [
+        "It's really hard to lose money with something like this",
+        "One sale - can they do it or not",
+        "Don't force the money out",
+        "Understand their source first",
+        "You still OWN THE BUSINESS",
+        "Leverage VenHub heavily - quantifiable savings",
+        "Only DQ at 100% done-for-you expectations",
+        "Put fear into DIY unknowns"
+      ],
+      "objection_frameworks": {
+        "capital_objection": {
+          "philosophy": "I don't want anyone to force the money out. The key question is whether they have a source.",
+          "opening": "Alrighty, let's see if I can figure this out for you. Totally understand you're investing in a business and investing in yourself.",
+          "source_question": "First thing I want to see... do you have a source? Do you have it in the bank? Do you have access to credit? Do you have a family member that can lend it to you? I don't need to know who, I don't need to know what... I just want to know if you have a source or not.",
+          "payment_plan_pitch": "So the way that the payment plan works, because it is a third party company, they want to ensure it's someone who's serious and can afford the investment. What credit score do you think you're rocking right now?",
+          "hard_to_lose_money": "It's really hard to lose money with something like this because unlike you getting a loan for a car... With a car payment, you spend the money, you don't get it back. Even if you finance the $5,900 and you pay $200-250 extra dollars, you still OWN THE BUSINESS.",
+          "low_payment_test": "Hey, I mean, if we could get your payment down to $100, $200 bucks a month, I mean, is this something that's reasonable for you and manageable to get you into the community?",
+          "when_to_qualify_out": "I won't qualify you out until you get rejected from everyone. If Coach doesn't work, then ask about family and friends. Only then note in CRM to circle back."
+        },
+        "sticker_shock": {
+          "initial_response": "Totally understand, I know this isn't cheap. Well, starting a business isn't cheap in general.",
+          "franchise_comparison": "Some general costs of opening a business - franchising, you're getting a couple hundred thousand dollars. We're here, you get started for as little as a couple thousand.",
+          "venhub_leverage": "Do all your other offers have everything we include, including discounted machines, including product ordering? I try to leverage a lot more VenHub, which is more quantifiable for ROI.",
+          "roi_calculator": "I'll jump to the ROI calculator if it's the right person. Default: one machine, one location, not even performing well, you're building an asset worth $12,000."
+        },
+        "location_finding": {
+          "non_defensive": "I don't really get too defensive. Yeah, well, for that price, you're correct, it's not that expensive, but if you look at companies who guarantee locations, you're usually in for minimum $50,000 to $100,000.",
+          "quality_frame": "That's why our model is built the way it is. They will guarantee you a location, but they're not going to guarantee how good a location is.",
+          "98_percent_frame": "We're getting you 98% of the way there. The final part is you do have to sell yourself. Unfortunately, we're not the boots on the ground, but we're taking a ton of the legwork off of you.",
+          "credibility_killer": "If you go out there and face the objection 'how many locations do you have?' and you say none, then what are you gonna do? All your credibility falls off a cliff. That's why I leverage the community and the brand."
+        },
+        "diy_objection": {
+          "philosophy": "Probably one of the hardest ones to overcome. I just put as much fear as possible into them.",
+          "fear_approach": "What are you gonna do with this, what are you gonna do with that? There's a lot more that goes into this business than meets the eye.",
+          "credibility_killer": "The big one I really like to hone in on is credibility. The hardest part is landing locations. If they ask 'how many machines do you have?' and you say none, your credibility tanks.",
+          "solution": "We teach them how to overcome that by leveraging community and brand."
+        },
+        "saturation_objection": {
+          "philosophy": "I love this one, this one's not even that bad.",
+          "positive_reframe": "When people actually have vending machines, they can actually work for you, specifically the older models. We teach you how to rip and replace those guys.",
+          "new_concept_frame": "If we were just doing older vending machines, sure, I'd be concerned about saturation. With all these new AI smart machines, there's a lot of opportunity out there.",
+          "lazy_operator_angle": "To be quite frank, there's a lot of lazy operators out there, and we'll teach you how to not be a lazy operator and truly provide the value."
+        },
+        "financing": {
+          "three_option_waterfall": [
+            "Option 1: Credit card - put a hold on the amount, break it out over 12 months, 15% origination fee",
+            "Option 2: Elective - break it down in 3, 6, 9, or 12 months. Good credit = 0% interest. 15% origination fee.",
+            "Option 3: Coach - finance up to 144 months, get payments down to $100-$200/month"
+          ],
+          "new_approach": "Mention the financed amount first, then if they pay in full, they get the 15% discount. So it looks like they're getting a discount.",
+          "capital_strategy": "I tend to leverage capital at hand, keeping variable credit open, keeping liquid cash. By having more capital on hand, you could scale quicker."
+        }
+      }
+    }
+  },
+  "quick_reference": {
+    "call_structure": {
+      "opening": "5 minutes - Rapport, agenda, goal discovery",
+      "discovery": "15 minutes - Current situation, pain points, vision",
+      "presentation": "15 minutes - Show VenHub, savings calculator, community",
+      "close": "10 minutes - Handle objections, close or schedule follow-up"
+    },
+    "key_scripts_by_situation": {
+      "opening_a_call": "Hey [Name], what's going on? We usually make these calls 30-45 minutes. I've done a few thousand of these, so the most productive ones follow a simple structure.",
+      "discovering_motivation": "What first sparked your interest in vending?",
+      "future_pacing": "Let's say this vending business goes really well for you. What would you be hoping to achieve in the future?",
+      "identifying_obstacles": "What do you feel has been keeping you from getting into vending at this point already?",
+      "building_urgency": "What changed recently that made you really want to start taking this more serious?",
+      "qualifying_commitment": "If we could help you achieve [their goal], do you feel like that would check all the boxes?",
+      "setting_up_binary_choice": "For efficiency at the end of the call, I'm gonna recommend the option that makes sense. It's fine to say yes or no. The one I'd love to avoid is 'think about it' or 'talk to my dog.'",
+      "presenting_value": "Vending in a box - we'll help you end to end on getting in the door with properties.",
+      "closing": "How would you like to proceed?"
+    },
+    "common_validation_phrases": [
+      "Okay. Got it. That makes sense.",
+      "Yeah. Fair enough.",
+      "Totally get it.",
+      "Of course.",
+      "You'd be surprised..."
+    ],
+    "urgency_phrases": [
+      "And that's the tough part - if nothing changes now, what does it look like in a year?",
+      "Every month that goes past, there's thousands of dollars leaving on the table.",
+      "You're fortunate you've hopped on a call as early as you have."
+    ]
+  }
+}
