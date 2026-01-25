@@ -3,506 +3,611 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VendingPreneurs Sales Coach</title>
+  <title>Sales Coach</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
     :root {
-      --bg-primary: #0d1117;
-      --bg-secondary: #161b22;
-      --bg-tertiary: #21262d;
-      --border: #30363d;
-      --text-primary: #e6edf3;
-      --text-secondary: #8b949e;
-      --text-muted: #6e7681;
-      --accent: #58a6ff;
-      --success: #3fb950;
-      --warning: #d29922;
-      --danger: #f85149;
-      --purple: #a371f7;
-      --radius: 12px;
+      --bg: #0a0a0a;
+      --surface: rgba(255, 255, 255, 0.03);
+      --surface-hover: rgba(255, 255, 255, 0.06);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-light: rgba(255, 255, 255, 0.12);
+      --text: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.6);
+      --text-muted: rgba(255, 255, 255, 0.4);
+      --accent: rgba(255, 255, 255, 0.9);
+      --green: #22c55e;
+      --green-soft: rgba(34, 197, 94, 0.15);
+      --amber: #f59e0b;
+      --amber-soft: rgba(245, 158, 11, 0.15);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
       line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+
+    .slide-in {
+      animation: slideIn 0.3s ease-out forwards;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+
+    /* Header */
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 0;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 20px;
+      padding: 16px 0 24px;
+      animation: fadeIn 0.5s ease-out;
     }
 
-    .logo { font-size: 20px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: -0.01em;
+    }
 
-    .status-badge {
+    .status {
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
-      background: var(--bg-tertiary);
-      border-radius: 20px;
+      gap: 8px;
       font-size: 13px;
+      color: var(--text-muted);
     }
 
     .status-dot {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: var(--text-muted);
+      transition: all 0.3s ease;
     }
 
-    .status-dot.listening { background: var(--success); animation: pulse 2s infinite; }
-    .status-dot.analyzing { background: var(--warning); animation: pulse 0.5s infinite; }
+    .status-dot.active {
+      background: var(--green);
+      box-shadow: 0 0 12px var(--green);
+      animation: pulse 2s ease infinite;
+    }
 
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-
-    .setup-section {
-      background: var(--bg-secondary);
+    /* Glass Card */
+    .glass {
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      margin-bottom: 20px;
+      border-radius: 16px;
+      transition: all 0.3s ease;
     }
 
-    .setup-section h2 { font-size: 16px; margin-bottom: 16px; color: var(--text-secondary); }
+    .glass:hover {
+      border-color: var(--border-light);
+    }
+
+    /* Setup Section */
+    .setup {
+      padding: 48px 32px;
+      text-align: center;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    .setup h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .setup p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-bottom: 32px;
+      max-width: 360px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
     .btn {
-      padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
       font-size: 14px;
       font-weight: 500;
+      border: none;
+      border-radius: 12px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
+      font-family: inherit;
     }
 
-    .btn-primary { background: var(--accent); color: white; }
-    .btn-primary:hover { opacity: 0.9; }
-    .btn-danger { background: var(--danger); color: white; }
-    .btn-large { padding: 16px 32px; font-size: 16px; width: 100%; }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-primary {
+      background: var(--text);
+      color: var(--bg);
+    }
 
-    .hint { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+    }
 
-    .coaching-area { display: none; }
-    .coaching-area.active { display: block; }
+    .btn-primary:active {
+      transform: translateY(0);
+    }
 
-    /* Stats Bar */
-    .stats-bar {
-      display: flex;
-      gap: 16px;
-      margin-bottom: 20px;
-      padding: 12px 16px;
-      background: var(--bg-secondary);
-      border-radius: var(--radius);
+    .btn-ghost {
+      background: var(--surface);
+      color: var(--text-secondary);
       border: 1px solid var(--border);
     }
 
-    .stat-item { text-align: center; flex: 1; }
-    .stat-value { font-size: 24px; font-weight: 600; }
-    .stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
-    .stat-item.danger .stat-value { color: var(--danger); }
-    .stat-item.warning .stat-value { color: var(--warning); }
-    .stat-item.success .stat-value { color: var(--success); }
+    .btn-ghost:hover {
+      background: var(--surface-hover);
+      color: var(--text);
+    }
 
-    /* AI Insight Card - Primary focus */
-    .ai-insight {
-      background: linear-gradient(135deg, rgba(88, 166, 255, 0.15), rgba(163, 113, 247, 0.1));
-      border: 2px solid var(--accent);
-      border-radius: var(--radius);
-      padding: 20px;
-      margin-bottom: 20px;
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .hint {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Coaching Area */
+    .coaching {
       display: none;
     }
 
-    .ai-insight.active { display: block; animation: slideIn 0.3s ease; }
+    .coaching.active {
+      display: block;
+    }
 
-    .ai-insight .insight-header {
+    /* Duration Badge */
+    .duration-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    /* AI Suggestion Card */
+    .suggestion-card {
+      padding: 24px;
+      margin-bottom: 16px;
+      animation: slideIn 0.4s ease-out;
+    }
+
+    .suggestion-header {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .ai-insight .insight-icon { font-size: 20px; }
-    .ai-insight .insight-title { font-size: 14px; font-weight: 600; color: var(--accent); }
-    .ai-insight .insight-time { font-size: 11px; color: var(--text-muted); margin-left: auto; }
-
-    .ai-insight .insight-content {
-      font-size: 15px;
-      line-height: 1.6;
-      color: var(--text-primary);
       margin-bottom: 16px;
-      padding: 16px;
-      background: var(--bg-secondary);
-      border-radius: 8px;
-      white-space: pre-wrap;
     }
 
-    .ai-insight .say-this {
-      background: var(--bg-primary);
-      border-left: 3px solid var(--success);
-      padding: 12px 16px;
-      border-radius: 0 8px 8px 0;
-      margin-bottom: 12px;
-    }
-
-    .ai-insight .say-this-label {
-      font-size: 11px;
-      color: var(--success);
-      text-transform: uppercase;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .ai-insight .say-this-text {
-      font-size: 15px;
-      color: var(--text-primary);
-      line-height: 1.5;
-    }
-
-    .ai-insight .followup-box {
-      background: var(--bg-tertiary);
-      border-left: 3px solid var(--warning);
-      padding: 12px 16px;
-      border-radius: 0 8px 8px 0;
-      margin-bottom: 12px;
-    }
-
-    .ai-insight .followup-label {
-      font-size: 11px;
-      color: var(--warning);
-      text-transform: uppercase;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .ai-insight .followup-text {
-      font-size: 13px;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
-
-    .ai-insight .context-tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .context-tag {
-      padding: 4px 10px;
-      background: var(--bg-tertiary);
-      border-radius: 12px;
-      font-size: 11px;
-      color: var(--text-secondary);
-    }
-
-    .context-tag.danger { background: rgba(248, 81, 73, 0.2); color: var(--danger); }
-    .context-tag.warning { background: rgba(210, 153, 34, 0.2); color: var(--warning); }
-    .context-tag.success { background: rgba(63, 185, 80, 0.2); color: var(--success); }
-
-    @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* Transcription */
-    .transcription-box {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 20px;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-
-    .transcription-box h3 {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .transcription-box .word-count { font-weight: normal; }
-
-    .transcription-text { font-size: 14px; color: var(--text-secondary); min-height: 30px; }
-
-    /* Prospect Profile */
-    .prospect-profile {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 20px;
-      display: none;
-    }
-
-    .prospect-profile.active { display: block; }
-
-    .prospect-profile h3 {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-
-    .profile-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    .profile-item {
-      padding: 10px;
-      background: var(--bg-tertiary);
-      border-radius: 8px;
-    }
-
-    .profile-item .label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
-    .profile-item .value { font-size: 13px; color: var(--text-primary); margin-top: 4px; }
-
-    /* Quick Scripts */
-    .quick-scripts {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .quick-scripts h3 { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; }
-
-    .script-tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-    }
-
-    .script-tab {
-      padding: 6px 12px;
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 12px;
-      color: var(--text-secondary);
-      cursor: pointer;
-    }
-
-    .script-tab.active { background: var(--accent); color: white; border-color: var(--accent); }
-
-    .script-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-
-    .script-btn {
-      padding: 12px 16px;
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text-primary);
-      font-size: 13px;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.2s;
-    }
-
-    .script-btn:hover { border-color: var(--accent); background: var(--bg-primary); }
-    .script-btn .script-title { font-weight: 500; margin-bottom: 4px; }
-    .script-btn .script-category { font-size: 11px; color: var(--text-muted); }
-
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      padding: 12px 20px;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text-primary);
-      font-size: 14px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.3s;
-      z-index: 1000;
-    }
-
-    .toast.show { opacity: 1; transform: translateY(0); }
-    .toast.success { border-color: var(--success); }
-
-    .audio-visualizer {
+    .suggestion-icon {
+      width: 32px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 3px;
-      height: 30px;
-      margin-left: 10px;
+      background: var(--green-soft);
+      border-radius: 8px;
+      font-size: 14px;
     }
 
-    .audio-bar {
-      width: 4px;
-      height: 10px;
-      background: var(--accent);
-      border-radius: 2px;
-      animation: audioWave 0.5s ease infinite;
+    .suggestion-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
     }
 
-    .audio-bar:nth-child(1) { animation-delay: 0s; }
-    .audio-bar:nth-child(2) { animation-delay: 0.1s; }
-    .audio-bar:nth-child(3) { animation-delay: 0.2s; }
-    .audio-bar:nth-child(4) { animation-delay: 0.3s; }
-    .audio-bar:nth-child(5) { animation-delay: 0.4s; }
+    .suggestion-type {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
 
-    @keyframes audioWave { 0%, 100% { height: 10px; } 50% { height: 25px; } }
-    .audio-visualizer.paused .audio-bar { animation: none; height: 10px; }
+    .suggestion-content {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text);
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .followup-questions {
+      padding: 16px;
+      background: var(--amber-soft);
+      border-radius: 10px;
+      margin-bottom: 16px;
+    }
+
+    .followup-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--amber);
+      margin-bottom: 8px;
+    }
+
+    .followup-list {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
 
     .copy-btn {
-      padding: 6px 12px;
-      background: var(--bg-tertiary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      background: transparent;
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: 8px;
       color: var(--text-secondary);
-      font-size: 12px;
+      font-size: 13px;
       cursor: pointer;
-      float: right;
+      transition: all 0.2s ease;
+      font-family: inherit;
     }
 
-    .copy-btn:hover { background: var(--bg-primary); color: var(--text-primary); }
+    .copy-btn:hover {
+      background: var(--surface);
+      color: var(--text);
+    }
 
+    /* Transcript */
+    .transcript-card {
+      padding: 20px;
+      margin-bottom: 16px;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .transcript-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .transcript-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .word-count {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .transcript-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-height: 120px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .transcript-text::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .transcript-text::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .transcript-text::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 2px;
+    }
+
+    /* Quick Scripts */
+    .scripts-card {
+      padding: 20px;
+      margin-bottom: 16px;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    .scripts-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .scripts-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .scripts-tabs {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 6px 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .tab:hover {
+      color: var(--text-secondary);
+    }
+
+    .tab.active {
+      background: var(--surface);
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .scripts-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .script-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      font-family: inherit;
+    }
+
+    .script-btn:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-light);
+      transform: translateX(4px);
+    }
+
+    .script-info {
+      flex: 1;
+    }
+
+    .script-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .script-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .script-arrow {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    /* Stop Button */
+    .stop-btn {
+      width: 100%;
+      padding: 16px;
+      background: transparent;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 12px;
+      color: #ef4444;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      margin-top: 8px;
+    }
+
+    .stop-btn:hover {
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      padding: 12px 20px;
+      background: var(--text);
+      color: var(--bg);
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Empty State */
+    .empty-state {
+      padding: 32px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Responsive */
     @media (max-width: 600px) {
-      .script-grid { grid-template-columns: 1fr; }
-      .profile-grid { grid-template-columns: 1fr; }
-      .stats-bar { flex-wrap: wrap; }
+      .container { padding: 16px; }
+      .setup { padding: 32px 20px; }
+      .scripts-tabs { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <!-- Header -->
     <header class="header">
-      <div class="logo">VendingPreneurs Sales Coach</div>
-      <div class="status-badge">
+      <div class="logo">Sales Coach</div>
+      <div class="status">
         <span class="status-dot" id="status-dot"></span>
-        <span id="status-text">Not Connected</span>
-        <div class="audio-visualizer paused" id="audio-viz">
-          <div class="audio-bar"></div>
-          <div class="audio-bar"></div>
-          <div class="audio-bar"></div>
-          <div class="audio-bar"></div>
-          <div class="audio-bar"></div>
-        </div>
+        <span id="status-text">Ready</span>
       </div>
     </header>
 
     <!-- Setup -->
-    <section class="setup-section" id="setup-section">
-      <h2>Ready to Coach</h2>
-      <p style="color: var(--text-secondary); margin-bottom: 20px;">Click below to start listening to your call. The AI coach analyzes the full conversation context and provides real-time suggestions.</p>
-      <button class="btn btn-primary btn-large" id="start-btn">Start Listening</button>
-      <p class="hint" style="margin-top: 12px;">Works best in Chrome. Make sure your microphone is enabled.</p>
+    <section class="setup glass" id="setup">
+      <h1>Start your call</h1>
+      <p>The coach listens to your conversation and suggests responses in real-time.</p>
+      <button class="btn btn-primary" id="start-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="23"/>
+          <line x1="8" y1="23" x2="16" y2="23"/>
+        </svg>
+        Start Listening
+      </button>
+      <p class="hint">Works best in Chrome with microphone access</p>
     </section>
 
     <!-- Coaching Area -->
-    <section class="coaching-area" id="coaching-area">
+    <section class="coaching" id="coaching">
 
-      <!-- Stats Bar -->
-      <div class="stats-bar">
-        <div class="stat-item" id="objection-count-stat">
-          <div class="stat-value" id="objection-count">0</div>
-          <div class="stat-label">Objections</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value" id="call-duration">0:00</div>
-          <div class="stat-label">Duration</div>
-        </div>
-        <div class="stat-item" id="readiness-stat">
-          <div class="stat-value" id="readiness-score">--</div>
-          <div class="stat-label">Readiness</div>
-        </div>
-        <div class="stat-item" id="sentiment-stat">
-          <div class="stat-value" id="sentiment">--</div>
-          <div class="stat-label">Sentiment</div>
-        </div>
+      <!-- Duration -->
+      <div class="duration-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span id="duration">0:00</span>
       </div>
 
-      <!-- AI Insight Card - Primary coaching interface -->
-      <div class="ai-insight" id="ai-insight">
-        <div class="insight-header">
-          <span class="insight-icon">🧠</span>
-          <span class="insight-title" id="insight-title">AI Analysis</span>
-          <span class="insight-time" id="insight-time"></span>
+      <!-- AI Suggestion -->
+      <div class="suggestion-card glass" id="suggestion-card">
+        <div class="suggestion-header">
+          <div class="suggestion-icon">💡</div>
+          <div>
+            <div class="suggestion-label">Suggested Response</div>
+            <div class="suggestion-type" id="suggestion-type">Listening...</div>
+          </div>
         </div>
-        <div class="insight-content" id="insight-content">
-          Listening to your call... AI analysis will appear here based on the full conversation context.
+        <div class="suggestion-content" id="suggestion-content">
+          Start talking and the coach will analyze your conversation to provide helpful suggestions.
         </div>
-        <div class="say-this" id="say-this-box" style="display: none;">
-          <div class="say-this-label">Say This Now <button class="copy-btn" onclick="copySuggestion()">Copy</button></div>
-          <div class="say-this-text" id="say-this-text"></div>
+        <div class="followup-questions" id="followup-box" style="display: none;">
+          <div class="followup-label">Follow-up Questions</div>
+          <div class="followup-list" id="followup-text"></div>
         </div>
-        <div class="followup-box" id="followup-box" style="display: none;">
-          <div class="followup-label">Follow-Up Questions</div>
-          <div class="followup-text" id="followup-text"></div>
-        </div>
-        <div class="context-tags" id="context-tags"></div>
+        <button class="copy-btn" onclick="copySuggestion()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          Copy
+        </button>
       </div>
 
-      <!-- Prospect Profile (built from conversation) -->
-      <div class="prospect-profile" id="prospect-profile">
-        <h3>Prospect Profile (AI-Detected)</h3>
-        <div class="profile-grid">
-          <div class="profile-item">
-            <div class="label">Buyer Type</div>
-            <div class="value" id="profile-buyer-type">Analyzing...</div>
-          </div>
-          <div class="profile-item">
-            <div class="label">Main Concern</div>
-            <div class="value" id="profile-main-concern">Analyzing...</div>
-          </div>
-          <div class="profile-item">
-            <div class="label">Decision Maker?</div>
-            <div class="value" id="profile-decision-maker">Unknown</div>
-          </div>
-          <div class="profile-item">
-            <div class="label">Budget Signals</div>
-            <div class="value" id="profile-budget">Unknown</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Transcription -->
-      <div class="transcription-box">
-        <h3>
-          Live Transcription
+      <!-- Transcript -->
+      <div class="transcript-card glass">
+        <div class="transcript-header">
+          <span class="transcript-label">Live Transcript</span>
           <span class="word-count" id="word-count">0 words</span>
-        </h3>
-        <div class="transcription-text" id="transcription"></div>
+        </div>
+        <div class="transcript-text" id="transcript">
+          <span style="color: var(--text-muted);">Waiting for speech...</span>
+        </div>
       </div>
 
       <!-- Quick Scripts -->
-      <div class="quick-scripts">
-        <h3>Quick Scripts</h3>
-        <div class="script-tabs">
-          <button class="script-tab active" data-category="all">All</button>
-          <button class="script-tab" data-category="price">Price</button>
-          <button class="script-tab" data-category="time">Time/Stalls</button>
-          <button class="script-tab" data-category="trust">Trust/Fear</button>
-          <button class="script-tab" data-category="authority">Authority</button>
-          <button class="script-tab" data-category="roi">ROI</button>
-          <button class="script-tab" data-category="process">Process</button>
+      <div class="scripts-card glass">
+        <div class="scripts-header">
+          <span class="scripts-title">Quick Scripts</span>
         </div>
-        <div class="script-grid" id="script-grid"></div>
+        <div class="scripts-tabs">
+          <button class="tab active" data-category="all">All</button>
+          <button class="tab" data-category="price">Price</button>
+          <button class="tab" data-category="time">Stalls</button>
+          <button class="tab" data-category="trust">Trust</button>
+          <button class="tab" data-category="authority">Authority</button>
+          <button class="tab" data-category="process">Process</button>
+        </div>
+        <div class="scripts-grid" id="scripts-grid"></div>
       </div>
 
-      <button class="btn btn-danger btn-large" id="stop-btn">Stop Listening</button>
+      <button class="stop-btn" id="stop-btn">Stop Listening</button>
     </section>
   </div>
 
@@ -511,826 +616,281 @@
   <script>
     // ============ CONFIG ============
     const GEMINI_API_KEY = 'AIzaSyB6RKagdAunFoIvNQ3q97E1XKvPgIkqEv8';
-    const ANALYSIS_INTERVAL = 10000; // Analyze every 10 seconds
-    const MIN_WORDS_FOR_ANALYSIS = 12; // Need at least 12 words before analyzing
+    const ANALYSIS_INTERVAL = 10000;
+    const MIN_WORDS = 12;
 
-    // ============ COMPLETE OBJECTION DATABASE ============
-    const OBJECTIONS_DB = {
-      // PRICE OBJECTIONS
-      "P01": {
-        code: "P01",
-        category: "price",
-        objection: "That's more than I was expecting",
-        triggers: ["more than I was expecting", "expensive", "higher than I thought", "didn't expect", "sticker shock"],
-        rebuttal: "Totally. Let's anchor it to what you *get* and what it removes for you—then you can decide if it's worth it.",
-        talkTrack: "Totally. Let's anchor it to what you get. The program isn't a fee for 'info'—it's access to the community + VentHub savings + the playbook + support that compresses your timeline. If it saves you even one bad machine decision, one bad location, or gets you paid back faster, the math flips. Let me walk you through what's included and what the first 30–45 days look like so you can sanity-check ROI in real terms.",
-        followUp: ["What did you expect it to be?", "What are you comparing it to?", "What would make it a no-brainer?"],
-        proofPoints: "Value stack: community + savings + templates + support; avoid expensive mistakes",
-        cta: "If we can line up the path + terms that fit your cashflow today, are you ready to enroll now?",
-        technique: "Reframe + Value Stacking",
-        oneLiner: "Let's talk about what you get."
-      },
-      "P02": {
-        code: "P02",
-        category: "price",
-        objection: "Six K is a big chunk of what I have",
-        triggers: ["big chunk", "don't have", "cash is tight", "all my savings", "lot of money"],
-        rebuttal: "I get it. We don't discount, but we *can* make the cashflow sane—most people use installments so revenue covers the payment.",
-        talkTrack: "I get it. There's not much we can do on discounting, but we can spread it out so you can start moving. A path a lot of people take is installments—so you enroll now, execute, and by month 2–3 the business is producing and covering the expense. Want me to show you the payment options that match your situation?",
-        followUp: ["What's your comfort monthly number?", "Roughly what's your credit score?", "Do you prefer part-upfront + part-monthly?"],
-        proofPoints: "Installment path is common; revenue covers payment by month 2–3",
-        cta: "Let's pick the plan that doesn't choke your runway—then I'll send the link and walk you through it live.",
-        technique: "No Discount + Payment Plan",
-        oneLiner: "We can kick it out over the year."
-      },
-      "P03": {
-        code: "P03",
-        category: "price",
-        objection: "Can you give me a deal / discount?",
-        triggers: ["deal", "discount", "cheaper", "Black Friday", "promo", "coupon"],
-        rebuttal: "We keep pricing consistent for fairness. What I *can* do is add value today (bonus months/leads) instead of discounting.",
-        talkTrack: "Totally fair ask. We don't discount the price—everyone comes in at the same number so there's no community drama later. What I *can* do, since you're enrolling on the first call, is add a bonus: extra months of access / bonus leads applied to any tier. That keeps it fair while still helping you win faster.",
-        followUp: ["If I add X bonus today, are you comfortable moving forward now?", "Which bonus matters more: time or leads?"],
-        proofPoints: "Fairness policy; bonus months; bonus leads (today only)",
-        cta: "If we lock this in today, I'll add the bonus and we'll get you onboarded immediately. Sound good?",
-        technique: "No Discount + Reason + Bonus",
-        oneLiner: "Everyone comes in at the same price."
-      },
-      "P04": {
-        code: "P04",
-        category: "price",
-        objection: "I'm hesitant seeing this number",
-        triggers: ["hesitant", "nervous", "scared", "big number", "intimidating"],
-        rebuttal: "Makes sense. The best things are on the other side of fear—let's future-pace and compare worst vs best case.",
-        talkTrack: "Makes sense—this is a real decision. The best things in life are on the other side of fear. Picture the version of you 12 months from now that took the leap and executed—what would they tell you right now? Worst case: you're back where you started and you've learned fast. Best case: your life looks different in a year. Let's make this rational: what would you need to see to feel confident today?",
-        followUp: ["What specifically makes you hesitant: trust, cashflow, or clarity?", "What would remove the risk for you?"],
-        proofPoints: "Future pacing; worst/best case framing; normalization",
-        cta: "If we solve the one thing causing hesitation, are you ready to enroll today?",
-        technique: "Empathy + Future Pacing + Risk Reversal",
-        oneLiner: "Best things are on the other side of fear."
-      },
-      "P05": {
-        code: "P05",
-        category: "price",
-        objection: "Are you taking a % of my revenue?",
-        triggers: ["percentage", "60%", "cut", "revenue share", "royalty"],
-        rebuttal: "No—flat fee. Then low monthly for year-2 access. No revenue share.",
-        talkTrack: "Great catch—no revenue share. It's a flat fee for the year based on tier, then it's $100/mo in year two to keep access. We're not taking a cut of your revenue. You keep the upside; we compress the timeline and reduce COG through VentHub.",
-        followUp: ["What made you think it was %?", "With flat fee clarified, does the math make more sense?"],
-        proofPoints: "Flat fee; $100/mo year 2; keep upside",
-        cta: "Now that that's clear, do you want to enroll on Bronze/Silver today?",
-        technique: "Transparency + Correct Model",
-        oneLiner: "It's not a percentage—it's a flat fee."
-      },
-
-      // TIME/READINESS OBJECTIONS
-      "T01": {
-        code: "T01",
-        category: "time",
-        objection: "Can we delay entry for two weeks?",
-        triggers: ["delay", "start later", "two weeks", "next month", "not ready yet"],
-        rebuttal: "No problem. We'll delay your start—and I can add a bonus month so you're not rushed.",
-        talkTrack: "No problem. We can delay your start. To keep it a win-win, I'll add a bonus month of membership so you're not losing time. Enroll now, lock in the bonus, start when your schedule opens up.",
-        followUp: ["When exactly do you want your start date?", "What would you do in week 0?"],
-        proofPoints: "Flexibility; bonus month; protect momentum",
-        cta: "Let's enroll today and set your start date for ___.",
-        technique: "Flexibility + Bonus",
-        oneLiner: "No problem—I'll add a bonus month."
-      },
-      "T02": {
-        code: "T02",
-        category: "time",
-        objection: "I need 24 hours to think about it",
-        triggers: ["think about it", "sleep on it", "tomorrow", "few days", "time to decide"],
-        rebuttal: "Totally. Before you go—what specifically do you need to think about: trust, money, or fit?",
-        talkTrack: "Totally. Before you go, help me out—what specifically do you need to think about? Is it trust, cashflow, or fit? If we can get clarity on that one thing right now, you won't need to carry it into tomorrow.",
-        followUp: ["What's the one concern?", "Who else needs to weigh in?", "What info would make it obvious?"],
-        proofPoints: "Probe → isolate → resolve; avoid drift",
-        cta: "If we clear that up, are you good to enroll today?",
-        technique: "Isolate Objection",
-        oneLiner: "What specifically do you need to think about?"
-      },
-
-      // TRUST/FEAR OBJECTIONS
-      "F01": {
-        code: "F01",
-        category: "trust",
-        objection: "You better not be scamming me",
-        triggers: ["scam", "shady", "trust", "legitimacy", "legit", "real"],
-        rebuttal: "Totally get it. Verify us—here's how to check. I'll give you the receipts.",
-        talkTrack: "Totally get it—world's shady. Please do your due diligence. Look us up, check the community, and I'll send verification info. I'd rather you feel 100% solid than pressured. What would you need to see to feel safe moving forward today?",
-        followUp: ["What would prove legitimacy for you?", "Want screenshots/outcomes?", "Want verification info now?"],
-        proofPoints: "Encourage verification; provide socials + leadership; community proof",
-        cta: "If I send verification now, can we finish enrollment on this call?",
-        technique: "Transparency + Encourage Verification",
-        oneLiner: "Please verify us—I want you confident."
-      },
-      "F02": {
-        code: "F02",
-        category: "trust",
-        objection: "I'm anxious and nervous",
-        triggers: ["nervous", "anxious", "scared", "worried", "afraid"],
-        rebuttal: "That's normal—part of the process. Most people feel it before a new step.",
-        talkTrack: "That's normal—part of the process. I'd be surprised if you weren't nervous. Most people are. Everyone on the other side felt the exact same thing and still executed. Let's make the next step small and clear: enroll, then first actions are ___.",
-        followUp: ["What's the fear specifically?", "What's the smallest first step you're comfortable with?"],
-        proofPoints: "Normalization + social proof; micro-commitment",
-        cta: "Let's do the first step together right now (enroll + book onboarding).",
-        technique: "Normalization + Social Proof",
-        oneLiner: "I would not expect you to not feel nervous."
-      },
-
-      // TERRITORY/LEADS OBJECTIONS
-      "L01": {
-        code: "L01",
-        category: "roi",
-        objection: "Are there other members in my area?",
-        triggers: ["anyone in my area", "competition", "butting heads", "saturated", "too many"],
-        rebuttal: "Good question—here are the actual numbers, and it's not saturated.",
-        talkTrack: "Good question. In your metro, not a ton—roughly a few. In your specific area, historically only a couple. Locations aren't singletons; the bigger differentiator is execution speed, which is what we help you do.",
-        followUp: ["What's your exact city/zip?", "What radius do you want?"],
-        proofPoints: "Specific counts; scarcity; execution differentiator",
-        cta: "If territory isn't crowded, are you ready to enroll today?",
-        technique: "Transparency + Specificity",
-        oneLiner: "Not a ton—like three or four."
-      },
-      "L02": {
-        code: "L02",
-        category: "roi",
-        objection: "I already have location ideas. Do I need leads?",
-        triggers: ["I have ideas", "DIY", "don't need leads", "own locations", "found spots"],
-        rebuttal: "If you can generate your own, don't overpay. Start lean, upgrade later if needed.",
-        talkTrack: "Honestly, with your background—just to be transparent—you may not need the lead package. Start with the tier that gives you the playbook + community. If later you want lead gen or 1:1, you can upgrade within 90 days and your year resets from that day.",
-        followUp: ["How comfortable are you approaching locations?", "How many weekly?", "Start Bronze and keep upgrade optional?"],
-        proofPoints: "Radical transparency builds trust; upgrade path",
-        cta: "Let's enroll you in the right tier today and keep upgrade optional.",
-        technique: "Consultative Downsell",
-        oneLiner: "If I were you, I wouldn't overpay for that."
-      },
-
-      // ROI OBJECTIONS
-      "R01": {
-        code: "R01",
-        category: "roi",
-        objection: "I'd need to make 200K/year before leaving my job",
-        triggers: ["need 200k", "replace income", "quit job", "leave my job", "full time"],
-        rebuttal: "That's attainable. Let's map units + timeline based on your market and time commitment.",
-        talkTrack: "Totally. 200K/year is attainable. People in the community are doing in excess of that. The key is mapping it back to units + locations + throughput. What's your target monthly take-home and how aggressive do you want to be in the first 90 days?",
-        followUp: ["What's your target monthly take-home?", "Hours per week?", "Part-time ramp or full-time push?"],
-        proofPoints: "Social proof + backsolve; realistic plan",
-        cta: "If the path is clear and realistic, are you ready to start now?",
-        technique: "Social Proof + Backsolve",
-        oneLiner: "Let's map it to units and timeline."
-      },
-      "R02": {
-        code: "R02",
-        category: "roi",
-        objection: "How many machines to get to $8K/month?",
-        triggers: ["how many machines", "8k month", "math", "numbers", "calculation"],
-        rebuttal: "Depends on location. Many finance because it's cashflow once plugged in; we scale off performance.",
-        talkTrack: "Great question. It depends on location performance, but the principle is: once it's plugged in, it's cashflow. That's why many finance—use revenue to pay it down. We'll map a realistic plan based on your market and categories.",
-        followUp: ["What locations are you targeting?", "What timeline to 8K?", "What category mix?"],
-        proofPoints: "Cashflow framing; scaling plan",
-        cta: "Let's enroll and map your unit plan in onboarding.",
-        technique: "Transparency + Financing Frame",
-        oneLiner: "The minute you plug it in, it's cashflow."
-      },
-
-      // CONTRACT/TERMS OBJECTIONS
-      "C01": {
-        code: "C01",
-        category: "process",
-        objection: "If a location underperforms, can I remove the machine?",
-        triggers: ["take back", "underperform", "remove machine", "stuck", "locked in"],
-        rebuttal: "Yes—callback contracts. We'll help you structure the clause language.",
-        talkTrack: "Yes. Callback contracts let you remove if performance isn't within an agreed range. You give notice and remove after a set period. We'll help you with templates and negotiation.",
-        followUp: ["Are you worried about being locked in?", "What notice window feels fair?"],
-        proofPoints: "Callback contracts; templates; negotiation support",
-        cta: "If you're not locked in, are you good to move forward today?",
-        technique: "Education + Reassurance",
-        oneLiner: "Callback contracts protect you."
-      },
-      "C02": {
-        code: "C02",
-        category: "process",
-        objection: "What happens after the first year?",
-        triggers: ["after year", "renewal", "second year", "year two", "ongoing"],
-        rebuttal: "Year 2 is $100/month for core access—no surprises.",
-        talkTrack: "Good question. First year is full access. After that it's $100/month to keep access to the core (community/VentHub). We're upfront so there are no surprises.",
-        followUp: ["Do you want ongoing access?", "Is $100/mo reasonable for savings + community?"],
-        proofPoints: "$100/mo year 2; transparency",
-        cta: "If that's clear, want to enroll now?",
-        technique: "Transparency",
-        oneLiner: "Second year is $100/month."
-      },
-
-      // FINANCING OBJECTIONS
-      "FIN01": {
-        code: "FIN01",
-        category: "process",
-        objection: "Will this be a hard credit pull?",
-        triggers: ["hard pull", "credit hit", "soft pull", "credit score", "affect credit"],
-        rebuttal: "Starts soft; finalizing can be hard. Impact fades; bigger lever is execution speed.",
-        talkTrack: "Good question. It starts as a soft pull; finalizing can become a hard pull. Those hits fade over time. The bigger lever is getting you live and cashflowing quickly.",
-        followUp: ["Buying a house soon?", "Pay-in-full/hybrid better?", "What's your credit goal?"],
-        proofPoints: "Soft→hard clarity; impact fades",
-        cta: "Given that, do you want pay-in-full, hybrid, or installment?",
-        technique: "Transparency + Minimize Concern",
-        oneLiner: "Soft pull first—finalizing can be hard."
-      },
-      "FIN02": {
-        code: "FIN02",
-        category: "process",
-        objection: "My financing application was declined",
-        triggers: ["declined", "denied", "not approved", "rejected", "didn't qualify"],
-        rebuttal: "We can troubleshoot inputs or pivot to pay-in-full/hybrid. Declines aren't deal-killers.",
-        talkTrack: "No worries—declines happen. Often it's an input issue (income entered too low). We can resubmit correctly, or do a hybrid: pay what's comfortable upfront and finance the rest. Either way we can get you started.",
-        followUp: ["What income did you enter?", "Gross annual?", "Resubmit or hybrid?"],
-        proofPoints: "Troubleshoot; resubmit; pivot",
-        cta: "Let's pick resubmit or hybrid now so you don't lose momentum.",
-        technique: "Problem Solving",
-        oneLiner: "Declines aren't deal-killers."
-      },
-
-      // AUTHORITY/DECISION OBJECTIONS
-      "AUTH01": {
-        code: "AUTH01",
-        category: "authority",
-        objection: "I need to talk to my spouse/partner",
-        triggers: ["wife", "husband", "partner", "talk to them", "spouse", "significant other"],
-        rebuttal: "Totally—have you already discussed it? If not, let's loop them in or schedule a 3-way call.",
-        talkTrack: "Totally. Have you two already discussed this and what a yes would look like? If they need to weigh in, we can do a quick 3-way call or I'll send a tight recap for you both to review together.",
-        followUp: ["Are they supportive in principle?", "What's their main concern?", "Can we loop them in for 10 min?"],
-        proofPoints: "3-way call protocol; decision alignment",
-        cta: "Let's add them now or schedule the 3-way today/tomorrow with an agenda.",
-        technique: "Decision Process + Next Step",
-        oneLiner: "Have you two discussed what a yes looks like?"
-      },
-      "AUTH02": {
-        code: "AUTH02",
-        category: "authority",
-        objection: "My spouse won't participate",
-        triggers: ["spouse not participating", "not involved", "won't join", "doesn't want to talk"],
-        rebuttal: "No worries—just confirm they're aware and aligned so it doesn't blindside later.",
-        talkTrack: "No worries. Just to make sure it doesn't become a surprise later—are you two on the same page about you doing this?",
-        followUp: ["Are they aware of the investment amount?", "Any concerns they've raised?"],
-        proofPoints: "Hidden spouse objection prevention",
-        cta: "If they're aligned, let's get you enrolled now.",
-        technique: "Gentle Probe",
-        oneLiner: "Is it something the two of you have discussed?"
-      },
-
-      // COMPARISON OBJECTIONS
-      "COMP01": {
-        code: "COMP01",
-        category: "trust",
-        objection: "I'm looking at other options / competitors",
-        triggers: ["comparing", "shopping", "other program", "competitors", "other options"],
-        rebuttal: "Totally. Let's compare on outcomes: speed to first location, savings, support, and risk control.",
-        talkTrack: "Makes sense to compare. Let's do it cleanly: what's the other option, how do they help you get your first location, what's their cost-of-goods advantage, and what support do you get when you hit objections? We win on execution speed + savings + community—if that's what you want, we should enroll now.",
-        followUp: ["What are you comparing to?", "What matters most: speed, savings, support, or financing?"],
-        proofPoints: "Define criteria; outcome comparison",
-        cta: "If we're best on your criteria, are you ready to lock it in today?",
-        technique: "Criteria Comparison",
-        oneLiner: "Let's compare on outcomes, not vibes."
-      },
-
-      // VALUE OBJECTIONS
-      "VAL01": {
-        code: "VAL01",
-        category: "price",
-        objection: "I'm paying for info vs paying for the business",
-        triggers: ["paying for info", "course", "education", "just information", "youtube"],
-        rebuttal: "Core is VentHub savings + access, not just info. Even Costco/Sam's costs more.",
-        talkTrack: "Totally. There is education, but the core is VentHub—ongoing savings on equipment and products. Even if you went to Costco or Sam's, you'd still pay more than through VentHub. So it's savings + execution support.",
-        followUp: ["Biggest costs you're worried about?", "Savings vs coaching—what matters more?"],
-        proofPoints: "COG savings; ongoing access",
-        cta: "If it's savings + execution support, are you ready to start today?",
-        technique: "Reframe to Ongoing Savings",
-        oneLiner: "Core is VentHub—savings beat Costco/Sam's."
-      },
-
-      // TIER OBJECTIONS
-      "TIER01": {
-        code: "TIER01",
-        category: "process",
-        objection: "Can I upgrade later?",
-        triggers: ["upgrade", "later", "switch tiers", "change plan", "move up"],
-        rebuttal: "Yes—upgrade within 90 days and your 12 months restarts from upgrade date.",
-        talkTrack: "Yes. Within 90 days you can upgrade. When you upgrade, your 12 months restarts from that day so you're not losing time.",
-        followUp: ["Start lean and keep upgrade optional?", "Which support might you need later?"],
-        proofPoints: "90-day upgrade window; year resets",
-        cta: "Let's enroll in the tier that fits now and keep upgrade optional.",
-        technique: "Flexibility + Bonus",
-        oneLiner: "Upgrade within 90 days—year restarts."
-      },
-      "TIER02": {
-        code: "TIER02",
-        category: "process",
-        objection: "Should I start Bronze then upgrade?",
-        triggers: ["start bronze", "base layer", "lowest tier", "minimum"],
-        rebuttal: "Depends on learning style: accountability vs autonomy. Either path works.",
-        talkTrack: "Great question. It depends on you. Some people want hand-holding and a scheduled 1:1 that keeps them accountable. Others prefer Q&A calls and move fast on their own. Which are you?",
-        followUp: ["Accountability or autonomy?", "How fast do you want first location?"],
-        proofPoints: "Self-selection; consultative",
-        cta: "Based on your style, let's pick and enroll now.",
-        technique: "Consultative Choice",
-        oneLiner: "I'm gonna flip it back to you—it depends on you."
-      },
-
-      // PROCESS/TECH OBJECTIONS
-      "PROC01": {
-        code: "PROC01",
-        category: "process",
-        objection: "I didn't get the payment link",
-        triggers: ["no link", "didn't get it", "email missing", "where's the link"],
-        rebuttal: "Check inbox/spam; I'll resend and stay on with you until it's done.",
-        talkTrack: "No problem. Check inbox and spam. I'm resending now. Stay with me and we'll complete it together.",
-        followUp: ["What email?", "Check spam/promotions?", "Want text link?"],
-        proofPoints: "Resend; spam; walk-through",
-        cta: "Once it opens, tell me what screen you see.",
-        technique: "Hand-holding",
-        oneLiner: "Stay with me—we'll do it together."
-      },
-
-      // PRODUCT OBJECTIONS
-      "PROD01": {
-        code: "PROD01",
-        category: "process",
-        objection: "Does the price include delivery?",
-        triggers: ["delivery included", "shipping", "freight", "installation"],
-        rebuttal: "Yes—delivery included. White glove extra; worth it for the first machine.",
-        talkTrack: "Yes—delivery is included. White glove isn't; that's unboxing and placement. I recommend white glove at least for the first machine.",
-        followUp: ["Want white glove?", "Where's the location (dock/stairs)?"],
-        proofPoints: "Clear inclusion/exclusion",
-        cta: "If that works, are you ready to enroll and we coordinate logistics after?",
-        technique: "Transparency + Recommendation",
-        oneLiner: "Delivery included—white glove extra."
-      },
-      "PROD02": {
-        code: "PROD02",
-        category: "process",
-        objection: "How do you prevent theft?",
-        triggers: ["theft", "take everything", "cameras", "stealing", "security"],
-        rebuttal: "It's like the airport store: tap to unlock, cameras track, charges when door closes.",
-        talkTrack: "Great question. They tap card to unlock; AI cameras track what's taken. When the door closes, it tallies and charges—basically like that convenience store at the airport.",
-        followUp: ["Does that analogy make sense?", "What location type?"],
-        proofPoints: "Analogy + flow explanation",
-        cta: "If tech is clear, want to move forward now?",
-        technique: "Education + Analogy",
-        oneLiner: "Like the airport convenience store."
-      }
+    // ============ OBJECTION DATABASE ============
+    const OBJECTIONS = {
+      "P01": { code: "P01", category: "price", objection: "More than expected", triggers: ["more than I was expecting", "expensive", "higher than I thought"], rebuttal: "Totally. Let's anchor it to what you *get* and what it removes for you—then you can decide if it's worth it.", talkTrack: "Totally. Let's anchor it to what you get. The program isn't a fee for 'info'—it's access to the community + VentHub savings + the playbook + support that compresses your timeline. If it saves you even one bad machine decision, one bad location, or gets you paid back faster, the math flips.", followUp: ["What did you expect it to be?", "What are you comparing it to?"], technique: "Reframe + Value Stack", oneLiner: "Let's talk about what you get." },
+      "P02": { code: "P02", category: "price", objection: "Big chunk of savings", triggers: ["big chunk", "don't have", "cash is tight", "lot of money"], rebuttal: "I get it. We don't discount, but we *can* make the cashflow sane—most people use installments.", talkTrack: "I get it. There's not much we can do on discounting, but we can spread it out so you can start moving. A path a lot of people take is installments—so you enroll now, execute, and by month 2–3 the business is producing and covering the expense.", followUp: ["What's your comfort monthly number?", "Do you prefer part-upfront + part-monthly?"], technique: "No Discount + Payment Plan", oneLiner: "We can spread it out." },
+      "P03": { code: "P03", category: "price", objection: "Discount request", triggers: ["deal", "discount", "cheaper", "Black Friday"], rebuttal: "We keep pricing consistent for fairness. What I *can* do is add value today instead of discounting.", talkTrack: "Totally fair ask. We don't discount the price—everyone comes in at the same number so there's no community drama later. What I *can* do, since you're enrolling on the first call, is add a bonus: extra months of access or bonus leads.", followUp: ["If I add a bonus today, are you comfortable moving forward?"], technique: "No Discount + Bonus", oneLiner: "Everyone comes in at the same price." },
+      "P04": { code: "P04", category: "price", objection: "Hesitant about price", triggers: ["hesitant", "nervous", "scared", "big number"], rebuttal: "Makes sense. The best things are on the other side of fear—let's compare worst vs best case.", talkTrack: "Makes sense—this is a real decision. The best things in life are on the other side of fear. Picture the version of you 12 months from now that took the leap and executed—what would they tell you right now?", followUp: ["What specifically makes you hesitant?", "What would remove the risk for you?"], technique: "Future Pacing", oneLiner: "Best things are on the other side of fear." },
+      "T01": { code: "T01", category: "time", objection: "Delay start", triggers: ["delay", "start later", "two weeks", "next month"], rebuttal: "No problem. We'll delay your start—and I can add a bonus month so you're not rushed.", talkTrack: "No problem. We can delay your start. To keep it a win-win, I'll add a bonus month of membership so you're not losing time. Enroll now, lock in the bonus, start when your schedule opens up.", followUp: ["When exactly do you want your start date?"], technique: "Flexibility + Bonus", oneLiner: "No problem—I'll add a bonus month." },
+      "T02": { code: "T02", category: "time", objection: "Need to think about it", triggers: ["think about it", "sleep on it", "tomorrow", "few days"], rebuttal: "Totally. Before you go—what specifically do you need to think about?", talkTrack: "Totally. Before you go, help me out—what specifically do you need to think about? Is it trust, cashflow, or fit? If we can get clarity on that one thing right now, you won't need to carry it into tomorrow.", followUp: ["What's the one concern?", "Who else needs to weigh in?"], technique: "Isolate Objection", oneLiner: "What specifically do you need to think about?" },
+      "F01": { code: "F01", category: "trust", objection: "Scam concern", triggers: ["scam", "shady", "trust", "legitimacy", "legit"], rebuttal: "Totally get it. Verify us—here's how to check. I'll give you the receipts.", talkTrack: "Totally get it—world's shady. Please do your due diligence. Look us up, check the community, and I'll send verification info. I'd rather you feel 100% solid than pressured.", followUp: ["What would prove legitimacy for you?", "Want verification info now?"], technique: "Transparency + Verification", oneLiner: "Please verify us—I want you confident." },
+      "F02": { code: "F02", category: "trust", objection: "Feeling nervous", triggers: ["nervous", "anxious", "scared", "worried", "afraid"], rebuttal: "That's normal—part of the process. Most people feel it before a new step.", talkTrack: "That's normal—part of the process. I'd be surprised if you weren't nervous. Most people are. Everyone on the other side felt the exact same thing and still executed.", followUp: ["What's the fear specifically?", "What's the smallest first step you're comfortable with?"], technique: "Normalization", oneLiner: "I would not expect you to not feel nervous." },
+      "AUTH01": { code: "AUTH01", category: "authority", objection: "Need to talk to spouse", triggers: ["wife", "husband", "partner", "spouse", "talk to them"], rebuttal: "Totally—have you already discussed it? If not, let's loop them in or schedule a 3-way call.", talkTrack: "Totally. Have you two already discussed this and what a yes would look like? If they need to weigh in, we can do a quick 3-way call or I'll send a tight recap for you both to review together.", followUp: ["Are they supportive in principle?", "Can we loop them in for 10 min?"], technique: "3-Way Call Protocol", oneLiner: "Have you two discussed what a yes looks like?" },
+      "AUTH02": { code: "AUTH02", category: "authority", objection: "Spouse won't participate", triggers: ["spouse not participating", "not involved", "won't join"], rebuttal: "No worries—just confirm they're aware and aligned so it doesn't blindside later.", talkTrack: "No worries. Just to make sure it doesn't become a surprise later—are you two on the same page about you doing this?", followUp: ["Are they aware of the investment amount?"], technique: "Gentle Probe", oneLiner: "Is it something the two of you have discussed?" },
+      "R01": { code: "R01", category: "process", objection: "Income replacement goal", triggers: ["need 200k", "replace income", "quit job", "leave my job"], rebuttal: "That's attainable. Let's map units + timeline based on your market.", talkTrack: "Totally. 200K/year is attainable. People in the community are doing in excess of that. The key is mapping it back to units + locations + throughput.", followUp: ["What's your target monthly take-home?", "Part-time ramp or full-time push?"], technique: "Backsolve", oneLiner: "Let's map it to units and timeline." },
+      "R02": { code: "R02", category: "process", objection: "Machine math question", triggers: ["how many machines", "8k month", "math", "numbers"], rebuttal: "Depends on location. Once it's plugged in, it's cashflow.", talkTrack: "Great question. It depends on location performance, but the principle is: once it's plugged in, it's cashflow. That's why many finance—use revenue to pay it down.", followUp: ["What locations are you targeting?", "What timeline?"], technique: "Cashflow Frame", oneLiner: "The minute you plug it in, it's cashflow." },
+      "COMP01": { code: "COMP01", category: "trust", objection: "Comparing options", triggers: ["comparing", "shopping", "other program", "competitors"], rebuttal: "Totally. Let's compare on outcomes: speed to first location, savings, support.", talkTrack: "Makes sense to compare. Let's do it cleanly: what's the other option, how do they help you get your first location, what's their cost-of-goods advantage?", followUp: ["What are you comparing to?", "What matters most to you?"], technique: "Criteria Comparison", oneLiner: "Let's compare on outcomes, not vibes." },
+      "C02": { code: "C02", category: "process", objection: "Year 2 pricing", triggers: ["after year", "renewal", "second year", "year two"], rebuttal: "Year 2 is $100/month for core access—no surprises.", talkTrack: "Good question. First year is full access. After that it's $100/month to keep access to the core (community/VentHub). We're upfront so there are no surprises.", followUp: ["Do you want ongoing access?"], technique: "Transparency", oneLiner: "Second year is $100/month." },
+      "TIER01": { code: "TIER01", category: "process", objection: "Upgrade question", triggers: ["upgrade", "switch tiers", "change plan"], rebuttal: "Yes—upgrade within 90 days and your 12 months restarts.", talkTrack: "Yes. Within 90 days you can upgrade. When you upgrade, your 12 months restarts from that day so you're not losing time.", followUp: ["Start lean and keep upgrade optional?"], technique: "Flexibility", oneLiner: "Upgrade within 90 days—year restarts." }
     };
 
-    // ============ POWER PHRASES ============
-    const POWER_PHRASES = {
-      fear: { phrase: "The best things in life are on the other side of fear.", when: "Hesitation at price/commitment" },
-      normalization: { phrase: "I would not expect you to not feel nervous—most people do.", when: "When anxious/nervous" },
-      fairness: { phrase: "Everyone comes in at the same price—keeps it fair in the community.", when: "Discount request" },
-      cashflow: { phrase: "The minute you plug it in, it's cashflow.", when: "ROI/machine-count questions" },
-      consultative: { phrase: "Just to be transparent—if I were you, I wouldn't overpay for that tier.", when: "DIY-capable prospects" },
-      probe: { phrase: "What specifically do you need to think about—trust, cashflow, or fit?", when: "'Need to think' stall" },
-      commitment: { phrase: "Do you feel ready to commit to yourself here?", when: "Trial close after agreement" },
-      support: { phrase: "Stay with me—we'll do it together.", when: "Tech/payment friction" },
-      options: { phrase: "We don't negotiate price, but we do have a few options to make payments work.", when: "Affordability" },
-      spouse: { phrase: "Have you two discussed what a yes would look like?", when: "Spouse/partner involved" },
-      comparison: { phrase: "Let's compare on outcomes: speed, savings, support, risk.", when: "Competitor shopping" }
-    };
+    // ============ AI PLAYBOOK ============
+    const PLAYBOOK = `You are a helpful sales coach for VendingPreneurs ($6K vending coaching program).
+Analyze the conversation and provide helpful suggestions—not critiques.
 
-    // ============ TECHNIQUES ============
-    const TECHNIQUES = {
-      "reframe_value": { name: "Reframe + Value Stack", steps: "Acknowledge → shift from price to outcomes/inclusions → tie to timeline compression", anchor: "Let's talk about what you get." },
-      "no_discount_bonus": { name: "No Discount + Reason + Bonus", steps: "Policy + fairness → offer bonus months/leads instead of discount", anchor: "Everyone comes in at the same price." },
-      "isolate_objection": { name: "Isolate the Objection", steps: "Ask: trust vs money vs fit → solve one thing", anchor: "What specifically do you need to think about?" },
-      "normalize_emotion": { name: "Normalize Emotion", steps: "Name it normal → social proof → micro next step", anchor: "Part of the process." },
-      "flexibility_bonus": { name: "Flexibility + Bonus", steps: "Say yes to timing; add bonus month; close now", anchor: "No problem—I'll add a bonus month." },
-      "consultative_downsell": { name: "Consultative Downsell", steps: "Advise lower tier when appropriate; offer upgrade path", anchor: "If I were you, I wouldn't overpay." },
-      "three_way_protocol": { name: "Three-Way Decision Protocol", steps: "Confirm spouse awareness → add spouse now or schedule 3-way w/ agenda", anchor: "Can we loop them in for 10 minutes?" }
-    };
+OBJECTION RESPONSES:
+${Object.values(OBJECTIONS).map(o => `[${o.code}] "${o.objection}" → "${o.talkTrack}"\nFollow-ups: ${o.followUp.join(' | ')}`).join('\n\n')}
 
-    // ============ BUILD COMPLETE PLAYBOOK FOR AI ============
-    const SALES_PLAYBOOK = `
-You are a real-time sales coach for VendingPreneurs, a vending machine coaching business.
-Your job is to analyze the live conversation and provide SPECIFIC, ACTIONABLE coaching using our proven objection handling playbook.
-
-PRODUCT: $6,000 vending machine coaching program (Bronze/Silver/Gold tiers)
-- Includes training, community, VentHub savings, location leads, support
-- Financing available (~$600/month over 12 months)
-- Year 2 is $100/month for continued access
-- Members typically get first location in 30 days
-- Average machine nets $200-400/month profit
-
-=== COMPLETE OBJECTION DATABASE ===
-
-${Object.values(OBJECTIONS_DB).map(obj => `
-[${obj.code}] ${obj.category.toUpperCase()}: "${obj.objection}"
-Triggers: ${obj.triggers.join(', ')}
-Rebuttal: ${obj.rebuttal}
-Full Talk Track: ${obj.talkTrack}
-Follow-Up Questions: ${obj.followUp.join(' | ')}
-Proof Points: ${obj.proofPoints}
-CTA: ${obj.cta}
-Technique: ${obj.technique}
-One-Liner: "${obj.oneLiner}"
-`).join('\n')}
-
-=== POWER PHRASES (Use These Exact Words) ===
-${Object.values(POWER_PHRASES).map(p => `• "${p.phrase}" — Use when: ${p.when}`).join('\n')}
-
-=== TECHNIQUES ===
-${Object.values(TECHNIQUES).map(t => `• ${t.name}: ${t.steps} [Anchor: "${t.anchor}"]`).join('\n')}
-
-=== CRITICAL RULES ===
-1. When you detect an objection, respond with the EXACT rebuttal from the database
-2. Always include the follow-up questions—they isolate the real concern
-3. Use the one-liner as your anchor phrase
-4. Match the technique to the situation
-5. Every response should end with a clear CTA (call to action)
-6. Don't fight objections—acknowledge then redirect
-7. "Think about it" ALWAYS masks a real objection—probe deeper
-8. Spouse objections: always try to get them on a 3-way call
-9. Price objections: reframe to monthly, not total
-
-=== DANGER SIGNALS ===
-- 3+ objections = re-qualify (they may not be a real buyer)
-- Spouse + Money together = they're not the decision maker
-- Vague "I'll think about it" with no specifics = soft no
-- Multiple stalls in a row = they're being polite, not interested
-
-=== BUYER TYPES ===
-- Escapee: Hates their job, wants out. Emphasize freedom.
-- Builder: Already entrepreneurial. Emphasize portfolio/scale.
-- Provider: Family-focused. Emphasize legacy for kids.
-
-RESPONSE FORMAT - You MUST respond in this exact JSON format:
+RESPONSE FORMAT (JSON):
 {
-  "situation": "Brief 1-sentence summary of where we are in the call",
-  "objection_code": "The code (P01, T02, etc) if objection detected, or null",
-  "objection_detected": "Name of objection if any, or null",
-  "objection_count": number of distinct objections detected so far in full transcript,
-  "say_this": "EXACT word-for-word script from the playbook—this is what they should say RIGHT NOW",
-  "follow_up_questions": ["Array of 2-3 follow-up questions to ask"],
-  "technique": "Name of the technique being used",
-  "one_liner": "The anchor phrase for this technique",
-  "buyer_type": "Escapee, Builder, Provider, or Unknown",
-  "main_concern": "Their primary concern/hesitation",
-  "is_decision_maker": "Yes, No, or Unclear",
-  "budget_signal": "Has money, Needs financing, No budget, or Unknown",
-  "readiness_score": number 1-10,
-  "sentiment": "Positive, Neutral, Skeptical, or Resistant",
-  "danger_signals": ["list of any danger signals detected"],
-  "tags": ["relevant situation tags"]
-}
-
-The "say_this" field is CRITICAL—it should be something they can literally read word-for-word from our playbook.`;
-
-    // ============ QUICK SCRIPTS (from database) ============
-    const QUICK_SCRIPTS = Object.values(OBJECTIONS_DB).map(obj => ({
-      id: obj.code,
-      title: obj.oneLiner,
-      category: obj.category,
-      script: obj.talkTrack,
-      followUp: obj.followUp,
-      technique: obj.technique
-    }));
+  "situation": "Brief description of where we are",
+  "objection_code": "Code if detected, or null",
+  "say_this": "Helpful script suggestion",
+  "follow_up_questions": ["Question 1", "Question 2"],
+  "technique": "Technique name"
+}`;
 
     // ============ STATE ============
     let isListening = false;
-    let fullTranscript = '';
-    let lastAnalyzedTranscript = '';
-    let objectionCount = 0;
-    let callStartTime = null;
-    let durationInterval = null;
-    let analysisInterval = null;
-    let currentCategory = 'all';
-    let isAnalyzing = false;
+    let transcript = '';
+    let lastAnalyzed = '';
+    let startTime = null;
+    let durationTimer = null;
+    let analysisTimer = null;
+    let category = 'all';
+    let analyzing = false;
 
-    // ============ DOM ELEMENTS ============
+    // ============ DOM ============
     const $ = id => document.getElementById(id);
+    const setup = $('setup');
+    const coaching = $('coaching');
     const startBtn = $('start-btn');
     const stopBtn = $('stop-btn');
-    const setupSection = $('setup-section');
-    const coachingArea = $('coaching-area');
     const statusDot = $('status-dot');
     const statusText = $('status-text');
-    const audioViz = $('audio-viz');
-    const transcription = $('transcription');
-    const aiInsight = $('ai-insight');
-    const prospectProfile = $('prospect-profile');
-    const scriptGrid = $('script-grid');
+    const transcriptEl = $('transcript');
+    const suggestionCard = $('suggestion-card');
+    const scriptsGrid = $('scripts-grid');
     const toast = $('toast');
 
-    // ============ INITIALIZE ============
+    // ============ INIT ============
     function init() {
-      renderQuickScripts();
-      startBtn.addEventListener('click', startListening);
-      stopBtn.addEventListener('click', stopListening);
+      renderScripts();
+      startBtn.onclick = startListening;
+      stopBtn.onclick = stopListening;
 
-      document.querySelectorAll('.script-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-          document.querySelectorAll('.script-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.onclick = () => {
+          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
           tab.classList.add('active');
-          currentCategory = tab.dataset.category;
-          renderQuickScripts();
-        });
+          category = tab.dataset.category;
+          renderScripts();
+        };
       });
     }
 
-    function renderQuickScripts() {
-      const filtered = currentCategory === 'all'
-        ? QUICK_SCRIPTS.slice(0, 12)
-        : QUICK_SCRIPTS.filter(s => s.category === currentCategory);
+    function renderScripts() {
+      const list = Object.values(OBJECTIONS);
+      const filtered = category === 'all' ? list.slice(0, 8) : list.filter(o => o.category === category);
 
-      scriptGrid.innerHTML = filtered.map(script => `
-        <button class="script-btn" onclick="showQuickScript('${script.id}')">
-          <div class="script-title">${script.title}</div>
-          <div class="script-category">${script.category} · ${script.technique}</div>
+      scriptsGrid.innerHTML = filtered.map(s => `
+        <button class="script-btn" onclick="loadScript('${s.code}')">
+          <div class="script-info">
+            <div class="script-title">${s.oneLiner}</div>
+            <div class="script-meta">${s.technique}</div>
+          </div>
+          <span class="script-arrow">→</span>
         </button>
       `).join('');
     }
 
-    // ============ SPEECH RECOGNITION ============
+    // ============ LISTENING ============
     async function startListening() {
       startBtn.disabled = true;
-      startBtn.textContent = 'Connecting...';
+      startBtn.innerHTML = 'Connecting...';
 
       try {
         await navigator.mediaDevices.getUserMedia({ audio: true });
-        startSpeechRecognition();
+        startRecognition();
 
         isListening = true;
-        fullTranscript = '';
-        callStartTime = Date.now();
-        durationInterval = setInterval(updateDuration, 1000);
-        analysisInterval = setInterval(runAIAnalysis, ANALYSIS_INTERVAL);
+        transcript = '';
+        startTime = Date.now();
+        durationTimer = setInterval(updateDuration, 1000);
+        analysisTimer = setInterval(analyze, ANALYSIS_INTERVAL);
 
-        setupSection.style.display = 'none';
-        coachingArea.classList.add('active');
-        statusDot.classList.add('listening');
-        statusText.textContent = 'Listening...';
-        audioViz.classList.remove('paused');
-
-        aiInsight.classList.add('active');
-        $('insight-content').textContent = 'Listening to your call... AI analysis will appear here once the conversation gets going.';
-      } catch (err) {
+        setup.style.display = 'none';
+        coaching.classList.add('active');
+        statusDot.classList.add('active');
+        statusText.textContent = 'Listening';
+      } catch (e) {
         showToast('Microphone access denied');
         startBtn.disabled = false;
-        startBtn.textContent = 'Start Listening';
+        startBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg> Start Listening`;
       }
     }
 
-    function startSpeechRecognition() {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) { showToast('Speech recognition not supported. Try Chrome.'); return; }
+    function startRecognition() {
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SR) { showToast('Speech recognition not supported'); return; }
 
-      const recognition = new SpeechRecognition();
+      const recognition = new SR();
       recognition.continuous = true;
       recognition.interimResults = true;
       recognition.lang = 'en-US';
 
-      let interimTranscript = '';
+      let interim = '';
 
-      recognition.onresult = (event) => {
-        interimTranscript = '';
-        for (let i = event.resultIndex; i < event.results.length; i++) {
-          const transcript = event.results[i][0].transcript;
-          if (event.results[i].isFinal) {
-            fullTranscript += transcript + ' ';
-            // Quick pattern match for immediate feedback
-            quickPatternMatch(transcript);
+      recognition.onresult = (e) => {
+        interim = '';
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+          if (e.results[i].isFinal) {
+            transcript += e.results[i][0].transcript + ' ';
+            quickMatch(e.results[i][0].transcript);
           } else {
-            interimTranscript = transcript;
+            interim = e.results[i][0].transcript;
           }
         }
 
-        transcription.innerHTML = fullTranscript + '<span style="color: var(--text-muted)">' + interimTranscript + '</span>';
-        transcription.scrollTop = transcription.scrollHeight;
+        transcriptEl.innerHTML = transcript + `<span style="color: var(--text-muted)">${interim}</span>`;
+        transcriptEl.scrollTop = transcriptEl.scrollHeight;
 
-        const wordCount = fullTranscript.trim().split(/\s+/).filter(w => w).length;
-        $('word-count').textContent = wordCount + ' words';
+        const words = transcript.trim().split(/\s+/).filter(w => w).length;
+        $('word-count').textContent = `${words} words`;
       };
 
       recognition.onerror = (e) => {
-        if (e.error === 'not-allowed') { showToast('Microphone access denied'); stopListening(); }
+        if (e.error === 'not-allowed') stopListening();
       };
 
       recognition.onend = () => { if (isListening) recognition.start(); };
       recognition.start();
-      window.currentRecognition = recognition;
+      window.recognition = recognition;
     }
 
-    // Quick pattern matching for immediate feedback
-    function quickPatternMatch(text) {
+    function quickMatch(text) {
       const lower = text.toLowerCase();
-      for (const obj of Object.values(OBJECTIONS_DB)) {
-        for (const trigger of obj.triggers) {
-          if (lower.includes(trigger.toLowerCase())) {
-            // Show quick notification
-            showToast(`Detected: ${obj.oneLiner}`, true);
-            return;
-          }
+      for (const obj of Object.values(OBJECTIONS)) {
+        if (obj.triggers.some(t => lower.includes(t.toLowerCase()))) {
+          showToast(`Detected: ${obj.oneLiner}`);
+          return;
         }
       }
     }
 
-    // ============ AI ANALYSIS (Full Context) ============
-    async function runAIAnalysis() {
-      if (isAnalyzing) return;
-      if (fullTranscript === lastAnalyzedTranscript) return;
+    // ============ AI ANALYSIS ============
+    async function analyze() {
+      if (analyzing || transcript === lastAnalyzed) return;
+      const words = transcript.trim().split(/\s+/).filter(w => w).length;
+      if (words < MIN_WORDS) return;
 
-      const wordCount = fullTranscript.trim().split(/\s+/).filter(w => w).length;
-      if (wordCount < MIN_WORDS_FOR_ANALYSIS) return;
-
-      isAnalyzing = true;
-      statusDot.classList.add('analyzing');
+      analyzing = true;
       statusText.textContent = 'Analyzing...';
 
       try {
-        const analysis = await callGeminiAPI(fullTranscript);
-        lastAnalyzedTranscript = fullTranscript;
-        displayAnalysis(analysis);
-      } catch (err) {
-        console.error('AI Analysis error:', err);
+        const result = await callAI(transcript);
+        lastAnalyzed = transcript;
+        displayResult(result);
+      } catch (e) {
+        console.error(e);
       } finally {
-        isAnalyzing = false;
-        statusDot.classList.remove('analyzing');
-        statusText.textContent = 'Listening...';
+        analyzing = false;
+        statusText.textContent = 'Listening';
       }
     }
 
-    async function callGeminiAPI(transcript) {
-      const prompt = `${SALES_PLAYBOOK}
+    async function callAI(text) {
+      const prompt = `${PLAYBOOK}\n\nTRANSCRIPT:\n"${text}"\n\nProvide helpful coaching in JSON format.`;
 
-FULL CONVERSATION TRANSCRIPT SO FAR:
-"""
-${transcript}
-"""
-
-Based on this FULL conversation context and our objection handling playbook, provide real-time coaching.
-If you detect an objection, use the EXACT scripts from the playbook.
-Respond in the JSON format specified above.`;
-
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0.2,
-            maxOutputTokens: 1500
-          }
+          generationConfig: { temperature: 0.2, maxOutputTokens: 1000 }
         })
       });
 
-      const data = await response.json();
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-
-      const jsonMatch = text.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        return JSON.parse(jsonMatch[0]);
-      }
-      throw new Error('Could not parse AI response');
+      const data = await res.json();
+      const txt = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      const match = txt.match(/\{[\s\S]*\}/);
+      return match ? JSON.parse(match[0]) : null;
     }
 
-    function displayAnalysis(analysis) {
-      // Update insight card
-      const title = analysis.objection_code
-        ? `[${analysis.objection_code}] ${analysis.objection_detected}`
-        : 'Situation Analysis';
-      $('insight-title').textContent = title;
-      $('insight-time').textContent = new Date().toLocaleTimeString();
+    function displayResult(r) {
+      if (!r) return;
 
-      let content = analysis.situation;
-      if (analysis.technique) content += `\n\nTechnique: ${analysis.technique}`;
-      if (analysis.one_liner) content += `\nAnchor: "${analysis.one_liner}"`;
-      $('insight-content').textContent = content;
+      $('suggestion-type').textContent = r.objection_code ? `${r.technique}` : 'Conversation Analysis';
+      $('suggestion-content').textContent = r.say_this || r.situation;
 
-      // Show the "say this" box
-      if (analysis.say_this) {
-        $('say-this-box').style.display = 'block';
-        $('say-this-text').textContent = analysis.say_this;
-      }
-
-      // Show follow-up questions
-      if (analysis.follow_up_questions && analysis.follow_up_questions.length > 0) {
+      if (r.follow_up_questions?.length) {
         $('followup-box').style.display = 'block';
-        $('followup-text').textContent = analysis.follow_up_questions.join('\n• ');
+        $('followup-text').textContent = '• ' + r.follow_up_questions.join('\n• ');
       } else {
         $('followup-box').style.display = 'none';
       }
 
-      // Update tags
-      const tagsHtml = (analysis.tags || []).map(tag => {
-        let tagClass = '';
-        if (tag.includes('danger') || tag.includes('objection')) tagClass = 'danger';
-        else if (tag.includes('ready') || tag.includes('positive')) tagClass = 'success';
-        else if (tag.includes('spouse') || tag.includes('stall')) tagClass = 'warning';
-        return `<span class="context-tag ${tagClass}">${tag.replace(/_/g, ' ')}</span>`;
-      }).join('');
-
-      const dangerHtml = (analysis.danger_signals || []).map(signal =>
-        `<span class="context-tag danger">${signal}</span>`
-      ).join('');
-
-      $('context-tags').innerHTML = tagsHtml + dangerHtml;
-
-      // Update stats
-      if (analysis.objection_count !== undefined) {
-        objectionCount = analysis.objection_count;
-        $('objection-count').textContent = objectionCount;
-        const statEl = $('objection-count-stat');
-        statEl.className = 'stat-item';
-        if (objectionCount >= 3) statEl.classList.add('danger');
-        else if (objectionCount >= 2) statEl.classList.add('warning');
-      }
-
-      if (analysis.readiness_score !== undefined) {
-        $('readiness-score').textContent = analysis.readiness_score + '/10';
-        const readinessStat = $('readiness-stat');
-        readinessStat.className = 'stat-item';
-        if (analysis.readiness_score >= 7) readinessStat.classList.add('success');
-        else if (analysis.readiness_score <= 4) readinessStat.classList.add('danger');
-        else readinessStat.classList.add('warning');
-      }
-
-      if (analysis.sentiment) {
-        $('sentiment').textContent = analysis.sentiment;
-        const sentimentStat = $('sentiment-stat');
-        sentimentStat.className = 'stat-item';
-        if (analysis.sentiment === 'Positive') sentimentStat.classList.add('success');
-        else if (analysis.sentiment === 'Resistant') sentimentStat.classList.add('danger');
-        else if (analysis.sentiment === 'Skeptical') sentimentStat.classList.add('warning');
-      }
-
-      // Update prospect profile
-      prospectProfile.classList.add('active');
-      $('profile-buyer-type').textContent = analysis.buyer_type || 'Unknown';
-      $('profile-main-concern').textContent = analysis.main_concern || 'Unknown';
-      $('profile-decision-maker').textContent = analysis.is_decision_maker || 'Unknown';
-      $('profile-budget').textContent = analysis.budget_signal || 'Unknown';
+      suggestionCard.classList.add('slide-in');
+      setTimeout(() => suggestionCard.classList.remove('slide-in'), 400);
     }
 
-    // ============ UTILITIES ============
+    // ============ UTILS ============
     function updateDuration() {
-      const elapsed = Math.floor((Date.now() - callStartTime) / 1000);
-      const mins = Math.floor(elapsed / 60);
-      const secs = elapsed % 60;
-      $('call-duration').textContent = mins + ':' + secs.toString().padStart(2, '0');
+      const s = Math.floor((Date.now() - startTime) / 1000);
+      $('duration').textContent = `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`;
     }
 
-    window.showQuickScript = function(id) {
-      const script = QUICK_SCRIPTS.find(s => s.id === id);
-      if (!script) return;
+    window.loadScript = function(code) {
+      const s = OBJECTIONS[code];
+      if (!s) return;
 
-      $('say-this-box').style.display = 'block';
-      $('say-this-text').textContent = script.script;
-      $('insight-title').textContent = script.title;
-      $('insight-content').textContent = `Technique: ${script.technique}\n\nUse this script now.`;
+      $('suggestion-type').textContent = s.technique;
+      $('suggestion-content').textContent = s.talkTrack;
 
-      if (script.followUp && script.followUp.length > 0) {
+      if (s.followUp?.length) {
         $('followup-box').style.display = 'block';
-        $('followup-text').textContent = '• ' + script.followUp.join('\n• ');
+        $('followup-text').textContent = '• ' + s.followUp.join('\n• ');
       }
 
-      showToast('Script loaded!', true);
+      showToast('Script loaded');
     };
 
     window.copySuggestion = function() {
-      navigator.clipboard.writeText($('say-this-text').textContent)
-        .then(() => showToast('Copied!', true));
+      navigator.clipboard.writeText($('suggestion-content').textContent)
+        .then(() => showToast('Copied to clipboard'));
     };
 
     function stopListening() {
       isListening = false;
-      if (window.currentRecognition) { window.currentRecognition.stop(); window.currentRecognition = null; }
-      if (durationInterval) { clearInterval(durationInterval); durationInterval = null; }
-      if (analysisInterval) { clearInterval(analysisInterval); analysisInterval = null; }
+      if (window.recognition) { window.recognition.stop(); window.recognition = null; }
+      if (durationTimer) { clearInterval(durationTimer); durationTimer = null; }
+      if (analysisTimer) { clearInterval(analysisTimer); analysisTimer = null; }
 
-      setupSection.style.display = 'block';
-      coachingArea.classList.remove('active');
-      statusDot.classList.remove('listening', 'analyzing');
-      statusText.textContent = 'Not Connected';
-      audioViz.classList.add('paused');
+      setup.style.display = 'block';
+      coaching.classList.remove('active');
+      statusDot.classList.remove('active');
+      statusText.textContent = 'Ready';
       startBtn.disabled = false;
-      startBtn.textContent = 'Start Listening';
+      startBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg> Start Listening`;
 
-      fullTranscript = '';
-      lastAnalyzedTranscript = '';
-      objectionCount = 0;
-      $('objection-count').textContent = '0';
-      $('objection-count-stat').className = 'stat-item';
-      $('call-duration').textContent = '0:00';
-      $('readiness-score').textContent = '--';
-      $('sentiment').textContent = '--';
+      transcript = '';
+      lastAnalyzed = '';
+      $('duration').textContent = '0:00';
       $('word-count').textContent = '0 words';
-      transcription.innerHTML = '';
-      aiInsight.classList.remove('active');
-      prospectProfile.classList.remove('active');
+      transcriptEl.innerHTML = '<span style="color: var(--text-muted);">Waiting for speech...</span>';
+      $('suggestion-type').textContent = 'Listening...';
+      $('suggestion-content').textContent = 'Start talking and the coach will analyze your conversation to provide helpful suggestions.';
+      $('followup-box').style.display = 'none';
     }
 
-    function showToast(msg, success = false) {
+    function showToast(msg) {
       toast.textContent = msg;
-      toast.className = 'toast show' + (success ? ' success' : '');
-      setTimeout(() => toast.classList.remove('show'), 3000);
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
     init();
