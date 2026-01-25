@@ -5,22 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sales Coach</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
     :root {
-      --bg: #0a0a0a;
-      --surface: rgba(255, 255, 255, 0.03);
-      --surface-hover: rgba(255, 255, 255, 0.06);
-      --border: rgba(255, 255, 255, 0.08);
-      --border-light: rgba(255, 255, 255, 0.12);
-      --text: #ffffff;
-      --text-secondary: rgba(255, 255, 255, 0.6);
-      --text-muted: rgba(255, 255, 255, 0.4);
+      --bg: #09090b;
+      --surface: rgba(255, 255, 255, 0.02);
+      --surface-hover: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.06);
+      --border-light: rgba(255, 255, 255, 0.1);
+      --text: #fafafa;
+      --text-secondary: rgba(255, 255, 255, 0.55);
+      --text-muted: rgba(255, 255, 255, 0.35);
+      --text-ai: rgba(255, 255, 255, 0.7);
       --accent: rgba(255, 255, 255, 0.9);
-      --green: #22c55e;
-      --green-soft: rgba(34, 197, 94, 0.15);
+      --green: #10b981;
+      --green-soft: rgba(16, 185, 129, 0.12);
       --amber: #f59e0b;
-      --amber-soft: rgba(245, 158, 11, 0.15);
+      --amber-soft: rgba(245, 158, 11, 0.1);
     }
 
     * {
@@ -34,24 +35,45 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      line-height: 1.5;
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Animations */
+    /* Refined Animations - inspired by Granola/Fathom */
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes slideIn {
-      from { opacity: 0; transform: translateY(-12px); }
+      from { opacity: 0; transform: translateY(-8px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
+    @keyframes breathe {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.96); }
+    }
+
     @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+      50% { opacity: 0.8; box-shadow: 0 0 0 4px rgba(16, 185, 129, 0); }
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+      50% { opacity: 0; }
     }
 
     @keyframes shimmer {
@@ -59,19 +81,28 @@
       100% { background-position: 200% 0; }
     }
 
+    @keyframes gentleBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); }
+    }
+
     .fade-in {
-      animation: fadeIn 0.4s ease-out forwards;
+      animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .slide-up {
+      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     .slide-in {
-      animation: slideIn 0.3s ease-out forwards;
+      animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     /* Layout */
     .container {
-      max-width: 720px;
+      max-width: 680px;
       margin: 0 auto;
-      padding: 24px 20px;
+      padding: 20px 24px;
     }
 
     /* Header */
@@ -79,23 +110,29 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 0 24px;
-      animation: fadeIn 0.5s ease-out;
+      padding: 12px 0 28px;
+      animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .logo {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 500;
       color: var(--text-secondary);
-      letter-spacing: -0.01em;
+      letter-spacing: -0.02em;
+      transition: color 0.3s ease;
+    }
+
+    .logo:hover {
+      color: var(--text);
     }
 
     .status {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-muted);
+      font-weight: 400;
     }
 
     .status-dot {
@@ -103,65 +140,84 @@
       height: 6px;
       border-radius: 50%;
       background: var(--text-muted);
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .status-dot.active {
       background: var(--green);
-      box-shadow: 0 0 12px var(--green);
-      animation: pulse 2s ease infinite;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+      animation: pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
 
-    /* Glass Card */
+    .status-dot.analyzing {
+      background: var(--amber);
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+      animation: breathe 1.2s ease-in-out infinite;
+    }
+
+    /* Glass Card - Apple-inspired subtle glass */
     .glass {
-      background: var(--surface);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.03) 0%,
+        rgba(255, 255, 255, 0.01) 100%
+      );
+      backdrop-filter: blur(24px) saturate(1.2);
+      -webkit-backdrop-filter: blur(24px) saturate(1.2);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      transition: all 0.3s ease;
+      border-radius: 14px;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .glass:hover {
       border-color: var(--border-light);
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.04) 0%,
+        rgba(255, 255, 255, 0.02) 100%
+      );
     }
 
     /* Setup Section */
     .setup {
-      padding: 48px 32px;
+      padding: 56px 32px;
       text-align: center;
-      animation: fadeIn 0.6s ease-out;
+      animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .setup h1 {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      letter-spacing: -0.02em;
+      font-size: 22px;
+      font-weight: 500;
+      margin-bottom: 10px;
+      letter-spacing: -0.03em;
+      color: var(--text);
     }
 
     .setup p {
       color: var(--text-secondary);
       font-size: 14px;
-      margin-bottom: 32px;
-      max-width: 360px;
+      font-weight: 300;
+      margin-bottom: 36px;
+      max-width: 340px;
       margin-left: auto;
       margin-right: auto;
+      line-height: 1.7;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 14px 28px;
-      font-size: 14px;
+      gap: 10px;
+      padding: 14px 32px;
+      font-size: 13px;
       font-weight: 500;
       border: none;
-      border-radius: 12px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       font-family: inherit;
+      letter-spacing: -0.01em;
     }
 
     .btn-primary {
@@ -170,12 +226,13 @@
     }
 
     .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(255, 255, 255, 0.15);
     }
 
     .btn-primary:active {
       transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
     }
 
     .btn-ghost {
@@ -187,18 +244,25 @@
     .btn-ghost:hover {
       background: var(--surface-hover);
       color: var(--text);
+      border-color: var(--border-light);
     }
 
     .btn:disabled {
-      opacity: 0.5;
+      opacity: 0.4;
       cursor: not-allowed;
       transform: none;
+      box-shadow: none;
+    }
+
+    .btn.connecting {
+      animation: breathe 1.5s ease-in-out infinite;
     }
 
     .hint {
-      margin-top: 16px;
-      font-size: 12px;
+      margin-top: 20px;
+      font-size: 11px;
       color: var(--text-muted);
+      font-weight: 400;
     }
 
     /* Coaching Area */
@@ -210,148 +274,205 @@
       display: block;
     }
 
-    /* Duration Badge */
-    .duration-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-bottom: 20px;
-      animation: fadeIn 0.4s ease-out;
+    /* AI Suggestion Card - Granola-inspired */
+    .suggestion-card {
+      padding: 22px;
+      margin-bottom: 14px;
+      animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* AI Suggestion Card */
-    .suggestion-card {
-      padding: 24px;
-      margin-bottom: 16px;
-      animation: slideIn 0.4s ease-out;
+    .suggestion-card.updating {
+      animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .suggestion-header {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
     .suggestion-icon {
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
       background: var(--green-soft);
-      border-radius: 8px;
-      font-size: 14px;
+      border-radius: 7px;
+      font-size: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .suggestion-icon.thinking {
+      animation: breathe 1s ease-in-out infinite;
+      background: var(--amber-soft);
     }
 
     .suggestion-label {
-      font-size: 11px;
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
       color: var(--text-muted);
+      font-weight: 500;
     }
 
     .suggestion-type {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
       color: var(--text);
+      letter-spacing: -0.01em;
     }
 
+    /* AI-generated text styling - like Granola's distinction */
     .suggestion-content {
-      font-size: 15px;
-      line-height: 1.7;
-      color: var(--text);
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--text-ai);
+      padding: 18px 20px;
+      background: rgba(255, 255, 255, 0.015);
+      border-radius: 10px;
       border: 1px solid var(--border);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .suggestion-content::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 12px;
+      bottom: 12px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--green), transparent);
+      border-radius: 1px;
+      opacity: 0.5;
+    }
+
+    .suggestion-content.typing {
+      background: rgba(255, 255, 255, 0.025);
     }
 
     .followup-questions {
-      padding: 16px;
+      padding: 14px 16px;
       background: var(--amber-soft);
-      border-radius: 10px;
-      margin-bottom: 16px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(245, 158, 11, 0.1);
     }
 
     .followup-label {
-      font-size: 11px;
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
       color: var(--amber);
       margin-bottom: 8px;
+      font-weight: 500;
     }
 
     .followup-list {
       font-size: 13px;
       color: var(--text-secondary);
-      line-height: 1.8;
+      line-height: 1.9;
+      white-space: pre-line;
     }
 
     .copy-btn {
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 10px 16px;
+      padding: 9px 14px;
       background: transparent;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text-secondary);
-      font-size: 13px;
+      border-radius: 7px;
+      color: var(--text-muted);
+      font-size: 12px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       font-family: inherit;
+      font-weight: 400;
     }
 
     .copy-btn:hover {
-      background: var(--surface);
+      background: var(--surface-hover);
       color: var(--text);
+      border-color: var(--border-light);
+      transform: translateY(-1px);
     }
 
-    /* Transcript */
+    .copy-btn:active {
+      transform: translateY(0);
+    }
+
+    .copy-btn.copied {
+      color: var(--green);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    /* Transcript - Fathom-inspired live feel */
     .transcript-card {
-      padding: 20px;
-      margin-bottom: 16px;
-      animation: fadeIn 0.5s ease-out;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      animation-delay: 0.1s;
+      animation-fill-mode: backwards;
     }
 
     .transcript-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .transcript-label {
-      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
       color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .live-indicator {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s ease infinite;
     }
 
     .word-count {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--text-muted);
+      font-weight: 400;
+      font-variant-numeric: tabular-nums;
     }
 
     .transcript-text {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--text-secondary);
-      line-height: 1.7;
-      max-height: 120px;
+      line-height: 1.8;
+      max-height: 110px;
       overflow-y: auto;
-      padding-right: 8px;
+      padding-right: 10px;
+      scroll-behavior: smooth;
+    }
+
+    .transcript-text .interim {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .transcript-text .new-utterance {
+      animation: fadeIn 0.3s ease-out;
     }
 
     .transcript-text::-webkit-scrollbar {
-      width: 4px;
+      width: 3px;
     }
 
     .transcript-text::-webkit-scrollbar-track {
@@ -360,49 +481,58 @@
 
     .transcript-text::-webkit-scrollbar-thumb {
       background: var(--border);
-      border-radius: 2px;
+      border-radius: 3px;
     }
 
-    /* Quick Scripts */
+    .transcript-text::-webkit-scrollbar-thumb:hover {
+      background: var(--border-light);
+    }
+
+    /* Quick Scripts - refined interactions */
     .scripts-card {
-      padding: 20px;
-      margin-bottom: 16px;
-      animation: fadeIn 0.6s ease-out;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      animation-delay: 0.2s;
+      animation-fill-mode: backwards;
     }
 
     .scripts-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .scripts-title {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
-      color: var(--text-secondary);
+      color: var(--text-muted);
+      letter-spacing: -0.01em;
     }
 
     .scripts-tabs {
       display: flex;
-      gap: 4px;
+      gap: 3px;
       flex-wrap: wrap;
     }
 
     .tab {
-      padding: 6px 12px;
-      font-size: 12px;
+      padding: 5px 10px;
+      font-size: 11px;
       color: var(--text-muted);
       background: transparent;
       border: 1px solid transparent;
-      border-radius: 6px;
+      border-radius: 5px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       font-family: inherit;
+      font-weight: 400;
     }
 
     .tab:hover {
       color: var(--text-secondary);
+      background: var(--surface);
     }
 
     .tab.active {
@@ -414,19 +544,19 @@
     .scripts-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 8px;
+      gap: 6px;
     }
 
     .script-btn {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 16px;
-      background: var(--surface);
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.015);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       text-align: left;
       font-family: inherit;
     }
@@ -434,7 +564,11 @@
     .script-btn:hover {
       background: var(--surface-hover);
       border-color: var(--border-light);
-      transform: translateX(4px);
+      transform: translateX(3px);
+    }
+
+    .script-btn:active {
+      transform: translateX(1px);
     }
 
     .script-info {
@@ -442,77 +576,122 @@
     }
 
     .script-title {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       color: var(--text);
       margin-bottom: 2px;
+      letter-spacing: -0.01em;
     }
 
     .script-meta {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--text-muted);
+      font-weight: 400;
     }
 
     .script-arrow {
       color: var(--text-muted);
-      font-size: 12px;
+      font-size: 11px;
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .script-btn:hover .script-arrow {
+      opacity: 1;
+      transform: translateX(0);
     }
 
     /* Stop Button */
     .stop-btn {
       width: 100%;
-      padding: 16px;
+      padding: 14px;
       background: transparent;
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      border-radius: 12px;
-      color: #ef4444;
-      font-size: 14px;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      border-radius: 10px;
+      color: rgba(239, 68, 68, 0.8);
+      font-size: 13px;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       font-family: inherit;
-      margin-top: 8px;
+      margin-top: 6px;
     }
 
     .stop-btn:hover {
-      background: rgba(239, 68, 68, 0.1);
+      background: rgba(239, 68, 68, 0.08);
+      border-color: rgba(239, 68, 68, 0.35);
+      color: #ef4444;
     }
 
-    /* Toast */
+    .stop-btn:active {
+      background: rgba(239, 68, 68, 0.12);
+    }
+
+    /* Toast - Apple-style */
     .toast {
       position: fixed;
-      bottom: 24px;
+      bottom: 28px;
       left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      padding: 12px 20px;
-      background: var(--text);
+      transform: translateX(-50%) translateY(100px) scale(0.95);
+      padding: 10px 18px;
+      background: rgba(250, 250, 250, 0.95);
       color: var(--bg);
-      border-radius: 10px;
-      font-size: 13px;
+      border-radius: 9px;
+      font-size: 12px;
       font-weight: 500;
       opacity: 0;
-      transition: all 0.3s ease;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 1000;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
     }
 
     .toast.show {
-      transform: translateX(-50%) translateY(0);
+      transform: translateX(-50%) translateY(0) scale(1);
       opacity: 1;
     }
 
-    /* Empty State */
-    .empty-state {
-      padding: 32px;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 14px;
+    /* Duration Badge */
+    .duration-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 11px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-bottom: 18px;
+      animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      font-variant-numeric: tabular-nums;
+      font-weight: 400;
     }
 
     /* Responsive */
     @media (max-width: 600px) {
-      .container { padding: 16px; }
-      .setup { padding: 32px 20px; }
-      .scripts-tabs { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
+      .container { padding: 16px 18px; }
+      .setup { padding: 40px 24px; }
+      .setup h1 { font-size: 20px; }
+      .scripts-tabs {
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
+      }
+      .scripts-tabs::-webkit-scrollbar { display: none; }
+    }
+
+    /* Focus states for accessibility */
+    .btn:focus-visible,
+    .tab:focus-visible,
+    .script-btn:focus-visible,
+    .copy-btn:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 2px;
     }
   </style>
 </head>
@@ -548,7 +727,7 @@
 
       <!-- Duration -->
       <div class="duration-badge">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <circle cx="12" cy="12" r="10"/>
           <polyline points="12 6 12 12 16 14"/>
         </svg>
@@ -583,11 +762,14 @@
       <!-- Transcript -->
       <div class="transcript-card glass">
         <div class="transcript-header">
-          <span class="transcript-label">Live Transcript</span>
+          <span class="transcript-label">
+            <span class="live-indicator"></span>
+            Live Transcript
+          </span>
           <span class="word-count" id="word-count">0 words</span>
         </div>
         <div class="transcript-text" id="transcript">
-          <span style="color: var(--text-muted);">Waiting for speech...</span>
+          <span class="interim">Waiting for speech...</span>
         </div>
       </div>
 
@@ -711,6 +893,7 @@ RESPONSE FORMAT (JSON):
     // ============ LISTENING ============
     async function startListening() {
       startBtn.disabled = true;
+      startBtn.classList.add('connecting');
       startBtn.innerHTML = 'Connecting...';
 
       try {
@@ -727,9 +910,11 @@ RESPONSE FORMAT (JSON):
         coaching.classList.add('active');
         statusDot.classList.add('active');
         statusText.textContent = 'Listening';
+        startBtn.classList.remove('connecting');
       } catch (e) {
         showToast('Microphone access denied');
         startBtn.disabled = false;
+        startBtn.classList.remove('connecting');
         startBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg> Start Listening`;
       }
     }
@@ -756,11 +941,11 @@ RESPONSE FORMAT (JSON):
           }
         }
 
-        transcriptEl.innerHTML = transcript + `<span style="color: var(--text-muted)">${interim}</span>`;
+        transcriptEl.innerHTML = transcript + (interim ? `<span class="interim">${interim}</span>` : '');
         transcriptEl.scrollTop = transcriptEl.scrollHeight;
 
         const words = transcript.trim().split(/\s+/).filter(w => w).length;
-        $('word-count').textContent = `${words} words`;
+        $('word-count').textContent = `${words} word${words !== 1 ? 's' : ''}`;
       };
 
       recognition.onerror = (e) => {
@@ -789,7 +974,12 @@ RESPONSE FORMAT (JSON):
       if (words < MIN_WORDS) return;
 
       analyzing = true;
+      statusDot.classList.add('analyzing');
+      statusDot.classList.remove('active');
       statusText.textContent = 'Analyzing...';
+
+      // Visual feedback on suggestion card
+      document.querySelector('.suggestion-icon')?.classList.add('thinking');
 
       try {
         const result = await callAI(transcript);
@@ -799,7 +989,10 @@ RESPONSE FORMAT (JSON):
         console.error(e);
       } finally {
         analyzing = false;
+        statusDot.classList.remove('analyzing');
+        statusDot.classList.add('active');
         statusText.textContent = 'Listening';
+        document.querySelector('.suggestion-icon')?.classList.remove('thinking');
       }
     }
 
@@ -824,8 +1017,13 @@ RESPONSE FORMAT (JSON):
     function displayResult(r) {
       if (!r) return;
 
+      const contentEl = $('suggestion-content');
+
+      // Add typing animation class
+      contentEl.classList.add('typing');
+
       $('suggestion-type').textContent = r.objection_code ? `${r.technique}` : 'Conversation Analysis';
-      $('suggestion-content').textContent = r.say_this || r.situation;
+      contentEl.textContent = r.say_this || r.situation;
 
       if (r.follow_up_questions?.length) {
         $('followup-box').style.display = 'block';
@@ -834,8 +1032,11 @@ RESPONSE FORMAT (JSON):
         $('followup-box').style.display = 'none';
       }
 
-      suggestionCard.classList.add('slide-in');
-      setTimeout(() => suggestionCard.classList.remove('slide-in'), 400);
+      suggestionCard.classList.add('updating');
+      setTimeout(() => {
+        suggestionCard.classList.remove('updating');
+        contentEl.classList.remove('typing');
+      }, 400);
     }
 
     // ============ UTILS ============
@@ -860,31 +1061,44 @@ RESPONSE FORMAT (JSON):
     };
 
     window.copySuggestion = function() {
+      const btn = document.querySelector('.copy-btn');
       navigator.clipboard.writeText($('suggestion-content').textContent)
-        .then(() => showToast('Copied to clipboard'));
+        .then(() => {
+          btn.classList.add('copied');
+          btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
+          showToast('Copied to clipboard');
+          setTimeout(() => {
+            btn.classList.remove('copied');
+            btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy`;
+          }, 2000);
+        });
     };
 
     function stopListening() {
       isListening = false;
+      analyzing = false;
       if (window.recognition) { window.recognition.stop(); window.recognition = null; }
       if (durationTimer) { clearInterval(durationTimer); durationTimer = null; }
       if (analysisTimer) { clearInterval(analysisTimer); analysisTimer = null; }
 
       setup.style.display = 'block';
       coaching.classList.remove('active');
-      statusDot.classList.remove('active');
+      statusDot.classList.remove('active', 'analyzing');
       statusText.textContent = 'Ready';
       startBtn.disabled = false;
+      startBtn.classList.remove('connecting');
       startBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg> Start Listening`;
 
       transcript = '';
       lastAnalyzed = '';
       $('duration').textContent = '0:00';
       $('word-count').textContent = '0 words';
-      transcriptEl.innerHTML = '<span style="color: var(--text-muted);">Waiting for speech...</span>';
+      transcriptEl.innerHTML = '<span class="interim">Waiting for speech...</span>';
       $('suggestion-type').textContent = 'Listening...';
       $('suggestion-content').textContent = 'Start talking and the coach will analyze your conversation to provide helpful suggestions.';
+      $('suggestion-content').classList.remove('typing');
       $('followup-box').style.display = 'none';
+      document.querySelector('.suggestion-icon')?.classList.remove('thinking');
     }
 
     function showToast(msg) {
