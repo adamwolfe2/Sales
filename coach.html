@@ -3,479 +3,793 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VendingPreneurs Sales Coach</title>
+  <title>Sales Coach</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
     :root {
-      --bg-primary: #0d1117;
-      --bg-secondary: #161b22;
-      --bg-tertiary: #21262d;
-      --border: #30363d;
-      --text-primary: #e6edf3;
-      --text-secondary: #8b949e;
-      --text-muted: #6e7681;
-      --accent: #58a6ff;
-      --success: #3fb950;
-      --warning: #d29922;
-      --danger: #f85149;
-      --purple: #a371f7;
-      --radius: 12px;
+      --bg: #09090b;
+      --surface: rgba(255, 255, 255, 0.02);
+      --surface-hover: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.06);
+      --border-light: rgba(255, 255, 255, 0.1);
+      --text: #fafafa;
+      --text-secondary: rgba(255, 255, 255, 0.55);
+      --text-muted: rgba(255, 255, 255, 0.35);
+      --text-ai: rgba(255, 255, 255, 0.7);
+      --accent: rgba(255, 255, 255, 0.9);
+      --green: #10b981;
+      --green-soft: rgba(16, 185, 129, 0.12);
+      --amber: #f59e0b;
+      --amber-soft: rgba(245, 158, 11, 0.1);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
-      line-height: 1.5;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+    /* Refined Animations - inspired by Granola/Fathom */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes breathe {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.96); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+      50% { opacity: 0.8; box-shadow: 0 0 0 4px rgba(16, 185, 129, 0); }
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    @keyframes gentleBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .slide-up {
+      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .slide-in {
+      animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 20px 24px;
+    }
+
+    /* Header */
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 0;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 20px;
+      padding: 12px 0 28px;
+      animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .logo { font-size: 20px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+    .logo {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: -0.02em;
+      transition: color 0.3s ease;
+    }
 
-    .status-badge {
+    .logo:hover {
+      color: var(--text);
+    }
+
+    .status {
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
-      background: var(--bg-tertiary);
-      border-radius: 20px;
-      font-size: 13px;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 400;
     }
 
     .status-dot {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: var(--text-muted);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .status-dot.listening { background: var(--success); animation: pulse 2s infinite; }
-    .status-dot.analyzing { background: var(--warning); animation: pulse 0.5s infinite; }
+    .status-dot.active {
+      background: var(--green);
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+      animation: pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
 
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .status-dot.analyzing {
+      background: var(--amber);
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+      animation: breathe 1.2s ease-in-out infinite;
+    }
 
-    .setup-section {
-      background: var(--bg-secondary);
+    /* Glass Card - Apple-inspired subtle glass */
+    .glass {
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.03) 0%,
+        rgba(255, 255, 255, 0.01) 100%
+      );
+      backdrop-filter: blur(24px) saturate(1.2);
+      -webkit-backdrop-filter: blur(24px) saturate(1.2);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      margin-bottom: 20px;
+      border-radius: 14px;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .setup-section h2 { font-size: 16px; margin-bottom: 16px; color: var(--text-secondary); }
+    .glass:hover {
+      border-color: var(--border-light);
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.04) 0%,
+        rgba(255, 255, 255, 0.02) 100%
+      );
+    }
+
+    /* Setup Section */
+    .setup {
+      padding: 56px 32px;
+      text-align: center;
+      animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .setup h1 {
+      font-size: 22px;
+      font-weight: 500;
+      margin-bottom: 10px;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .setup p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 300;
+      margin-bottom: 36px;
+      max-width: 340px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
 
     .btn {
-      padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn-primary { background: var(--accent); color: white; }
-    .btn-primary:hover { opacity: 0.9; }
-    .btn-danger { background: var(--danger); color: white; }
-    .btn-large { padding: 16px 32px; font-size: 16px; width: 100%; }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .hint { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
-
-    .coaching-area { display: none; }
-    .coaching-area.active { display: block; }
-
-    /* Stats Bar */
-    .stats-bar {
-      display: flex;
-      gap: 16px;
-      margin-bottom: 20px;
-      padding: 12px 16px;
-      background: var(--bg-secondary);
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-    }
-
-    .stat-item { text-align: center; flex: 1; }
-    .stat-value { font-size: 24px; font-weight: 600; }
-    .stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
-    .stat-item.danger .stat-value { color: var(--danger); }
-    .stat-item.warning .stat-value { color: var(--warning); }
-    .stat-item.success .stat-value { color: var(--success); }
-
-    /* AI Insight Card - Primary focus */
-    .ai-insight {
-      background: linear-gradient(135deg, rgba(88, 166, 255, 0.15), rgba(163, 113, 247, 0.1));
-      border: 2px solid var(--accent);
-      border-radius: var(--radius);
-      padding: 20px;
-      margin-bottom: 20px;
-      display: none;
-    }
-
-    .ai-insight.active { display: block; animation: slideIn 0.3s ease; }
-
-    .ai-insight .insight-header {
-      display: flex;
+      display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
-      margin-bottom: 12px;
+      padding: 14px 32px;
+      font-size: 13px;
+      font-weight: 500;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      font-family: inherit;
+      letter-spacing: -0.01em;
     }
 
-    .ai-insight .insight-icon { font-size: 20px; }
-    .ai-insight .insight-title { font-size: 14px; font-weight: 600; color: var(--accent); }
-    .ai-insight .insight-time { font-size: 11px; color: var(--text-muted); margin-left: auto; }
-
-    .ai-insight .insight-content {
-      font-size: 15px;
-      line-height: 1.6;
-      color: var(--text-primary);
-      margin-bottom: 16px;
-      padding: 16px;
-      background: var(--bg-secondary);
-      border-radius: 8px;
+    .btn-primary {
+      background: var(--text);
+      color: var(--bg);
     }
 
-    .ai-insight .say-this {
-      background: var(--bg-primary);
-      border-left: 3px solid var(--success);
-      padding: 12px 16px;
-      border-radius: 0 8px 8px 0;
-      margin-bottom: 12px;
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(255, 255, 255, 0.15);
     }
 
-    .ai-insight .say-this-label {
-      font-size: 11px;
-      color: var(--success);
-      text-transform: uppercase;
-      margin-bottom: 6px;
-      font-weight: 600;
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
     }
 
-    .ai-insight .say-this-text {
-      font-size: 15px;
-      color: var(--text-primary);
-      line-height: 1.5;
-    }
-
-    .ai-insight .context-tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .context-tag {
-      padding: 4px 10px;
-      background: var(--bg-tertiary);
-      border-radius: 12px;
-      font-size: 11px;
+    .btn-ghost {
+      background: var(--surface);
       color: var(--text-secondary);
-    }
-
-    .context-tag.danger { background: rgba(248, 81, 73, 0.2); color: var(--danger); }
-    .context-tag.warning { background: rgba(210, 153, 34, 0.2); color: var(--warning); }
-    .context-tag.success { background: rgba(63, 185, 80, 0.2); color: var(--success); }
-
-    @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* Transcription */
-    .transcription-box {
-      background: var(--bg-secondary);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 20px;
-      max-height: 200px;
-      overflow-y: auto;
     }
 
-    .transcription-box h3 {
+    .btn-ghost:hover {
+      background: var(--surface-hover);
+      color: var(--text);
+      border-color: var(--border-light);
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn.connecting {
+      animation: breathe 1.5s ease-in-out infinite;
+    }
+
+    .hint {
+      margin-top: 20px;
       font-size: 11px;
       color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      font-weight: 400;
     }
 
-    .transcription-box .word-count { font-weight: normal; }
-
-    .transcription-text { font-size: 14px; color: var(--text-secondary); min-height: 30px; }
-
-    /* Prospect Profile */
-    .prospect-profile {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 20px;
+    /* Coaching Area */
+    .coaching {
       display: none;
     }
 
-    .prospect-profile.active { display: block; }
-
-    .prospect-profile h3 {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 12px;
+    .coaching.active {
+      display: block;
     }
 
-    .profile-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+    /* AI Suggestion Card - Granola-inspired */
+    .suggestion-card {
+      padding: 22px;
+      margin-bottom: 14px;
+      animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .profile-item {
-      padding: 10px;
-      background: var(--bg-tertiary);
-      border-radius: 8px;
+    .suggestion-card.updating {
+      animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .profile-item .label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
-    .profile-item .value { font-size: 13px; color: var(--text-primary); margin-top: 4px; }
-
-    /* Quick Scripts */
-    .quick-scripts {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .quick-scripts h3 { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; }
-
-    .script-tabs {
+    .suggestion-header {
       display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
-    .script-tab {
-      padding: 6px 12px;
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 12px;
-      color: var(--text-secondary);
-      cursor: pointer;
-    }
-
-    .script-tab.active { background: var(--accent); color: white; border-color: var(--accent); }
-
-    .script-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-
-    .script-btn {
-      padding: 12px 16px;
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text-primary);
-      font-size: 13px;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.2s;
-    }
-
-    .script-btn:hover { border-color: var(--accent); background: var(--bg-primary); }
-    .script-btn .script-title { font-weight: 500; margin-bottom: 4px; }
-    .script-btn .script-category { font-size: 11px; color: var(--text-muted); }
-
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      padding: 12px 20px;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text-primary);
-      font-size: 14px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.3s;
-      z-index: 1000;
-    }
-
-    .toast.show { opacity: 1; transform: translateY(0); }
-    .toast.success { border-color: var(--success); }
-
-    .audio-visualizer {
+    .suggestion-icon {
+      width: 28px;
+      height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 3px;
-      height: 30px;
-      margin-left: 10px;
+      background: var(--green-soft);
+      border-radius: 7px;
+      font-size: 12px;
+      transition: all 0.3s ease;
     }
 
-    .audio-bar {
-      width: 4px;
-      height: 10px;
-      background: var(--accent);
-      border-radius: 2px;
-      animation: audioWave 0.5s ease infinite;
+    .suggestion-icon.thinking {
+      animation: breathe 1s ease-in-out infinite;
+      background: var(--amber-soft);
     }
 
-    .audio-bar:nth-child(1) { animation-delay: 0s; }
-    .audio-bar:nth-child(2) { animation-delay: 0.1s; }
-    .audio-bar:nth-child(3) { animation-delay: 0.2s; }
-    .audio-bar:nth-child(4) { animation-delay: 0.3s; }
-    .audio-bar:nth-child(5) { animation-delay: 0.4s; }
+    .suggestion-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
 
-    @keyframes audioWave { 0%, 100% { height: 10px; } 50% { height: 25px; } }
-    .audio-visualizer.paused .audio-bar { animation: none; height: 10px; }
+    .suggestion-type {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    /* AI-generated text styling - like Granola's distinction */
+    .suggestion-content {
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--text-ai);
+      padding: 18px 20px;
+      background: rgba(255, 255, 255, 0.015);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      margin-bottom: 14px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .suggestion-content::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 12px;
+      bottom: 12px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--green), transparent);
+      border-radius: 1px;
+      opacity: 0.5;
+    }
+
+    .suggestion-content.typing {
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .followup-questions {
+      padding: 14px 16px;
+      background: var(--amber-soft);
+      border-radius: 8px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(245, 158, 11, 0.1);
+    }
+
+    .followup-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--amber);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .followup-list {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.9;
+      white-space: pre-line;
+    }
 
     .copy-btn {
-      padding: 6px 12px;
-      background: var(--bg-tertiary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 14px;
+      background: transparent;
       border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-secondary);
+      border-radius: 7px;
+      color: var(--text-muted);
       font-size: 12px;
       cursor: pointer;
-      float: right;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      font-family: inherit;
+      font-weight: 400;
     }
 
-    .copy-btn:hover { background: var(--bg-primary); color: var(--text-primary); }
+    .copy-btn:hover {
+      background: var(--surface-hover);
+      color: var(--text);
+      border-color: var(--border-light);
+      transform: translateY(-1px);
+    }
 
+    .copy-btn:active {
+      transform: translateY(0);
+    }
+
+    .copy-btn.copied {
+      color: var(--green);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    /* Transcript - Fathom-inspired live feel */
+    .transcript-card {
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      animation-delay: 0.1s;
+      animation-fill-mode: backwards;
+    }
+
+    .transcript-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .transcript-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .live-indicator {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s ease infinite;
+    }
+
+    .word-count {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 400;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .transcript-text {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      max-height: 110px;
+      overflow-y: auto;
+      padding-right: 10px;
+      scroll-behavior: smooth;
+    }
+
+    .transcript-text .interim {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .transcript-text .new-utterance {
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .transcript-text::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    .transcript-text::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .transcript-text::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    .transcript-text::-webkit-scrollbar-thumb:hover {
+      background: var(--border-light);
+    }
+
+    /* Quick Scripts - refined interactions */
+    .scripts-card {
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      animation-delay: 0.2s;
+      animation-fill-mode: backwards;
+    }
+
+    .scripts-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .scripts-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: -0.01em;
+    }
+
+    .scripts-tabs {
+      display: flex;
+      gap: 3px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 5px 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      font-family: inherit;
+      font-weight: 400;
+    }
+
+    .tab:hover {
+      color: var(--text-secondary);
+      background: var(--surface);
+    }
+
+    .tab.active {
+      background: var(--surface);
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .scripts-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    .script-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.015);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      text-align: left;
+      font-family: inherit;
+    }
+
+    .script-btn:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-light);
+      transform: translateX(3px);
+    }
+
+    .script-btn:active {
+      transform: translateX(1px);
+    }
+
+    .script-info {
+      flex: 1;
+    }
+
+    .script-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 2px;
+      letter-spacing: -0.01em;
+    }
+
+    .script-meta {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .script-arrow {
+      color: var(--text-muted);
+      font-size: 11px;
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .script-btn:hover .script-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Stop Button */
+    .stop-btn {
+      width: 100%;
+      padding: 14px;
+      background: transparent;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      border-radius: 10px;
+      color: rgba(239, 68, 68, 0.8);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      font-family: inherit;
+      margin-top: 6px;
+    }
+
+    .stop-btn:hover {
+      background: rgba(239, 68, 68, 0.08);
+      border-color: rgba(239, 68, 68, 0.35);
+      color: #ef4444;
+    }
+
+    .stop-btn:active {
+      background: rgba(239, 68, 68, 0.12);
+    }
+
+    /* Toast - Apple-style */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px) scale(0.95);
+      padding: 10px 18px;
+      background: rgba(250, 250, 250, 0.95);
+      color: var(--bg);
+      border-radius: 9px;
+      font-size: 12px;
+      font-weight: 500;
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    /* Duration Badge */
+    .duration-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 11px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-bottom: 18px;
+      animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      font-variant-numeric: tabular-nums;
+      font-weight: 400;
+    }
+
+    /* Responsive */
     @media (max-width: 600px) {
-      .script-grid { grid-template-columns: 1fr; }
-      .profile-grid { grid-template-columns: 1fr; }
-      .stats-bar { flex-wrap: wrap; }
+      .container { padding: 16px 18px; }
+      .setup { padding: 40px 24px; }
+      .setup h1 { font-size: 20px; }
+      .scripts-tabs {
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
+      }
+      .scripts-tabs::-webkit-scrollbar { display: none; }
+    }
+
+    /* Focus states for accessibility */
+    .btn:focus-visible,
+    .tab:focus-visible,
+    .script-btn:focus-visible,
+    .copy-btn:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 2px;
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <!-- Header -->
     <header class="header">
-      <div class="logo">VendingPreneurs Sales Coach</div>
-      <div class="status-badge">
+      <div class="logo">Sales Coach</div>
+      <div class="status">
         <span class="status-dot" id="status-dot"></span>
-        <span id="status-text">Not Connected</span>
-        <div class="audio-visualizer paused" id="audio-viz">
-          <div class="audio-bar"></div>
-          <div class="audio-bar"></div>
-          <div class="audio-bar"></div>
-          <div class="audio-bar"></div>
-          <div class="audio-bar"></div>
-        </div>
+        <span id="status-text">Ready</span>
       </div>
     </header>
 
     <!-- Setup -->
-    <section class="setup-section" id="setup-section">
-      <h2>Ready to Coach</h2>
-      <p style="color: var(--text-secondary); margin-bottom: 20px;">Click below to start listening to your call. The AI coach analyzes the full conversation context and provides real-time suggestions.</p>
-      <button class="btn btn-primary btn-large" id="start-btn">Start Listening</button>
-      <p class="hint" style="margin-top: 12px;">Works best in Chrome. Make sure your microphone is enabled.</p>
+    <section class="setup glass" id="setup">
+      <h1>Start your call</h1>
+      <p>The coach listens to your conversation and suggests responses in real-time.</p>
+      <button class="btn btn-primary" id="start-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="23"/>
+          <line x1="8" y1="23" x2="16" y2="23"/>
+        </svg>
+        Start Listening
+      </button>
+      <p class="hint">Works best in Chrome with microphone access</p>
     </section>
 
     <!-- Coaching Area -->
-    <section class="coaching-area" id="coaching-area">
+    <section class="coaching" id="coaching">
 
-      <!-- Stats Bar -->
-      <div class="stats-bar">
-        <div class="stat-item" id="objection-count-stat">
-          <div class="stat-value" id="objection-count">0</div>
-          <div class="stat-label">Objections</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value" id="call-duration">0:00</div>
-          <div class="stat-label">Duration</div>
-        </div>
-        <div class="stat-item" id="readiness-stat">
-          <div class="stat-value" id="readiness-score">--</div>
-          <div class="stat-label">Readiness</div>
-        </div>
-        <div class="stat-item" id="sentiment-stat">
-          <div class="stat-value" id="sentiment">--</div>
-          <div class="stat-label">Sentiment</div>
-        </div>
+      <!-- Duration -->
+      <div class="duration-badge">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span id="duration">0:00</span>
       </div>
 
-      <!-- AI Insight Card - Primary coaching interface -->
-      <div class="ai-insight" id="ai-insight">
-        <div class="insight-header">
-          <span class="insight-icon">🧠</span>
-          <span class="insight-title" id="insight-title">AI Analysis</span>
-          <span class="insight-time" id="insight-time"></span>
+      <!-- AI Suggestion -->
+      <div class="suggestion-card glass" id="suggestion-card">
+        <div class="suggestion-header">
+          <div class="suggestion-icon">💡</div>
+          <div>
+            <div class="suggestion-label">Suggested Response</div>
+            <div class="suggestion-type" id="suggestion-type">Listening...</div>
+          </div>
         </div>
-        <div class="insight-content" id="insight-content">
-          Listening to your call... AI analysis will appear here based on the full conversation context.
+        <div class="suggestion-content" id="suggestion-content">
+          Start talking and the coach will analyze your conversation to provide helpful suggestions.
         </div>
-        <div class="say-this" id="say-this-box" style="display: none;">
-          <div class="say-this-label">Say This Now</div>
-          <div class="say-this-text" id="say-this-text"></div>
-          <button class="copy-btn" onclick="copySuggestion()">Copy</button>
+        <div class="followup-questions" id="followup-box" style="display: none;">
+          <div class="followup-label">Follow-up Questions</div>
+          <div class="followup-list" id="followup-text"></div>
         </div>
-        <div class="context-tags" id="context-tags"></div>
+        <button class="copy-btn" onclick="copySuggestion()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          Copy
+        </button>
       </div>
 
-      <!-- Prospect Profile (built from conversation) -->
-      <div class="prospect-profile" id="prospect-profile">
-        <h3>Prospect Profile (AI-Detected)</h3>
-        <div class="profile-grid">
-          <div class="profile-item">
-            <div class="label">Buyer Type</div>
-            <div class="value" id="profile-buyer-type">Analyzing...</div>
-          </div>
-          <div class="profile-item">
-            <div class="label">Main Concern</div>
-            <div class="value" id="profile-main-concern">Analyzing...</div>
-          </div>
-          <div class="profile-item">
-            <div class="label">Decision Maker?</div>
-            <div class="value" id="profile-decision-maker">Unknown</div>
-          </div>
-          <div class="profile-item">
-            <div class="label">Budget Signals</div>
-            <div class="value" id="profile-budget">Unknown</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Transcription -->
-      <div class="transcription-box">
-        <h3>
-          Live Transcription
+      <!-- Transcript -->
+      <div class="transcript-card glass">
+        <div class="transcript-header">
+          <span class="transcript-label">
+            <span class="live-indicator"></span>
+            Live Transcript
+          </span>
           <span class="word-count" id="word-count">0 words</span>
-        </h3>
-        <div class="transcription-text" id="transcription"></div>
+        </div>
+        <div class="transcript-text" id="transcript">
+          <span class="interim">Waiting for speech...</span>
+        </div>
       </div>
 
       <!-- Quick Scripts -->
-      <div class="quick-scripts">
-        <h3>Quick Scripts</h3>
-        <div class="script-tabs">
-          <button class="script-tab active" data-category="all">All</button>
-          <button class="script-tab" data-category="price">Price</button>
-          <button class="script-tab" data-category="spouse">Spouse</button>
-          <button class="script-tab" data-category="stall">Stalls</button>
-          <button class="script-tab" data-category="fear">Fear</button>
-          <button class="script-tab" data-category="close">Closing</button>
+      <div class="scripts-card glass">
+        <div class="scripts-header">
+          <span class="scripts-title">Quick Scripts</span>
         </div>
-        <div class="script-grid" id="script-grid"></div>
+        <div class="scripts-tabs">
+          <button class="tab active" data-category="all">All</button>
+          <button class="tab" data-category="price">Price</button>
+          <button class="tab" data-category="time">Stalls</button>
+          <button class="tab" data-category="trust">Trust</button>
+          <button class="tab" data-category="authority">Authority</button>
+          <button class="tab" data-category="process">Process</button>
+        </div>
+        <div class="scripts-grid" id="scripts-grid"></div>
       </div>
 
-      <button class="btn btn-danger btn-large" id="stop-btn">Stop Listening</button>
+      <button class="stop-btn" id="stop-btn">Stop Listening</button>
     </section>
   </div>
 
@@ -484,390 +798,313 @@
   <script>
     // ============ CONFIG ============
     const GEMINI_API_KEY = 'AIzaSyB6RKagdAunFoIvNQ3q97E1XKvPgIkqEv8';
-    const ANALYSIS_INTERVAL = 12000; // Analyze every 12 seconds
-    const MIN_WORDS_FOR_ANALYSIS = 15; // Need at least 15 words before analyzing
+    const ANALYSIS_INTERVAL = 10000;
+    const MIN_WORDS = 12;
 
-    // ============ SALES PLAYBOOK (for AI context) ============
-    const SALES_PLAYBOOK = `
-You are a real-time sales coach for VendingPreneurs, a vending machine coaching business.
-Your job is to analyze the live conversation and provide actionable coaching.
+    // ============ OBJECTION DATABASE ============
+    const OBJECTIONS = {
+      "P01": { code: "P01", category: "price", objection: "More than expected", triggers: ["more than I was expecting", "expensive", "higher than I thought"], rebuttal: "Totally. Let's anchor it to what you *get* and what it removes for you—then you can decide if it's worth it.", talkTrack: "Totally. Let's anchor it to what you get. The program isn't a fee for 'info'—it's access to the community + VentHub savings + the playbook + support that compresses your timeline. If it saves you even one bad machine decision, one bad location, or gets you paid back faster, the math flips.", followUp: ["What did you expect it to be?", "What are you comparing it to?"], technique: "Reframe + Value Stack", oneLiner: "Let's talk about what you get." },
+      "P02": { code: "P02", category: "price", objection: "Big chunk of savings", triggers: ["big chunk", "don't have", "cash is tight", "lot of money"], rebuttal: "I get it. We don't discount, but we *can* make the cashflow sane—most people use installments.", talkTrack: "I get it. There's not much we can do on discounting, but we can spread it out so you can start moving. A path a lot of people take is installments—so you enroll now, execute, and by month 2–3 the business is producing and covering the expense.", followUp: ["What's your comfort monthly number?", "Do you prefer part-upfront + part-monthly?"], technique: "No Discount + Payment Plan", oneLiner: "We can spread it out." },
+      "P03": { code: "P03", category: "price", objection: "Discount request", triggers: ["deal", "discount", "cheaper", "Black Friday"], rebuttal: "We keep pricing consistent for fairness. What I *can* do is add value today instead of discounting.", talkTrack: "Totally fair ask. We don't discount the price—everyone comes in at the same number so there's no community drama later. What I *can* do, since you're enrolling on the first call, is add a bonus: extra months of access or bonus leads.", followUp: ["If I add a bonus today, are you comfortable moving forward?"], technique: "No Discount + Bonus", oneLiner: "Everyone comes in at the same price." },
+      "P04": { code: "P04", category: "price", objection: "Hesitant about price", triggers: ["hesitant", "nervous", "scared", "big number"], rebuttal: "Makes sense. The best things are on the other side of fear—let's compare worst vs best case.", talkTrack: "Makes sense—this is a real decision. The best things in life are on the other side of fear. Picture the version of you 12 months from now that took the leap and executed—what would they tell you right now?", followUp: ["What specifically makes you hesitant?", "What would remove the risk for you?"], technique: "Future Pacing", oneLiner: "Best things are on the other side of fear." },
+      "T01": { code: "T01", category: "time", objection: "Delay start", triggers: ["delay", "start later", "two weeks", "next month"], rebuttal: "No problem. We'll delay your start—and I can add a bonus month so you're not rushed.", talkTrack: "No problem. We can delay your start. To keep it a win-win, I'll add a bonus month of membership so you're not losing time. Enroll now, lock in the bonus, start when your schedule opens up.", followUp: ["When exactly do you want your start date?"], technique: "Flexibility + Bonus", oneLiner: "No problem—I'll add a bonus month." },
+      "T02": { code: "T02", category: "time", objection: "Need to think about it", triggers: ["think about it", "sleep on it", "tomorrow", "few days"], rebuttal: "Totally. Before you go—what specifically do you need to think about?", talkTrack: "Totally. Before you go, help me out—what specifically do you need to think about? Is it trust, cashflow, or fit? If we can get clarity on that one thing right now, you won't need to carry it into tomorrow.", followUp: ["What's the one concern?", "Who else needs to weigh in?"], technique: "Isolate Objection", oneLiner: "What specifically do you need to think about?" },
+      "F01": { code: "F01", category: "trust", objection: "Scam concern", triggers: ["scam", "shady", "trust", "legitimacy", "legit"], rebuttal: "Totally get it. Verify us—here's how to check. I'll give you the receipts.", talkTrack: "Totally get it—world's shady. Please do your due diligence. Look us up, check the community, and I'll send verification info. I'd rather you feel 100% solid than pressured.", followUp: ["What would prove legitimacy for you?", "Want verification info now?"], technique: "Transparency + Verification", oneLiner: "Please verify us—I want you confident." },
+      "F02": { code: "F02", category: "trust", objection: "Feeling nervous", triggers: ["nervous", "anxious", "scared", "worried", "afraid"], rebuttal: "That's normal—part of the process. Most people feel it before a new step.", talkTrack: "That's normal—part of the process. I'd be surprised if you weren't nervous. Most people are. Everyone on the other side felt the exact same thing and still executed.", followUp: ["What's the fear specifically?", "What's the smallest first step you're comfortable with?"], technique: "Normalization", oneLiner: "I would not expect you to not feel nervous." },
+      "AUTH01": { code: "AUTH01", category: "authority", objection: "Need to talk to spouse", triggers: ["wife", "husband", "partner", "spouse", "talk to them"], rebuttal: "Totally—have you already discussed it? If not, let's loop them in or schedule a 3-way call.", talkTrack: "Totally. Have you two already discussed this and what a yes would look like? If they need to weigh in, we can do a quick 3-way call or I'll send a tight recap for you both to review together.", followUp: ["Are they supportive in principle?", "Can we loop them in for 10 min?"], technique: "3-Way Call Protocol", oneLiner: "Have you two discussed what a yes looks like?" },
+      "AUTH02": { code: "AUTH02", category: "authority", objection: "Spouse won't participate", triggers: ["spouse not participating", "not involved", "won't join"], rebuttal: "No worries—just confirm they're aware and aligned so it doesn't blindside later.", talkTrack: "No worries. Just to make sure it doesn't become a surprise later—are you two on the same page about you doing this?", followUp: ["Are they aware of the investment amount?"], technique: "Gentle Probe", oneLiner: "Is it something the two of you have discussed?" },
+      "R01": { code: "R01", category: "process", objection: "Income replacement goal", triggers: ["need 200k", "replace income", "quit job", "leave my job"], rebuttal: "That's attainable. Let's map units + timeline based on your market.", talkTrack: "Totally. 200K/year is attainable. People in the community are doing in excess of that. The key is mapping it back to units + locations + throughput.", followUp: ["What's your target monthly take-home?", "Part-time ramp or full-time push?"], technique: "Backsolve", oneLiner: "Let's map it to units and timeline." },
+      "R02": { code: "R02", category: "process", objection: "Machine math question", triggers: ["how many machines", "8k month", "math", "numbers"], rebuttal: "Depends on location. Once it's plugged in, it's cashflow.", talkTrack: "Great question. It depends on location performance, but the principle is: once it's plugged in, it's cashflow. That's why many finance—use revenue to pay it down.", followUp: ["What locations are you targeting?", "What timeline?"], technique: "Cashflow Frame", oneLiner: "The minute you plug it in, it's cashflow." },
+      "COMP01": { code: "COMP01", category: "trust", objection: "Comparing options", triggers: ["comparing", "shopping", "other program", "competitors"], rebuttal: "Totally. Let's compare on outcomes: speed to first location, savings, support.", talkTrack: "Makes sense to compare. Let's do it cleanly: what's the other option, how do they help you get your first location, what's their cost-of-goods advantage?", followUp: ["What are you comparing to?", "What matters most to you?"], technique: "Criteria Comparison", oneLiner: "Let's compare on outcomes, not vibes." },
+      "C02": { code: "C02", category: "process", objection: "Year 2 pricing", triggers: ["after year", "renewal", "second year", "year two"], rebuttal: "Year 2 is $100/month for core access—no surprises.", talkTrack: "Good question. First year is full access. After that it's $100/month to keep access to the core (community/VentHub). We're upfront so there are no surprises.", followUp: ["Do you want ongoing access?"], technique: "Transparency", oneLiner: "Second year is $100/month." },
+      "TIER01": { code: "TIER01", category: "process", objection: "Upgrade question", triggers: ["upgrade", "switch tiers", "change plan"], rebuttal: "Yes—upgrade within 90 days and your 12 months restarts.", talkTrack: "Yes. Within 90 days you can upgrade. When you upgrade, your 12 months restarts from that day so you're not losing time.", followUp: ["Start lean and keep upgrade optional?"], technique: "Flexibility", oneLiner: "Upgrade within 90 days—year restarts." }
+    };
 
-PRODUCT: $6,000 vending machine coaching program
-- Includes training, community, location leads, support
-- Financing available (~$600/month)
-- Members typically get first location in 30 days
-- Average machine nets $200-400/month profit
+    // ============ AI PLAYBOOK ============
+    const PLAYBOOK = `You are a helpful sales coach for VendingPreneurs ($6K vending coaching program).
+Analyze the conversation and provide helpful suggestions—not critiques.
 
-CRITICAL OBJECTIONS TO WATCH FOR (with win rates):
-1. "Can't afford it" / Price concerns (84% of calls, 42% win rate)
-   - Reframe: Total vs Monthly. $600/month, machines pay for themselves
-2. "Need to talk to spouse" (40% of calls, 52% win rate)
-   - Get spouse on next call, don't let them sell secondhand
-3. "Need to think about it" (70% of calls, 35% win rate)
-   - This ALWAYS masks the real objection - dig deeper
-4. "Bad timing" (48% win rate)
-   - There's never a perfect time. What specifically needs to change?
-5. "Fear of failure" / Self-doubt (45% win rate)
-   - Normalize it. Everyone successful felt this before starting.
+OBJECTION RESPONSES:
+${Object.values(OBJECTIONS).map(o => `[${o.code}] "${o.objection}" → "${o.talkTrack}"\nFollow-ups: ${o.followUp.join(' | ')}`).join('\n\n')}
 
-BUYER TYPES:
-- Escapee: Hates their job, wants out. Emphasize freedom.
-- Builder: Already entrepreneurial. Emphasize portfolio/scale.
-- Provider: Family-focused. Emphasize legacy for kids.
-
-DANGER SIGNALS:
-- 3+ objections = win rate drops to 31%. Re-qualify.
-- Spouse + Money concerns together = they're not the decision maker
-- Vague "I'll think about it" with no specifics = soft no
-
-RESPONSE FORMAT - Always provide:
-1. What's happening (brief analysis)
-2. Exact script to say (word for word)
-3. Why this works (the psychology)
-`;
-
-    // ============ QUICK SCRIPTS ============
-    const QUICK_SCRIPTS = [
-      { id: "three-path", title: "Capital - Three Path", category: "price", script: "Is it a case you've got the full $6,000 that's just a little bit difficult or scary to invest? Or do you have some of it when you look at breaking it up into a more manageable structure? Or you've got none of it at all, and we need to go to the bank?" },
-      { id: "franchise-compare", title: "Compare to Franchise", category: "price", script: "Most people compare this to franchise fees of $30-50k. You're getting similar support - lead generation, community, training - at a fraction of that cost." },
-      { id: "monthly-reframe", title: "Monthly Payment Reframe", category: "price", script: "Let's look at the financing options that make this $600/month instead of $6,000 upfront. Since machines typically generate $400-800 each monthly, your first 2 machines cover the payment." },
-      { id: "spouse-responsibility", title: "Spouse - Responsibility Frame", category: "spouse", script: "When she's at work making decisions to do her job well, she doesn't rely on you to make those decisions for her, right? Why would it be fair to put the decision for YOUR future, YOUR family, onto her?" },
-      { id: "spouse-call", title: "Spouse - Get on Call", category: "spouse", script: "Most successful members have their spouse on the next call so they hear the details directly rather than trying to explain it secondhand. Does Tuesday or Thursday work better?" },
-      { id: "think-crack", title: "Think About It - Crack It", category: "stall", script: "When you say you need to think about it, what specifically needs more consideration? Is it the payment structure? Confidence in ROI? Getting spouse buy-in?" },
-      { id: "timing-push", title: "Bad Timing - Push", category: "stall", script: "If not now, when? What specifically needs to change for the timing to be 'right'? There's never a perfect time." },
-      { id: "fear-normalize", title: "Fear - Normalize It", category: "fear", script: "That self-doubt you're feeling? Everyone successful in this community felt that before they started. The difference? They did it scared." },
-      { id: "no-experience", title: "No Experience - Proof", category: "fear", script: "We have teachers, mailmen, security guards with no business experience doing this successfully. The step-by-step process means you're never guessing." },
-      { id: "readiness-scale", title: "1-10 Readiness Check", category: "close", script: "On a scale of 1-10, how ready are you to move forward? [If 7+] What would get you to a 10? [If <7] What's actually holding you back?" },
-      { id: "permission-no", title: "Permission to Say No", category: "close", script: "If this isn't the right fit or timing, that's totally fine - just tell me. But if there's a real concern I can address right now, let's address it." },
-      { id: "whats-next", title: "Close - What's Next", category: "close", script: "Based on everything we've discussed, it sounds like this could work for you. What questions do you have before we get you started?" }
-    ];
+RESPONSE FORMAT (JSON):
+{
+  "situation": "Brief description of where we are",
+  "objection_code": "Code if detected, or null",
+  "say_this": "Helpful script suggestion",
+  "follow_up_questions": ["Question 1", "Question 2"],
+  "technique": "Technique name"
+}`;
 
     // ============ STATE ============
     let isListening = false;
-    let fullTranscript = ''; // FULL conversation history
-    let lastAnalyzedTranscript = '';
-    let objectionCount = 0;
-    let callStartTime = null;
-    let durationInterval = null;
-    let analysisInterval = null;
-    let currentCategory = 'all';
-    let isAnalyzing = false;
+    let transcript = '';
+    let lastAnalyzed = '';
+    let startTime = null;
+    let durationTimer = null;
+    let analysisTimer = null;
+    let category = 'all';
+    let analyzing = false;
 
-    // ============ DOM ELEMENTS ============
+    // ============ DOM ============
     const $ = id => document.getElementById(id);
+    const setup = $('setup');
+    const coaching = $('coaching');
     const startBtn = $('start-btn');
     const stopBtn = $('stop-btn');
-    const setupSection = $('setup-section');
-    const coachingArea = $('coaching-area');
     const statusDot = $('status-dot');
     const statusText = $('status-text');
-    const audioViz = $('audio-viz');
-    const transcription = $('transcription');
-    const aiInsight = $('ai-insight');
-    const prospectProfile = $('prospect-profile');
-    const scriptGrid = $('script-grid');
+    const transcriptEl = $('transcript');
+    const suggestionCard = $('suggestion-card');
+    const scriptsGrid = $('scripts-grid');
     const toast = $('toast');
 
-    // ============ INITIALIZE ============
+    // ============ INIT ============
     function init() {
-      renderQuickScripts();
-      startBtn.addEventListener('click', startListening);
-      stopBtn.addEventListener('click', stopListening);
+      renderScripts();
+      startBtn.onclick = startListening;
+      stopBtn.onclick = stopListening;
 
-      document.querySelectorAll('.script-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-          document.querySelectorAll('.script-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.onclick = () => {
+          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
           tab.classList.add('active');
-          currentCategory = tab.dataset.category;
-          renderQuickScripts();
-        });
+          category = tab.dataset.category;
+          renderScripts();
+        };
       });
     }
 
-    function renderQuickScripts() {
-      const filtered = currentCategory === 'all'
-        ? QUICK_SCRIPTS
-        : QUICK_SCRIPTS.filter(s => s.category === currentCategory);
+    function renderScripts() {
+      const list = Object.values(OBJECTIONS);
+      const filtered = category === 'all' ? list.slice(0, 8) : list.filter(o => o.category === category);
 
-      scriptGrid.innerHTML = filtered.map(script => `
-        <button class="script-btn" onclick="showQuickScript('${script.id}')">
-          <div class="script-title">${script.title}</div>
-          <div class="script-category">${script.category}</div>
+      scriptsGrid.innerHTML = filtered.map(s => `
+        <button class="script-btn" onclick="loadScript('${s.code}')">
+          <div class="script-info">
+            <div class="script-title">${s.oneLiner}</div>
+            <div class="script-meta">${s.technique}</div>
+          </div>
+          <span class="script-arrow">→</span>
         </button>
       `).join('');
     }
 
-    // ============ SPEECH RECOGNITION ============
+    // ============ LISTENING ============
     async function startListening() {
       startBtn.disabled = true;
-      startBtn.textContent = 'Connecting...';
+      startBtn.classList.add('connecting');
+      startBtn.innerHTML = 'Connecting...';
 
       try {
         await navigator.mediaDevices.getUserMedia({ audio: true });
-        startSpeechRecognition();
+        startRecognition();
 
         isListening = true;
-        fullTranscript = '';
-        callStartTime = Date.now();
-        durationInterval = setInterval(updateDuration, 1000);
+        transcript = '';
+        startTime = Date.now();
+        durationTimer = setInterval(updateDuration, 1000);
+        analysisTimer = setInterval(analyze, ANALYSIS_INTERVAL);
 
-        // Start AI analysis loop
-        analysisInterval = setInterval(runAIAnalysis, ANALYSIS_INTERVAL);
-
-        setupSection.style.display = 'none';
-        coachingArea.classList.add('active');
-        statusDot.classList.add('listening');
-        statusText.textContent = 'Listening...';
-        audioViz.classList.remove('paused');
-
-        aiInsight.classList.add('active');
-        $('insight-content').textContent = 'Listening to your call... AI analysis will appear here once the conversation gets going.';
-      } catch (err) {
+        setup.style.display = 'none';
+        coaching.classList.add('active');
+        statusDot.classList.add('active');
+        statusText.textContent = 'Listening';
+        startBtn.classList.remove('connecting');
+      } catch (e) {
         showToast('Microphone access denied');
         startBtn.disabled = false;
-        startBtn.textContent = 'Start Listening';
+        startBtn.classList.remove('connecting');
+        startBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg> Start Listening`;
       }
     }
 
-    function startSpeechRecognition() {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) { showToast('Speech recognition not supported. Try Chrome.'); return; }
+    function startRecognition() {
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SR) { showToast('Speech recognition not supported'); return; }
 
-      const recognition = new SpeechRecognition();
+      const recognition = new SR();
       recognition.continuous = true;
       recognition.interimResults = true;
       recognition.lang = 'en-US';
 
-      let interimTranscript = '';
+      let interim = '';
 
-      recognition.onresult = (event) => {
-        interimTranscript = '';
-        for (let i = event.resultIndex; i < event.results.length; i++) {
-          const transcript = event.results[i][0].transcript;
-          if (event.results[i].isFinal) {
-            fullTranscript += transcript + ' ';
+      recognition.onresult = (e) => {
+        interim = '';
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+          if (e.results[i].isFinal) {
+            transcript += e.results[i][0].transcript + ' ';
+            quickMatch(e.results[i][0].transcript);
           } else {
-            interimTranscript = transcript;
+            interim = e.results[i][0].transcript;
           }
         }
 
-        // Update display
-        transcription.innerHTML = fullTranscript + '<span style="color: var(--text-muted)">' + interimTranscript + '</span>';
-        transcription.scrollTop = transcription.scrollHeight;
+        transcriptEl.innerHTML = transcript + (interim ? `<span class="interim">${interim}</span>` : '');
+        transcriptEl.scrollTop = transcriptEl.scrollHeight;
 
-        // Update word count
-        const wordCount = fullTranscript.trim().split(/\s+/).filter(w => w).length;
-        $('word-count').textContent = wordCount + ' words';
+        const words = transcript.trim().split(/\s+/).filter(w => w).length;
+        $('word-count').textContent = `${words} word${words !== 1 ? 's' : ''}`;
       };
 
       recognition.onerror = (e) => {
-        if (e.error === 'not-allowed') { showToast('Microphone access denied'); stopListening(); }
+        if (e.error === 'not-allowed') stopListening();
       };
 
       recognition.onend = () => { if (isListening) recognition.start(); };
       recognition.start();
-      window.currentRecognition = recognition;
+      window.recognition = recognition;
     }
 
-    // ============ AI ANALYSIS (Full Context) ============
-    async function runAIAnalysis() {
-      // Skip if no new content or already analyzing
-      if (isAnalyzing) return;
-      if (fullTranscript === lastAnalyzedTranscript) return;
-
-      const wordCount = fullTranscript.trim().split(/\s+/).filter(w => w).length;
-      if (wordCount < MIN_WORDS_FOR_ANALYSIS) return;
-
-      isAnalyzing = true;
-      statusDot.classList.add('analyzing');
-      statusText.textContent = 'Analyzing...';
-
-      try {
-        const analysis = await callGeminiAPI(fullTranscript);
-        lastAnalyzedTranscript = fullTranscript;
-        displayAnalysis(analysis);
-      } catch (err) {
-        console.error('AI Analysis error:', err);
-      } finally {
-        isAnalyzing = false;
-        statusDot.classList.remove('analyzing');
-        statusText.textContent = 'Listening...';
+    function quickMatch(text) {
+      const lower = text.toLowerCase();
+      for (const obj of Object.values(OBJECTIONS)) {
+        if (obj.triggers.some(t => lower.includes(t.toLowerCase()))) {
+          showToast(`Detected: ${obj.oneLiner}`);
+          return;
+        }
       }
     }
 
-    async function callGeminiAPI(transcript) {
-      const prompt = `${SALES_PLAYBOOK}
+    // ============ AI ANALYSIS ============
+    async function analyze() {
+      if (analyzing || transcript === lastAnalyzed) return;
+      const words = transcript.trim().split(/\s+/).filter(w => w).length;
+      if (words < MIN_WORDS) return;
 
-FULL CONVERSATION TRANSCRIPT SO FAR:
-"""
-${transcript}
-"""
+      analyzing = true;
+      statusDot.classList.add('analyzing');
+      statusDot.classList.remove('active');
+      statusText.textContent = 'Analyzing...';
 
-Based on this FULL conversation context, provide real-time coaching. Respond in this exact JSON format:
-{
-  "situation": "Brief 1-sentence summary of where we are in the call",
-  "objection_detected": "specific objection if any, or null",
-  "objection_count": number of distinct objections so far,
-  "say_this": "Exact word-for-word script the rep should say RIGHT NOW based on full context",
-  "why_this_works": "1-sentence explanation of the psychology",
-  "buyer_type": "Escapee, Builder, Provider, or Unknown",
-  "main_concern": "Their primary concern/hesitation",
-  "is_decision_maker": "Yes, No, or Unclear",
-  "budget_signal": "Has money, Needs financing, No budget, or Unknown",
-  "readiness_score": number 1-10,
-  "sentiment": "Positive, Neutral, Skeptical, or Resistant",
-  "danger_signals": ["list of any danger signals detected"],
-  "tags": ["relevant situation tags like 'price_objection', 'spouse_concern', 'ready_to_close']"
-}
+      // Visual feedback on suggestion card
+      document.querySelector('.suggestion-icon')?.classList.add('thinking');
 
-Be specific and actionable. The "say_this" should be something they can literally read word-for-word.`;
+      try {
+        const result = await callAI(transcript);
+        lastAnalyzed = transcript;
+        displayResult(result);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        analyzing = false;
+        statusDot.classList.remove('analyzing');
+        statusDot.classList.add('active');
+        statusText.textContent = 'Listening';
+        document.querySelector('.suggestion-icon')?.classList.remove('thinking');
+      }
+    }
 
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+    async function callAI(text) {
+      const prompt = `${PLAYBOOK}\n\nTRANSCRIPT:\n"${text}"\n\nProvide helpful coaching in JSON format.`;
+
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0.3,
-            maxOutputTokens: 1000
-          }
+          generationConfig: { temperature: 0.2, maxOutputTokens: 1000 }
         })
       });
 
-      const data = await response.json();
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-
-      // Extract JSON from response
-      const jsonMatch = text.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        return JSON.parse(jsonMatch[0]);
-      }
-      throw new Error('Could not parse AI response');
+      const data = await res.json();
+      const txt = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      const match = txt.match(/\{[\s\S]*\}/);
+      return match ? JSON.parse(match[0]) : null;
     }
 
-    function displayAnalysis(analysis) {
-      // Update insight card
-      $('insight-title').textContent = analysis.objection_detected
-        ? `Objection: ${analysis.objection_detected}`
-        : 'Situation Analysis';
-      $('insight-time').textContent = new Date().toLocaleTimeString();
-      $('insight-content').textContent = analysis.situation + (analysis.why_this_works ? '\n\n' + analysis.why_this_works : '');
+    function displayResult(r) {
+      if (!r) return;
 
-      // Show the "say this" box
-      if (analysis.say_this) {
-        $('say-this-box').style.display = 'block';
-        $('say-this-text').textContent = analysis.say_this;
+      const contentEl = $('suggestion-content');
+
+      // Add typing animation class
+      contentEl.classList.add('typing');
+
+      $('suggestion-type').textContent = r.objection_code ? `${r.technique}` : 'Conversation Analysis';
+      contentEl.textContent = r.say_this || r.situation;
+
+      if (r.follow_up_questions?.length) {
+        $('followup-box').style.display = 'block';
+        $('followup-text').textContent = '• ' + r.follow_up_questions.join('\n• ');
+      } else {
+        $('followup-box').style.display = 'none';
       }
 
-      // Update tags
-      const tagsHtml = (analysis.tags || []).map(tag => {
-        let tagClass = '';
-        if (tag.includes('danger') || tag.includes('objection')) tagClass = 'danger';
-        else if (tag.includes('ready') || tag.includes('positive')) tagClass = 'success';
-        else if (tag.includes('spouse') || tag.includes('stall')) tagClass = 'warning';
-        return `<span class="context-tag ${tagClass}">${tag.replace('_', ' ')}</span>`;
-      }).join('');
-
-      // Add danger signals as tags
-      const dangerHtml = (analysis.danger_signals || []).map(signal =>
-        `<span class="context-tag danger">${signal}</span>`
-      ).join('');
-
-      $('context-tags').innerHTML = tagsHtml + dangerHtml;
-
-      // Update stats
-      if (analysis.objection_count !== undefined) {
-        objectionCount = analysis.objection_count;
-        $('objection-count').textContent = objectionCount;
-        const statEl = $('objection-count-stat');
-        statEl.className = 'stat-item';
-        if (objectionCount >= 3) statEl.classList.add('danger');
-        else if (objectionCount >= 2) statEl.classList.add('warning');
-      }
-
-      if (analysis.readiness_score !== undefined) {
-        $('readiness-score').textContent = analysis.readiness_score + '/10';
-        const readinessStat = $('readiness-stat');
-        readinessStat.className = 'stat-item';
-        if (analysis.readiness_score >= 7) readinessStat.classList.add('success');
-        else if (analysis.readiness_score <= 4) readinessStat.classList.add('danger');
-        else readinessStat.classList.add('warning');
-      }
-
-      if (analysis.sentiment) {
-        $('sentiment').textContent = analysis.sentiment;
-        const sentimentStat = $('sentiment-stat');
-        sentimentStat.className = 'stat-item';
-        if (analysis.sentiment === 'Positive') sentimentStat.classList.add('success');
-        else if (analysis.sentiment === 'Resistant') sentimentStat.classList.add('danger');
-        else if (analysis.sentiment === 'Skeptical') sentimentStat.classList.add('warning');
-      }
-
-      // Update prospect profile
-      prospectProfile.classList.add('active');
-      $('profile-buyer-type').textContent = analysis.buyer_type || 'Unknown';
-      $('profile-main-concern').textContent = analysis.main_concern || 'Unknown';
-      $('profile-decision-maker').textContent = analysis.is_decision_maker || 'Unknown';
-      $('profile-budget').textContent = analysis.budget_signal || 'Unknown';
+      suggestionCard.classList.add('updating');
+      setTimeout(() => {
+        suggestionCard.classList.remove('updating');
+        contentEl.classList.remove('typing');
+      }, 400);
     }
 
-    // ============ UTILITIES ============
+    // ============ UTILS ============
     function updateDuration() {
-      const elapsed = Math.floor((Date.now() - callStartTime) / 1000);
-      const mins = Math.floor(elapsed / 60);
-      const secs = elapsed % 60;
-      $('call-duration').textContent = mins + ':' + secs.toString().padStart(2, '0');
+      const s = Math.floor((Date.now() - startTime) / 1000);
+      $('duration').textContent = `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`;
     }
 
-    window.showQuickScript = function(id) {
-      const script = QUICK_SCRIPTS.find(s => s.id === id);
-      if (!script) return;
+    window.loadScript = function(code) {
+      const s = OBJECTIONS[code];
+      if (!s) return;
 
-      $('say-this-box').style.display = 'block';
-      $('say-this-text').textContent = script.script;
-      $('insight-title').textContent = script.title;
-      $('insight-content').textContent = 'Quick script selected. Use this response now.';
-      showToast('Script loaded!', true);
+      $('suggestion-type').textContent = s.technique;
+      $('suggestion-content').textContent = s.talkTrack;
+
+      if (s.followUp?.length) {
+        $('followup-box').style.display = 'block';
+        $('followup-text').textContent = '• ' + s.followUp.join('\n• ');
+      }
+
+      showToast('Script loaded');
     };
 
     window.copySuggestion = function() {
-      navigator.clipboard.writeText($('say-this-text').textContent)
-        .then(() => showToast('Copied!', true));
+      const btn = document.querySelector('.copy-btn');
+      navigator.clipboard.writeText($('suggestion-content').textContent)
+        .then(() => {
+          btn.classList.add('copied');
+          btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
+          showToast('Copied to clipboard');
+          setTimeout(() => {
+            btn.classList.remove('copied');
+            btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy`;
+          }, 2000);
+        });
     };
 
     function stopListening() {
       isListening = false;
-      if (window.currentRecognition) { window.currentRecognition.stop(); window.currentRecognition = null; }
-      if (durationInterval) { clearInterval(durationInterval); durationInterval = null; }
-      if (analysisInterval) { clearInterval(analysisInterval); analysisInterval = null; }
+      analyzing = false;
+      if (window.recognition) { window.recognition.stop(); window.recognition = null; }
+      if (durationTimer) { clearInterval(durationTimer); durationTimer = null; }
+      if (analysisTimer) { clearInterval(analysisTimer); analysisTimer = null; }
 
-      setupSection.style.display = 'block';
-      coachingArea.classList.remove('active');
-      statusDot.classList.remove('listening', 'analyzing');
-      statusText.textContent = 'Not Connected';
-      audioViz.classList.add('paused');
+      setup.style.display = 'block';
+      coaching.classList.remove('active');
+      statusDot.classList.remove('active', 'analyzing');
+      statusText.textContent = 'Ready';
       startBtn.disabled = false;
-      startBtn.textContent = 'Start Listening';
+      startBtn.classList.remove('connecting');
+      startBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg> Start Listening`;
 
-      // Reset state
-      fullTranscript = '';
-      lastAnalyzedTranscript = '';
-      objectionCount = 0;
-      $('objection-count').textContent = '0';
-      $('objection-count-stat').className = 'stat-item';
-      $('call-duration').textContent = '0:00';
-      $('readiness-score').textContent = '--';
-      $('sentiment').textContent = '--';
+      transcript = '';
+      lastAnalyzed = '';
+      $('duration').textContent = '0:00';
       $('word-count').textContent = '0 words';
-      transcription.innerHTML = '';
-      aiInsight.classList.remove('active');
-      prospectProfile.classList.remove('active');
+      transcriptEl.innerHTML = '<span class="interim">Waiting for speech...</span>';
+      $('suggestion-type').textContent = 'Listening...';
+      $('suggestion-content').textContent = 'Start talking and the coach will analyze your conversation to provide helpful suggestions.';
+      $('suggestion-content').classList.remove('typing');
+      $('followup-box').style.display = 'none';
+      document.querySelector('.suggestion-icon')?.classList.remove('thinking');
     }
 
-    function showToast(msg, success = false) {
+    function showToast(msg) {
       toast.textContent = msg;
-      toast.className = 'toast show' + (success ? ' success' : '');
-      setTimeout(() => toast.classList.remove('show'), 3000);
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
     init();
