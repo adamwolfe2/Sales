@@ -1,0 +1,598 @@
+{
+  "metadata": {
+    "description": "Job backgrounds and how their existing skills translate to vending success",
+    "total_jobs": 50,
+    "last_updated": "2025-01-26"
+  },
+  "job_superpowers": [
+    {
+      "id": "high_school_teacher",
+      "title": "High School Teacher",
+      "category": "education",
+      "superpowers": [
+        {"skill": "Classroom management", "vending_application": "Tight route scheduling and SOPs"},
+        {"skill": "Daily parent/admin contact", "vending_application": "Confident pop-ins and follow-ups"},
+        {"skill": "Data-driven grading", "vending_application": "Track SKU performance and rotate winners"},
+        {"skill": "Lesson planning", "vending_application": "Structured route and restock checklists"},
+        {"skill": "Student/parent network", "vending_application": "Warm intros to schools and gyms"}
+      ]
+    },
+    {
+      "id": "football_coach",
+      "title": "High School Football Coach",
+      "category": "education",
+      "superpowers": [
+        {"skill": "Motivates teams", "vending_application": "Hires/restocker management and accountability"},
+        {"skill": "Game film mindset", "vending_application": "Review machine sales and adjust plays (SKUs)"},
+        {"skill": "Practice discipline", "vending_application": "Consistent service cycles = uptime"},
+        {"skill": "Sideline negotiations", "vending_application": "Faster approvals with ADs/facilities"},
+        {"skill": "Community credibility", "vending_application": "Doors open at schools/clubs"}
+      ]
+    },
+    {
+      "id": "sales_representative",
+      "title": "Sales Representative",
+      "category": "sales",
+      "superpowers": [
+        {"skill": "Cold outreach", "vending_application": "Rapid pipeline of location leads"},
+        {"skill": "Objection handling", "vending_application": "Converts 'we already have vending'"},
+        {"skill": "Negotiation chops", "vending_application": "Better contract terms and placement spots"},
+        {"skill": "Account management", "vending_application": "Retention and upsell more machines"},
+        {"skill": "Territory planning", "vending_application": "Efficient, profitable routes"}
+      ]
+    },
+    {
+      "id": "entrepreneur",
+      "title": "Entrepreneur / Small Business Owner",
+      "category": "business",
+      "superpowers": [
+        {"skill": "Multi-hat operator", "vending_application": "Marketing, sales, ops unified"},
+        {"skill": "Reinvest ethos", "vending_application": "Scale machine count systematically"},
+        {"skill": "P&L literacy", "vending_application": "Price for margin, not vanity"},
+        {"skill": "Vendor relations", "vending_application": "Better COGS and delivery cadence"},
+        {"skill": "Opportunity spotting", "vending_application": "Niche locations others miss"}
+      ]
+    },
+    {
+      "id": "family_business_owner",
+      "title": "Family Business Owner / Parent",
+      "category": "family",
+      "superpowers": [
+        {"skill": "Delegation at home", "vending_application": "Family-powered restocking routes"},
+        {"skill": "Time blocking", "vending_application": "Service windows around life"},
+        {"skill": "Community ties", "vending_application": "Warm intros to churches/teams"},
+        {"skill": "Budget focus", "vending_application": "Lean ops, high free cash flow"},
+        {"skill": "Teaching moments", "vending_application": "Kids manage SKUs/coin counts"}
+      ]
+    },
+    {
+      "id": "atm_operator",
+      "title": "ATM Operator",
+      "category": "operations",
+      "superpowers": [
+        {"skill": "Location economics", "vending_application": "Pick high-traffic, high-yield spots"},
+        {"skill": "Cash logistics", "vending_application": "Secure collections and change float"},
+        {"skill": "Machine uptime mindset", "vending_application": "Preventive maintenance routines"},
+        {"skill": "Placement negotiation", "vending_application": "Proven with property owners"},
+        {"skill": "Route density", "vending_application": "Fewer miles, more profit"}
+      ]
+    },
+    {
+      "id": "marketing_professional",
+      "title": "Marketing Professional",
+      "category": "marketing",
+      "superpowers": [
+        {"skill": "Offer crafting", "vending_application": "Irresistible 'employee perk' pitches"},
+        {"skill": "Local SEO", "vending_application": "Inbound leads from businesses"},
+        {"skill": "Promo calendars", "vending_application": "Lift sales with limited-time SKUs"},
+        {"skill": "Brand/storytelling", "vending_application": "Premium placements and trust"},
+        {"skill": "Analytics", "vending_application": "A/B pricing and planograms"}
+      ]
+    },
+    {
+      "id": "teacher_general",
+      "title": "Teacher (Elementary, Middle, or High)",
+      "category": "education",
+      "superpowers": [
+        {"skill": "Bell-schedule precision", "vending_application": "On-time service"},
+        {"skill": "Parent/teacher orgs", "vending_application": "Intro paths to campuses"},
+        {"skill": "Classroom data", "vending_application": "Test-and-learn product mixes"},
+        {"skill": "Calm conflict handling", "vending_application": "Smooth PM conversations"},
+        {"skill": "Community events", "vending_application": "Short-term placement pilots"}
+      ]
+    },
+    {
+      "id": "mortgage_broker",
+      "title": "Mortgage Broker (Networking background)",
+      "category": "finance",
+      "superpowers": [
+        {"skill": "Referral flywheels", "vending_application": "PMs, brokers, office managers"},
+        {"skill": "Document heavy", "vending_application": "Clean COIs, W-9s, vendor packs"},
+        {"skill": "Rate math", "vending_application": "ROI framing for PMs"},
+        {"skill": "Persistence", "vending_application": "Long cycles don't stall deals"},
+        {"skill": "Local market map", "vending_application": "Cluster high-density buildings"}
+      ]
+    },
+    {
+      "id": "hospitality_management",
+      "title": "Hospitality / Hotel Management",
+      "category": "hospitality",
+      "superpowers": [
+        {"skill": "Guest amenity framing", "vending_application": "Vending as 24/7 perk"},
+        {"skill": "Lobby flow insight", "vending_application": "Optimal machine placement"},
+        {"skill": "Multi-property ops", "vending_application": "Scale across sister hotels"},
+        {"skill": "Service SLAs", "vending_application": "Uptime and response speed"},
+        {"skill": "Upsell mindset", "vending_application": "Add coffee/ice cream units"}
+      ]
+    },
+    {
+      "id": "auto_dealership",
+      "title": "Auto Dealership Employee",
+      "category": "sales",
+      "superpowers": [
+        {"skill": "Sales floor rhythm", "vending_application": "Pop-ins with GMs and service bays"},
+        {"skill": "Waiting areas", "vending_application": "High ASP product curation"},
+        {"skill": "Referral web", "vending_application": "Dealer group rollouts"},
+        {"skill": "Financing savvy", "vending_application": "Explain machine payback"},
+        {"skill": "Customer perks", "vending_application": "Co-branded promos"}
+      ]
+    },
+    {
+      "id": "real_estate_agent",
+      "title": "Real Estate Agent / Broker",
+      "category": "real_estate",
+      "superpowers": [
+        {"skill": "Prospecting muscle", "vending_application": "Daily door-knock cadence for PMs"},
+        {"skill": "Contract skills", "vending_application": "Tight placement agreements"},
+        {"skill": "Geo knowledge", "vending_application": "Route density by zip"},
+        {"skill": "PM access", "vending_application": "Direct decision-maker intros"},
+        {"skill": "Vacancy data", "vending_application": "Target high-occupancy assets"}
+      ]
+    },
+    {
+      "id": "bni_member",
+      "title": "Business Networking Group Member",
+      "category": "sales",
+      "superpowers": [
+        {"skill": "Warm intros", "vending_application": "Faster yeses from local owners"},
+        {"skill": "Weekly cadence", "vending_application": "Consistent pipeline activity"},
+        {"skill": "Spotlight talks", "vending_application": "Pitch vending as staff benefit"},
+        {"skill": "Trust bank", "vending_application": "Easier multi-site expansions"},
+        {"skill": "Shared leads", "vending_application": "Swap for other perks"}
+      ]
+    },
+    {
+      "id": "consultant",
+      "title": "Consultant (Management / Business / Sales)",
+      "category": "business",
+      "superpowers": [
+        {"skill": "Discovery calls", "vending_application": "Tailor machine type to site needs"},
+        {"skill": "Process mapping", "vending_application": "Eliminate dead miles on routes"},
+        {"skill": "KPI dashboards", "vending_application": "Sales/hour, sell-through, OOS rates"},
+        {"skill": "Change management", "vending_application": "PM buy-in and adoption"},
+        {"skill": "Proposal polish", "vending_application": "Close complex, multi-building deals"}
+      ]
+    },
+    {
+      "id": "accountant",
+      "title": "Accountant / CPA",
+      "category": "finance",
+      "superpowers": [
+        {"skill": "Margin mastery", "vending_application": "Price packs for profit, not volume"},
+        {"skill": "Forecasting", "vending_application": "Cashflow for machine purchases"},
+        {"skill": "Reconciliations", "vending_application": "Shrink/theft detection"},
+        {"skill": "Tax savvy", "vending_application": "Section 179/equipment deductions"},
+        {"skill": "Vendor audits", "vending_application": "Best-price sourcing"}
+      ]
+    },
+    {
+      "id": "data_analyst",
+      "title": "Data Analyst / Business Analyst",
+      "category": "technology",
+      "superpowers": [
+        {"skill": "SKU analytics", "vending_application": "Cut losers, scale winners"},
+        {"skill": "Cohort views", "vending_application": "Property-type playbooks"},
+        {"skill": "Route heatmaps", "vending_application": "Densify territories"},
+        {"skill": "Price elasticity", "vending_application": "Maximize EBITDA per coil"},
+        {"skill": "Experimentation", "vending_application": "Controlled tests, clear readouts"}
+      ]
+    },
+    {
+      "id": "digital_marketing",
+      "title": "Digital Marketing Specialist",
+      "category": "marketing",
+      "superpowers": [
+        {"skill": "Landing pages", "vending_application": "Inbound PM inquiries"},
+        {"skill": "Retargeting ads", "vending_application": "Win undecided properties"},
+        {"skill": "GMB optimization", "vending_application": "Rank for 'vending near me'"},
+        {"skill": "Email sequences", "vending_application": "Nurture PM pipeline"},
+        {"skill": "Social proof", "vending_application": "Testimonials that close"}
+      ]
+    },
+    {
+      "id": "social_media_manager",
+      "title": "Social Media Manager",
+      "category": "marketing",
+      "superpowers": [
+        {"skill": "Content engine", "vending_application": "Showcase installs and results"},
+        {"skill": "DM outreach", "vending_application": "Book site walks with PMs"},
+        {"skill": "UGC from tenants", "vending_application": "Lift machine traffic"},
+        {"skill": "Promo posts", "vending_application": "Time-bound sales spikes"},
+        {"skill": "Community replies", "vending_application": "Handle support fast"}
+      ]
+    },
+    {
+      "id": "event_planner",
+      "title": "Event Planner / Event Coordinator",
+      "category": "business",
+      "superpowers": [
+        {"skill": "Venue relationships", "vending_application": "Short-term pilots to permanent"},
+        {"skill": "Logistics mastery", "vending_application": "Timed deliveries and installs"},
+        {"skill": "Sponsor tie-ins", "vending_application": "Co-branded machines, paid"},
+        {"skill": "Foot traffic data", "vending_application": "Pick hits over duds"},
+        {"skill": "Contract finesse", "vending_application": "Quick approvals"}
+      ]
+    },
+    {
+      "id": "operations_manager",
+      "title": "Operations Manager",
+      "category": "operations",
+      "superpowers": [
+        {"skill": "SOPs", "vending_application": "Consistent service, fewer breakdowns"},
+        {"skill": "Staff scheduling", "vending_application": "Restocker coverage without gaps"},
+        {"skill": "Inventory turns", "vending_application": "Cash not trapped on shelves"},
+        {"skill": "Vendor SLAs", "vending_application": "On-time product supply"},
+        {"skill": "Incident playbooks", "vending_application": "Minimal downtime"}
+      ]
+    },
+    {
+      "id": "supply_chain",
+      "title": "Supply Chain / Logistics Coordinator",
+      "category": "operations",
+      "superpowers": [
+        {"skill": "Route optimization", "vending_application": "Lowest miles per dollar"},
+        {"skill": "Load planning", "vending_application": "Fewer trips, full trunks"},
+        {"skill": "Reorder points", "vending_application": "Zero stockouts"},
+        {"skill": "Lead-time buffers", "vending_application": "Seasonal demand covered"},
+        {"skill": "Carrier coordination", "vending_application": "Machine delivery smooth"}
+      ]
+    },
+    {
+      "id": "customer_service",
+      "title": "Customer Service Representative",
+      "category": "hospitality",
+      "superpowers": [
+        {"skill": "De-escalation", "vending_application": "Keep PMs happy during hiccups"},
+        {"skill": "Feedback loops", "vending_application": "Switch SKUs before churn"},
+        {"skill": "Relationship touches", "vending_application": "Renewals and referrals"},
+        {"skill": "SLA clarity", "vending_application": "Expectations set and met"},
+        {"skill": "Surprise & delight", "vending_application": "PM gifts drive goodwill"}
+      ]
+    },
+    {
+      "id": "retail_manager",
+      "title": "Retail Store Manager",
+      "category": "sales",
+      "superpowers": [
+        {"skill": "Merchandising", "vending_application": "Eye-level winners, bundling"},
+        {"skill": "Shrink control", "vending_application": "Lock high-theft items"},
+        {"skill": "Schedule rigor", "vending_application": "Fixed service windows"},
+        {"skill": "Team training", "vending_application": "Restocker playbooks"},
+        {"skill": "Seasonal resets", "vending_application": "Holidays and campus cycles"}
+      ]
+    },
+    {
+      "id": "ecommerce_owner",
+      "title": "E-commerce Store Owner",
+      "category": "sales",
+      "superpowers": [
+        {"skill": "Funnel thinking", "vending_application": "Convert 'curious PM' to contract"},
+        {"skill": "SKU testing", "vending_application": "Rapid iteration using sales data"},
+        {"skill": "Supplier leverage", "vending_application": "Wholesale pricing"},
+        {"skill": "Automation", "vending_application": "Inventory alerts, route reminders"},
+        {"skill": "Cross-sell", "vending_application": "QR coupons to online store"}
+      ]
+    },
+    {
+      "id": "field_sales",
+      "title": "Field Sales Representative",
+      "category": "sales",
+      "superpowers": [
+        {"skill": "Territory grind", "vending_application": "Daily pop-ins that convert"},
+        {"skill": "Call cadence", "vending_application": "Meetings booked, not hoped"},
+        {"skill": "Route mapping", "vending_application": "Cluster wins per day"},
+        {"skill": "Close skills", "vending_application": "Multi-machine agreements"},
+        {"skill": "Pipeline hygiene", "vending_application": "Constant deal flow"}
+      ]
+    },
+    {
+      "id": "outside_sales",
+      "title": "Outside Sales Representative",
+      "category": "sales",
+      "superpowers": [
+        {"skill": "Door-to-door comfort", "vending_application": "Fearless with PM offices"},
+        {"skill": "Proposal speed", "vending_application": "Same-day quotes"},
+        {"skill": "Objection mastery", "vending_application": "'We have a vendor' flips"},
+        {"skill": "Expansion asks", "vending_application": "Sister sites, same brand"},
+        {"skill": "Post-sale care", "vending_application": "Referrals unlocked"}
+      ]
+    },
+    {
+      "id": "franchise_owner",
+      "title": "Franchise Owner / Operator",
+      "category": "business",
+      "superpowers": [
+        {"skill": "Playbook execution", "vending_application": "Scale with repeatable ops"},
+        {"skill": "Hiring systems", "vending_application": "Reliable restocker bench"},
+        {"skill": "Vendor terms", "vending_application": "Better pricing tiers"},
+        {"skill": "QA audits", "vending_application": "Spotless machines = renewals"},
+        {"skill": "Territory thinking", "vending_application": "Defend and expand"}
+      ]
+    },
+    {
+      "id": "insurance_agent",
+      "title": "Insurance Agent",
+      "category": "finance",
+      "superpowers": [
+        {"skill": "Trust selling", "vending_application": "PMs buy you, then the box"},
+        {"skill": "Renewal discipline", "vending_application": "Multi-year agreements"},
+        {"skill": "Networking", "vending_application": "Chambers/BNI feed leads"},
+        {"skill": "Risk framing", "vending_application": "Liability, COI handled"},
+        {"skill": "Persistence", "vending_application": "Long cycle, steady follow-up"}
+      ]
+    },
+    {
+      "id": "financial_advisor",
+      "title": "Financial Advisor",
+      "category": "finance",
+      "superpowers": [
+        {"skill": "ROI framing", "vending_application": "Payback, IRR per unit"},
+        {"skill": "Laddered buys", "vending_application": "Smooth capex over months"},
+        {"skill": "Diversification", "vending_application": "Mix of site types"},
+        {"skill": "Pricing strategy", "vending_application": "Margin vs. volume math"},
+        {"skill": "Owner financing", "vending_application": "Creative deal structures"}
+      ]
+    },
+    {
+      "id": "real_estate_investor",
+      "title": "Real Estate Investor / Property Manager",
+      "category": "real_estate",
+      "superpowers": [
+        {"skill": "PM language", "vending_application": "Amenity value, zero-cost perk"},
+        {"skill": "Asset plans", "vending_application": "Vending in NOI story"},
+        {"skill": "Lease addenda", "vending_application": "Clean contracts, few surprises"},
+        {"skill": "Portfolio rollout", "vending_application": "1 pilot → 10 sites"},
+        {"skill": "Maintenance access", "vending_application": "Faster service windows"}
+      ]
+    },
+    {
+      "id": "fitness_trainer",
+      "title": "Fitness Trainer / Gym Owner",
+      "category": "hospitality",
+      "superpowers": [
+        {"skill": "Health SKUs", "vending_application": "Gyms/offices wellness alignment"},
+        {"skill": "Member rapport", "vending_application": "Permission for new placements"},
+        {"skill": "Peak times insight", "vending_application": "Restock off-peak"},
+        {"skill": "Local partnerships", "vending_application": "Studios and boxes"},
+        {"skill": "Upsell", "vending_application": "Recovery drinks at premium"}
+      ]
+    },
+    {
+      "id": "restaurant_owner",
+      "title": "Restaurant Owner / Café Owner",
+      "category": "hospitality",
+      "superpowers": [
+        {"skill": "Distributor rates", "vending_application": "COGS edge on snacks/drinks"},
+        {"skill": "Prep cadence", "vending_application": "Batch restock runs"},
+        {"skill": "Cross-promo", "vending_application": "Coupons with purchases"},
+        {"skill": "Off-hours access", "vending_application": "Service before open"},
+        {"skill": "Back-of-house fixes", "vending_application": "Quick, handy repairs"}
+      ]
+    },
+    {
+      "id": "bartender",
+      "title": "Bartender / Server",
+      "category": "hospitality",
+      "superpowers": [
+        {"skill": "People radar", "vending_application": "Read PMs fast during pop-ins"},
+        {"skill": "Tip-driven hustle", "vending_application": "Relentless follow-ups"},
+        {"skill": "Shift flexibility", "vending_application": "Service routes off-peak"},
+        {"skill": "Upsell reflex", "vending_application": "Add second unit pitch"},
+        {"skill": "Community pulse", "vending_application": "Hears about new sites first"}
+      ]
+    },
+    {
+      "id": "truck_driver",
+      "title": "Truck Driver / Delivery Driver",
+      "category": "operations",
+      "superpowers": [
+        {"skill": "Route mastery", "vending_application": "Minimal miles, max stops"},
+        {"skill": "Time windows", "vending_application": "Precise arrivals PMs love"},
+        {"skill": "Equipment handling", "vending_application": "Safe machine moves"},
+        {"skill": "Traffic savvy", "vending_application": "Avoid delays, fewer OOS"},
+        {"skill": "Checklists", "vending_application": "Zero missed restocks"}
+      ]
+    },
+    {
+      "id": "military_veteran",
+      "title": "Military Veteran",
+      "category": "military",
+      "superpowers": [
+        {"skill": "SOP discipline", "vending_application": "Machines spotless, uptime high"},
+        {"skill": "Logistics", "vending_application": "Route efficiency excellence"},
+        {"skill": "Composure", "vending_application": "Calm under equipment failures"},
+        {"skill": "Leadership", "vending_application": "Build dependable restock team"},
+        {"skill": "Integrity", "vending_application": "PM trust, easy renewals"}
+      ]
+    },
+    {
+      "id": "first_responder",
+      "title": "Police Officer / Firefighter",
+      "category": "military",
+      "superpowers": [
+        {"skill": "Community trust", "vending_application": "Instant credibility with PMs"},
+        {"skill": "Shift patterns", "vending_application": "Service during off-hours"},
+        {"skill": "Facilities access", "vending_application": "Public buildings familiarity"},
+        {"skill": "Crisis handling", "vending_application": "Quick, decisive fixes"},
+        {"skill": "Local network", "vending_application": "Referrals to departments"}
+      ]
+    },
+    {
+      "id": "stay_at_home_parent",
+      "title": "Stay-at-Home Parent",
+      "category": "family",
+      "superpowers": [
+        {"skill": "Time blocks", "vending_application": "Predictable service cadence"},
+        {"skill": "School/club ties", "vending_application": "Warm intros galore"},
+        {"skill": "Family team", "vending_application": "Kids handle simple tasks"},
+        {"skill": "Budget focus", "vending_application": "Lean, profitable ops"},
+        {"skill": "Reliability", "vending_application": "PMs value consistency"}
+      ]
+    },
+    {
+      "id": "college_student",
+      "title": "College Student / Recent Graduate",
+      "category": "education",
+      "superpowers": [
+        {"skill": "Hustle windows", "vending_application": "Between classes = pop-ins"},
+        {"skill": "Tech stack", "vending_application": "Telemetry, sheets, automations"},
+        {"skill": "Campus targets", "vending_application": "Dorms, labs, lounges"},
+        {"skill": "Peer marketing", "vending_application": "Flyers/QRs drive sales"},
+        {"skill": "Low overhead", "vending_application": "Reinvest to scale"}
+      ]
+    },
+    {
+      "id": "nonprofit_fundraiser",
+      "title": "Nonprofit Fundraiser",
+      "category": "business",
+      "superpowers": [
+        {"skill": "The ask", "vending_application": "Confident contract closes"},
+        {"skill": "Donor maps", "vending_application": "Translate to PM targets"},
+        {"skill": "Storytelling", "vending_application": "Vending as staff perk"},
+        {"skill": "Follow-up systems", "vending_application": "Conversions over time"},
+        {"skill": "Community boards", "vending_application": "Civic placements"}
+      ]
+    },
+    {
+      "id": "public_speaker",
+      "title": "Public Speaker / Trainer",
+      "category": "education",
+      "superpowers": [
+        {"skill": "Presence", "vending_application": "Commanding room with PMs"},
+        {"skill": "Clear framing", "vending_application": "Value, ROI, zero hassle"},
+        {"skill": "Workshop offers", "vending_application": "Launch events at sites"},
+        {"skill": "Training ability", "vending_application": "Onboard restockers fast"},
+        {"skill": "Referrals", "vending_application": "Impressed audiences connect dots"}
+      ]
+    },
+    {
+      "id": "hr_manager",
+      "title": "HR Manager / Recruiter",
+      "category": "business",
+      "superpowers": [
+        {"skill": "Hiring funnel", "vending_application": "Reliable restocker pipeline"},
+        {"skill": "Policy fluency", "vending_application": "Vendor requirements nailed"},
+        {"skill": "Stakeholder comms", "vending_application": "PM updates that reassure"},
+        {"skill": "Negotiation", "vending_application": "Fair, durable agreements"},
+        {"skill": "Scheduling", "vending_application": "Coverage without gaps"}
+      ]
+    },
+    {
+      "id": "construction_pm",
+      "title": "Construction Project Manager",
+      "category": "operations",
+      "superpowers": [
+        {"skill": "Site coordination", "vending_application": "Smooth machine deliveries"},
+        {"skill": "Permit/process savvy", "vending_application": "Building approvals faster"},
+        {"skill": "Timeline control", "vending_application": "Installs on schedule"},
+        {"skill": "Vendor wrangling", "vending_application": "Electricians/riggers aligned"},
+        {"skill": "Punchlists", "vending_application": "No loose ends"}
+      ]
+    },
+    {
+      "id": "facility_manager",
+      "title": "Facility Manager / Building Supervisor",
+      "category": "operations",
+      "superpowers": [
+        {"skill": "Asset mindset", "vending_application": "Vending as amenity upgrade"},
+        {"skill": "Access windows", "vending_application": "After-hours servicing ease"},
+        {"skill": "Maintenance triage", "vending_application": "Fix or call, fast"},
+        {"skill": "Space planning", "vending_application": "Ideal placement spots"},
+        {"skill": "Multi-site leverage", "vending_application": "Rollouts across portfolio"}
+      ]
+    },
+    {
+      "id": "security_professional",
+      "title": "Security Professional",
+      "category": "operations",
+      "superpowers": [
+        {"skill": "Loss prevention", "vending_application": "Shrink mitigation tactics"},
+        {"skill": "Access control", "vending_application": "Safe cash collections"},
+        {"skill": "Incident response", "vending_application": "Downtime minimized"},
+        {"skill": "Patrol routes", "vending_application": "Spot high-traffic areas"},
+        {"skill": "Trust badge", "vending_application": "PMs feel secure"}
+      ]
+    },
+    {
+      "id": "it_support",
+      "title": "IT Support / Systems Administrator",
+      "category": "technology",
+      "superpowers": [
+        {"skill": "Telemetry setup", "vending_application": "Live sales/stock data"},
+        {"skill": "Network fixes", "vending_application": "Smart cooler connectivity"},
+        {"skill": "Automation", "vending_application": "Alerts for OOS/SLA"},
+        {"skill": "Troubleshooting", "vending_application": "Fewer service tickets"},
+        {"skill": "Data backups", "vending_application": "Compliance clean"}
+      ]
+    },
+    {
+      "id": "engineer",
+      "title": "Engineer (Mechanical / Electrical)",
+      "category": "technology",
+      "superpowers": [
+        {"skill": "In-house repairs", "vending_application": "Low downtime, low cost"},
+        {"skill": "Preventive maintenance", "vending_application": "Fewer failures"},
+        {"skill": "Modifications", "vending_application": "Custom vend solutions"},
+        {"skill": "Process rigor", "vending_application": "High route efficiency"},
+        {"skill": "Root-cause", "vending_application": "Fix problems permanently"}
+      ]
+    },
+    {
+      "id": "graphic_designer",
+      "title": "Graphic Designer / Creative Professional",
+      "category": "marketing",
+      "superpowers": [
+        {"skill": "Branded wraps", "vending_application": "Premium look = approvals"},
+        {"skill": "Menu cards", "vending_application": "Clear pricing ups conversion"},
+        {"skill": "Promo creatives", "vending_application": "Flyers that book meetings"},
+        {"skill": "Social content", "vending_application": "Showcase installs"},
+        {"skill": "Signage", "vending_application": "Drive impulse buys"}
+      ]
+    },
+    {
+      "id": "product_manager",
+      "title": "Product Manager",
+      "category": "technology",
+      "superpowers": [
+        {"skill": "Roadmaps", "vending_application": "Scale route like a product"},
+        {"skill": "User research", "vending_application": "Tenants' needs → SKU choices"},
+        {"skill": "Metrics", "vending_application": "Cohort retention per site"},
+        {"skill": "Experimentation", "vending_application": "Price/assortment testing"},
+        {"skill": "Stakeholder alignment", "vending_application": "PM, owners, tenants"}
+      ]
+    }
+  ],
+  "categories": [
+    {"id": "education", "name": "Education & Teaching"},
+    {"id": "sales", "name": "Sales & Business Development"},
+    {"id": "business", "name": "Business Ownership"},
+    {"id": "finance", "name": "Finance & Accounting"},
+    {"id": "marketing", "name": "Marketing & Digital"},
+    {"id": "operations", "name": "Operations & Logistics"},
+    {"id": "hospitality", "name": "Hospitality & Food Service"},
+    {"id": "real_estate", "name": "Real Estate & Property"},
+    {"id": "technology", "name": "Technology & IT"},
+    {"id": "family", "name": "Family & Lifestyle"},
+    {"id": "military", "name": "Military & Public Service"}
+  ]
+}
