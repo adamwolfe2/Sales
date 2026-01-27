@@ -1,0 +1,456 @@
+{
+  "metadata": {
+    "last_updated": "2026-01-27",
+    "version": "1.0",
+    "notes": "Complete payment link inventory for all packages and financing options"
+  },
+  "packages": {
+    "bronze": {
+      "name": "Bronze Package",
+      "price": 5997,
+      "duration_months": 12,
+      "best_for": "New entrepreneurs seeking coaching and community support",
+      "features": [
+        "FREE access to VendHub during program (discounted machines & products)",
+        "Access to premium Vendingpreneur Community in Skool",
+        "Access to daily group calls",
+        "1:1 Intercom Chat support",
+        "Weekly group call with Mike"
+      ],
+      "payment_options": {
+        "pif_fanbasis": {
+          "name": "Pay in Full (Fanbasis)",
+          "price": 5997,
+          "description": "Full payment, no additional fees",
+          "url": "https://www.fanbasis.com/agency-checkout/modern-amenities-vendingpreneurs/JZpZg"
+        },
+        "shn_10_off": {
+          "name": "10% Off (SHN)",
+          "price": 5397,
+          "description": "Save $600 with SHN discount",
+          "url": "https://whop.com/checkout/plan_6bIz53JkhGobB?d2c=true"
+        },
+        "split_it": {
+          "name": "Split It (15% more)",
+          "price": 6897,
+          "description": "3-12 months, 0% APR, no credit impact",
+          "fee_percentage": 15,
+          "url": "https://whop.com/checkout/plan_jD8rSqagnDGql?d2c=true"
+        },
+        "klarna": {
+          "name": "Klarna (15% more)",
+          "price": 6897,
+          "description": "Up to 24 months, requires 600+ credit score",
+          "fee_percentage": 15,
+          "url": "https://whop.com/checkout/plan_WF0wG1AuAzJDP?d2c=true"
+        },
+        "payva": {
+          "name": "Payva",
+          "price": 5997,
+          "description": "3-12 months, anyone approved, fixed APR",
+          "url": "https://pay.payva.com/checkout/overview/2HcC8uLrzY"
+        },
+        "elective": {
+          "name": "Elective (15% more)",
+          "price": 6897,
+          "description": "3-12 months, ideal for 650+ credit score, CA residents NOT eligible",
+          "fee_percentage": 15,
+          "url": "https://app.elective.com/student/checkout/bca706e1-8d4d-4f0f-8767-34bbcaac6c18?productId=24f5482b-d14a-4e9e-9c39-fa94e3682bee"
+        },
+        "coach": {
+          "name": "Coach Financing",
+          "price": 5997,
+          "description": "Up to 144 months, good for bad credit, personal loan",
+          "url": "https://www.coachfinancing.com/modern-amenities-llc/"
+        },
+        "low_ticket_pif": {
+          "name": "Low Ticket Pay in Full",
+          "price": 5997,
+          "description": "Alternative PIF checkout",
+          "url": "https://whop.com/checkout/plan_lajs13cp2KYpq?d2c=true"
+        },
+        "low_ticket_split_it": {
+          "name": "Low Ticket Split It (15% more)",
+          "price": 6897,
+          "description": "Alternative Split It checkout",
+          "fee_percentage": 15,
+          "url": "https://whop.com/checkout/plan_3kxAhNekEu0H7?d2c=true"
+        },
+        "low_ticket_payva": {
+          "name": "Low Ticket Payva",
+          "price": 5997,
+          "description": "Alternative Payva checkout",
+          "url": "https://pay.payva.com/checkout/overview/2HcC8uLs40"
+        }
+      }
+    },
+    "silver": {
+      "name": "Silver Package",
+      "price": 8997,
+      "duration_months": 12,
+      "best_for": "Entrepreneurs ready to launch with immediate cold lead scrape",
+      "features": [
+        "Everything in Bronze",
+        "200+ business contacts provided in your ZIP code"
+      ],
+      "payment_options": {
+        "pif_fanbasis": {
+          "name": "Pay in Full (Fanbasis)",
+          "price": 8997,
+          "description": "Full payment, no additional fees",
+          "url": "https://www.fanbasis.com/agency-checkout/modern-amenities-vendingpreneurs/P1y14"
+        },
+        "shn_10_off": {
+          "name": "10% Off (SHN)",
+          "price": 8097,
+          "description": "Save $900 with SHN discount",
+          "url": "https://whop.com/checkout/plan_TrNks2qrZxMrB?d2c=true"
+        },
+        "split_it": {
+          "name": "Split It (15% more)",
+          "price": 10347,
+          "description": "3-12 months, 0% APR, no credit impact",
+          "fee_percentage": 15,
+          "url": "https://whop.com/checkout/plan_gJPHymACdZgvU?d2c=true"
+        },
+        "klarna": {
+          "name": "Klarna ($10k)",
+          "price": 10347,
+          "description": "Up to 24 months, requires 600+ credit score",
+          "fee_percentage": 15,
+          "url": "https://whop.com/checkout/plan_uz01k81XXSXA9"
+        },
+        "payva": {
+          "name": "Payva",
+          "price": 8997,
+          "description": "3-12 months, anyone approved, fixed APR",
+          "url": "https://pay.payva.com/checkout/overview/2HcC8uLrzb"
+        },
+        "elective": {
+          "name": "Elective (15% more)",
+          "price": 10347,
+          "description": "3-12 months, ideal for 650+ credit score, CA residents NOT eligible",
+          "fee_percentage": 15,
+          "url": "https://app.elective.com/student/checkout/bca706e1-8d4d-4f0f-8767-34bbcaac6c18?productId=bff22093-c68d-4df3-9ba2-744a422ef3cf"
+        },
+        "coach": {
+          "name": "Coach Financing",
+          "price": 8997,
+          "description": "Up to 144 months, good for bad credit, personal loan",
+          "url": "https://www.coachfinancing.com/modern-amenities-llc/"
+        },
+        "low_ticket_pif": {
+          "name": "Low Ticket Pay in Full",
+          "price": 8997,
+          "description": "Alternative PIF checkout",
+          "url": "https://whop.com/checkout/plan_fxksU5jQkGgso?d2c=true"
+        },
+        "low_ticket_split_it": {
+          "name": "Low Ticket Split It (15% more)",
+          "price": 10347,
+          "description": "Alternative Split It checkout",
+          "fee_percentage": 15,
+          "url": "https://whop.com/checkout/plan_JC9zJ1panfyAt?d2c=true"
+        },
+        "low_ticket_payva": {
+          "name": "Low Ticket Payva",
+          "price": 8997,
+          "description": "Alternative Payva checkout",
+          "url": "https://pay.payva.com/checkout/overview/2HcC8uLs3z"
+        }
+      }
+    },
+    "gold": {
+      "name": "Gold Package",
+      "price": 10997,
+      "duration_months": 12,
+      "most_popular": true,
+      "best_for": "Entrepreneurs ready to launch with immediate lead flow",
+      "features": [
+        "Everything from Silver",
+        "1:1 mentorship (2x 30-min calls/month) with Vendingpreneur coaches"
+      ],
+      "payment_options": {
+        "pif_fanbasis": {
+          "name": "Pay in Full (Fanbasis)",
+          "price": 10997,
+          "description": "Full payment, no additional fees",
+          "url": "https://www.fanbasis.com/agency-checkout/modern-amenities-vendingpreneurs/RgAgE"
+        },
+        "shn_10_off": {
+          "name": "10% Off (SHN)",
+          "price": 9897,
+          "description": "Save $1,100 with SHN discount",
+          "url": "https://whop.com/checkout/plan_1nSqTK8hWqh9V?d2c=true"
+        },
+        "split_it": {
+          "name": "Split It (15% more)",
+          "price": 12647,
+          "description": "3-12 months, 0% APR, no credit impact",
+          "fee_percentage": 15,
+          "url": "https://whop.com/checkout/plan_F3pYMVYiBNvhN?d2c=true"
+        },
+        "klarna": {
+          "name": "Klarna ($10k)",
+          "price": 12647,
+          "description": "Up to 24 months, requires 600+ credit score",
+          "fee_percentage": 15,
+          "url": "https://whop.com/checkout/plan_DFb9X2IUwSXO5"
+        },
+        "payva": {
+          "name": "Payva",
+          "price": 10997,
+          "description": "3-12 months, anyone approved, fixed APR",
+          "url": "https://app.payva.com/checkout/overview/2HcC8uLrzc"
+        },
+        "elective": {
+          "name": "Elective (15% more)",
+          "price": 12647,
+          "description": "3-12 months, ideal for 650+ credit score, CA residents NOT eligible",
+          "fee_percentage": 15,
+          "url": "https://app.elective.com/student/checkout/bca706e1-8d4d-4f0f-8767-34bbcaac6c18?productId=c5d38b51-249b-4ea2-817b-c5687c4c9db4"
+        },
+        "coach": {
+          "name": "Coach Financing",
+          "price": 10997,
+          "description": "Up to 144 months, good for bad credit, personal loan",
+          "url": "https://www.coachfinancing.com/modern-amenities-llc/"
+        },
+        "low_ticket_pif": {
+          "name": "Low Ticket Pay in Full",
+          "price": 10997,
+          "description": "Alternative PIF checkout",
+          "url": "https://whop.com/checkout/plan_JC9zJ1panfyAt?d2c=true"
+        },
+        "low_ticket_split_it": {
+          "name": "Low Ticket Split It (15% more)",
+          "price": 12647,
+          "description": "Alternative Split It checkout",
+          "fee_percentage": 15,
+          "url": "https://whop.com/checkout/plan_YOFDSDqXqcKjm?d2c=true"
+        },
+        "low_ticket_payva": {
+          "name": "Low Ticket Payva",
+          "price": 10997,
+          "description": "Alternative Payva checkout",
+          "url": "https://pay.payva.com/checkout/overview/2HcC8uLs3y"
+        }
+      }
+    },
+    "platinum": {
+      "name": "Platinum Package",
+      "price": 13997,
+      "duration_months": 12,
+      "best_for": "Serious operators who want accelerated outreach (12 months + 1,000 touchpoints)",
+      "features": [
+        "Everything in Gold",
+        "12 months of outreach with 1,000 touchpoints"
+      ],
+      "payment_options": {
+        "pif_fanbasis": {
+          "name": "Pay in Full (Fanbasis)",
+          "price": 13997,
+          "description": "Full payment, no additional fees",
+          "url": "https://www.fanbasis.com/agency-checkout/modern-amenities-vendingpreneurs/VmGmX"
+        },
+        "shn_10_off": {
+          "name": "10% Off (SHN)",
+          "price": 12597,
+          "description": "Save $1,400 with SHN discount",
+          "url": "https://whop.com/checkout/plan_9RfbmY4RihMKq?d2c=true"
+        },
+        "split_it": {
+          "name": "Split It (15% more)",
+          "price": 16097,
+          "description": "3-12 months, 0% APR, no credit impact",
+          "fee_percentage": 15,
+          "url": "https://whop.com/checkout/plan_UGv9L6NWHTLbv?d2c=true"
+        },
+        "klarna": {
+          "name": "Klarna ($10k)",
+          "price": 16097,
+          "description": "Up to 24 months, requires 600+ credit score",
+          "fee_percentage": 15,
+          "url": "https://whop.com/checkout/plan_8fDFUDlcukK2P"
+        },
+        "payva": {
+          "name": "Payva",
+          "price": 13997,
+          "description": "3-12 months, anyone approved, fixed APR",
+          "url": "https://pay.payva.com/checkout/overview/2HcC8uLs1S"
+        },
+        "elective": {
+          "name": "Elective (15% more)",
+          "price": 15000,
+          "description": "3-12 months, ideal for 650+ credit score, CA residents NOT eligible",
+          "fee_percentage": 15,
+          "url": "https://app.elective.com/student/checkout/bca706e1-8d4d-4f0f-8767-34bbcaac6c18?productId=c8714fe0-799a-4bbf-a6a8-3e543d2c72f2"
+        },
+        "coach": {
+          "name": "Coach Financing",
+          "price": 13997,
+          "description": "Up to 144 months, good for bad credit, personal loan",
+          "url": "https://www.coachfinancing.com/modern-amenities-llc/"
+        },
+        "low_ticket_pif": {
+          "name": "Low Ticket Pay in Full",
+          "price": 13997,
+          "description": "Alternative PIF checkout",
+          "url": "https://whop.com/checkout/plan_Qjs1qsoa18vNy"
+        },
+        "low_ticket_split_it": {
+          "name": "Low Ticket Split It (15% more)",
+          "price": 15000,
+          "description": "Alternative Split It checkout",
+          "fee_percentage": 15,
+          "url": "https://whop.com/checkout/plan_cxG6G4T3SeRaF"
+        },
+        "low_ticket_payva": {
+          "name": "Low Ticket Payva",
+          "price": 13997,
+          "description": "Alternative Payva checkout",
+          "url": "https://pay.payva.com/checkout/overview/2HcC8uLs3x"
+        }
+      }
+    }
+  },
+  "addons": {
+    "machine_addon_1x": {
+      "name": "Machine Add-On (1x)",
+      "price": 3500,
+      "regular_price": 4000,
+      "savings": 500,
+      "description": "$4,000 machine for $3,500 on VendHub (save $500)",
+      "url": "https://whop.com/checkout/plan_YZSQ8FGc8XrdO?d2c=true"
+    },
+    "machine_addon_2x": {
+      "name": "Machine Add-On (2x)",
+      "price": 7000,
+      "regular_price": 8000,
+      "savings": 1000,
+      "description": "Two machines for $7,000 (save $1,000)",
+      "url": "https://whop.com/checkout/plan_dHlpCEqhzwrCm?d2c=true"
+    },
+    "vendhub_renewal": {
+      "name": "VendHub Renewal",
+      "price": null,
+      "description": "Renew your VendHub access to continue receiving discounted machines and products",
+      "url": "https://whop.com/checkout/3FMqmtPlEcKQ9K3vk5-wtn1-LMK2-kCRf-q1Jm66uSfcez/"
+    }
+  },
+  "financing_options": {
+    "pif": {
+      "name": "Pay in Full (PIF)",
+      "timeline": "Immediate",
+      "benefits": [
+        "Standard payment option",
+        "No additional fees",
+        "Full payment upfront",
+        "Best value - no financing costs"
+      ]
+    },
+    "split_it": {
+      "name": "Split It",
+      "timeline": "3-12 months",
+      "fee_percentage": 15,
+      "benefits": [
+        "Price + 15% origination fee",
+        "Does not affect credit score",
+        "0% APR - no interest",
+        "Must use personal credit card (not business CC)",
+        "Places a hold on card for full amount",
+        "Only charges monthly installment each month",
+        "Hold reduces as balance is paid down"
+      ]
+    },
+    "elective": {
+      "name": "Elective",
+      "timeline": "3-12 months",
+      "fee_percentage": 15,
+      "benefits": [
+        "Price + 15% origination fee + APR (0% if good finances)",
+        "Ideal for credit score 650+ (can approve down to 550)",
+        "3-12 month repayment terms",
+        "Lower to no APR on top of 15% fee",
+        "Credit/debit card only for 1st payment or down payment",
+        "California residents NOT eligible",
+        "Canadian residents ARE eligible"
+      ]
+    },
+    "payva": {
+      "name": "Payva",
+      "timeline": "3-12 months",
+      "benefits": [
+        "Price + fixed APR (flat rate)",
+        "Anyone gets approved",
+        "No initiation fee",
+        "CS 600+ = Funded upfront",
+        "CS below 600 = Servicing (collected monthly)",
+        "Can use credit or debit card",
+        "Canadian residents eligible (Servicing only)"
+      ]
+    },
+    "klarna": {
+      "name": "Klarna",
+      "timeline": "Up to 24 months",
+      "fee_percentage": 15,
+      "benefits": [
+        "Price + 15% origination fee + APR",
+        "Ideal for those who need 24mo (vs 12mo)",
+        "Must have credit score 600+",
+        "Requires debit card for first payment",
+        "Process can be clunky for tech-challenged clients",
+        "US only",
+        "Good for lower packages (Bronze)"
+      ]
+    },
+    "coach": {
+      "name": "Coach Financing",
+      "timeline": "Up to 144 months",
+      "benefits": [
+        "Good for bad credit and/or flexible long-term plans",
+        "Personal loan - extends past 24mo to reduce monthly payment",
+        "No initiation fee (PIF price once funded)",
+        "US only",
+        "Best option when other financing is declined"
+      ]
+    },
+    "paypal": {
+      "name": "PayPal",
+      "timeline": "Pay in 4 / Monthly / Credit",
+      "variants": {
+        "pay_in_4": {
+          "apr": "0%",
+          "range": "$30-$1,500",
+          "terms": "4 payments every 2 weeks",
+          "credit_check": "Soft credit check - no impact on score"
+        },
+        "pay_monthly": {
+          "apr": "9.99%-35.99%",
+          "range": "$149-$10,000",
+          "terms": "Monthly payments"
+        }
+      }
+    }
+  },
+  "credit_score_recommendations": {
+    "prompt": "Do you roughly know what your credit score is?",
+    "tiers": {
+      "650_plus": {
+        "label": "650+ Credit Score",
+        "priority_order": ["elective", "klarna", "payva"],
+        "notes": "If Elective doesn't offer 18mo and client can't make 12mo work, move to Klarna"
+      },
+      "600_650": {
+        "label": "600-650 Credit Score",
+        "priority_order": ["elective", "klarna", "payva", "coach"],
+        "notes": "If Elective doesn't offer 18mo and client can't make 12mo work, move to Klarna"
+      },
+      "below_600": {
+        "label": "Below 600 Credit Score",
+        "priority_order": ["payva", "coach"],
+        "notes": "Limited options - Payva will approve anyone, Coach for extended terms"
+      }
+    }
+  }
+}

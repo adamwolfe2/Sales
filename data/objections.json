@@ -88,7 +88,29 @@
             "TODAY being the very emphasis key",
             "If they say no, you know it's fair and need to go into objection handling",
             "Finance is the easy bit - focus on their commitment first"
-          ]
+          ],
+          "advanced_tactics": {
+            "scholarship_reframe": {
+              "script": "We have a scholarship program that can lower your entry cost",
+              "why_it_works": "Frames discount as earned/deserved, not desperate sales tactic. Makes prospect feel special/selected."
+            },
+            "tax_deduction_angle": {
+              "script": "This is a business expense, fully tax deductible. Your CPA will love this - it's good debt, not bad debt.",
+              "why_it_works": "Reframes cost as investment that reduces tax burden"
+            },
+            "extended_financing": {
+              "script": "$575/month too high? We can extend to 36-60 months, get you to $200/month",
+              "why_it_works": "Makes program accessible without lowering price, preserves value perception while solving cash flow objection"
+            },
+            "machine_discount_math": {
+              "script": "You save $500 per machine. Buy 2 machines = program pays for itself. After year 1, it's only $99/month - one machine covers that.",
+              "why_it_works": "Concrete ROI calculation that's easy to visualize"
+            },
+            "out_of_pocket_timeline": {
+              "script": "Can you do $1,000-$1,200 out of pocket for month 1 and month 2? By month 3-4, machines are covering the program cost.",
+              "why_it_works": "Specific, short-term commitment feels manageable. Shows path to self-funding business."
+            }
+          }
         },
         "scott": {
           "name": "Scott Seymour",
@@ -195,7 +217,17 @@
             "clarify": "I'm not saying she can't be there to lean on. But when it comes to the decision and responsibility to take the first step, whose responsibility does that fall on?",
             "close": "The version of you who's got X, Y, Z and this amazing family - what decision would he make here? Because frankly, I'm not sure it's going away and outsourcing that responsibility to anyone else."
           },
-          "ceo_frame": "You are the man of the house - you're almost like the CEO of your own household. Similar to a CEO running a business, would he put any of those decisions for what's best for the business, and ultimately for the employees (your family), onto them?"
+          "ceo_frame": "You are the man of the house - you're almost like the CEO of your own household. Similar to a CEO running a business, would he put any of those decisions for what's best for the business, and ultimately for the employees (your family), onto them?",
+          "advanced_tactics": {
+            "send_them_everything": {
+              "script": "I'll send you all the info so you can review with [spouse/partner]. Let's schedule a follow-up call with both of you on it.",
+              "why_it_works": "Respects decision-making process, doesn't try to bypass"
+            },
+            "division_of_labor": {
+              "script": "Who's doing what? One person finds locations, other restocks? How much does this need to make for you to cut back hours?",
+              "why_it_works": "Gets them planning together, building shared vision"
+            }
+          }
         },
         "scott": {
           "name": "Scott Seymour",
@@ -231,7 +263,21 @@
           "discovery_urgency_question": "Knowing that those right tools and resources are out there, just a handful to grab away, and you can change your life - you being in the current position where you can't do X, Y, Z, and you're stuck in that box - how much longer, how many months, weeks, or even days are you okay actually staying in the same position?",
           "buy_in_approach": "'Not ready to start right now' isn't an objection. Ask: 'Is it a case that, you know, like, if you did do this, and you were to implement XYZ, do you feel that it could ever get to XYZ?' Then get them to explain why.",
           "opportunity_cost": "Brother, if you're going to do this regardless, why would it make sense to delay it? When in Q1 2026, you might already have 2 or 3 machines.",
-          "key_principle": "Always try to close now. Not even if it's literally impossible - at least a payment is a sign of commitment."
+          "key_principle": "Always try to close now. Not even if it's literally impossible - at least a payment is a sign of commitment.",
+          "advanced_tactics": {
+            "analysis_paralysis_warning": {
+              "script": "I don't want you stuck in analysis paralysis, wishing you'd pulled the trigger 6 months from now",
+              "why_it_works": "Creates urgency without pressure. Appeals to regret avoidance (loss aversion psychology)."
+            },
+            "ramp_up_while_you_wait": {
+              "script": "Start learning now, hit the ground running in 2-3 months when you're ready. Get knowledgeable, build skillset, don't play catch-up later.",
+              "why_it_works": "Reframes waiting as wasting time vs. preparing"
+            },
+            "life_will_never_be_perfect": {
+              "script": "There's always going to be something - wedding, training, move, baby. The best time to plant a tree was 20 years ago. Second best time is today.",
+              "why_it_works": "Normalizes imperfect timing, encourages action despite obstacles"
+            }
+          }
         },
         "scott": {
           "name": "Scott Seymour",
@@ -459,6 +505,91 @@
       "Urgency must be built in discovery, not objection handling",
       "Always try to close TODAY",
       "Three-way calls beat sending info"
+    ]
+  },
+  "advanced_tactics": {
+    "trust_building": {
+      "local_social_proof": {
+        "script": "Do you have anybody in [their city] doing this? Yes, [Name] has [X] machines, does $[Y]/month in sales. I'll see if they have availability for a Q&A.",
+        "why_it_works": "Specific numbers + local proximity = credibility. Offer to connect them."
+      },
+      "no_timeshare_reassurance": {
+        "script": "This isn't a timeshare presentation. There's no ticking time bomb. Only incentive is 50 leads if you sign up by end of month - that's it.",
+        "why_it_works": "Explicitly addresses high-pressure sales fear. Builds trust by being transparent about incentives."
+      },
+      "we_want_you_to_succeed": {
+        "script": "We're not worried about just getting the deal. We're here for the steps and the process. We want to make sure you want to do it and will be successful.",
+        "why_it_works": "Positions company as partner, not vendor"
+      }
+    }
+  },
+  "emotional_triggers": {
+    "family_time": {
+      "phrases": ["More time with my daughter", "avoid daycare costs", "be present for kids"],
+      "response": "Emphasize 6-8 hrs/week, family business involvement, creating memories",
+      "testimonials": ["Joe Natoli", "Abby C - Van Pelt Vending"]
+    },
+    "physical_exhaustion": {
+      "phrases": ["18-hour days walking on my feet", "body wearing down", "less physically demanding"],
+      "response": "Vending is not dependent on your body/time, passive income"
+    },
+    "job_instability": {
+      "phrases": ["Laid off while pregnant", "career uncertainty", "real estate cycles", "company downsizing"],
+      "response": "Recession-proof, cash-flowing, you control it"
+    },
+    "autonomy": {
+      "phrases": ["Work for myself", "not relying on W2", "build my own asset", "immigration status"],
+      "response": "Own the business, not dependent on employers, build equity"
+    },
+    "generational_wealth": {
+      "phrases": ["Set up my son for college", "teach financial literacy", "leave something behind", "special needs child"],
+      "response": "Family business, involving kids, long-term legacy. This is THE most powerful motivator."
+    }
+  },
+  "winning_closes": {
+    "definitely_towards_10": {
+      "signal": "Rep asks 1-10 readiness, prospect says 'Definitely towards the 10'",
+      "meaning": "Objections handled, vision clear, ready to close",
+      "action": "Move to payment options immediately"
+    },
+    "love_everything_seeing": {
+      "signal": "'I love the support, the contracts, the templates'",
+      "meaning": "Enthusiasm present even if they claim skepticism",
+      "action": "Address remaining skepticism, don't re-sell value"
+    },
+    "lets_talk_pricing": {
+      "signal": "'If all that's included, let's talk pricing'",
+      "meaning": "Mentally bought, now logistics only",
+      "action": "Present options clearly, offer flexibility"
+    },
+    "family_meeting": {
+      "signal": "'We should have a family meeting this Sunday'",
+      "meaning": "Real buying process, not a stall",
+      "action": "Send materials, offer to join call, schedule follow-up"
+    }
+  },
+  "rep_language_patterns": {
+    "trust_builders": [
+      "I can definitely respect that",
+      "That's totally fair",
+      "I'm not gonna be a hard press",
+      "There's no wrong answer here",
+      "I want to make sure you're comfortable"
+    ],
+    "urgency_creators": [
+      "The only incentive is [specific deadline]",
+      "I don't want you stuck in analysis paralysis",
+      "Six months from now, you'll wish you'd started today"
+    ],
+    "price_handlers": [
+      "It's a real investment to start a company",
+      "This is good debt, not bad debt",
+      "The program pays for itself with machine discounts"
+    ],
+    "skepticism_overcomers": [
+      "You're not crazy for thinking that",
+      "I get it, there are scams out there",
+      "Let me connect you with [specific member] who was in your exact situation"
     ]
   }
 }

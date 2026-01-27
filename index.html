@@ -33,10 +33,20 @@
         <nav class="nav">
           <button class="nav-btn active" data-nav="objections">Objections</button>
           <button class="nav-btn" data-nav="playbooks">Playbooks</button>
+          <button class="nav-btn" data-nav="pricing">Pricing</button>
+          <button class="nav-btn" data-nav="reps">Reps</button>
           <button class="nav-btn" data-nav="prospects">Prospects</button>
           <button class="nav-btn" data-nav="financing">Financing</button>
           <button class="nav-btn" data-nav="testimonials">Testimonials</button>
+          <button class="nav-btn" data-nav="analytics">Analytics</button>
           <button class="nav-btn" data-nav="analyzer">Analyzer</button>
+          <a href="coach.html" class="nav-btn coach-link" target="_blank" title="Real-time Sales Coach">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            </svg>
+            Coach
+          </a>
         </nav>
       </div>
     </header>
@@ -54,6 +64,28 @@
     <div class="modal-container">
       <div id="modal-content"></div>
     </div>
+  </div>
+
+  <!-- Quick Access Floating Buttons -->
+  <div class="quick-tools">
+    <button class="quick-tool-btn language" onclick="app.showRepLanguagePanel()" title="Rep Language Patterns">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+    </button>
+    <button class="quick-tool-btn credit" onclick="app.showCreditScoreRecommender()" title="Credit Score Recommender">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+        <line x1="1" y1="10" x2="23" y2="10"></line>
+      </svg>
+    </button>
+    <button class="quick-tool-btn info" onclick="app.showPaymentOptionsInfoModal()" title="Payment Options Info">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+    </button>
   </div>
 
   <script src="src/app.js"></script>

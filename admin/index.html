@@ -773,15 +773,36 @@
 
     async function saveObjection() {
       const id = document.getElementById('obj-id').value;
+      const name = document.getElementById('obj-name').value.trim();
+      const category = document.getElementById('obj-category').value;
+      const script = document.getElementById('obj-script').value.trim();
+
+      // Required field validation
+      if (!name) {
+        showToast('Name is required', 'error');
+        document.getElementById('obj-name').focus();
+        return;
+      }
+      if (!category) {
+        showToast('Category is required', 'error');
+        document.getElementById('obj-category').focus();
+        return;
+      }
+      if (!script) {
+        showToast('Primary script is required', 'error');
+        document.getElementById('obj-script').focus();
+        return;
+      }
+
       const objection = {
-        name: document.getElementById('obj-name').value,
-        category: document.getElementById('obj-category').value,
+        name,
+        category,
         variations: document.getElementById('obj-variations').value.split('\n').filter(v => v.trim()),
         win_rate: parseFloat(document.getElementById('obj-winrate').value) || null,
         difficulty: document.getElementById('obj-difficulty').value,
         responses: {
           matt: {
-            primary_script: document.getElementById('obj-script').value,
+            primary_script: script,
             key_principles: [document.getElementById('obj-key').value].filter(k => k)
           }
         }
@@ -847,10 +868,25 @@
 
     async function saveTestimonial() {
       const id = document.getElementById('test-id').value;
+      const name = document.getElementById('test-name').value.trim();
+      const quote = document.getElementById('test-quote').value.trim();
+
+      // Required field validation
+      if (!name) {
+        showToast('Name is required', 'error');
+        document.getElementById('test-name').focus();
+        return;
+      }
+      if (!quote) {
+        showToast('Quote is required', 'error');
+        document.getElementById('test-quote').focus();
+        return;
+      }
+
       const testimonial = {
-        name: document.getElementById('test-name').value,
-        title: document.getElementById('test-title').value,
-        quote: document.getElementById('test-quote').value,
+        name,
+        title: document.getElementById('test-title').value.trim(),
+        quote,
         tags: document.getElementById('test-tags').value.split(',').map(t => t.trim()).filter(t => t),
         objection_counters: document.getElementById('test-counters').value.split(',').map(t => t.trim()).filter(t => t)
       };

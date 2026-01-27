@@ -9,6 +9,8 @@ class SalesCommandCenter {
     this.playbooks = null;
     this.testimonials = null;
     this.reps = null;
+    this.pricing = null;
+    this.callAnalytics = null;
     this.jobSuperpowers = null;
     this.financing = null;
     this.currentView = 'objections';
@@ -29,21 +31,41 @@ class SalesCommandCenter {
   }
 
   async loadData() {
-    const [objections, playbooks, testimonials, reps, jobSuperpowers, financing] = await Promise.all([
-      fetch('data/objections.json').then(r => r.json()),
-      fetch('data/playbooks.json').then(r => r.json()),
-      fetch('data/testimonials.json').then(r => r.json()),
-      fetch('data/reps.json').then(r => r.json()),
-      fetch('data/job-superpowers.json').then(r => r.json()).catch(() => null),
-      fetch('data/financing.json').then(r => r.json()).catch(() => null)
+    // Helper to safely fetch JSON with error handling
+    const safeFetch = async (url, name) => {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          console.warn(`Failed to load ${name}: ${response.status}`);
+          return null;
+        }
+        return await response.json();
+      } catch (error) {
+        console.warn(`Error loading ${name}:`, error);
+        return null;
+      }
+    };
+
+    // Load all data with individual error handling
+    const [objections, playbooks, testimonials, reps, pricing, callAnalytics, jobSuperpowers, financing] = await Promise.all([
+      safeFetch('data/objections.json', 'objections'),
+      safeFetch('data/playbooks.json', 'playbooks'),
+      safeFetch('data/testimonials.json', 'testimonials'),
+      safeFetch('data/reps.json', 'reps'),
+      safeFetch('data/pricing.json', 'pricing'),
+      safeFetch('data/call-analytics.json', 'call-analytics'),
+      safeFetch('data/job-superpowers.json', 'job-superpowers'),
+      safeFetch('data/financing.json', 'financing')
     ]);
 
-    this.objections = objections;
-    this.playbooks = playbooks;
-    this.testimonials = testimonials;
-    this.reps = reps;
-    this.jobSuperpowers = jobSuperpowers;
-    this.financing = financing;
+    this.objections = objections || { objections: [], categories: [], patterns: {} };
+    this.playbooks = playbooks || { frameworks: {}, quick_reference: {} };
+    this.testimonials = testimonials || { full_testimonials: [], by_objection_type: {}, revenue_proof_points: [] };
+    this.reps = reps || { reps: [], team_averages: {}, critical_gaps: [] };
+    this.pricing = pricing || { packages: {}, financing_options: {}, credit_score_recommendations: { tiers: {} }, addons: {} };
+    this.callAnalytics = callAnalytics || { job_type_patterns: {}, emotional_triggers: {}, winning_closes: {}, lost_deal_reasons: {}, followup_patterns: {}, analytics: { outcome_summary: {}, objection_frequency: {} }, metadata: {} };
+    this.jobSuperpowers = jobSuperpowers || {};
+    this.financing = financing || {};
   }
 
   buildSearchIndex() {
@@ -103,6 +125,20 @@ class SalesCommandCenter {
       });
     }
 
+    // Index pricing packages
+    if (this.pricing && this.pricing.packages) {
+      Object.entries(this.pricing.packages).forEach(([key, pkg]) => {
+        this.searchIndex.push({
+          type: 'pricing',
+          id: key,
+          name: pkg.name,
+          searchText: [
+            pkg.name,
+            pkg.best_for,
+            ...pkg.features,
+            key
+          ].join(' ').toLowerCase(),
+          data: pkg
     // Index job superpowers
     if (this.jobSuperpowers && this.jobSuperpowers.job_superpowers) {
       this.jobSuperpowers.job_superpowers.forEach(job => {
@@ -122,6 +158,54 @@ class SalesCommandCenter {
     }
 
     // Index financing options
+    if (this.pricing && this.pricing.financing_options) {
+      Object.entries(this.pricing.financing_options).forEach(([key, opt]) => {
+        this.searchIndex.push({
+          type: 'financing',
+          id: key,
+          name: opt.name,
+          searchText: [
+            opt.name,
+            opt.timeline || '',
+            ...(opt.benefits || [])
+          ].join(' ').toLowerCase(),
+          data: opt
+        });
+      });
+    }
+
+    // Index job type patterns
+    if (this.callAnalytics && this.callAnalytics.job_type_patterns) {
+      Object.entries(this.callAnalytics.job_type_patterns).forEach(([key, pattern]) => {
+        this.searchIndex.push({
+          type: 'job_pattern',
+          id: key,
+          name: key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+          searchText: [
+            key,
+            ...pattern.jobs,
+            pattern.motivation,
+            pattern.approach,
+            ...pattern.common_objections
+          ].join(' ').toLowerCase(),
+          data: pattern
+        });
+      });
+    }
+
+    // Index emotional triggers
+    if (this.callAnalytics && this.callAnalytics.emotional_triggers) {
+      Object.entries(this.callAnalytics.emotional_triggers).forEach(([key, trigger]) => {
+        this.searchIndex.push({
+          type: 'trigger',
+          id: key,
+          name: key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+          searchText: [
+            key,
+            ...trigger.phrases,
+            trigger.response
+          ].join(' ').toLowerCase(),
+          data: trigger
     if (this.financing && this.financing.payment_options) {
       this.financing.payment_options.forEach(option => {
         this.searchIndex.push({
@@ -192,11 +276,19 @@ class SalesCommandCenter {
       case 'playbooks':
         this.renderPlaybooks(content);
         break;
+      case 'pricing':
+        this.renderPricing(content);
+        break;
+      case 'reps':
+        this.renderReps(content);
       case 'prospects':
         this.renderProspectProfiles(content);
         break;
       case 'testimonials':
         this.renderTestimonials(content);
+        break;
+      case 'analytics':
+        this.renderCallAnalytics(content);
         break;
       case 'analyzer':
         this.renderAnalyzer(content);
@@ -255,7 +347,11 @@ class SalesCommandCenter {
     const grouped = {
       objection: results.filter(r => r.type === 'objection'),
       playbook: results.filter(r => r.type === 'playbook'),
-      testimonial: results.filter(r => r.type === 'testimonial')
+      testimonial: results.filter(r => r.type === 'testimonial'),
+      pricing: results.filter(r => r.type === 'pricing'),
+      financing: results.filter(r => r.type === 'financing'),
+      job_pattern: results.filter(r => r.type === 'job_pattern'),
+      trigger: results.filter(r => r.type === 'trigger')
     };
 
     content.innerHTML = `
@@ -288,6 +384,62 @@ class SalesCommandCenter {
             <h3>Testimonials</h3>
             <div class="results-list">
               ${grouped.testimonial.map(r => this.renderTestimonialCard(r.data)).join('')}
+            </div>
+          </div>
+        ` : ''}
+
+        ${grouped.pricing.length ? `
+          <div class="results-section">
+            <h3>Pricing Packages</h3>
+            <div class="results-list">
+              ${grouped.pricing.map(r => `
+                <div class="search-result-item" onclick="app.currentView='pricing';app.updateNav();app.renderCurrentView();">
+                  <span class="result-type">Package</span>
+                  <span class="result-name">${r.name} - $${r.data.price.toLocaleString()}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+
+        ${grouped.financing.length ? `
+          <div class="results-section">
+            <h3>Financing Options</h3>
+            <div class="results-list">
+              ${grouped.financing.map(r => `
+                <div class="search-result-item" onclick="app.showPaymentOptionsInfoModal()">
+                  <span class="result-type">Financing</span>
+                  <span class="result-name">${r.name} - ${r.data.timeline || ''}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+
+        ${grouped.job_pattern.length ? `
+          <div class="results-section">
+            <h3>Job Type Patterns</h3>
+            <div class="results-list">
+              ${grouped.job_pattern.map(r => `
+                <div class="search-result-item" onclick="app.showJobPatternModal('${r.id}')">
+                  <span class="result-type">Job Pattern</span>
+                  <span class="result-name">${r.name}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+
+        ${grouped.trigger.length ? `
+          <div class="results-section">
+            <h3>Emotional Triggers</h3>
+            <div class="results-list">
+              ${grouped.trigger.map(r => `
+                <div class="search-result-item" onclick="app.showEmotionalTriggerModal('${r.id}')">
+                  <span class="result-type">Trigger</span>
+                  <span class="result-name">${r.name}</span>
+                </div>
+              `).join('')}
             </div>
           </div>
         ` : ''}
@@ -844,11 +996,12 @@ class SalesCommandCenter {
     const fullTestimonials = this.testimonials.full_testimonials || [];
     const byObjection = this.testimonials.by_objection_type || {};
     const revenueProof = this.testimonials.revenue_proof_points || [];
+    const jobPatterns = this.callAnalytics?.job_type_patterns || {};
 
     container.innerHTML = `
       <div class="view-header">
         <h2>Success Story Library</h2>
-        <p>Social proof ammunition for presentations. Search or filter by objection type.</p>
+        <p>Social proof ammunition for presentations. Filter by objection type or prospect job category.</p>
       </div>
 
       <div class="stats-bar">
@@ -866,17 +1019,34 @@ class SalesCommandCenter {
         </div>
       </div>
 
-      <div class="category-filters">
-        <button class="filter-btn active" data-objection-type="all">All Stories</button>
-        ${Object.keys(byObjection).map(type => `
-          <button class="filter-btn" data-objection-type="${type}">
-            ${type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-          </button>
-        `).join('')}
+      <div class="filter-sections">
+        <div class="filter-section">
+          <label>Filter by Objection:</label>
+          <div class="category-filters">
+            <button class="filter-btn active" data-objection-type="all">All Stories</button>
+            ${Object.keys(byObjection).map(type => `
+              <button class="filter-btn" data-objection-type="${type}">
+                ${type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+              </button>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <label>Filter by Prospect Job Type:</label>
+          <div class="category-filters job-filters">
+            <button class="filter-btn job-filter active" data-job-type="all">All Jobs</button>
+            ${Object.entries(jobPatterns).map(([key, pattern]) => `
+              <button class="filter-btn job-filter" data-job-type="${key}" title="${pattern.jobs.join(', ')}">
+                ${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+              </button>
+            `).join('')}
+          </div>
+        </div>
       </div>
 
       <div class="testimonials-grid" id="testimonials-grid">
-        ${fullTestimonials.map(test => this.renderTestimonialCard(test)).join('')}
+        ${fullTestimonials.map(test => this.renderTestimonialCardWithJobType(test, jobPatterns)).join('')}
       </div>
 
       <div class="revenue-proof">
@@ -896,7 +1066,68 @@ class SalesCommandCenter {
     `;
 
     this.bindTestimonialFilters();
+    this.bindJobTypeFilters();
     this.bindResultEvents();
+  }
+
+  renderTestimonialCardWithJobType(test, jobPatterns) {
+    // Use explicit job_type if available, otherwise fall back to text matching
+    let matchedJobType = test.job_type || '';
+
+    // Fallback: determine job type based on title or tags if not explicitly set
+    if (!matchedJobType) {
+      const titleLower = (test.title || '').toLowerCase();
+      const tagsLower = (test.tags || []).join(' ').toLowerCase();
+      const quoteLower = (test.quote || '').toLowerCase();
+      const searchText = titleLower + ' ' + tagsLower + ' ' + quoteLower;
+
+      Object.entries(jobPatterns).forEach(([key, pattern]) => {
+        pattern.jobs.forEach(job => {
+          if (searchText.includes(job.toLowerCase())) {
+            matchedJobType = key;
+          }
+        });
+      });
+    }
+
+    return `
+      <div class="testimonial-card" data-testimonial-id="${test.id}" data-tags="${(test.objection_counters || []).join(' ')}" data-job-type="${matchedJobType}">
+        <h3 class="testimonial-name">${test.name}</h3>
+        <p class="testimonial-title">${test.title}</p>
+        ${test.business_name ? `<p class="testimonial-business">${test.business_name}</p>` : ''}
+        <p class="testimonial-preview">"${(test.quote || '').substring(0, 150)}..."</p>
+        ${test.results ? `
+          <div class="testimonial-results">
+            ${test.results.locations ? `<span>${test.results.locations} locations</span>` : ''}
+            ${test.results.machines ? `<span>${test.results.machines} machines</span>` : ''}
+            ${test.results.monthly_revenue ? `<span>$${test.results.monthly_revenue.toLocaleString()}/mo</span>` : ''}
+          </div>
+        ` : ''}
+        <div class="testimonial-tags">
+          ${test.objection_counters ? test.objection_counters.slice(0, 2).map(o => `<span class="tag small">${o}</span>`).join('') : ''}
+          ${matchedJobType ? `<span class="tag small job-tag">${matchedJobType.replace(/_/g, ' ')}</span>` : ''}
+        </div>
+      </div>
+    `;
+  }
+
+  bindJobTypeFilters() {
+    document.querySelectorAll('.job-filter').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.job-filter').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+
+        const jobType = e.target.dataset.jobType;
+
+        document.querySelectorAll('.testimonial-card').forEach(card => {
+          if (jobType === 'all' || card.dataset.jobType === jobType) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
   }
 
   renderTestimonialCard(test) {
@@ -1265,6 +1496,43 @@ class SalesCommandCenter {
             <button class="copy-btn" onclick="app.copyToClipboard('If we could solve that, would you be ready to move forward today?')">Copy</button>
           </div>
         </div>
+
+        ${this.callAnalytics?.followup_patterns ? `
+          <div class="pattern-section followup-patterns-section">
+            <h4>Follow-up Patterns</h4>
+            <p class="section-desc">How to respond when prospects need time</p>
+            <div class="followup-patterns-grid">
+              ${Object.entries(this.callAnalytics.followup_patterns).map(([key, pattern]) => `
+                <div class="followup-pattern-card ${pattern.success_rate.toLowerCase().replace(/[- ]/g, '_')}">
+                  <h5>${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h5>
+                  <p class="pattern-request">"${pattern.request}"</p>
+                  <div class="pattern-response">
+                    <strong>Say:</strong> "${pattern.response}"
+                    <button class="copy-btn small" onclick="app.copyToClipboard('${this.escapeForJs(pattern.response)}')">Copy</button>
+                  </div>
+                  <span class="success-rate-badge">${pattern.success_rate}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+
+        ${this.callAnalytics?.lost_deal_reasons ? `
+          <div class="pattern-section lost-deals-section">
+            <h4>Lost Deal Prevention</h4>
+            <p class="section-desc">Recognize and prevent these patterns</p>
+            <div class="lost-deals-prevention-grid">
+              ${Object.entries(this.callAnalytics.lost_deal_reasons).map(([key, reason]) => `
+                <div class="lost-deal-prevention-card">
+                  <h5>${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h5>
+                  <p class="deal-pattern"><strong>Warning Sign:</strong> "${reason.pattern}"</p>
+                  <p class="deal-solution"><strong>Solution:</strong> ${reason.solution}</p>
+                  <p class="deal-prevention"><strong>Prevention:</strong> ${reason.prevention}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
       </div>
     `;
   }
@@ -1585,6 +1853,772 @@ class SalesCommandCenter {
 
   escapeForJs(text) {
     return (text || '').replace(/`/g, '\\`').replace(/\$/g, '\\$');
+  }
+
+  renderPricing(container) {
+    if (!this.pricing) {
+      container.innerHTML = '<div class="empty-state"><h3>Pricing data not available</h3><p>Please refresh the page.</p></div>';
+      return;
+    }
+
+    const packages = this.pricing.packages || {};
+    const financing = this.pricing.financing_options || {};
+    const creditRecs = this.pricing.credit_score_recommendations || { tiers: {}, prompt: '' };
+
+    container.innerHTML = `
+      <div class="view-header">
+        <h2>Pricing Calculator</h2>
+        <p>Complete payment links and financing options. Click any package to see all payment methods.</p>
+      </div>
+
+      <div class="credit-score-guide">
+        <h3>Credit Score Recommendation Guide</h3>
+        <p class="guide-prompt">"${creditRecs.prompt}"</p>
+        <div class="credit-tiers">
+          ${Object.entries(creditRecs.tiers).map(([key, tier]) => `
+            <div class="credit-tier" data-tier="${key}">
+              <h4>${tier.label}</h4>
+              <div class="tier-flow">${tier.priority_order.map(opt =>
+                `<span class="flow-item">${this.getFinancingName(opt)}</span>`
+              ).join('<span class="flow-arrow">→</span>')}</div>
+              <p class="tier-notes">${tier.notes}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="packages-grid">
+        ${Object.entries(packages).map(([key, pkg]) => `
+          <div class="package-card ${pkg.most_popular ? 'popular' : ''}" data-package="${key}">
+            ${pkg.most_popular ? '<div class="popular-badge">MOST POPULAR</div>' : ''}
+            <div class="package-header">
+              <h3>${pkg.name}</h3>
+              <div class="package-price">
+                <span class="price-amount">$${pkg.price.toLocaleString()}</span>
+                <span class="price-duration">/ ${pkg.duration_months} months</span>
+              </div>
+            </div>
+            <p class="package-best-for"><strong>BEST FOR:</strong> ${pkg.best_for}</p>
+            <ul class="package-features">
+              ${pkg.features.map(f => `<li>${f}</li>`).join('')}
+            </ul>
+            <button class="btn-primary view-payments" data-package="${key}">View Payment Options</button>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="addons-section">
+        <h3>Add-Ons</h3>
+        <div class="addons-grid">
+          ${Object.entries(this.pricing.addons).map(([key, addon]) => `
+            <div class="addon-card">
+              <h4>${addon.name}</h4>
+              ${addon.price ? `<div class="addon-price">$${addon.price.toLocaleString()}</div>` : ''}
+              ${addon.savings ? `<div class="addon-savings">Save $${addon.savings}</div>` : ''}
+              <p>${addon.description}</p>
+              <a href="${addon.url}" target="_blank" class="btn-secondary">Checkout Link</a>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="financing-reference">
+        <h3>Financing Options Reference</h3>
+        <div class="financing-grid">
+          ${Object.entries(financing).filter(([k]) => k !== 'paypal').map(([key, opt]) => `
+            <div class="financing-card">
+              <h4>${opt.name}</h4>
+              <div class="financing-timeline">${opt.timeline}</div>
+              ${opt.fee_percentage ? `<div class="financing-fee">+${opt.fee_percentage}% fee</div>` : ''}
+              <ul class="financing-benefits">
+                ${opt.benefits.map(b => `<li>${b}</li>`).join('')}
+              </ul>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    // Bind payment option click events
+    document.querySelectorAll('.view-payments').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const pkgKey = e.target.dataset.package;
+        this.showPaymentOptionsModal(pkgKey);
+      });
+    });
+  }
+
+  getFinancingName(key) {
+    const names = {
+      'elective': 'Elective',
+      'klarna': 'Klarna',
+      'payva': 'Payva',
+      'coach': 'Coach',
+      'pif': 'PIF'
+    };
+    return names[key] || key;
+  }
+
+  showPaymentOptionsModal(packageKey) {
+    const pkg = this.pricing.packages[packageKey];
+    if (!pkg) return;
+
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+
+    modalContent.innerHTML = `
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-category">Payment Options</span>
+          <h2>${pkg.name} - $${pkg.price.toLocaleString()}</h2>
+        </div>
+        <button class="modal-close" onclick="app.closeModal()">&times;</button>
+      </div>
+
+      <div class="modal-section">
+        <p><strong>Best For:</strong> ${pkg.best_for}</p>
+      </div>
+
+      <div class="payment-options-grid">
+        ${Object.entries(pkg.payment_options).map(([key, opt]) => `
+          <div class="payment-option-card">
+            <div class="payment-option-header">
+              <h4>${opt.name}</h4>
+              <span class="payment-price">$${opt.price.toLocaleString()}</span>
+            </div>
+            <p class="payment-desc">${opt.description}</p>
+            <a href="${opt.url}" target="_blank" class="btn-primary payment-link" onclick="app.copyPaymentLink('${opt.url}', event)">
+              Open Checkout
+            </a>
+            <button class="btn-secondary copy-link" onclick="app.copyToClipboard('${opt.url}')">
+              Copy Link
+            </button>
+          </div>
+        `).join('')}
+      </div>
+    `;
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  copyPaymentLink(url, event) {
+    navigator.clipboard.writeText(url).then(() => {
+      this.showToast('Link copied to clipboard');
+    });
+  }
+
+  showPaymentOptionsInfoModal() {
+    if (!this.pricing?.financing_options) {
+      this.showToast('Pricing data not available');
+      return;
+    }
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+    const financing = this.pricing.financing_options;
+    const creditRecs = this.pricing.credit_score_recommendations || { tiers: {}, prompt: '' };
+
+    modalContent.innerHTML = `
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-category">Reference Guide</span>
+          <h2>Payment Options Information</h2>
+        </div>
+        <button class="modal-close" onclick="app.closeModal()">&times;</button>
+      </div>
+
+      <div class="modal-section">
+        <h3>Credit Score Recommendation Guide</h3>
+        <p class="guide-prompt">"${creditRecs.prompt}"</p>
+        <div class="credit-tiers-modal">
+          ${Object.entries(creditRecs.tiers).map(([key, tier]) => `
+            <div class="credit-tier-modal">
+              <h4>${tier.label}</h4>
+              <div class="tier-flow">${tier.priority_order.map(opt =>
+                `<span class="flow-item">${this.getFinancingName(opt)}</span>`
+              ).join('<span class="flow-arrow">→</span>')}</div>
+              <p class="tier-notes">${tier.notes}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>Financing Options Details</h3>
+        <div class="financing-details-grid">
+          ${Object.entries(financing).filter(([k]) => k !== 'paypal').map(([key, opt]) => `
+            <div class="financing-detail-card">
+              <h4>${opt.name}</h4>
+              <div class="financing-meta">
+                <span class="financing-timeline">${opt.timeline}</span>
+                ${opt.fee_percentage ? `<span class="financing-fee">+${opt.fee_percentage}% fee</span>` : ''}
+              </div>
+              <ul class="financing-benefits">
+                ${opt.benefits.map(b => `<li>${b}</li>`).join('')}
+              </ul>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>PayPal Options</h3>
+        ${financing.paypal ? `
+          <div class="paypal-options">
+            <div class="paypal-option">
+              <h4>Pay in 4</h4>
+              <p><strong>APR:</strong> ${financing.paypal.variants.pay_in_4.apr}</p>
+              <p><strong>Range:</strong> ${financing.paypal.variants.pay_in_4.range}</p>
+              <p><strong>Terms:</strong> ${financing.paypal.variants.pay_in_4.terms}</p>
+              <p><strong>Credit Check:</strong> ${financing.paypal.variants.pay_in_4.credit_check}</p>
+            </div>
+            <div class="paypal-option">
+              <h4>Pay Monthly</h4>
+              <p><strong>APR:</strong> ${financing.paypal.variants.pay_monthly.apr}</p>
+              <p><strong>Range:</strong> ${financing.paypal.variants.pay_monthly.range}</p>
+              <p><strong>Terms:</strong> ${financing.paypal.variants.pay_monthly.terms}</p>
+            </div>
+          </div>
+        ` : ''}
+      </div>
+    `;
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  showEmotionalTriggerModal(triggerKey) {
+    if (!this.callAnalytics?.emotional_triggers) {
+      this.showToast('Emotional triggers data not available');
+      return;
+    }
+    const trigger = this.callAnalytics.emotional_triggers[triggerKey];
+    if (!trigger) return;
+
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+
+    modalContent.innerHTML = `
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-category">Emotional Trigger</span>
+          <h2>${triggerKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h2>
+        </div>
+        <button class="modal-close" onclick="app.closeModal()">&times;</button>
+      </div>
+
+      <div class="modal-section">
+        <h3>Listen For These Phrases</h3>
+        <div class="trigger-phrases-modal">
+          ${trigger.phrases.map(p => `<span class="trigger-phrase-lg">"${p}"</span>`).join('')}
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>How to Respond</h3>
+        <blockquote class="script">${trigger.response}</blockquote>
+        <button class="copy-btn" onclick="app.copyToClipboard(\`${this.escapeForJs(trigger.response)}\`)">Copy Response</button>
+      </div>
+
+      ${trigger.testimonials ? `
+        <div class="modal-section">
+          <h3>Testimonials to Use</h3>
+          <ul>
+            ${trigger.testimonials.map(t => `<li>${t}</li>`).join('')}
+          </ul>
+        </div>
+      ` : ''}
+    `;
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  showCreditScoreRecommender() {
+    if (!this.pricing?.credit_score_recommendations) {
+      this.showToast('Pricing data not available');
+      return;
+    }
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+    const creditRecs = this.pricing.credit_score_recommendations;
+
+    modalContent.innerHTML = `
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-category">Quick Tool</span>
+          <h2>Credit Score Financing Recommender</h2>
+        </div>
+        <button class="modal-close" onclick="app.closeModal()">&times;</button>
+      </div>
+
+      <div class="modal-section">
+        <h3>Enter Credit Score</h3>
+        <div class="credit-input-wrapper">
+          <input type="number" id="credit-score-input" placeholder="Enter credit score (e.g., 680)" min="300" max="850" class="credit-score-input">
+          <button class="btn-primary" onclick="app.calculateFinancingRecommendation()">Get Recommendation</button>
+        </div>
+        <div id="financing-recommendation" class="financing-recommendation"></div>
+      </div>
+
+      <div class="modal-section">
+        <h3>Quick Reference</h3>
+        <div class="credit-tiers-modal">
+          ${Object.entries(creditRecs.tiers).map(([key, tier]) => `
+            <div class="credit-tier-modal">
+              <h4>${tier.label}</h4>
+              <div class="tier-flow">${tier.priority_order.map(opt =>
+                `<span class="flow-item">${this.getFinancingName(opt)}</span>`
+              ).join('<span class="flow-arrow">→</span>')}</div>
+              <p class="tier-notes">${tier.notes}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  calculateFinancingRecommendation() {
+    const input = document.getElementById('credit-score-input');
+    const resultDiv = document.getElementById('financing-recommendation');
+    const score = parseInt(input.value);
+
+    if (!score || score < 300 || score > 850) {
+      resultDiv.innerHTML = '<p class="error">Please enter a valid credit score between 300 and 850.</p>';
+      return;
+    }
+
+    let tier, tierData;
+    if (score >= 650) {
+      tier = '650_plus';
+      tierData = this.pricing.credit_score_recommendations.tiers['650_plus'];
+    } else if (score >= 600) {
+      tier = '600_650';
+      tierData = this.pricing.credit_score_recommendations.tiers['600_650'];
+    } else {
+      tier = 'below_600';
+      tierData = this.pricing.credit_score_recommendations.tiers['below_600'];
+    }
+
+    const primaryOption = tierData.priority_order[0];
+    const financingDetails = this.pricing.financing_options[primaryOption];
+
+    resultDiv.innerHTML = `
+      <div class="recommendation-result">
+        <div class="recommendation-header">
+          <h4>Credit Score: ${score}</h4>
+          <span class="tier-badge">${tierData.label}</span>
+        </div>
+        <div class="recommended-option">
+          <h4>Recommended: ${this.getFinancingName(primaryOption)}</h4>
+          ${financingDetails ? `
+            <p class="option-timeline">${financingDetails.timeline}</p>
+            <ul class="option-benefits">
+              ${financingDetails.benefits.slice(0, 3).map(b => `<li>${b}</li>`).join('')}
+            </ul>
+          ` : ''}
+        </div>
+        <div class="fallback-options">
+          <strong>Fallback Order:</strong>
+          <div class="tier-flow">${tierData.priority_order.map(opt =>
+            `<span class="flow-item">${this.getFinancingName(opt)}</span>`
+          ).join('<span class="flow-arrow">→</span>')}</div>
+        </div>
+        <p class="tier-notes">${tierData.notes}</p>
+      </div>
+    `;
+  }
+
+  showRepLanguagePanel() {
+    const repLanguage = this.objections?.rep_language_patterns;
+    if (!repLanguage) {
+      this.showToast('Rep language patterns not available');
+      return;
+    }
+
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+
+    modalContent.innerHTML = `
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-category">Quick Reference</span>
+          <h2>Rep Language Patterns</h2>
+        </div>
+        <button class="modal-close" onclick="app.closeModal()">&times;</button>
+      </div>
+
+      <div class="language-patterns-grid">
+        <div class="language-section trust-builders">
+          <h3>Trust Builders</h3>
+          <p class="section-hint">Use these to build rapport and reduce resistance</p>
+          <ul>
+            ${repLanguage.trust_builders.map(phrase => `
+              <li class="copyable-phrase" onclick="app.copyToClipboard('${this.escapeForJs(phrase)}')">${phrase}</li>
+            `).join('')}
+          </ul>
+        </div>
+
+        <div class="language-section urgency-creators">
+          <h3>Urgency Creators</h3>
+          <p class="section-hint">Create urgency without pressure</p>
+          <ul>
+            ${repLanguage.urgency_creators.map(phrase => `
+              <li class="copyable-phrase" onclick="app.copyToClipboard('${this.escapeForJs(phrase)}')">${phrase}</li>
+            `).join('')}
+          </ul>
+        </div>
+
+        <div class="language-section price-handlers">
+          <h3>Price Handlers</h3>
+          <p class="section-hint">Reframe investment and value</p>
+          <ul>
+            ${repLanguage.price_handlers.map(phrase => `
+              <li class="copyable-phrase" onclick="app.copyToClipboard('${this.escapeForJs(phrase)}')">${phrase}</li>
+            `).join('')}
+          </ul>
+        </div>
+
+        <div class="language-section skepticism-overcomers">
+          <h3>Skepticism Overcomers</h3>
+          <p class="section-hint">Address doubt and build credibility</p>
+          <ul>
+            ${repLanguage.skepticism_overcomers.map(phrase => `
+              <li class="copyable-phrase" onclick="app.copyToClipboard('${this.escapeForJs(phrase)}')">${phrase}</li>
+            `).join('')}
+          </ul>
+        </div>
+      </div>
+
+      ${this.callAnalytics?.winning_closes ? `
+      <div class="modal-section">
+        <h3>Winning Close Signals</h3>
+        <p class="section-hint">When you hear these, move to close immediately</p>
+        <div class="close-signals-quick">
+          ${Object.entries(this.callAnalytics.winning_closes).map(([key, close]) => `
+            <div class="close-signal-quick">
+              <span class="signal-text">"${close.signal}"</span>
+              <span class="signal-action">${close.action}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      ` : ''}
+    `;
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  showDangerComboAlert(categories) {
+    const patterns = this.objections?.patterns?.dangerous_combos || [];
+    let dangerCombo = null;
+
+    patterns.forEach(combo => {
+      const hasAll = combo.objections.every(obj =>
+        categories.some(cat => cat.includes(obj) || obj.includes(cat))
+      );
+      if (hasAll) {
+        dangerCombo = combo;
+      }
+    });
+
+    if (dangerCombo) {
+      const alertDiv = document.createElement('div');
+      alertDiv.className = 'danger-combo-alert';
+      alertDiv.innerHTML = `
+        <div class="danger-combo-content">
+          <h4>Danger Combination Detected!</h4>
+          <p><strong>${dangerCombo.objections.map(o => this.getCategoryName(o)).join(' + ')}</strong></p>
+          <p>Combined win rate: <strong>${Math.round(dangerCombo.win_rate * 100)}%</strong></p>
+          <div class="protocol">
+            <strong>Protocol:</strong>
+            <ol>${dangerCombo.protocol.map(p => `<li>${p}</li>`).join('')}</ol>
+          </div>
+          <button class="btn-primary" onclick="this.parentElement.parentElement.remove()">Got it</button>
+        </div>
+      `;
+      document.body.appendChild(alertDiv);
+
+      setTimeout(() => alertDiv.classList.add('show'), 10);
+    }
+  }
+
+  renderOutcomeChart(outcomes) {
+    if (!outcomes) return '';
+    const total = (outcomes.WON || 0) + (outcomes.LOST || 0) + (outcomes.FOLLOWUP || 0);
+    if (total === 0) return '<div class="no-data">No data available</div>';
+
+    const wonPercent = ((outcomes.WON || 0) / total) * 100;
+    const lostPercent = ((outcomes.LOST || 0) / total) * 100;
+    const followupPercent = ((outcomes.FOLLOWUP || 0) / total) * 100;
+
+    // Create a horizontal stacked bar chart
+    return `
+      <div class="stacked-bar-chart">
+        <div class="bar-segment won" style="width: ${wonPercent}%" title="Won: ${outcomes.WON || 0}"></div>
+        <div class="bar-segment lost" style="width: ${lostPercent}%" title="Lost: ${outcomes.LOST || 0}"></div>
+        <div class="bar-segment followup" style="width: ${followupPercent}%" title="Follow-up: ${outcomes.FOLLOWUP || 0}"></div>
+      </div>
+      <div class="bar-percentages">
+        <span class="percent won">${Math.round(wonPercent)}%</span>
+        <span class="percent lost">${Math.round(lostPercent)}%</span>
+        <span class="percent followup">${Math.round(followupPercent)}%</span>
+      </div>
+    `;
+  }
+
+  renderCallAnalytics(container) {
+    if (!this.callAnalytics) {
+      container.innerHTML = '<div class="empty-state"><h3>Analytics data not available</h3><p>Please refresh the page.</p></div>';
+      return;
+    }
+
+    const analytics = this.callAnalytics.analytics || { outcome_summary: {}, objection_frequency: {} };
+    const jobPatterns = this.callAnalytics.job_type_patterns || {};
+    const creditPatterns = this.callAnalytics.credit_score_patterns || {};
+    const emotionalTriggers = this.callAnalytics.emotional_triggers || {};
+    const winningCloses = this.callAnalytics.winning_closes || {};
+
+    container.innerHTML = `
+      <div class="view-header">
+        <h2>Call Analytics</h2>
+        <p>Patterns from ${this.callAnalytics.metadata.total_calls_analyzed} calls analyzed. Use these insights to improve close rates.</p>
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat">
+          <span class="stat-value">${this.callAnalytics.metadata?.total_calls_analyzed || 0}</span>
+          <span class="stat-label">Calls Analyzed</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">${Math.round((analytics.outcome_summary?.followup_rate || 0) * 100)}%</span>
+          <span class="stat-label">Follow-up Rate</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">${analytics.objection_frequency?.PRICE || 0}</span>
+          <span class="stat-label">Price Objections</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">${analytics.objection_frequency?.SPOUSE || 0}</span>
+          <span class="stat-label">Spouse Objections</span>
+        </div>
+      </div>
+
+      <div class="analytics-section">
+        <h3>Call Outcomes</h3>
+        <div class="outcome-chart-container">
+          <div class="outcome-chart">
+            ${this.renderOutcomeChart(analytics.outcome_summary)}
+          </div>
+          <div class="outcome-legend">
+            <div class="legend-item won">
+              <span class="legend-dot"></span>
+              <span class="legend-label">Won</span>
+              <span class="legend-value">${analytics.outcome_summary?.WON || 0}</span>
+            </div>
+            <div class="legend-item lost">
+              <span class="legend-dot"></span>
+              <span class="legend-label">Lost</span>
+              <span class="legend-value">${analytics.outcome_summary?.LOST || 0}</span>
+            </div>
+            <div class="legend-item followup">
+              <span class="legend-dot"></span>
+              <span class="legend-label">Follow-up</span>
+              <span class="legend-value">${analytics.outcome_summary?.FOLLOWUP || 0}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="analytics-section">
+        <h3>Objection Frequency</h3>
+        <div class="objection-bars">
+          ${Object.entries(analytics.objection_frequency)
+            .sort((a, b) => b[1] - a[1])
+            .map(([obj, count]) => {
+              const maxCount = Math.max(...Object.values(analytics.objection_frequency));
+              const percentage = (count / maxCount) * 100;
+              return `
+                <div class="objection-bar-item">
+                  <span class="bar-label">${obj}</span>
+                  <div class="bar-container">
+                    <div class="bar-fill" style="width: ${percentage}%"></div>
+                  </div>
+                  <span class="bar-count">${count}</span>
+                </div>
+              `;
+            }).join('')}
+        </div>
+      </div>
+
+      <div class="analytics-section">
+        <h3>Patterns by Job Type</h3>
+        <p class="section-desc">Click any job category to see detailed approach and testimonials.</p>
+        <div class="job-patterns-grid">
+          ${Object.entries(jobPatterns).map(([key, pattern]) => `
+            <div class="job-pattern-card" data-job="${key}">
+              <h4>${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h4>
+              <div class="job-examples">${pattern.jobs.slice(0, 4).join(', ')}${pattern.jobs.length > 4 ? '...' : ''}</div>
+              <div class="job-motivation"><strong>Motivation:</strong> ${pattern.motivation}</div>
+              <div class="job-objections"><strong>Common:</strong> ${pattern.common_objections.join(', ')}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="analytics-section">
+        <h3>Emotional Triggers</h3>
+        <p class="section-desc">Identify these triggers in discovery to build urgency and close deals.</p>
+        <div class="triggers-grid">
+          ${Object.entries(emotionalTriggers).map(([key, trigger]) => `
+            <div class="trigger-card">
+              <h4>${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h4>
+              <div class="trigger-phrases">
+                ${trigger.phrases.map(p => `<span class="trigger-phrase">"${p}"</span>`).join('')}
+              </div>
+              <p class="trigger-response"><strong>Response:</strong> ${trigger.response}</p>
+              ${trigger.testimonials ? `<p class="trigger-testimonials"><strong>Use:</strong> ${trigger.testimonials.join(', ')}</p>` : ''}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="analytics-section">
+        <h3>Credit Score Patterns</h3>
+        <div class="credit-patterns-grid">
+          ${Object.entries(creditPatterns).map(([key, pattern]) => `
+            <div class="credit-pattern-card ${pattern.win_rate_correlation.toLowerCase().replace(/[- ]/g, '_')}">
+              <h4>${key.replace(/_/g, ' ')}</h4>
+              <p><strong>Behavior:</strong> ${pattern.behavior}</p>
+              <p><strong>Approach:</strong> ${pattern.approach}</p>
+              <span class="correlation-badge">${pattern.win_rate_correlation}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="analytics-section">
+        <h3>Winning Close Signals</h3>
+        <p class="section-desc">When you hear these, move to close immediately.</p>
+        <div class="winning-closes-grid">
+          ${Object.entries(winningCloses).map(([key, close]) => `
+            <div class="close-signal-card">
+              <h4>${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h4>
+              <div class="close-signal">"${close.signal}"</div>
+              <p><strong>Meaning:</strong> ${close.meaning}</p>
+              <p class="close-action"><strong>Action:</strong> ${close.action}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="analytics-section">
+        <h3>Lost Deal Reasons</h3>
+        <div class="lost-deals-grid">
+          ${Object.entries(this.callAnalytics.lost_deal_reasons).map(([key, reason]) => `
+            <div class="lost-deal-card">
+              <h4>${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h4>
+              <p><strong>Pattern:</strong> "${reason.pattern}"</p>
+              <p><strong>Solution:</strong> ${reason.solution}</p>
+              <p class="prevention"><strong>Prevention:</strong> ${reason.prevention}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    // Bind job pattern click events
+    document.querySelectorAll('.job-pattern-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const jobKey = card.dataset.job;
+        this.showJobPatternModal(jobKey);
+      });
+    });
+  }
+
+  showJobPatternModal(jobKey) {
+    if (!this.callAnalytics?.job_type_patterns) {
+      this.showToast('Job patterns data not available');
+      return;
+    }
+    const pattern = this.callAnalytics.job_type_patterns[jobKey];
+    if (!pattern) return;
+
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+
+    modalContent.innerHTML = `
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-category">Job Type Pattern</span>
+          <h2>${jobKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h2>
+        </div>
+        <button class="modal-close" onclick="app.closeModal()">&times;</button>
+      </div>
+
+      <div class="modal-section">
+        <h3>Job Titles</h3>
+        <div class="tags">
+          ${pattern.jobs.map(j => `<span class="tag">${j}</span>`).join('')}
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>Motivation</h3>
+        <p>${pattern.motivation}</p>
+      </div>
+
+      <div class="modal-section">
+        <h3>Common Objections</h3>
+        <div class="tags">
+          ${pattern.common_objections.map(o => `<span class="tag warning">${o}</span>`).join('')}
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>Recommended Approach</h3>
+        <p>${pattern.approach}</p>
+      </div>
+
+      ${pattern.emotional_trigger ? `
+        <div class="modal-section">
+          <h3>Emotional Trigger</h3>
+          <blockquote>"${pattern.emotional_trigger}"</blockquote>
+        </div>
+      ` : ''}
+
+      ${pattern.win_signals ? `
+        <div class="modal-section">
+          <h3>Win Signals</h3>
+          <ul>
+            ${pattern.win_signals.map(s => `<li>${s}</li>`).join('')}
+          </ul>
+        </div>
+      ` : ''}
+
+      ${pattern.testimonials_to_use ? `
+        <div class="modal-section">
+          <h3>Testimonials to Use</h3>
+          <ul>
+            ${pattern.testimonials_to_use.map(t => `<li>${t}</li>`).join('')}
+          </ul>
+        </div>
+      ` : ''}
+
+      ${pattern.caution ? `
+        <div class="modal-section warning-section">
+          <h3>Caution</h3>
+          <p>${pattern.caution}</p>
+        </div>
+      ` : ''}
+    `;
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
   }
 }
 

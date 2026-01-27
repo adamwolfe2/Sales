@@ -286,6 +286,77 @@ function setupIpcHandlers() {
     return { success: !!prompt, prompt };
   });
 
+  // ============ SETTINGS ============
+
+  ipcMain.handle('get-settings', () => {
+    try {
+      const Store = require('electron-store');
+      const store = new Store();
+      return {
+        success: true,
+        settings: {
+          geminiApiKey: store.get('geminiApiKey', ''),
+          windowPosition: store.get('windowPosition', null),
+          alwaysOnTop: store.get('alwaysOnTop', true),
+          opacity: store.get('opacity', 1.0),
+          autoStart: store.get('autoStart', false)
+        }
+      };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  });
+
+  ipcMain.handle('save-settings', (event, settings) => {
+    try {
+      const Store = require('electron-store');
+      const store = new Store();
+      Object.entries(settings).forEach(([key, value]) => {
+        store.set(key, value);
+      });
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  });
+
+  ipcMain.handle('get-gemini-api-key', () => {
+    try {
+      const Store = require('electron-store');
+      const store = new Store();
+      return { success: true, key: store.get('geminiApiKey', '') };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  });
+
+  ipcMain.handle('set-gemini-api-key', (event, key) => {
+    try {
+      const Store = require('electron-store');
+      const store = new Store();
+      store.set('geminiApiKey', key);
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  });
+
+  // Save window position on move/resize
+  ipcMain.handle('save-window-position', () => {
+    if (mainWindow) {
+      try {
+        const Store = require('electron-store');
+        const store = new Store();
+        const bounds = mainWindow.getBounds();
+        store.set('windowPosition', bounds);
+        return { success: true, bounds };
+      } catch (error) {
+        return { success: false, error: error.message };
+      }
+    }
+    return { success: false, error: 'No window' };
+  });
+
   // ============ AUTO-UPDATE ============
 
   ipcMain.handle('check-for-updates', () => {
