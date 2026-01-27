@@ -2260,3 +2260,420 @@ blockquote.testimonial-quote {
   border-color: var(--warning);
   color: var(--warning);
 }
+
+/* ========================================
+   Search Result Items
+   ======================================== */
+
+.search-result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-bottom: var(--space-2);
+}
+
+.search-result-item:hover {
+  border-color: var(--accent-primary);
+  background: var(--bg-tertiary);
+}
+
+.result-type {
+  font-size: var(--font-size-xs);
+  padding: var(--space-1) var(--space-2);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+}
+
+.result-name {
+  font-weight: 500;
+}
+
+/* ========================================
+   Credit Score Recommender
+   ======================================== */
+
+.credit-input-wrapper {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.credit-score-input {
+  flex: 1;
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--font-size-lg);
+}
+
+.credit-score-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.financing-recommendation {
+  margin-top: var(--space-4);
+}
+
+.recommendation-result {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.recommendation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.tier-badge {
+  padding: var(--space-1) var(--space-3);
+  background: var(--accent-primary);
+  color: white;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+
+.recommended-option {
+  background: var(--bg-secondary);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-4);
+  border-left: 3px solid var(--success);
+}
+
+.recommended-option h4 {
+  color: var(--success);
+  margin-bottom: var(--space-2);
+}
+
+.option-timeline {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+.option-benefits {
+  padding-left: var(--space-4);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.fallback-options {
+  margin-bottom: var(--space-3);
+}
+
+/* ========================================
+   Credit Tiers Modal
+   ======================================== */
+
+.credit-tiers-modal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.credit-tier-modal {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.credit-tier-modal h4 {
+  margin-bottom: var(--space-2);
+}
+
+/* ========================================
+   Financing Details Modal
+   ======================================== */
+
+.financing-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-4);
+}
+
+.financing-detail-card {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.financing-detail-card h4 {
+  color: var(--accent-primary);
+  margin-bottom: var(--space-2);
+}
+
+.financing-meta {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.paypal-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-4);
+}
+
+.paypal-option {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.paypal-option h4 {
+  margin-bottom: var(--space-2);
+}
+
+.paypal-option p {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-1);
+}
+
+/* ========================================
+   Rep Language Panel
+   ======================================== */
+
+.language-patterns-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4);
+  padding: var(--space-4);
+}
+
+.language-section {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+
+.language-section h3 {
+  font-size: var(--font-size-base);
+  margin-bottom: var(--space-2);
+}
+
+.language-section.trust-builders h3 { color: var(--success); }
+.language-section.urgency-creators h3 { color: var(--warning); }
+.language-section.price-handlers h3 { color: var(--accent-primary); }
+.language-section.skepticism-overcomers h3 { color: #a78bfa; }
+
+.section-hint {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.language-section ul {
+  list-style: none;
+}
+
+.copyable-phrase {
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-2);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  transition: all var(--transition-fast);
+}
+
+.copyable-phrase:hover {
+  background: var(--bg-hover);
+  border-left: 3px solid var(--accent-primary);
+}
+
+.close-signals-quick {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.close-signal-quick {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--success);
+}
+
+.signal-text {
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.signal-action {
+  font-size: var(--font-size-sm);
+  color: var(--success);
+  font-weight: 500;
+}
+
+/* ========================================
+   Emotional Trigger Modal
+   ======================================== */
+
+.trigger-phrases-modal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.trigger-phrase-lg {
+  padding: var(--space-2) var(--space-4);
+  background: var(--success-bg);
+  color: var(--success);
+  border-radius: var(--radius-md);
+  font-style: italic;
+}
+
+/* ========================================
+   Danger Combo Alert
+   ======================================== */
+
+.danger-combo-alert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.danger-combo-alert.show {
+  opacity: 1;
+}
+
+.danger-combo-content {
+  background: var(--bg-secondary);
+  border: 2px solid var(--danger);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  max-width: 500px;
+  text-align: center;
+}
+
+.danger-combo-content h4 {
+  color: var(--danger);
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-4);
+}
+
+.danger-combo-content .protocol {
+  text-align: left;
+  margin: var(--space-4) 0;
+  padding: var(--space-4);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+}
+
+/* ========================================
+   Job Type Filters
+   ======================================== */
+
+.filter-sections {
+  margin-bottom: var(--space-6);
+}
+
+.filter-section {
+  margin-bottom: var(--space-4);
+}
+
+.filter-section label {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+.job-filters {
+  border-top: none;
+}
+
+.job-tag {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+}
+
+/* ========================================
+   Quick Access Buttons
+   ======================================== */
+
+.quick-tools {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  z-index: 100;
+}
+
+.quick-tool-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+}
+
+.quick-tool-btn:hover {
+  background: var(--accent-secondary);
+  transform: scale(1.1);
+}
+
+.quick-tool-btn.language {
+  background: var(--success);
+}
+
+.quick-tool-btn.credit {
+  background: var(--warning);
+}
+
+.quick-tool-btn.info {
+  background: #a78bfa;
+}
+
+/* ========================================
+   Error State
+   ======================================== */
+
+.error {
+  color: var(--danger);
+  padding: var(--space-3);
+  background: var(--danger-bg);
+  border-radius: var(--radius-md);
+}
