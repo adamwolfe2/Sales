@@ -36,6 +36,7 @@ contextBridge.exposeInMainWorld('api', {
   loadObjectionData: () => ipcRenderer.invoke('load-objection-data'),
   loadPlaybookData: () => ipcRenderer.invoke('load-playbook-data'),
   loadTestimonialData: () => ipcRenderer.invoke('load-testimonial-data'),
+  loadLiveCoachingData: () => ipcRenderer.invoke('load-live-coaching-data'),
   getSystemPrompt: () => ipcRenderer.invoke('get-system-prompt'),
 
   // Auto-updates
