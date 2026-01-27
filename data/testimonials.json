@@ -2,7 +2,9 @@
   "metadata": {
     "total_testimonials": 85,
     "categories": ["full_testimonials", "quick_wins", "objection_specific"],
-    "last_updated": "2025-01-23"
+    "last_updated": "2025-01-26",
+    "image_support": true,
+    "image_base_path": "images/testimonials/"
   },
   "full_testimonials": [
     {
@@ -21,7 +23,9 @@
       },
       "quote": "I am a High School Football Coach and Teacher in Texas. I had no previous vending experience prior to joining the Vendingpreneurs. As a matter of fact, I had no formal training in business or sales at all. Joining Vendingpreneurs gave me access to nationwide network of Vendors who are learning right there along with me. The ability to bounce ideas off of each other, celebrate wins, and share mistakes made has helped me scale my business rather quickly. I placed my first market 4 months after joining, and am now 7 months in with 5 markets now live and 2 more being delivered soon!",
       "tags": ["no_experience", "full_time_job", "teacher", "fast_growth", "family"],
-      "objection_counters": ["I don't have time", "I have no experience", "I work full-time"]
+      "objection_counters": ["I don't have time", "I have no experience", "I work full-time"],
+      "image": null,
+      "job_profile": "high_school_teacher"
     },
     {
       "id": "adam_s",
