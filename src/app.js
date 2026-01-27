@@ -135,10 +135,14 @@ class SalesCommandCenter {
           searchText: [
             pkg.name,
             pkg.best_for,
-            ...pkg.features,
+            ...(pkg.features || []),
             key
           ].join(' ').toLowerCase(),
           data: pkg
+        });
+      });
+    }
+
     // Index job superpowers
     if (this.jobSuperpowers && this.jobSuperpowers.job_superpowers) {
       this.jobSuperpowers.job_superpowers.forEach(job => {
@@ -202,10 +206,15 @@ class SalesCommandCenter {
           name: key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
           searchText: [
             key,
-            ...trigger.phrases,
+            ...(trigger.phrases || []),
             trigger.response
           ].join(' ').toLowerCase(),
           data: trigger
+        });
+      });
+    }
+
+    // Index financing payment options
     if (this.financing && this.financing.payment_options) {
       this.financing.payment_options.forEach(option => {
         this.searchIndex.push({
@@ -281,6 +290,7 @@ class SalesCommandCenter {
         break;
       case 'reps':
         this.renderReps(content);
+        break;
       case 'prospects':
         this.renderProspectProfiles(content);
         break;
