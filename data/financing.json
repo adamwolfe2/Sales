@@ -1,0 +1,221 @@
+{
+  "metadata": {
+    "description": "Payment options and financing partners for VendingPreneurs",
+    "external_url": "https://vp-pricing.vercel.app/",
+    "last_updated": "2026-01-27"
+  },
+  "credit_score_guide": {
+    "high": {
+      "range": "650+",
+      "label": "Good Credit",
+      "recommended_order": ["elective", "klarna", "payva"],
+      "note": "If Elective doesn't offer 18mo and client can't make 12mo work, move to Klarna"
+    },
+    "medium": {
+      "range": "600-650",
+      "label": "Fair Credit",
+      "recommended_order": ["elective", "klarna", "payva", "coach"],
+      "note": "If Elective doesn't offer 18mo and client can't make 12mo work, move to Klarna"
+    },
+    "low": {
+      "range": "Below 600",
+      "label": "Limited Credit",
+      "recommended_order": ["payva", "coach"],
+      "note": "Limited options - Payva will approve anyone, Coach for extended terms"
+    }
+  },
+  "discovery_question": "Do you roughly know what your credit score is?",
+  "payment_options": [
+    {
+      "id": "pif",
+      "name": "Pay in Full (PIF)",
+      "short_name": "PIF",
+      "timeline": "Immediate",
+      "fee": "None",
+      "apr": "None",
+      "terms": "Full payment upfront",
+      "best_for": "Prospects ready to invest fully",
+      "highlights": [
+        "Standard payment option",
+        "No additional fees",
+        "Full payment upfront",
+        "Best value - no financing costs"
+      ],
+      "restrictions": [],
+      "credit_required": false,
+      "keywords": ["pay in full", "full payment", "pay now", "upfront", "no financing"]
+    },
+    {
+      "id": "split_it",
+      "name": "Split It",
+      "short_name": "Split It",
+      "timeline": "3-12 months",
+      "fee": "15% origination fee",
+      "apr": "0%",
+      "terms": "3-12 month repayment",
+      "best_for": "Those who want to protect credit score",
+      "highlights": [
+        "Price + 15% origination fee",
+        "Does not affect credit score",
+        "0% APR - no interest",
+        "Must use personal credit card (not business CC)",
+        "Places a hold on card for full amount",
+        "Only charges monthly installment each month",
+        "Hold reduces as balance is paid down"
+      ],
+      "restrictions": ["Personal credit card only", "No business cards"],
+      "credit_required": false,
+      "keywords": ["split", "monthly", "credit card", "hold", "installment"]
+    },
+    {
+      "id": "elective",
+      "name": "Elective",
+      "short_name": "Elective",
+      "timeline": "3-12 months",
+      "fee": "15% origination fee",
+      "apr": "0% if good finances, varies otherwise",
+      "terms": "3-12 month repayment",
+      "best_for": "Credit score 650+ (can approve down to 550)",
+      "highlights": [
+        "Price + 15% origination fee + APR (0% if good finances)",
+        "Ideal for credit score 650+ (can approve down to 550)",
+        "3-12 month repayment terms",
+        "Lower to no APR on top of 15% fee",
+        "Credit/debit card only for 1st payment or down payment",
+        "Canadian residents ARE eligible"
+      ],
+      "restrictions": ["California residents NOT eligible"],
+      "credit_required": true,
+      "min_credit_score": 550,
+      "ideal_credit_score": 650,
+      "keywords": ["elective", "financing", "credit score", "monthly payments"]
+    },
+    {
+      "id": "payva",
+      "name": "Payva",
+      "short_name": "Payva",
+      "timeline": "3-12 months",
+      "fee": "No initiation fee",
+      "apr": "Fixed APR (flat rate)",
+      "terms": "3-12 month repayment",
+      "best_for": "Anyone - universal approval",
+      "highlights": [
+        "Price + fixed APR (flat rate)",
+        "Anyone gets approved",
+        "No initiation fee",
+        "CS 600+ = Funded upfront",
+        "CS below 600 = Servicing (collected monthly)",
+        "Can use credit or debit card",
+        "Canadian residents eligible (Servicing only)"
+      ],
+      "restrictions": [],
+      "credit_required": false,
+      "keywords": ["payva", "approved", "anyone", "bad credit", "no credit check"]
+    },
+    {
+      "id": "klarna",
+      "name": "Klarna",
+      "short_name": "Klarna",
+      "timeline": "Up to 24 months",
+      "fee": "15% origination fee",
+      "apr": "Varies",
+      "terms": "Up to 24 month repayment",
+      "best_for": "Those who need longer terms (24mo vs 12mo)",
+      "highlights": [
+        "Price + 15% origination fee + APR",
+        "Ideal for those who need 24mo (vs 12mo)",
+        "Must have credit score 600+",
+        "Requires debit card for first payment",
+        "Good for lower packages (Bronze)"
+      ],
+      "restrictions": ["US only", "Process can be clunky for tech-challenged clients"],
+      "credit_required": true,
+      "min_credit_score": 600,
+      "keywords": ["klarna", "24 months", "longer terms", "extended"]
+    },
+    {
+      "id": "coach",
+      "name": "Coach Financing",
+      "short_name": "Coach",
+      "timeline": "Up to 144 months",
+      "fee": "No initiation fee",
+      "apr": "Personal loan rates",
+      "terms": "Up to 144 month repayment (12 years)",
+      "best_for": "Bad credit and/or flexible long-term plans",
+      "highlights": [
+        "Good for bad credit and/or flexible long-term plans",
+        "Personal loan - extends past 24mo to reduce monthly payment",
+        "No initiation fee (PIF price once funded)",
+        "Best option when other financing is declined"
+      ],
+      "restrictions": ["US only"],
+      "credit_required": false,
+      "keywords": ["coach", "bad credit", "declined", "long term", "144 months", "personal loan"]
+    },
+    {
+      "id": "paypal",
+      "name": "PayPal",
+      "short_name": "PayPal",
+      "timeline": "Varies",
+      "fee": "Varies by option",
+      "apr": "0% to 35.99%",
+      "terms": "Multiple options available",
+      "best_for": "Niche use case - only if sales rep comfortable walking through",
+      "highlights": [
+        "Pay in 4: 0% APR, $30-$1,500, 4 payments every 2 weeks",
+        "Pay in 4: Soft credit check - no impact on score",
+        "Pay Monthly: 9.99%-35.99% APR, $149-$10,000",
+        "Pay Monthly: 3-24 month terms with fixed payments",
+        "PayPal Credit: Revolving credit line",
+        "PayPal Credit: 6mo no interest on $99+ if paid in full"
+      ],
+      "restrictions": ["Niche use case"],
+      "credit_required": false,
+      "keywords": ["paypal", "pay in 4", "pay monthly"]
+    }
+  ],
+  "creative_options": [
+    "Split payments and use multiple cards",
+    "Make a partial payment and finance the remainder (15% only applies to financed amount)",
+    "Use multiple finance options (i.e. half Elective and half Payva)"
+  ],
+  "last_resort_options": [
+    "Crypto",
+    "Stocks",
+    "Apply for 0% APR credit card",
+    "401K loan",
+    "Family",
+    "Friends",
+    "Sell your Pokemon collection",
+    "Rob a bank"
+  ],
+  "quick_reference": {
+    "fifteen_percent_fee": ["split_it", "elective", "klarna"],
+    "no_fee": ["payva", "coach"],
+    "california_excluded": ["elective"],
+    "canada_eligible": ["elective", "payva"],
+    "us_only": ["klarna", "coach"]
+  },
+  "objection_triggers": {
+    "cant_afford": {
+      "keywords": ["can't afford", "too expensive", "don't have the money", "cost too much", "budget", "expensive"],
+      "recommended": ["split_it", "elective", "payva"],
+      "script": "I totally understand budget is a concern. The good news is we have several flexible payment options. Do you roughly know what your credit score is? That helps me point you to the best fit."
+    },
+    "bad_credit": {
+      "keywords": ["bad credit", "credit score", "no credit", "credit issues", "declined"],
+      "recommended": ["payva", "coach"],
+      "script": "No worries at all - we work with everyone. Payva approves anyone regardless of credit, and Coach Financing offers terms up to 144 months to keep payments low."
+    },
+    "need_longer_terms": {
+      "keywords": ["longer terms", "lower payments", "monthly payment", "24 months", "can't do 12"],
+      "recommended": ["klarna", "coach"],
+      "script": "We can definitely work with that. Klarna offers up to 24 months, and Coach Financing can go up to 144 months if you need really low monthly payments."
+    },
+    "california_resident": {
+      "keywords": ["california", "CA", "los angeles", "san francisco", "san diego"],
+      "excluded": ["elective"],
+      "note": "Elective not available for California residents - use Klarna or Payva instead"
+    }
+  }
+}
