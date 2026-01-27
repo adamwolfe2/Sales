@@ -1,0 +1,1339 @@
+{
+  "metadata": {
+    "description": "Sales rep training quiz with heavy focus on financing knowledge",
+    "version": "1.0.0",
+    "last_updated": "2026-01-27"
+  },
+  "categories": [
+    {
+      "id": "financing_basics",
+      "name": "Financing Basics",
+      "description": "Core knowledge about payment options and fees",
+      "icon": "credit-card"
+    },
+    {
+      "id": "financing_eligibility",
+      "name": "Financing Eligibility",
+      "description": "Who qualifies for what options",
+      "icon": "check-circle"
+    },
+    {
+      "id": "financing_scenarios",
+      "name": "Financing Scenarios",
+      "description": "Real-world situations and recommendations",
+      "icon": "users"
+    },
+    {
+      "id": "financing_objections",
+      "name": "Financing Objections",
+      "description": "Handling money and payment objections",
+      "icon": "message-circle"
+    },
+    {
+      "id": "financing_advanced",
+      "name": "Advanced Financing",
+      "description": "Expert-level financing knowledge",
+      "icon": "award"
+    },
+    {
+      "id": "sales_fundamentals",
+      "name": "Sales Fundamentals",
+      "description": "Core sales techniques and frameworks",
+      "icon": "target"
+    },
+    {
+      "id": "objection_handling",
+      "name": "Objection Handling",
+      "description": "General objection handling strategies",
+      "icon": "shield"
+    },
+    {
+      "id": "product_knowledge",
+      "name": "Product Knowledge",
+      "description": "Packages, pricing, and features",
+      "icon": "package"
+    }
+  ],
+  "questions": [
+    {
+      "id": "fin_001",
+      "category": "financing_basics",
+      "difficulty": "easy",
+      "question": "What is the origination fee for Split It financing?",
+      "options": ["10%", "12%", "15%", "20%"],
+      "correct": 2,
+      "explanation": "Split It has a 15% origination fee with 0% APR. This fee is standard across Split It, Elective, and Klarna."
+    },
+    {
+      "id": "fin_002",
+      "category": "financing_basics",
+      "difficulty": "easy",
+      "question": "Which financing option has NO origination fee?",
+      "options": ["Split It", "Elective", "Payva", "Klarna"],
+      "correct": 2,
+      "explanation": "Payva has no initiation fee - they charge a fixed APR instead. Coach Financing also has no initiation fee."
+    },
+    {
+      "id": "fin_003",
+      "category": "financing_basics",
+      "difficulty": "easy",
+      "question": "What is the APR for Split It financing?",
+      "options": ["0%", "9.99%", "15%", "Varies"],
+      "correct": 0,
+      "explanation": "Split It offers 0% APR - no interest! The only cost is the 15% origination fee."
+    },
+    {
+      "id": "fin_004",
+      "category": "financing_basics",
+      "difficulty": "easy",
+      "question": "What is the maximum term length for Klarna?",
+      "options": ["12 months", "18 months", "24 months", "36 months"],
+      "correct": 2,
+      "explanation": "Klarna offers up to 24 months, making it great for clients who need longer terms than the typical 12-month options."
+    },
+    {
+      "id": "fin_005",
+      "category": "financing_basics",
+      "difficulty": "easy",
+      "question": "What is the maximum term length for Coach Financing?",
+      "options": ["24 months", "48 months", "96 months", "144 months"],
+      "correct": 3,
+      "explanation": "Coach Financing offers up to 144 months (12 years!), making it the longest-term option available for keeping monthly payments extremely low."
+    },
+    {
+      "id": "fin_006",
+      "category": "financing_basics",
+      "difficulty": "easy",
+      "question": "Which card type is required for Split It?",
+      "options": ["Business credit card", "Personal credit card", "Debit card only", "Any card type"],
+      "correct": 1,
+      "explanation": "Split It requires a PERSONAL credit card - no business cards allowed. It places a hold on the card for the full amount."
+    },
+    {
+      "id": "fin_007",
+      "category": "financing_basics",
+      "difficulty": "medium",
+      "question": "How does Split It work with the credit card hold?",
+      "options": [
+        "Charges full amount immediately",
+        "Places hold for full amount, charges monthly",
+        "No hold, just monthly charges",
+        "Half hold, half monthly"
+      ],
+      "correct": 1,
+      "explanation": "Split It places a HOLD on the card for the full amount but only CHARGES the monthly installment. The hold reduces as the balance is paid down."
+    },
+    {
+      "id": "fin_008",
+      "category": "financing_basics",
+      "difficulty": "easy",
+      "question": "Which THREE financing options have a 15% origination fee?",
+      "options": [
+        "PIF, Split It, Elective",
+        "Split It, Elective, Klarna",
+        "Elective, Klarna, Payva",
+        "Payva, Coach, PayPal"
+      ],
+      "correct": 1,
+      "explanation": "Split It, Elective, and Klarna all have a 15% origination fee. Payva and Coach have no initiation fee."
+    },
+    {
+      "id": "fin_009",
+      "category": "financing_basics",
+      "difficulty": "medium",
+      "question": "What type of payment method does Klarna require for the first payment?",
+      "options": ["Credit card only", "Debit card only", "Check or ACH", "Any payment method"],
+      "correct": 1,
+      "explanation": "Klarna requires a DEBIT card for the first payment - credit cards won't work for the initial payment."
+    },
+    {
+      "id": "fin_010",
+      "category": "financing_basics",
+      "difficulty": "medium",
+      "question": "What does PIF stand for?",
+      "options": ["Payment In Full", "Pay In Full", "Prepaid In Full", "Principal Interest Free"],
+      "correct": 1,
+      "explanation": "PIF stands for Pay In Full - the standard full payment option with no financing fees."
+    },
+    {
+      "id": "fin_011",
+      "category": "financing_eligibility",
+      "difficulty": "easy",
+      "question": "Which financing option will approve ANYONE regardless of credit?",
+      "options": ["Elective", "Klarna", "Payva", "Split It"],
+      "correct": 2,
+      "explanation": "Payva approves anyone regardless of credit score. It's the go-to option for clients with bad or no credit."
+    },
+    {
+      "id": "fin_012",
+      "category": "financing_eligibility",
+      "difficulty": "easy",
+      "question": "California residents are NOT eligible for which financing option?",
+      "options": ["Payva", "Klarna", "Elective", "Coach"],
+      "correct": 2,
+      "explanation": "California residents cannot use Elective due to state regulations. Recommend Klarna or Payva instead."
+    },
+    {
+      "id": "fin_013",
+      "category": "financing_eligibility",
+      "difficulty": "medium",
+      "question": "What is the IDEAL credit score for Elective financing?",
+      "options": ["500+", "550+", "600+", "650+"],
+      "correct": 3,
+      "explanation": "Elective ideally requires 650+ credit score, though they CAN approve down to 550."
+    },
+    {
+      "id": "fin_014",
+      "category": "financing_eligibility",
+      "difficulty": "medium",
+      "question": "What is the minimum credit score Elective can approve?",
+      "options": ["500", "550", "600", "650"],
+      "correct": 1,
+      "explanation": "Elective can approve down to 550 credit score, though 650+ is ideal for the best terms."
+    },
+    {
+      "id": "fin_015",
+      "category": "financing_eligibility",
+      "difficulty": "medium",
+      "question": "What credit score is required for Klarna?",
+      "options": ["No minimum", "550+", "600+", "650+"],
+      "correct": 2,
+      "explanation": "Klarna requires a 600+ credit score. For clients below 600, recommend Payva or Coach instead."
+    },
+    {
+      "id": "fin_016",
+      "category": "financing_eligibility",
+      "difficulty": "easy",
+      "question": "Which financing options are available for Canadian residents?",
+      "options": [
+        "Elective and Payva only",
+        "Klarna and Coach only",
+        "All options",
+        "None - US only"
+      ],
+      "correct": 0,
+      "explanation": "Canadian residents can use Elective and Payva. Klarna and Coach are US only."
+    },
+    {
+      "id": "fin_017",
+      "category": "financing_eligibility",
+      "difficulty": "medium",
+      "question": "For Payva, what happens with clients who have a 600+ credit score?",
+      "options": [
+        "They get lower APR",
+        "They are funded upfront",
+        "They get longer terms",
+        "They qualify for 0% APR"
+      ],
+      "correct": 1,
+      "explanation": "With Payva, clients with 600+ credit are FUNDED upfront. Below 600, payments are collected monthly (Servicing model)."
+    },
+    {
+      "id": "fin_018",
+      "category": "financing_eligibility",
+      "difficulty": "hard",
+      "question": "A Canadian resident with a 580 credit score wants financing. What's their ONLY option?",
+      "options": ["Elective", "Klarna", "Payva (Servicing)", "Coach"],
+      "correct": 2,
+      "explanation": "For a Canadian with low credit: Elective requires 550+ (possible), Klarna is US only, Coach is US only. Payva Servicing works for anyone including Canadians."
+    },
+    {
+      "id": "fin_019",
+      "category": "financing_eligibility",
+      "difficulty": "medium",
+      "question": "Which financing options are US ONLY?",
+      "options": [
+        "Elective and Payva",
+        "Klarna and Coach",
+        "Split It and PIF",
+        "Payva and Coach"
+      ],
+      "correct": 1,
+      "explanation": "Klarna and Coach are both US only. Elective and Payva are available for Canadian residents."
+    },
+    {
+      "id": "fin_020",
+      "category": "financing_eligibility",
+      "difficulty": "easy",
+      "question": "Does Split It affect the client's credit score?",
+      "options": [
+        "Yes, it's a hard credit check",
+        "No, it doesn't affect credit",
+        "Only if they miss payments",
+        "Depends on the amount"
+      ],
+      "correct": 1,
+      "explanation": "Split It does NOT affect credit score at all - it uses the credit card hold system instead of a credit check."
+    },
+    {
+      "id": "fin_021",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "A client says 'I have good credit but I'm in California.' What financing do you recommend?",
+      "options": ["Elective", "Klarna then Payva", "Coach", "Split It only"],
+      "correct": 1,
+      "explanation": "California residents can't use Elective. For good credit, recommend Klarna (up to 24 months). If that doesn't work, Payva approves anyone."
+    },
+    {
+      "id": "fin_022",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "Client has 700 credit score and wants the lowest monthly payment. What's the best option?",
+      "options": ["Elective (12 months)", "Klarna (24 months)", "Payva", "Coach (144 months)"],
+      "correct": 3,
+      "explanation": "For the absolute lowest monthly payment, Coach Financing at 144 months beats everything, even with a personal loan APR. Good credit helps get better rates."
+    },
+    {
+      "id": "fin_023",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "Client says they've been declined for financing before and have bad credit. Best option?",
+      "options": ["Try Elective anyway", "Payva or Coach", "Klarna", "PIF only"],
+      "correct": 1,
+      "explanation": "Payva approves ANYONE regardless of credit, and Coach works well for bad credit with extended terms. These are your go-to options for declined clients."
+    },
+    {
+      "id": "fin_024",
+      "category": "financing_scenarios",
+      "difficulty": "hard",
+      "question": "Client has 620 credit and needs 18+ months. What's the recommended order?",
+      "options": [
+        "Elective → Klarna → Coach",
+        "Klarna → Payva → Coach",
+        "Payva → Coach → Klarna",
+        "Coach → Payva → Klarna"
+      ],
+      "correct": 1,
+      "explanation": "620 credit is above Klarna's 600 minimum and they offer 24 months. If that fails, Payva approves anyone. Coach is last resort for longest terms."
+    },
+    {
+      "id": "fin_025",
+      "category": "financing_scenarios",
+      "difficulty": "easy",
+      "question": "What's the recommended financing order for HIGH credit (650+)?",
+      "options": [
+        "Payva → Coach → Elective",
+        "Elective → Klarna → Payva",
+        "Klarna → Elective → Coach",
+        "Coach → Payva → Elective"
+      ],
+      "correct": 1,
+      "explanation": "For 650+ credit: Start with Elective (best terms), then Klarna if they need 18+ months, then Payva as backup."
+    },
+    {
+      "id": "fin_026",
+      "category": "financing_scenarios",
+      "difficulty": "easy",
+      "question": "What's the recommended financing order for LOW credit (below 600)?",
+      "options": [
+        "Elective → Klarna",
+        "Klarna → Coach",
+        "Payva → Coach",
+        "Split It → PIF"
+      ],
+      "correct": 2,
+      "explanation": "For below 600 credit: Payva approves anyone, and Coach offers extended terms if needed. These are the only viable options."
+    },
+    {
+      "id": "fin_027",
+      "category": "financing_scenarios",
+      "difficulty": "hard",
+      "question": "Client wants to protect their credit score AND get monthly payments. Best option?",
+      "options": ["Elective", "Split It", "Payva", "Coach"],
+      "correct": 1,
+      "explanation": "Split It doesn't affect credit score at all - no credit check, just a hold on their personal credit card. Perfect for credit-conscious clients."
+    },
+    {
+      "id": "fin_028",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "Client can put down 50% today and wants to finance the rest. What should you tell them?",
+      "options": [
+        "They have to finance the full amount",
+        "The 15% fee applies to the full amount",
+        "The 15% fee only applies to the financed amount",
+        "Partial payments aren't allowed"
+      ],
+      "correct": 2,
+      "explanation": "Clients can make a partial payment and finance the remainder - the 15% fee ONLY applies to the financed portion! This is a great way to reduce total cost."
+    },
+    {
+      "id": "fin_029",
+      "category": "financing_scenarios",
+      "difficulty": "hard",
+      "question": "Client has good credit but Elective didn't offer 18 months. What's the next step?",
+      "options": [
+        "Tell them 12 months is the only option",
+        "Move to Klarna for 24-month terms",
+        "Suggest they pay in full",
+        "Try Payva for better terms"
+      ],
+      "correct": 1,
+      "explanation": "If Elective doesn't offer the needed terms (like 18 months) and the client can't make 12 months work, move to Klarna which offers up to 24 months."
+    },
+    {
+      "id": "fin_030",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "What creative option lets a client use multiple financing sources?",
+      "options": [
+        "This isn't allowed",
+        "Split between two Payva accounts",
+        "Half Elective and half Payva",
+        "Use Klarna twice"
+      ],
+      "correct": 2,
+      "explanation": "Clients can use MULTIPLE finance options - for example, half on Elective and half on Payva. This flexibility helps close deals."
+    },
+    {
+      "id": "fin_031",
+      "category": "financing_objections",
+      "difficulty": "easy",
+      "question": "Client says 'I can't afford it.' What's the first question to ask?",
+      "options": [
+        "What's your budget?",
+        "Do you roughly know what your credit score is?",
+        "Can you borrow from family?",
+        "Would you like a smaller package?"
+      ],
+      "correct": 1,
+      "explanation": "Always ask about credit score first - it determines which financing options you can offer. This opens the door to multiple payment solutions."
+    },
+    {
+      "id": "fin_032",
+      "category": "financing_objections",
+      "difficulty": "medium",
+      "question": "Client says 'I have bad credit.' What's your response?",
+      "options": [
+        "Sorry, we can't help you",
+        "You'll need to pay in full",
+        "No worries - Payva approves anyone, and Coach offers extended terms",
+        "Try improving your credit first"
+      ],
+      "correct": 2,
+      "explanation": "Never give up on bad credit clients! Payva approves ANYONE regardless of credit, and Coach offers up to 144 months to keep payments low."
+    },
+    {
+      "id": "fin_033",
+      "category": "financing_objections",
+      "difficulty": "medium",
+      "question": "Client says 'The monthly payments are too high.' Best response?",
+      "options": [
+        "That's the best we can do",
+        "We can extend terms with Klarna (24mo) or Coach (144mo)",
+        "Consider a smaller package",
+        "Try paying in full to avoid fees"
+      ],
+      "correct": 1,
+      "explanation": "Extend the terms! Klarna offers 24 months vs the typical 12, and Coach can go up to 144 months for the lowest possible monthly payments."
+    },
+    {
+      "id": "fin_034",
+      "category": "financing_objections",
+      "difficulty": "hard",
+      "question": "Client says 'I don't want to do a credit check.' What options can you offer?",
+      "options": [
+        "Only PIF is available",
+        "Split It and Payva work",
+        "Split It (no check) or PIF",
+        "All financing requires credit checks"
+      ],
+      "correct": 2,
+      "explanation": "Split It doesn't do a credit check - it just places a hold on their personal credit card. PIF obviously has no check either."
+    },
+    {
+      "id": "fin_035",
+      "category": "financing_objections",
+      "difficulty": "medium",
+      "question": "Client says 'I need to talk to my spouse about the money.' How does financing help?",
+      "options": [
+        "It doesn't - they still need to discuss it",
+        "Lower monthly payments make the conversation easier",
+        "Tell them to decide now",
+        "Offer a discount instead"
+      ],
+      "correct": 1,
+      "explanation": "Financing makes the money conversation easier! Instead of discussing a large lump sum, they can discuss manageable monthly payments."
+    },
+    {
+      "id": "fin_036",
+      "category": "financing_objections",
+      "difficulty": "hard",
+      "question": "Client says 'I was declined by another financing company.' What now?",
+      "options": [
+        "They probably can't get financing here either",
+        "Payva approves anyone - Coach is the backup",
+        "They need to pay in full",
+        "Suggest they wait and try later"
+      ],
+      "correct": 1,
+      "explanation": "Previous declines don't matter for Payva - they approve ANYONE. Coach Financing is also great for previously declined clients."
+    },
+    {
+      "id": "fin_037",
+      "category": "financing_objections",
+      "difficulty": "medium",
+      "question": "Client asks 'What if I want to pay it off early?' What do you tell them?",
+      "options": [
+        "There's an early payoff penalty",
+        "They can pay off anytime with no penalty",
+        "They have to wait 6 months",
+        "It depends on the lender"
+      ],
+      "correct": 1,
+      "explanation": "There are no early payoff penalties - clients can pay off their balance anytime they want without extra fees."
+    },
+    {
+      "id": "fin_038",
+      "category": "financing_objections",
+      "difficulty": "easy",
+      "question": "What's the discovery question to ask before recommending financing?",
+      "options": [
+        "How much can you afford monthly?",
+        "Do you roughly know what your credit score is?",
+        "Do you have a credit card?",
+        "Are you employed?"
+      ],
+      "correct": 1,
+      "explanation": "Always ask: 'Do you roughly know what your credit score is?' This determines which financing options to recommend."
+    },
+    {
+      "id": "fin_039",
+      "category": "financing_objections",
+      "difficulty": "hard",
+      "question": "Client says 'I don't want to pay any fees or interest.' What's their only option?",
+      "options": [
+        "Split It (0% APR, but 15% fee)",
+        "Pay In Full (PIF)",
+        "Payva (no fee, but APR)",
+        "There's no fee-free option"
+      ],
+      "correct": 1,
+      "explanation": "PIF (Pay In Full) is the ONLY option with zero fees and zero interest. All financing options have either fees or APR."
+    },
+    {
+      "id": "fin_040",
+      "category": "financing_objections",
+      "difficulty": "medium",
+      "question": "Client says 'The 15% fee seems high.' Best response?",
+      "options": [
+        "That's just how it is",
+        "Frame it: '15% to start your business today vs waiting and possibly never starting'",
+        "Suggest they save up instead",
+        "Offer Payva with APR instead"
+      ],
+      "correct": 1,
+      "explanation": "Reframe the fee as an investment in starting NOW. The cost of waiting (never starting, missing opportunities) is often higher than 15%."
+    },
+    {
+      "id": "fin_041",
+      "category": "financing_advanced",
+      "difficulty": "hard",
+      "question": "How does Payva's 'Servicing' model work for clients below 600 credit?",
+      "options": [
+        "They get declined",
+        "They pay higher fees",
+        "Payments are collected monthly (not funded upfront)",
+        "They need a co-signer"
+      ],
+      "correct": 2,
+      "explanation": "For clients below 600 credit, Payva uses 'Servicing' mode where payments are collected monthly rather than the company being funded upfront."
+    },
+    {
+      "id": "fin_042",
+      "category": "financing_advanced",
+      "difficulty": "hard",
+      "question": "What's special about Coach Financing compared to other options?",
+      "options": [
+        "It's 0% APR",
+        "It's a personal loan extending past 24 months",
+        "It has no credit requirements",
+        "It's only for premium packages"
+      ],
+      "correct": 1,
+      "explanation": "Coach Financing is a personal loan that can extend to 144 months (12 years!). Once funded, you receive the PIF price - no origination fee."
+    },
+    {
+      "id": "fin_043",
+      "category": "financing_advanced",
+      "difficulty": "hard",
+      "question": "PayPal's 'Pay in 4' has what special benefit?",
+      "options": [
+        "0% APR with no credit check",
+        "24-month terms available",
+        "Soft credit check - no impact on score",
+        "Works with any amount"
+      ],
+      "correct": 2,
+      "explanation": "PayPal Pay in 4 does a SOFT credit check that doesn't impact the credit score. It's 0% APR, 4 payments over 2 weeks, for $30-$1,500."
+    },
+    {
+      "id": "fin_044",
+      "category": "financing_advanced",
+      "difficulty": "hard",
+      "question": "What's the APR range for PayPal Pay Monthly?",
+      "options": [
+        "0%",
+        "5.99% - 19.99%",
+        "9.99% - 35.99%",
+        "15% flat"
+      ],
+      "correct": 2,
+      "explanation": "PayPal Pay Monthly ranges from 9.99% to 35.99% APR, for amounts $149-$10,000, with 3-24 month fixed payment terms."
+    },
+    {
+      "id": "fin_045",
+      "category": "financing_advanced",
+      "difficulty": "medium",
+      "question": "What 'last resort' creative options exist when all financing fails?",
+      "options": [
+        "There are no other options",
+        "Only reducing the package",
+        "Crypto, stocks, 0% APR card, 401K loan, family/friends",
+        "Wait until next month"
+      ],
+      "correct": 2,
+      "explanation": "Creative last resorts include: crypto, stocks, applying for a 0% APR credit card, 401K loan, and asking family/friends. Get creative!"
+    },
+    {
+      "id": "fin_046",
+      "category": "financing_advanced",
+      "difficulty": "hard",
+      "question": "Why might Klarna be 'clunky' for some clients?",
+      "options": [
+        "It requires too much documentation",
+        "The process can be confusing for tech-challenged clients",
+        "It takes too long to approve",
+        "It requires in-person verification"
+      ],
+      "correct": 1,
+      "explanation": "Klarna's process can be clunky and confusing for tech-challenged clients. Keep this in mind when recommending to less tech-savvy prospects."
+    },
+    {
+      "id": "fin_047",
+      "category": "financing_advanced",
+      "difficulty": "medium",
+      "question": "What's the term range for PayPal Pay Monthly?",
+      "options": [
+        "1-6 months",
+        "3-12 months",
+        "3-24 months",
+        "6-36 months"
+      ],
+      "correct": 2,
+      "explanation": "PayPal Pay Monthly offers 3-24 month terms with fixed payments, competing with Klarna for longer-term financing."
+    },
+    {
+      "id": "fin_048",
+      "category": "financing_advanced",
+      "difficulty": "hard",
+      "question": "PayPal Credit offers what unique benefit for purchases over $99?",
+      "options": [
+        "0% APR for life",
+        "6 months no interest if paid in full",
+        "Cash back rewards",
+        "Extended warranty"
+      ],
+      "correct": 1,
+      "explanation": "PayPal Credit offers 6 months no interest on purchases $99+ IF paid in full within that period. It's a revolving credit line."
+    },
+    {
+      "id": "fin_049",
+      "category": "financing_advanced",
+      "difficulty": "medium",
+      "question": "When using multiple cards/financing, what creative option exists?",
+      "options": [
+        "This isn't possible",
+        "Split payments across multiple cards",
+        "Only two cards maximum",
+        "Requires special approval"
+      ],
+      "correct": 1,
+      "explanation": "Clients can split payments across multiple cards AND combine with financing. For example, pay part on one card, finance the rest."
+    },
+    {
+      "id": "fin_050",
+      "category": "financing_advanced",
+      "difficulty": "hard",
+      "question": "What determines if Elective offers 0% APR?",
+      "options": [
+        "Always 0% APR",
+        "Credit score only",
+        "Good finances (credit + income)",
+        "Term length chosen"
+      ],
+      "correct": 2,
+      "explanation": "Elective offers 0% APR for clients with 'good finances' - a combination of credit score and overall financial health, not just credit score alone."
+    },
+    {
+      "id": "fin_051",
+      "category": "financing_scenarios",
+      "difficulty": "hard",
+      "question": "Client is in Canada with 550 credit and needs 24 months. What's their path?",
+      "options": [
+        "Klarna 24 months",
+        "Payva Servicing (only viable option)",
+        "Coach Financing",
+        "They have no options"
+      ],
+      "correct": 1,
+      "explanation": "For a Canadian with 550 credit: Elective requires 550+ but max 12 months, Klarna/Coach are US only. Payva Servicing is their only path, though terms max at 12 months."
+    },
+    {
+      "id": "fin_052",
+      "category": "financing_eligibility",
+      "difficulty": "medium",
+      "question": "What payment method can be used for Elective's first payment?",
+      "options": [
+        "Only credit card",
+        "Only debit card",
+        "Credit OR debit card",
+        "ACH/Bank transfer only"
+      ],
+      "correct": 2,
+      "explanation": "Elective accepts credit OR debit card for the first payment or down payment - unlike Klarna which requires debit only."
+    },
+    {
+      "id": "fin_053",
+      "category": "financing_basics",
+      "difficulty": "easy",
+      "question": "Which financing option is described as a 'niche use case'?",
+      "options": ["Coach", "Payva", "PayPal", "Split It"],
+      "correct": 2,
+      "explanation": "PayPal is considered a niche use case - only use it if you're comfortable walking the client through the various options."
+    },
+    {
+      "id": "fin_054",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "Client has 680 credit but only has a business credit card. What financing works?",
+      "options": [
+        "Split It",
+        "Elective, Klarna, or Payva",
+        "Only PIF",
+        "Coach only"
+      ],
+      "correct": 1,
+      "explanation": "Split It requires a PERSONAL credit card. But Elective, Klarna, and Payva all work with any payment method for subsequent payments."
+    },
+    {
+      "id": "fin_055",
+      "category": "financing_objections",
+      "difficulty": "hard",
+      "question": "Client says 'I've never financed anything and I'm scared to start.' Best approach?",
+      "options": [
+        "Pressure them to finance",
+        "Explain Split It doesn't affect credit and they stay in control",
+        "Tell them to pay in full then",
+        "Suggest they think about it"
+      ],
+      "correct": 1,
+      "explanation": "Split It is perfect for financing-nervous clients: no credit check, no impact on credit score, they stay in control with their own card."
+    },
+    {
+      "id": "fin_056",
+      "category": "sales_fundamentals",
+      "difficulty": "easy",
+      "question": "According to Eric's WFS framework, what's the first phase of a sales call?",
+      "options": ["Pitch", "Qualify", "Build Rapport", "Close"],
+      "correct": 2,
+      "explanation": "Building rapport comes first - establish connection and trust before moving into qualification and the rest of the call."
+    },
+    {
+      "id": "fin_057",
+      "category": "sales_fundamentals",
+      "difficulty": "medium",
+      "question": "What's the 'Three-Path Question' technique used for?",
+      "options": [
+        "Closing the deal",
+        "Handling objections by giving options",
+        "Building rapport",
+        "Qualifying leads"
+      ],
+      "correct": 1,
+      "explanation": "The Three-Path Question gives prospects three options to choose from, making them feel in control while steering toward a decision."
+    },
+    {
+      "id": "fin_058",
+      "category": "sales_fundamentals",
+      "difficulty": "medium",
+      "question": "When a prospect says they're a '7 out of 10' serious about starting, what should you do?",
+      "options": [
+        "Ask what would make them a 10",
+        "Move to close immediately",
+        "Give them more information",
+        "Schedule a follow-up"
+      ],
+      "correct": 0,
+      "explanation": "Ask what would make them a 10 - this uncovers their remaining concerns and shows you what needs to be addressed to close."
+    },
+    {
+      "id": "fin_059",
+      "category": "sales_fundamentals",
+      "difficulty": "easy",
+      "question": "What's the scale question to gauge commitment?",
+      "options": [
+        "How interested are you from 1-5?",
+        "Are you ready to buy today?",
+        "On a scale of 1-10, how serious are you about starting a vending business in the next 90 days?",
+        "What's your budget?"
+      ],
+      "correct": 2,
+      "explanation": "The scale question gauges commitment: 'On a scale of 1-10, how serious are you about starting a vending business in the next 90 days?'"
+    },
+    {
+      "id": "fin_060",
+      "category": "sales_fundamentals",
+      "difficulty": "medium",
+      "question": "What follow-up question helps isolate the real objection?",
+      "options": [
+        "What's your budget?",
+        "If we could solve that, would you be ready to move forward today?",
+        "Do you have any questions?",
+        "When would be a good time to call back?"
+      ],
+      "correct": 1,
+      "explanation": "'If we could solve that, would you be ready to move forward today?' isolates whether their stated objection is real or if there's something else."
+    },
+    {
+      "id": "fin_061",
+      "category": "objection_handling",
+      "difficulty": "easy",
+      "question": "What's the first step when handling any objection?",
+      "options": [
+        "Overcome it immediately",
+        "Acknowledge and validate",
+        "Offer a discount",
+        "Change the subject"
+      ],
+      "correct": 1,
+      "explanation": "Always acknowledge and validate first - show them you heard and understand. Then move to addressing the objection."
+    },
+    {
+      "id": "fin_062",
+      "category": "objection_handling",
+      "difficulty": "medium",
+      "question": "When someone says 'I need to think about it,' what's really happening?",
+      "options": [
+        "They genuinely need time",
+        "They have an unspoken objection",
+        "They're definitely not interested",
+        "They're comparing prices"
+      ],
+      "correct": 1,
+      "explanation": "'I need to think about it' almost always means there's an unspoken objection. Dig deeper to find the real concern."
+    },
+    {
+      "id": "fin_063",
+      "category": "objection_handling",
+      "difficulty": "medium",
+      "question": "How should you respond to 'I need to talk to my spouse'?",
+      "options": [
+        "Tell them to call back when they've talked",
+        "Ask what specifically they need to discuss",
+        "Schedule a call with both of them",
+        "All of the above could work, depending on context"
+      ],
+      "correct": 3,
+      "explanation": "Multiple approaches work: understand what needs discussing, offer to have a call with both, or help them prepare for the conversation."
+    },
+    {
+      "id": "fin_064",
+      "category": "objection_handling",
+      "difficulty": "hard",
+      "question": "What's the 'feel, felt, found' technique?",
+      "options": [
+        "A closing technique",
+        "Empathy pattern: 'I understand how you feel, others felt the same, what they found was...'",
+        "A pricing negotiation tactic",
+        "A follow-up strategy"
+      ],
+      "correct": 1,
+      "explanation": "Feel, Felt, Found: 'I understand how you feel, many others felt the same way, what they found was...' - validates then provides social proof."
+    },
+    {
+      "id": "fin_065",
+      "category": "objection_handling",
+      "difficulty": "medium",
+      "question": "When a prospect mentions a competitor, what should you do?",
+      "options": [
+        "Bash the competitor",
+        "Ignore it and continue",
+        "Acknowledge, then differentiate on value",
+        "Match their price"
+      ],
+      "correct": 2,
+      "explanation": "Never bash competitors. Acknowledge they're doing research (good!), then differentiate on value - what makes your offering unique."
+    },
+    {
+      "id": "fin_066",
+      "category": "product_knowledge",
+      "difficulty": "easy",
+      "question": "What is the typical package range offered?",
+      "options": [
+        "Starter only",
+        "Bronze, Silver, Gold",
+        "Bronze through Diamond",
+        "Basic and Premium"
+      ],
+      "correct": 2,
+      "explanation": "Packages typically range from Bronze through Diamond, offering different levels of support, machines, and features."
+    },
+    {
+      "id": "fin_067",
+      "category": "product_knowledge",
+      "difficulty": "medium",
+      "question": "What emotional trigger works best for someone unhappy with their 9-5 job?",
+      "options": [
+        "Financial freedom",
+        "Being your own boss",
+        "Escape the corporate grind",
+        "All of these are effective"
+      ],
+      "correct": 3,
+      "explanation": "For someone unhappy at work, all these triggers work: financial freedom, being their own boss, escaping the corporate grind."
+    },
+    {
+      "id": "fin_068",
+      "category": "sales_fundamentals",
+      "difficulty": "hard",
+      "question": "What's a 'win signal' that indicates you should move to close?",
+      "options": [
+        "When they ask about payment options",
+        "When they discuss implementation details",
+        "When they say 'if I did this...'",
+        "All of the above"
+      ],
+      "correct": 3,
+      "explanation": "All of these are win signals! Payment questions, implementation discussions, and 'if I did this' language all show they're visualizing ownership."
+    },
+    {
+      "id": "fin_069",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "Client asks about Bronze package financing. Which option do you highlight?",
+      "options": [
+        "Coach only - it's the cheapest",
+        "Klarna - good for lower packages",
+        "PIF only - Bronze should be affordable",
+        "Payva - always approves"
+      ],
+      "correct": 1,
+      "explanation": "Klarna is noted as 'good for lower packages (Bronze)' - it offers reasonable terms that work well for smaller amounts."
+    },
+    {
+      "id": "fin_070",
+      "category": "financing_objections",
+      "difficulty": "medium",
+      "question": "Client says 'I have the money but don't want to drain my savings.' Best option?",
+      "options": [
+        "Tell them to use savings anyway",
+        "Suggest financing to preserve their capital",
+        "Offer a smaller package",
+        "Schedule follow-up when they've saved more"
+      ],
+      "correct": 1,
+      "explanation": "Financing preserves capital! They can keep their savings for emergencies or investing in their business while making manageable payments."
+    },
+    {
+      "id": "fin_071",
+      "category": "financing_advanced",
+      "difficulty": "hard",
+      "question": "A client qualifies for multiple options. What's the PRIMARY factor in your recommendation?",
+      "options": [
+        "Whatever has lowest fees",
+        "Whatever you know best",
+        "Match their specific needs (term length, monthly budget, credit concerns)",
+        "Always start with PIF"
+      ],
+      "correct": 2,
+      "explanation": "Always match the option to THEIR needs: term length they want, monthly budget, credit score concerns, etc. One size doesn't fit all."
+    },
+    {
+      "id": "fin_072",
+      "category": "financing_basics",
+      "difficulty": "easy",
+      "question": "What's the term range for Elective financing?",
+      "options": ["1-6 months", "3-12 months", "6-24 months", "12-36 months"],
+      "correct": 1,
+      "explanation": "Elective offers 3-12 month repayment terms. For longer terms, clients need Klarna (24mo) or Coach (144mo)."
+    },
+    {
+      "id": "fin_073",
+      "category": "financing_scenarios",
+      "difficulty": "hard",
+      "question": "Client has 640 credit and lives in California. What's your financing order?",
+      "options": [
+        "Elective → Klarna → Payva",
+        "Klarna → Payva → Coach",
+        "Payva → Coach only",
+        "Klarna only"
+      ],
+      "correct": 1,
+      "explanation": "California = no Elective. 640 credit = Klarna works (600+ required). Order: Klarna (best terms for their credit), then Payva, then Coach."
+    },
+    {
+      "id": "fin_074",
+      "category": "financing_objections",
+      "difficulty": "medium",
+      "question": "Client says 'What's the catch with Payva approving everyone?' How do you respond?",
+      "options": [
+        "There's no catch!",
+        "The 'catch' is they charge APR instead of flat fee",
+        "It's actually a scam",
+        "They have hidden fees"
+      ],
+      "correct": 1,
+      "explanation": "Payva's model: no initiation fee, but they charge fixed APR. That's how they can approve everyone - they adjust APR to risk level."
+    },
+    {
+      "id": "fin_075",
+      "category": "financing_basics",
+      "difficulty": "medium",
+      "question": "Which payment options can use EITHER credit OR debit cards?",
+      "options": [
+        "Split It and Elective",
+        "Payva and Elective",
+        "Klarna and Coach",
+        "Only PIF"
+      ],
+      "correct": 1,
+      "explanation": "Payva accepts credit or debit, and Elective accepts credit or debit for first/down payment. Split It needs personal credit card, Klarna needs debit for first."
+    },
+    {
+      "id": "fin_076",
+      "category": "financing_scenarios",
+      "difficulty": "hard",
+      "question": "Client says they applied for a 0% APR credit card. What's a good play?",
+      "options": [
+        "Wait for them to get the card",
+        "Have them PIF when the card arrives",
+        "Tell them financing is better",
+        "This is a creative last resort option - support them"
+      ],
+      "correct": 3,
+      "explanation": "Applying for a 0% APR card is actually listed as a creative last resort option! Support this approach - they can PIF with no financing cost."
+    },
+    {
+      "id": "fin_077",
+      "category": "objection_handling",
+      "difficulty": "hard",
+      "question": "What often causes 'lost deals' that could have been saved?",
+      "options": [
+        "Price was too high",
+        "Competition won",
+        "Not enough financing options offered",
+        "Rep gave up too soon on objections"
+      ],
+      "correct": 3,
+      "explanation": "Many deals are lost because reps give up too soon. Persistence and creative problem-solving (like multiple financing options) save deals."
+    },
+    {
+      "id": "fin_078",
+      "category": "financing_eligibility",
+      "difficulty": "medium",
+      "question": "What credit tier is considered 'Fair Credit'?",
+      "options": ["700+", "650-699", "600-650", "Below 600"],
+      "correct": 2,
+      "explanation": "Fair Credit is 600-650. Above 650 is Good Credit, below 600 is Limited Credit with fewer options."
+    },
+    {
+      "id": "fin_079",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "Client with 700 credit wants ZERO interest. What's the best option?",
+      "options": [
+        "PIF (no financing cost)",
+        "Split It (0% APR, but 15% fee)",
+        "Elective (possible 0% APR + 15% fee)",
+        "There's no true 0% option besides PIF"
+      ],
+      "correct": 0,
+      "explanation": "If they want truly ZERO interest and fees, PIF is the only option. Split It is 0% APR but has 15% fee. Elective has 15% fee too."
+    },
+    {
+      "id": "fin_080",
+      "category": "financing_advanced",
+      "difficulty": "hard",
+      "question": "Why is Coach Financing described as 'PIF price once funded'?",
+      "options": [
+        "They charge PIF prices",
+        "No origination fee - you receive full amount without fee reduction",
+        "It's the same as PIF",
+        "PIF discount applies"
+      ],
+      "correct": 1,
+      "explanation": "Coach has NO initiation fee, so once the loan is funded, you receive the full PIF price - unlike options that deduct 15% for fees."
+    },
+    {
+      "id": "fin_081",
+      "category": "financing_objections",
+      "difficulty": "easy",
+      "question": "What keyword should trigger your financing recommendation?",
+      "options": [
+        "Maybe later",
+        "Can't afford",
+        "Need to research",
+        "Not interested"
+      ],
+      "correct": 1,
+      "explanation": "'Can't afford' or similar (too expensive, don't have the money, budget) should immediately trigger your financing options pitch."
+    },
+    {
+      "id": "fin_082",
+      "category": "financing_basics",
+      "difficulty": "easy",
+      "question": "How many financing partners are available?",
+      "options": ["3", "5", "7", "10"],
+      "correct": 2,
+      "explanation": "There are 7 payment options: PIF, Split It, Elective, Payva, Klarna, Coach, and PayPal."
+    },
+    {
+      "id": "fin_083",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "Client wants to put $2,000 down on a $10,000 package. The 15% fee applies to?",
+      "options": [
+        "$10,000 (full amount)",
+        "$8,000 (financed portion)",
+        "$2,000 (down payment)",
+        "No fee with down payment"
+      ],
+      "correct": 1,
+      "explanation": "The 15% fee ONLY applies to the financed amount ($8,000), not the full price. This is a great way to reduce total financing cost!"
+    },
+    {
+      "id": "fin_084",
+      "category": "financing_eligibility",
+      "difficulty": "hard",
+      "question": "Canadian resident with 700 credit wants maximum term length. What's available?",
+      "options": [
+        "Klarna 24 months",
+        "Coach 144 months",
+        "Elective 12 months",
+        "Payva 12 months"
+      ],
+      "correct": 2,
+      "explanation": "For Canadians: Klarna and Coach are US only. Max term is Elective or Payva at 12 months. Elective is better for 700 credit."
+    },
+    {
+      "id": "fin_085",
+      "category": "sales_fundamentals",
+      "difficulty": "medium",
+      "question": "What's the purpose of asking about their current job?",
+      "options": [
+        "To judge if they can afford it",
+        "To find their 'superpowers' that transfer to vending",
+        "To qualify their income",
+        "Small talk only"
+      ],
+      "correct": 1,
+      "explanation": "Job information helps you identify their 'superpowers' - transferable skills that make them perfect for vending success."
+    },
+    {
+      "id": "fin_086",
+      "category": "financing_objections",
+      "difficulty": "hard",
+      "question": "Client says 'My friend did vending and failed, so I'm worried about financing.' Response?",
+      "options": [
+        "Ignore the friend's story",
+        "Acknowledge, ask what went wrong, show how we're different",
+        "Say financing is safe",
+        "Suggest they pay in full to reduce risk"
+      ],
+      "correct": 1,
+      "explanation": "Acknowledge their concern, probe what went wrong with the friend, then differentiate how our program/support prevents those issues."
+    },
+    {
+      "id": "fin_087",
+      "category": "financing_scenarios",
+      "difficulty": "easy",
+      "question": "Which financing option would you recommend for someone who says 'I don't care about monthly amount, just longest terms'?",
+      "options": ["Elective", "Klarna", "Coach", "Split It"],
+      "correct": 2,
+      "explanation": "Coach Financing offers the longest terms at up to 144 months (12 years!) - perfect for clients focused on term length."
+    },
+    {
+      "id": "fin_088",
+      "category": "financing_basics",
+      "difficulty": "medium",
+      "question": "Which options have VARIABLE APR based on client qualifications?",
+      "options": [
+        "Split It and Coach",
+        "Elective, Payva, Klarna",
+        "PIF and Coach",
+        "All financing has fixed APR"
+      ],
+      "correct": 1,
+      "explanation": "Elective (0% if good finances, varies otherwise), Payva (fixed APR based on profile), and Klarna (varies) all have variable APR."
+    },
+    {
+      "id": "fin_089",
+      "category": "financing_advanced",
+      "difficulty": "hard",
+      "question": "What makes PayPal a 'niche use case' according to the guidance?",
+      "options": [
+        "It has bad terms",
+        "It's complicated",
+        "Only use if rep is comfortable walking client through options",
+        "It's being discontinued"
+      ],
+      "correct": 2,
+      "explanation": "PayPal has multiple options (Pay in 4, Pay Monthly, Credit) that can be confusing. Only recommend if YOU are comfortable explaining it all."
+    },
+    {
+      "id": "fin_090",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "Client wants financing but is worried about application rejection affecting their credit. Best recommendation?",
+      "options": [
+        "Split It - no credit check at all",
+        "Payva - soft credit check",
+        "PayPal Pay in 4 - soft check, no score impact",
+        "Both A and C would work"
+      ],
+      "correct": 3,
+      "explanation": "Both Split It (no credit check) and PayPal Pay in 4 (soft check, no impact) work for credit-concerned clients."
+    },
+    {
+      "id": "fin_091",
+      "category": "objection_handling",
+      "difficulty": "medium",
+      "question": "When is it appropriate to mention 'testimonials' during objection handling?",
+      "options": [
+        "Never - focus on the prospect",
+        "When they need social proof that others succeeded",
+        "Only after they've committed",
+        "Only for price objections"
+      ],
+      "correct": 1,
+      "explanation": "Testimonials provide powerful social proof. Use them when prospects need to see that others like them have succeeded."
+    },
+    {
+      "id": "fin_092",
+      "category": "financing_eligibility",
+      "difficulty": "easy",
+      "question": "Which financing option is best for someone who says 'I have excellent credit'?",
+      "options": [
+        "Payva - they approve anyone",
+        "Coach - longest terms",
+        "Elective - best terms for good credit",
+        "Split It - protects credit score"
+      ],
+      "correct": 2,
+      "explanation": "Elective is ideal for 650+ credit - they get the best terms, potentially 0% APR, and it's the primary recommendation for good credit."
+    },
+    {
+      "id": "fin_093",
+      "category": "financing_scenarios",
+      "difficulty": "hard",
+      "question": "Client says 'I tried Elective but they only offered 9 months, I need 12.' What now?",
+      "options": [
+        "Tell them 9 months is what they got",
+        "Try Klarna for potentially better terms",
+        "See if larger down payment gets better terms",
+        "Both B and C are good options"
+      ],
+      "correct": 3,
+      "explanation": "Try Klarna which might offer different terms. Also, a larger down payment reduces financed amount which might get better terms. Both are worth trying."
+    },
+    {
+      "id": "fin_094",
+      "category": "financing_basics",
+      "difficulty": "medium",
+      "question": "What's unique about how Split It handles monthly payments?",
+      "options": [
+        "Direct debit from bank",
+        "Hold on card, only charge monthly amount",
+        "Charge full amount, refund monthly",
+        "Manual payment required"
+      ],
+      "correct": 1,
+      "explanation": "Split It places a HOLD on the credit card for the full amount but only CHARGES the monthly installment. The hold decreases as balance is paid."
+    },
+    {
+      "id": "fin_095",
+      "category": "financing_objections",
+      "difficulty": "medium",
+      "question": "Client says 'I'll wait until I have the cash.' Best response approach?",
+      "options": [
+        "Ok, call us back when ready",
+        "Explore the cost of waiting - opportunities missed, prices may increase",
+        "Pressure them to finance now",
+        "Offer a discount"
+      ],
+      "correct": 1,
+      "explanation": "Explore the cost of waiting - what opportunities will they miss? Will prices go up? Sometimes financing NOW costs less than waiting."
+    },
+    {
+      "id": "fin_096",
+      "category": "financing_advanced",
+      "difficulty": "hard",
+      "question": "What's the practical difference between Payva 'Funded' vs 'Servicing' mode?",
+      "options": [
+        "Different APR rates",
+        "Different term lengths",
+        "You get money upfront vs collected monthly",
+        "Different approval criteria"
+      ],
+      "correct": 2,
+      "explanation": "Funded (600+ credit): company receives money upfront. Servicing (below 600): payments are collected monthly and passed through."
+    },
+    {
+      "id": "fin_097",
+      "category": "sales_fundamentals",
+      "difficulty": "easy",
+      "question": "What's more important: handling the objection or understanding WHY they have it?",
+      "options": [
+        "Handling it quickly",
+        "Understanding the real reason behind it",
+        "Both equally important",
+        "Neither - just close"
+      ],
+      "correct": 1,
+      "explanation": "Understanding WHY they have the objection is more important - it reveals the real issue. Often the stated objection isn't the real one."
+    },
+    {
+      "id": "fin_098",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "Client qualifies for everything. They say 'just tell me the best one.' How do you respond?",
+      "options": [
+        "Recommend Elective - it's the best",
+        "Ask clarifying questions about their priorities",
+        "Give them PIF - no fees",
+        "List all options and let them choose"
+      ],
+      "correct": 1,
+      "explanation": "Ask clarifying questions: What's more important - lowest monthly payment, shortest term, or lowest total cost? Then match accordingly."
+    },
+    {
+      "id": "fin_099",
+      "category": "financing_objections",
+      "difficulty": "hard",
+      "question": "Client says 'I want to start but not with debt hanging over me.' How do you reframe?",
+      "options": [
+        "It's not debt, it's an investment",
+        "The business will pay for itself",
+        "Frame monthly payment as business expense, like rent",
+        "All of these reframes can work"
+      ],
+      "correct": 3,
+      "explanation": "All these reframes help: investment not debt, business pays for itself, monthly payment as operating expense. Pick what resonates with them."
+    },
+    {
+      "id": "fin_100",
+      "category": "financing_advanced",
+      "difficulty": "hard",
+      "question": "Why might you recommend AGAINST the lowest monthly payment option?",
+      "options": [
+        "Never - always go lowest",
+        "Longer terms = more total interest paid over time",
+        "Looks better for the company",
+        "No reason to recommend against"
+      ],
+      "correct": 1,
+      "explanation": "Longer terms mean more total interest. A client who CAN afford higher payments might want to pay less overall by choosing shorter terms."
+    }
+  ]
+}

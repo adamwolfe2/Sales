@@ -13,8 +13,20 @@ class SalesCommandCenter {
     this.callAnalytics = null;
     this.jobSuperpowers = null;
     this.financing = null;
+    this.quiz = null;
     this.currentView = 'objections';
     this.searchIndex = [];
+
+    // Quiz state
+    this.quizState = {
+      currentQuestionIndex: 0,
+      answers: {},
+      selectedCategory: 'all',
+      selectedDifficulty: 'all',
+      filteredQuestions: [],
+      showingResults: false,
+      reviewMode: false
+    };
   }
 
   async init() {
@@ -47,7 +59,7 @@ class SalesCommandCenter {
     };
 
     // Load all data with individual error handling
-    const [objections, playbooks, testimonials, reps, pricing, callAnalytics, jobSuperpowers, financing] = await Promise.all([
+    const [objections, playbooks, testimonials, reps, pricing, callAnalytics, jobSuperpowers, financing, quiz] = await Promise.all([
       safeFetch('data/objections.json', 'objections'),
       safeFetch('data/playbooks.json', 'playbooks'),
       safeFetch('data/testimonials.json', 'testimonials'),
@@ -55,7 +67,8 @@ class SalesCommandCenter {
       safeFetch('data/pricing.json', 'pricing'),
       safeFetch('data/call-analytics.json', 'call-analytics'),
       safeFetch('data/job-superpowers.json', 'job-superpowers'),
-      safeFetch('data/financing.json', 'financing')
+      safeFetch('data/financing.json', 'financing'),
+      safeFetch('data/quiz.json', 'quiz')
     ]);
 
     this.objections = objections || { objections: [], categories: [], patterns: {} };
@@ -66,6 +79,7 @@ class SalesCommandCenter {
     this.callAnalytics = callAnalytics || { job_type_patterns: {}, emotional_triggers: {}, winning_closes: {}, lost_deal_reasons: {}, followup_patterns: {}, analytics: { outcome_summary: {}, objection_frequency: {} }, metadata: {} };
     this.jobSuperpowers = jobSuperpowers || {};
     this.financing = financing || {};
+    this.quiz = quiz || { categories: [], questions: [] };
   }
 
   buildSearchIndex() {
@@ -295,6 +309,9 @@ class SalesCommandCenter {
         break;
       case 'financing':
         this.renderFinancing(content);
+        break;
+      case 'quiz':
+        this.renderQuiz(content);
         break;
       default:
         this.renderObjections(content);
@@ -2619,6 +2636,455 @@ class SalesCommandCenter {
 
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
+  }
+
+  // ========================================
+  // Quiz Module
+  // ========================================
+
+  renderQuiz(container) {
+    if (!this.quiz || !this.quiz.questions) {
+      container.innerHTML = '<div class="empty-state"><h3>Quiz not available</h3></div>';
+      return;
+    }
+
+    // Filter questions based on selection
+    this.filterQuizQuestions();
+
+    const categories = this.quiz.categories || [];
+    const totalQuestions = this.quizState.filteredQuestions.length;
+    const answeredCount = Object.keys(this.quizState.answers).filter(
+      id => this.quizState.filteredQuestions.find(q => q.id === id)
+    ).length;
+
+    // Calculate stats
+    const correctCount = this.calculateCorrectAnswers();
+    const percentage = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
+
+    container.innerHTML = `
+      <div class="view-header">
+        <h2>Sales Training Quiz</h2>
+        <p>Test your knowledge! Heavy focus on financing - the area reps need the most help.</p>
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat">
+          <span class="stat-value">${totalQuestions}</span>
+          <span class="stat-label">Questions Available</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">${answeredCount}/${totalQuestions}</span>
+          <span class="stat-label">Answered</span>
+        </div>
+        <div class="stat ${percentage >= 80 ? 'stat-success' : percentage >= 60 ? 'stat-warning' : 'stat-danger'}">
+          <span class="stat-value">${percentage}%</span>
+          <span class="stat-label">Score</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">${correctCount}</span>
+          <span class="stat-label">Correct</span>
+        </div>
+      </div>
+
+      <div class="quiz-controls">
+        <div class="quiz-filters">
+          <div class="filter-group">
+            <label>Category:</label>
+            <select id="quiz-category-filter" class="quiz-filter-select">
+              <option value="all" ${this.quizState.selectedCategory === 'all' ? 'selected' : ''}>All Categories</option>
+              ${categories.map(cat => `
+                <option value="${cat.id}" ${this.quizState.selectedCategory === cat.id ? 'selected' : ''}>
+                  ${cat.name} (${this.quiz.questions.filter(q => q.category === cat.id).length})
+                </option>
+              `).join('')}
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Difficulty:</label>
+            <select id="quiz-difficulty-filter" class="quiz-filter-select">
+              <option value="all" ${this.quizState.selectedDifficulty === 'all' ? 'selected' : ''}>All Levels</option>
+              <option value="easy" ${this.quizState.selectedDifficulty === 'easy' ? 'selected' : ''}>Easy</option>
+              <option value="medium" ${this.quizState.selectedDifficulty === 'medium' ? 'selected' : ''}>Medium</option>
+              <option value="hard" ${this.quizState.selectedDifficulty === 'hard' ? 'selected' : ''}>Hard</option>
+            </select>
+          </div>
+        </div>
+        <div class="quiz-actions">
+          <button class="btn-secondary" onclick="app.resetQuiz()">Reset Progress</button>
+          <button class="btn-secondary" onclick="app.shuffleQuiz()">Shuffle Questions</button>
+          <button class="btn-primary" onclick="app.showQuizResults()">View Results</button>
+        </div>
+      </div>
+
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" style="width: ${(answeredCount / totalQuestions) * 100}%"></div>
+      </div>
+
+      <div class="quiz-container" id="quiz-container">
+        ${this.quizState.showingResults ? this.renderQuizResults() : this.renderQuizQuestion()}
+      </div>
+
+      <div class="quiz-category-overview">
+        <h3>Category Breakdown</h3>
+        <div class="category-cards">
+          ${categories.map(cat => {
+            const catQuestions = this.quiz.questions.filter(q => q.category === cat.id);
+            const catAnswered = catQuestions.filter(q => this.quizState.answers[q.id] !== undefined).length;
+            const catCorrect = catQuestions.filter(q => this.quizState.answers[q.id] === q.correct).length;
+            const catPercent = catAnswered > 0 ? Math.round((catCorrect / catAnswered) * 100) : 0;
+            return `
+              <div class="category-stat-card ${this.quizState.selectedCategory === cat.id ? 'active' : ''}"
+                   onclick="app.setQuizCategory('${cat.id}')">
+                <h4>${cat.name}</h4>
+                <p class="cat-desc">${cat.description}</p>
+                <div class="cat-stats">
+                  <span>${catAnswered}/${catQuestions.length} answered</span>
+                  <span class="${catPercent >= 80 ? 'text-success' : catPercent >= 60 ? 'text-warning' : 'text-danger'}">${catPercent}% correct</span>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+
+    this.bindQuizEvents();
+  }
+
+  filterQuizQuestions() {
+    let questions = [...(this.quiz.questions || [])];
+
+    if (this.quizState.selectedCategory !== 'all') {
+      questions = questions.filter(q => q.category === this.quizState.selectedCategory);
+    }
+
+    if (this.quizState.selectedDifficulty !== 'all') {
+      questions = questions.filter(q => q.difficulty === this.quizState.selectedDifficulty);
+    }
+
+    this.quizState.filteredQuestions = questions;
+
+    // Reset index if out of bounds
+    if (this.quizState.currentQuestionIndex >= questions.length) {
+      this.quizState.currentQuestionIndex = 0;
+    }
+  }
+
+  renderQuizQuestion() {
+    const questions = this.quizState.filteredQuestions;
+    if (questions.length === 0) {
+      return `
+        <div class="quiz-empty">
+          <h3>No questions match your filters</h3>
+          <p>Try selecting a different category or difficulty level.</p>
+        </div>
+      `;
+    }
+
+    const currentIndex = this.quizState.currentQuestionIndex;
+    const question = questions[currentIndex];
+    const answered = this.quizState.answers[question.id] !== undefined;
+    const selectedAnswer = this.quizState.answers[question.id];
+    const isCorrect = selectedAnswer === question.correct;
+    const category = this.quiz.categories.find(c => c.id === question.category);
+
+    return `
+      <div class="quiz-question-card">
+        <div class="quiz-question-header">
+          <div class="quiz-question-meta">
+            <span class="quiz-category-tag">${category?.name || question.category}</span>
+            <span class="quiz-difficulty-tag ${question.difficulty}">${question.difficulty}</span>
+          </div>
+          <span class="quiz-question-number">Question ${currentIndex + 1} of ${questions.length}</span>
+        </div>
+
+        <h3 class="quiz-question-text">${question.question}</h3>
+
+        <div class="quiz-options">
+          ${question.options.map((option, index) => {
+            let optionClass = 'quiz-option';
+            if (answered) {
+              if (index === question.correct) {
+                optionClass += ' correct';
+              } else if (index === selectedAnswer && !isCorrect) {
+                optionClass += ' incorrect';
+              }
+            } else if (index === selectedAnswer) {
+              optionClass += ' selected';
+            }
+            return `
+              <button class="${optionClass}"
+                      data-option-index="${index}"
+                      ${answered ? 'disabled' : ''}>
+                <span class="option-letter">${String.fromCharCode(65 + index)}</span>
+                <span class="option-text">${option}</span>
+                ${answered && index === question.correct ? '<span class="option-check">&#10003;</span>' : ''}
+                ${answered && index === selectedAnswer && !isCorrect ? '<span class="option-x">&#10007;</span>' : ''}
+              </button>
+            `;
+          }).join('')}
+        </div>
+
+        ${answered ? `
+          <div class="quiz-explanation ${isCorrect ? 'correct' : 'incorrect'}">
+            <div class="explanation-header">
+              ${isCorrect ? '<span class="result-icon">&#10003;</span> Correct!' : '<span class="result-icon">&#10007;</span> Incorrect'}
+            </div>
+            <p>${question.explanation}</p>
+          </div>
+        ` : ''}
+
+        <div class="quiz-navigation">
+          <button class="btn-secondary" onclick="app.prevQuestion()" ${currentIndex === 0 ? 'disabled' : ''}>
+            &larr; Previous
+          </button>
+          <div class="quiz-nav-dots">
+            ${questions.slice(Math.max(0, currentIndex - 2), Math.min(questions.length, currentIndex + 3)).map((q, i) => {
+              const actualIndex = Math.max(0, currentIndex - 2) + i;
+              const isAnswered = this.quizState.answers[q.id] !== undefined;
+              const wasCorrect = this.quizState.answers[q.id] === q.correct;
+              let dotClass = 'nav-dot';
+              if (actualIndex === currentIndex) dotClass += ' current';
+              if (isAnswered) dotClass += wasCorrect ? ' correct' : ' incorrect';
+              return `<button class="${dotClass}" onclick="app.goToQuestion(${actualIndex})">${actualIndex + 1}</button>`;
+            }).join('')}
+          </div>
+          <button class="btn-secondary" onclick="app.nextQuestion()" ${currentIndex === questions.length - 1 ? 'disabled' : ''}>
+            Next &rarr;
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  renderQuizResults() {
+    const questions = this.quizState.filteredQuestions;
+    const answered = Object.keys(this.quizState.answers).filter(
+      id => questions.find(q => q.id === id)
+    );
+    const correct = this.calculateCorrectAnswers();
+    const percentage = answered.length > 0 ? Math.round((correct / answered.length) * 100) : 0;
+
+    // Group results by category
+    const categoryResults = {};
+    this.quiz.categories.forEach(cat => {
+      const catQuestions = questions.filter(q => q.category === cat.id);
+      const catAnswered = catQuestions.filter(q => this.quizState.answers[q.id] !== undefined);
+      const catCorrect = catQuestions.filter(q => this.quizState.answers[q.id] === q.correct);
+      if (catQuestions.length > 0) {
+        categoryResults[cat.id] = {
+          name: cat.name,
+          total: catQuestions.length,
+          answered: catAnswered.length,
+          correct: catCorrect.length,
+          percentage: catAnswered.length > 0 ? Math.round((catCorrect.length / catAnswered.length) * 100) : 0
+        };
+      }
+    });
+
+    // Find weak areas (below 70%)
+    const weakAreas = Object.values(categoryResults).filter(r => r.answered >= 3 && r.percentage < 70);
+
+    return `
+      <div class="quiz-results">
+        <div class="results-header">
+          <h2>Quiz Results</h2>
+          <button class="btn-secondary" onclick="app.hideQuizResults()">Back to Quiz</button>
+        </div>
+
+        <div class="results-summary">
+          <div class="results-score ${percentage >= 80 ? 'excellent' : percentage >= 60 ? 'good' : 'needs-work'}">
+            <div class="score-circle">
+              <span class="score-number">${percentage}%</span>
+            </div>
+            <div class="score-label">
+              ${percentage >= 80 ? 'Excellent!' : percentage >= 60 ? 'Good Progress!' : 'Keep Practicing!'}
+            </div>
+          </div>
+          <div class="results-stats">
+            <div class="result-stat">
+              <span class="stat-value">${correct}</span>
+              <span class="stat-label">Correct</span>
+            </div>
+            <div class="result-stat">
+              <span class="stat-value">${answered.length - correct}</span>
+              <span class="stat-label">Incorrect</span>
+            </div>
+            <div class="result-stat">
+              <span class="stat-value">${questions.length - answered.length}</span>
+              <span class="stat-label">Unanswered</span>
+            </div>
+          </div>
+        </div>
+
+        ${weakAreas.length > 0 ? `
+          <div class="weak-areas">
+            <h3>Areas to Focus On</h3>
+            <div class="weak-area-list">
+              ${weakAreas.map(area => `
+                <div class="weak-area-item" onclick="app.setQuizCategory('${Object.keys(categoryResults).find(k => categoryResults[k] === area)}'); app.hideQuizResults();">
+                  <span class="weak-area-name">${area.name}</span>
+                  <span class="weak-area-score">${area.percentage}%</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+
+        <div class="category-results">
+          <h3>Results by Category</h3>
+          <div class="category-result-grid">
+            ${Object.entries(categoryResults).map(([id, result]) => `
+              <div class="category-result-card">
+                <h4>${result.name}</h4>
+                <div class="result-bar-container">
+                  <div class="result-bar ${result.percentage >= 80 ? 'excellent' : result.percentage >= 60 ? 'good' : 'needs-work'}"
+                       style="width: ${result.percentage}%"></div>
+                </div>
+                <div class="result-details">
+                  <span>${result.correct}/${result.answered} correct</span>
+                  <span class="${result.percentage >= 80 ? 'text-success' : result.percentage >= 60 ? 'text-warning' : 'text-danger'}">${result.percentage}%</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="missed-questions">
+          <h3>Review Missed Questions</h3>
+          <div class="missed-list">
+            ${questions.filter(q => this.quizState.answers[q.id] !== undefined && this.quizState.answers[q.id] !== q.correct).map((q, i) => `
+              <div class="missed-item" onclick="app.goToQuestionById('${q.id}'); app.hideQuizResults();">
+                <span class="missed-number">${i + 1}</span>
+                <span class="missed-question">${q.question}</span>
+                <span class="missed-category">${this.quiz.categories.find(c => c.id === q.category)?.name || q.category}</span>
+              </div>
+            `).join('') || '<p class="no-missed">No missed questions yet - keep going!</p>'}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  bindQuizEvents() {
+    // Category filter
+    const categoryFilter = document.getElementById('quiz-category-filter');
+    if (categoryFilter) {
+      categoryFilter.addEventListener('change', (e) => {
+        this.quizState.selectedCategory = e.target.value;
+        this.quizState.currentQuestionIndex = 0;
+        this.renderCurrentView();
+      });
+    }
+
+    // Difficulty filter
+    const difficultyFilter = document.getElementById('quiz-difficulty-filter');
+    if (difficultyFilter) {
+      difficultyFilter.addEventListener('change', (e) => {
+        this.quizState.selectedDifficulty = e.target.value;
+        this.quizState.currentQuestionIndex = 0;
+        this.renderCurrentView();
+      });
+    }
+
+    // Option buttons
+    document.querySelectorAll('.quiz-option:not([disabled])').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const index = parseInt(btn.dataset.optionIndex);
+        this.selectAnswer(index);
+      });
+    });
+  }
+
+  selectAnswer(optionIndex) {
+    const question = this.quizState.filteredQuestions[this.quizState.currentQuestionIndex];
+    if (!question || this.quizState.answers[question.id] !== undefined) return;
+
+    this.quizState.answers[question.id] = optionIndex;
+    this.updateQuizContainer();
+  }
+
+  updateQuizContainer() {
+    const container = document.getElementById('quiz-container');
+    if (container) {
+      container.innerHTML = this.quizState.showingResults ? this.renderQuizResults() : this.renderQuizQuestion();
+      this.bindQuizEvents();
+    }
+    // Also update stats
+    this.renderCurrentView();
+  }
+
+  nextQuestion() {
+    if (this.quizState.currentQuestionIndex < this.quizState.filteredQuestions.length - 1) {
+      this.quizState.currentQuestionIndex++;
+      this.updateQuizContainer();
+    }
+  }
+
+  prevQuestion() {
+    if (this.quizState.currentQuestionIndex > 0) {
+      this.quizState.currentQuestionIndex--;
+      this.updateQuizContainer();
+    }
+  }
+
+  goToQuestion(index) {
+    if (index >= 0 && index < this.quizState.filteredQuestions.length) {
+      this.quizState.currentQuestionIndex = index;
+      this.updateQuizContainer();
+    }
+  }
+
+  goToQuestionById(questionId) {
+    const index = this.quizState.filteredQuestions.findIndex(q => q.id === questionId);
+    if (index !== -1) {
+      this.quizState.currentQuestionIndex = index;
+    }
+  }
+
+  calculateCorrectAnswers() {
+    return this.quizState.filteredQuestions.filter(
+      q => this.quizState.answers[q.id] === q.correct
+    ).length;
+  }
+
+  resetQuiz() {
+    if (confirm('Are you sure you want to reset all your quiz progress?')) {
+      this.quizState.answers = {};
+      this.quizState.currentQuestionIndex = 0;
+      this.quizState.showingResults = false;
+      this.renderCurrentView();
+      this.showToast('Quiz progress reset');
+    }
+  }
+
+  shuffleQuiz() {
+    // Shuffle the filtered questions
+    for (let i = this.quizState.filteredQuestions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [this.quizState.filteredQuestions[i], this.quizState.filteredQuestions[j]] =
+      [this.quizState.filteredQuestions[j], this.quizState.filteredQuestions[i]];
+    }
+    this.quizState.currentQuestionIndex = 0;
+    this.renderCurrentView();
+    this.showToast('Questions shuffled');
+  }
+
+  setQuizCategory(categoryId) {
+    this.quizState.selectedCategory = categoryId;
+    this.quizState.currentQuestionIndex = 0;
+    this.quizState.showingResults = false;
+    this.renderCurrentView();
+  }
+
+  showQuizResults() {
+    this.quizState.showingResults = true;
+    this.renderCurrentView();
+  }
+
+  hideQuizResults() {
+    this.quizState.showingResults = false;
+    this.renderCurrentView();
   }
 }
 
