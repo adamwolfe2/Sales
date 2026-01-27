@@ -121,7 +121,8 @@
       "common_objections": ["PRICE", "SPOUSE", "TIMING", "RESEARCH"],
       "motivation": "Escape 9-5, autonomy, upside potential",
       "approach": "Emphasize ROI, tax benefits, building equity outside W2",
-      "win_signals": ["community support", "50 free leads offer", "concrete numbers"]
+      "win_signals": ["community support", "50 free leads offer", "concrete numbers"],
+      "testimonials_to_use": ["Mac - $7,700/month in 3 months", "Brian D - $8,300/month across 12 machines", "Jason Priest - Built semi-passive income while running other business"]
     },
     "healthcare_education": {
       "jobs": ["teacher", "dentist", "nurse", "physical therapist"],
@@ -135,14 +136,16 @@
       "common_objections": ["CAPITAL", "LOCATION", "TIMING"],
       "motivation": "Less physical demand, retirement prep, body wearing down",
       "approach": "Emphasize passive nature, less physically demanding than current work",
-      "emotional_trigger": "18-hour days walking on my feet, body wearing down"
+      "emotional_trigger": "18-hour days walking on my feet, body wearing down",
+      "testimonials_to_use": ["Lonny Carter - 4 locations in less than 6 months", "Ben Sanders - First contract in just 1 month"]
     },
     "real_estate_sales": {
       "jobs": ["realtor", "sales", "sales rep", "tech sales", "real estate banking", "insurance agent"],
       "common_objections": ["RESEARCH", "TIMING", "PRICE", "LOCATION"],
       "motivation": "Diversification, stable income during slow cycles",
       "approach": "Complement existing skills, use sales experience, network advantage",
-      "win_signals": ["understand cyclical nature", "want stability"]
+      "win_signals": ["understand cyclical nature", "want stability"],
+      "testimonials_to_use": ["Kelsey Corcoran - Sales Professional gaining more than expected in 3 months", "Joe Natoli - Car dealership employee, 2 locations with 6-8 more pending"]
     },
     "military_government": {
       "jobs": ["military", "federal government", "state employee", "public information officer"],
@@ -156,26 +159,30 @@
       "common_objections": ["PRICE", "RESEARCH", "CAPITAL", "COMPETITION"],
       "motivation": "Diversification, additional revenue stream, scale existing skills",
       "approach": "Business expansion angle, leverage existing experience",
-      "caution": "May try to DIY - emphasize shortcut value"
+      "caution": "May try to DIY - emphasize shortcut value",
+      "testimonials_to_use": ["Nolan Mayfield - Saved from buying wrong machines, countless mistakes avoided", "Adam S - Multiple locations up and running", "Abby C - 30+ machines in about a year with family involved"]
     },
     "finance_professional": {
       "jobs": ["private equity", "advertising agency"],
       "common_objections": ["RESEARCH", "TIMING", "PRICE", "SPOUSE"],
       "motivation": "Asset building, ROI-focused, analytical approach",
-      "approach": "Hard numbers, ROI calculations, tax deduction angle"
+      "approach": "Hard numbers, ROI calculations, tax deduction angle",
+      "testimonials_to_use": ["Mac - $7,700/month in 3 months (ROI proof)", "Brian D - $8,300/month across 12 machines (scale proof)"]
     },
     "aviation_travel": {
       "jobs": ["flight attendant", "aviation apprentice"],
       "common_objections": ["PRICE", "CAPITAL", "TIMING", "LOCATION"],
       "motivation": "Flexible schedule complement, passive income during travel",
-      "approach": "Works with irregular schedule, service while traveling"
+      "approach": "Works with irregular schedule, service while traveling",
+      "testimonials_to_use": ["Jason Priest - Built semi-passive income alongside other business", "Lonny Carter - Quick scaling, responsive support"]
     },
     "students": {
       "jobs": ["college student"],
       "common_objections": ["RESEARCH", "TIMING", "CAPITAL"],
       "motivation": "Build business while studying, early entrepreneurship",
       "approach": "Thomas Rolander testimonial - sold route before graduating",
-      "caution": "Check capital/support situation early, may be wrong fit"
+      "caution": "Check capital/support situation early, may be wrong fit",
+      "testimonials_to_use": ["Thomas Rolander - Started while in school, scaled and sold route before graduating"]
     }
   },
   "credit_score_patterns": {

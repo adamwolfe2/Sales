@@ -693,6 +693,54 @@
       outline: 2px solid var(--green);
       outline-offset: 2px;
     }
+
+    /* Danger Alert */
+    .danger-alert {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2000;
+      animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .danger-alert-content {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 12px;
+      padding: 16px 20px;
+      max-width: 360px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .danger-alert-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: #ef4444;
+      font-size: 14px;
+    }
+
+    .danger-icon {
+      font-size: 18px;
+    }
+
+    .danger-alert-content p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+
+    .danger-protocol {
+      font-size: 12px;
+      color: var(--text);
+      background: rgba(0, 0, 0, 0.2);
+      padding: 10px 12px;
+      border-radius: 6px;
+      line-height: 1.8;
+    }
   </style>
 </head>
 <body>
@@ -705,6 +753,20 @@
         <span id="status-text">Ready</span>
       </div>
     </header>
+
+    <!-- API Key Setup -->
+    <section class="setup glass" id="api-setup" style="display: none;">
+      <h1>Setup Required</h1>
+      <p>Enter your Gemini API key to enable AI coaching. Get one free at <a href="https://makersuite.google.com/app/apikey" target="_blank" style="color: var(--green);">Google AI Studio</a>.</p>
+      <div style="margin: 20px 0;">
+        <input type="password" id="api-key-input" placeholder="Enter Gemini API Key"
+          style="width: 100%; padding: 12px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 14px; margin-bottom: 12px;">
+        <button class="btn btn-primary" id="save-api-key-btn" style="width: 100%;">
+          Save & Continue
+        </button>
+      </div>
+      <p class="hint">Your key is stored locally and never sent to our servers</p>
+    </section>
 
     <!-- Setup -->
     <section class="setup glass" id="setup">
@@ -720,6 +782,9 @@
         Start Listening
       </button>
       <p class="hint">Works best in Chrome with microphone access</p>
+      <button class="btn btn-ghost" id="change-api-key-btn" style="margin-top: 12px; font-size: 11px;">
+        Change API Key
+      </button>
     </section>
 
     <!-- Coaching Area -->
@@ -797,7 +862,8 @@
 
   <script>
     // ============ CONFIG ============
-    const GEMINI_API_KEY = 'AIzaSyB6RKagdAunFoIvNQ3q97E1XKvPgIkqEv8';
+    // API key is stored securely in localStorage after user enters it
+    let GEMINI_API_KEY = localStorage.getItem('gemini_api_key') || '';
     const ANALYSIS_INTERVAL = 10000;
     const MIN_WORDS = 12;
 
@@ -820,9 +886,41 @@
       "TIER01": { code: "TIER01", category: "process", objection: "Upgrade question", triggers: ["upgrade", "switch tiers", "change plan"], rebuttal: "Yes—upgrade within 90 days and your 12 months restarts.", talkTrack: "Yes. Within 90 days you can upgrade. When you upgrade, your 12 months restarts from that day so you're not losing time.", followUp: ["Start lean and keep upgrade optional?"], technique: "Flexibility", oneLiner: "Upgrade within 90 days—year restarts." }
     };
 
+    // ============ DANGER COMBOS ============
+    const DANGER_COMBOS = [
+      {
+        objections: ['price', 'authority'],
+        winRate: 0.18,
+        protocol: ['Address authority FIRST', 'Loop in spouse with 3-way call', 'Only then discuss pricing options']
+      },
+      {
+        objections: ['trust', 'price'],
+        winRate: 0.22,
+        protocol: ['Build trust before discussing ROI', 'Use local testimonials', 'Offer verification info']
+      }
+    ];
+
+    // ============ EMOTIONAL TRIGGERS ============
+    const EMOTIONAL_TRIGGERS = {
+      family_time: { phrases: ['more time with my daughter', 'avoid daycare', 'be present for kids'], response: 'Family involvement is huge. Many of our successful members have their kids helping—counting money, testing snacks. It becomes a family activity, not just a business.' },
+      physical_exhaustion: { phrases: ['18-hour days', 'body wearing down', 'less physically demanding'], response: 'The beauty of vending is it\'s not dependent on your body or time. Once machines are placed, they work while you recover.' },
+      job_instability: { phrases: ['laid off', 'career uncertainty', 'downsizing'], response: 'That uncertainty is exactly why this makes sense—you control it, it\'s recession-proof, and it cash-flows from day one.' },
+      autonomy: { phrases: ['work for myself', 'not relying on W2', 'build my own asset'], response: 'That\'s the mindset. You\'re not trading time for money—you\'re building an asset that works whether you show up or not.' }
+    };
+
     // ============ AI PLAYBOOK ============
     const PLAYBOOK = `You are a helpful sales coach for VendingPreneurs ($6K vending coaching program).
 Analyze the conversation and provide helpful suggestions—not critiques.
+
+DANGER COMBINATIONS (flag immediately):
+- PRICE + AUTHORITY (spouse) together = 18% win rate. Protocol: Address authority FIRST, offer 3-way call.
+- TRUST + PRICE together = 22% win rate. Protocol: Build trust before ROI discussion.
+
+EMOTIONAL TRIGGERS TO LEVERAGE:
+- "more time with family/kids" → Emphasize 6-8 hrs/week, family involvement
+- "body wearing down" → Vending is passive, not physically demanding
+- "laid off / uncertain" → You control this, recession-proof
+- "work for myself" → Building asset, not trading time
 
 OBJECTION RESPONSES:
 ${Object.values(OBJECTIONS).map(o => `[${o.code}] "${o.objection}" → "${o.talkTrack}"\nFollow-ups: ${o.followUp.join(' | ')}`).join('\n\n')}
@@ -864,6 +962,37 @@ RESPONSE FORMAT (JSON):
       renderScripts();
       startBtn.onclick = startListening;
       stopBtn.onclick = stopListening;
+
+      // API key setup handlers
+      const apiSetup = $('api-setup');
+      const saveApiKeyBtn = $('save-api-key-btn');
+      const changeApiKeyBtn = $('change-api-key-btn');
+      const apiKeyInput = $('api-key-input');
+
+      // Check if API key exists
+      if (!GEMINI_API_KEY) {
+        apiSetup.style.display = 'block';
+        setup.style.display = 'none';
+      }
+
+      saveApiKeyBtn.onclick = () => {
+        const key = apiKeyInput.value.trim();
+        if (key) {
+          localStorage.setItem('gemini_api_key', key);
+          GEMINI_API_KEY = key;
+          apiSetup.style.display = 'none';
+          setup.style.display = 'block';
+          showToast('API key saved');
+        } else {
+          showToast('Please enter an API key');
+        }
+      };
+
+      changeApiKeyBtn.onclick = () => {
+        setup.style.display = 'none';
+        apiSetup.style.display = 'block';
+        apiKeyInput.value = '';
+      };
 
       document.querySelectorAll('.tab').forEach(tab => {
         tab.onclick = () => {
@@ -957,14 +1086,59 @@ RESPONSE FORMAT (JSON):
       window.recognition = recognition;
     }
 
+    // Track detected categories for danger combo detection
+    let detectedCategories = new Set();
+
     function quickMatch(text) {
       const lower = text.toLowerCase();
       for (const obj of Object.values(OBJECTIONS)) {
         if (obj.triggers.some(t => lower.includes(t.toLowerCase()))) {
           showToast(`Detected: ${obj.oneLiner}`);
+          detectedCategories.add(obj.category);
+          checkDangerCombos();
           return;
         }
       }
+
+      // Also check for emotional triggers
+      for (const [key, trigger] of Object.entries(EMOTIONAL_TRIGGERS)) {
+        if (trigger.phrases.some(p => lower.includes(p.toLowerCase()))) {
+          showToast(`Emotional trigger: ${key.replace(/_/g, ' ')}`);
+          return;
+        }
+      }
+    }
+
+    function checkDangerCombos() {
+      for (const combo of DANGER_COMBOS) {
+        if (combo.objections.every(c => detectedCategories.has(c))) {
+          showDangerAlert(combo);
+          break;
+        }
+      }
+    }
+
+    function showDangerAlert(combo) {
+      // Remove existing alert
+      const existing = document.querySelector('.danger-alert');
+      if (existing) existing.remove();
+
+      const alert = document.createElement('div');
+      alert.className = 'danger-alert';
+      alert.innerHTML = `
+        <div class="danger-alert-content">
+          <div class="danger-alert-header">
+            <span class="danger-icon">⚠️</span>
+            <strong>Danger Combo Detected</strong>
+          </div>
+          <p><strong>${combo.objections.map(o => o.charAt(0).toUpperCase() + o.slice(1)).join(' + ')}</strong> = ${Math.round(combo.winRate * 100)}% win rate</p>
+          <div class="danger-protocol">
+            ${combo.protocol.map((p, i) => `<div>${i + 1}. ${p}</div>`).join('')}
+          </div>
+          <button onclick="this.parentElement.parentElement.remove()" style="background: transparent; border: 1px solid rgba(239, 68, 68, 0.5); color: #ef4444; padding: 6px 12px; border-radius: 6px; cursor: pointer; margin-top: 8px;">Got it</button>
+        </div>
+      `;
+      document.body.appendChild(alert);
     }
 
     // ============ AI ANALYSIS ============

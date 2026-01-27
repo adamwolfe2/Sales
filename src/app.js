@@ -29,21 +29,37 @@ class SalesCommandCenter {
   }
 
   async loadData() {
+    // Helper to safely fetch JSON with error handling
+    const safeFetch = async (url, name) => {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          console.warn(`Failed to load ${name}: ${response.status}`);
+          return null;
+        }
+        return await response.json();
+      } catch (error) {
+        console.warn(`Error loading ${name}:`, error);
+        return null;
+      }
+    };
+
+    // Load all data with individual error handling
     const [objections, playbooks, testimonials, reps, pricing, callAnalytics] = await Promise.all([
-      fetch('data/objections.json').then(r => r.json()),
-      fetch('data/playbooks.json').then(r => r.json()),
-      fetch('data/testimonials.json').then(r => r.json()),
-      fetch('data/reps.json').then(r => r.json()),
-      fetch('data/pricing.json').then(r => r.json()),
-      fetch('data/call-analytics.json').then(r => r.json())
+      safeFetch('data/objections.json', 'objections'),
+      safeFetch('data/playbooks.json', 'playbooks'),
+      safeFetch('data/testimonials.json', 'testimonials'),
+      safeFetch('data/reps.json', 'reps'),
+      safeFetch('data/pricing.json', 'pricing'),
+      safeFetch('data/call-analytics.json', 'call-analytics')
     ]);
 
-    this.objections = objections;
-    this.playbooks = playbooks;
-    this.testimonials = testimonials;
-    this.reps = reps;
-    this.pricing = pricing;
-    this.callAnalytics = callAnalytics;
+    this.objections = objections || { objections: [], categories: [], patterns: {} };
+    this.playbooks = playbooks || { frameworks: {}, quick_reference: {} };
+    this.testimonials = testimonials || { full_testimonials: [], by_objection_type: {}, revenue_proof_points: [] };
+    this.reps = reps || { reps: [], team_averages: {}, critical_gaps: [] };
+    this.pricing = pricing || { packages: {}, financing_options: {}, credit_score_recommendations: { tiers: {} }, addons: {} };
+    this.callAnalytics = callAnalytics || { job_type_patterns: {}, emotional_triggers: {}, winning_closes: {}, lost_deal_reasons: {}, followup_patterns: {}, analytics: { outcome_summary: {}, objection_frequency: {} }, metadata: {} };
   }
 
   buildSearchIndex() {
@@ -1144,20 +1160,24 @@ class SalesCommandCenter {
   }
 
   renderTestimonialCardWithJobType(test, jobPatterns) {
-    // Determine job type based on title or tags
-    let matchedJobType = '';
-    const titleLower = (test.title || '').toLowerCase();
-    const tagsLower = (test.tags || []).join(' ').toLowerCase();
-    const quoteLower = (test.quote || '').toLowerCase();
-    const searchText = titleLower + ' ' + tagsLower + ' ' + quoteLower;
+    // Use explicit job_type if available, otherwise fall back to text matching
+    let matchedJobType = test.job_type || '';
 
-    Object.entries(jobPatterns).forEach(([key, pattern]) => {
-      pattern.jobs.forEach(job => {
-        if (searchText.includes(job.toLowerCase())) {
-          matchedJobType = key;
-        }
+    // Fallback: determine job type based on title or tags if not explicitly set
+    if (!matchedJobType) {
+      const titleLower = (test.title || '').toLowerCase();
+      const tagsLower = (test.tags || []).join(' ').toLowerCase();
+      const quoteLower = (test.quote || '').toLowerCase();
+      const searchText = titleLower + ' ' + tagsLower + ' ' + quoteLower;
+
+      Object.entries(jobPatterns).forEach(([key, pattern]) => {
+        pattern.jobs.forEach(job => {
+          if (searchText.includes(job.toLowerCase())) {
+            matchedJobType = key;
+          }
+        });
       });
-    });
+    }
 
     return `
       <div class="testimonial-card" data-testimonial-id="${test.id}" data-tags="${(test.objection_counters || []).join(' ')}" data-job-type="${matchedJobType}">
@@ -1299,6 +1319,43 @@ class SalesCommandCenter {
                 </div>
               </div>
             `).join('')}
+          </div>
+        ` : ''}
+
+        ${this.callAnalytics?.followup_patterns ? `
+          <div class="pattern-section followup-patterns-section">
+            <h4>Follow-up Patterns</h4>
+            <p class="section-desc">How to respond when prospects need time</p>
+            <div class="followup-patterns-grid">
+              ${Object.entries(this.callAnalytics.followup_patterns).map(([key, pattern]) => `
+                <div class="followup-pattern-card ${pattern.success_rate.toLowerCase().replace(/[- ]/g, '_')}">
+                  <h5>${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h5>
+                  <p class="pattern-request">"${pattern.request}"</p>
+                  <div class="pattern-response">
+                    <strong>Say:</strong> "${pattern.response}"
+                    <button class="copy-btn small" onclick="app.copyToClipboard('${this.escapeForJs(pattern.response)}')">Copy</button>
+                  </div>
+                  <span class="success-rate-badge">${pattern.success_rate}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+
+        ${this.callAnalytics?.lost_deal_reasons ? `
+          <div class="pattern-section lost-deals-section">
+            <h4>Lost Deal Prevention</h4>
+            <p class="section-desc">Recognize and prevent these patterns</p>
+            <div class="lost-deals-prevention-grid">
+              ${Object.entries(this.callAnalytics.lost_deal_reasons).map(([key, reason]) => `
+                <div class="lost-deal-prevention-card">
+                  <h5>${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h5>
+                  <p class="deal-pattern"><strong>Warning Sign:</strong> "${reason.pattern}"</p>
+                  <p class="deal-solution"><strong>Solution:</strong> ${reason.solution}</p>
+                  <p class="deal-prevention"><strong>Prevention:</strong> ${reason.prevention}</p>
+                </div>
+              `).join('')}
+            </div>
           </div>
         ` : ''}
       </div>
@@ -1479,11 +1536,14 @@ class SalesCommandCenter {
   }
 
   renderPricing(container) {
-    if (!this.pricing) return;
+    if (!this.pricing) {
+      container.innerHTML = '<div class="empty-state"><h3>Pricing data not available</h3><p>Please refresh the page.</p></div>';
+      return;
+    }
 
-    const packages = this.pricing.packages;
-    const financing = this.pricing.financing_options;
-    const creditRecs = this.pricing.credit_score_recommendations;
+    const packages = this.pricing.packages || {};
+    const financing = this.pricing.financing_options || {};
+    const creditRecs = this.pricing.credit_score_recommendations || { tiers: {}, prompt: '' };
 
     container.innerHTML = `
       <div class="view-header">
@@ -1629,10 +1689,14 @@ class SalesCommandCenter {
   }
 
   showPaymentOptionsInfoModal() {
+    if (!this.pricing?.financing_options) {
+      this.showToast('Pricing data not available');
+      return;
+    }
     const modal = document.getElementById('modal');
     const modalContent = document.getElementById('modal-content');
     const financing = this.pricing.financing_options;
-    const creditRecs = this.pricing.credit_score_recommendations;
+    const creditRecs = this.pricing.credit_score_recommendations || { tiers: {}, prompt: '' };
 
     modalContent.innerHTML = `
       <div class="modal-header">
@@ -1704,6 +1768,10 @@ class SalesCommandCenter {
   }
 
   showEmotionalTriggerModal(triggerKey) {
+    if (!this.callAnalytics?.emotional_triggers) {
+      this.showToast('Emotional triggers data not available');
+      return;
+    }
     const trigger = this.callAnalytics.emotional_triggers[triggerKey];
     if (!trigger) return;
 
@@ -1747,6 +1815,10 @@ class SalesCommandCenter {
   }
 
   showCreditScoreRecommender() {
+    if (!this.pricing?.credit_score_recommendations) {
+      this.showToast('Pricing data not available');
+      return;
+    }
     const modal = document.getElementById('modal');
     const modalContent = document.getElementById('modal-content');
     const creditRecs = this.pricing.credit_score_recommendations;
@@ -1841,8 +1913,11 @@ class SalesCommandCenter {
   }
 
   showRepLanguagePanel() {
-    const repLanguage = this.objections.rep_language_patterns;
-    if (!repLanguage) return;
+    const repLanguage = this.objections?.rep_language_patterns;
+    if (!repLanguage) {
+      this.showToast('Rep language patterns not available');
+      return;
+    }
 
     const modal = document.getElementById('modal');
     const modalContent = document.getElementById('modal-content');
@@ -1898,6 +1973,7 @@ class SalesCommandCenter {
         </div>
       </div>
 
+      ${this.callAnalytics?.winning_closes ? `
       <div class="modal-section">
         <h3>Winning Close Signals</h3>
         <p class="section-hint">When you hear these, move to close immediately</p>
@@ -1910,6 +1986,7 @@ class SalesCommandCenter {
           `).join('')}
         </div>
       </div>
+      ` : ''}
     `;
 
     modal.classList.add('open');
@@ -1950,14 +2027,41 @@ class SalesCommandCenter {
     }
   }
 
-  renderCallAnalytics(container) {
-    if (!this.callAnalytics) return;
+  renderOutcomeChart(outcomes) {
+    if (!outcomes) return '';
+    const total = (outcomes.WON || 0) + (outcomes.LOST || 0) + (outcomes.FOLLOWUP || 0);
+    if (total === 0) return '<div class="no-data">No data available</div>';
 
-    const analytics = this.callAnalytics.analytics;
-    const jobPatterns = this.callAnalytics.job_type_patterns;
-    const creditPatterns = this.callAnalytics.credit_score_patterns;
-    const emotionalTriggers = this.callAnalytics.emotional_triggers;
-    const winningCloses = this.callAnalytics.winning_closes;
+    const wonPercent = ((outcomes.WON || 0) / total) * 100;
+    const lostPercent = ((outcomes.LOST || 0) / total) * 100;
+    const followupPercent = ((outcomes.FOLLOWUP || 0) / total) * 100;
+
+    // Create a horizontal stacked bar chart
+    return `
+      <div class="stacked-bar-chart">
+        <div class="bar-segment won" style="width: ${wonPercent}%" title="Won: ${outcomes.WON || 0}"></div>
+        <div class="bar-segment lost" style="width: ${lostPercent}%" title="Lost: ${outcomes.LOST || 0}"></div>
+        <div class="bar-segment followup" style="width: ${followupPercent}%" title="Follow-up: ${outcomes.FOLLOWUP || 0}"></div>
+      </div>
+      <div class="bar-percentages">
+        <span class="percent won">${Math.round(wonPercent)}%</span>
+        <span class="percent lost">${Math.round(lostPercent)}%</span>
+        <span class="percent followup">${Math.round(followupPercent)}%</span>
+      </div>
+    `;
+  }
+
+  renderCallAnalytics(container) {
+    if (!this.callAnalytics) {
+      container.innerHTML = '<div class="empty-state"><h3>Analytics data not available</h3><p>Please refresh the page.</p></div>';
+      return;
+    }
+
+    const analytics = this.callAnalytics.analytics || { outcome_summary: {}, objection_frequency: {} };
+    const jobPatterns = this.callAnalytics.job_type_patterns || {};
+    const creditPatterns = this.callAnalytics.credit_score_patterns || {};
+    const emotionalTriggers = this.callAnalytics.emotional_triggers || {};
+    const winningCloses = this.callAnalytics.winning_closes || {};
 
     container.innerHTML = `
       <div class="view-header">
@@ -1967,20 +2071,46 @@ class SalesCommandCenter {
 
       <div class="stats-bar">
         <div class="stat">
-          <span class="stat-value">${this.callAnalytics.metadata.total_calls_analyzed}</span>
+          <span class="stat-value">${this.callAnalytics.metadata?.total_calls_analyzed || 0}</span>
           <span class="stat-label">Calls Analyzed</span>
         </div>
         <div class="stat">
-          <span class="stat-value">${Math.round(analytics.outcome_summary.followup_rate * 100)}%</span>
+          <span class="stat-value">${Math.round((analytics.outcome_summary?.followup_rate || 0) * 100)}%</span>
           <span class="stat-label">Follow-up Rate</span>
         </div>
         <div class="stat">
-          <span class="stat-value">${analytics.objection_frequency.PRICE}</span>
+          <span class="stat-value">${analytics.objection_frequency?.PRICE || 0}</span>
           <span class="stat-label">Price Objections</span>
         </div>
         <div class="stat">
-          <span class="stat-value">${analytics.objection_frequency.SPOUSE}</span>
+          <span class="stat-value">${analytics.objection_frequency?.SPOUSE || 0}</span>
           <span class="stat-label">Spouse Objections</span>
+        </div>
+      </div>
+
+      <div class="analytics-section">
+        <h3>Call Outcomes</h3>
+        <div class="outcome-chart-container">
+          <div class="outcome-chart">
+            ${this.renderOutcomeChart(analytics.outcome_summary)}
+          </div>
+          <div class="outcome-legend">
+            <div class="legend-item won">
+              <span class="legend-dot"></span>
+              <span class="legend-label">Won</span>
+              <span class="legend-value">${analytics.outcome_summary?.WON || 0}</span>
+            </div>
+            <div class="legend-item lost">
+              <span class="legend-dot"></span>
+              <span class="legend-label">Lost</span>
+              <span class="legend-value">${analytics.outcome_summary?.LOST || 0}</span>
+            </div>
+            <div class="legend-item followup">
+              <span class="legend-dot"></span>
+              <span class="legend-label">Follow-up</span>
+              <span class="legend-value">${analytics.outcome_summary?.FOLLOWUP || 0}</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -2091,6 +2221,10 @@ class SalesCommandCenter {
   }
 
   showJobPatternModal(jobKey) {
+    if (!this.callAnalytics?.job_type_patterns) {
+      this.showToast('Job patterns data not available');
+      return;
+    }
     const pattern = this.callAnalytics.job_type_patterns[jobKey];
     if (!pattern) return;
 

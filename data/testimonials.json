@@ -13,6 +13,7 @@
       "business_name": "DenCo Vending LLC",
       "previous_experience": "none",
       "timeline": "7 months",
+      "job_type": "healthcare_education",
       "results": {
         "markets_live": 5,
         "markets_pending": 2,
@@ -28,6 +29,7 @@
       "title": "Entrepreneur, Owner",
       "business_name": "Emporio Vending LLC",
       "previous_experience": "none",
+      "job_type": "entrepreneurs_business_owners",
       "results": {
         "status": "multiple locations up and running"
       },
@@ -55,6 +57,7 @@
       "title": "Cofounder, Dash ATM Services",
       "business_name": "ATM & Vending Entrepreneur",
       "previous_experience": "ATM experience, no vending",
+      "job_type": "entrepreneurs_business_owners",
       "results": {
         "status": "saved from buying wrong machines",
         "outcome": "countless mistakes avoided"
@@ -80,6 +83,7 @@
       "title": "Sales Professional",
       "business_name": "Super Foods Distribution",
       "previous_experience": "none",
+      "job_type": "real_estate_sales",
       "timeline": "less than 3 months",
       "quote": "I've only been a part of the community for less than three months and have already gained much more than I expected! Not only does Mike and his team do an incredible job of laying out everything you need to have a successful vending/market business, the Skool community aspect has been really helpful in answering questions and leaning on each other for support as we have our own trial and errors. Side note: For almost 7 years I've had an article about a successful entrepreneur (making $10,000 a month in vending machines) bookmarked on my phone, always wishing I knew how to do it. So glad to have found Mike & this community to finally learn it & would recommend this to all of my friends!",
       "tags": ["sales_professional", "exceeded_expectations", "long_time_dream"],
@@ -101,6 +105,7 @@
       "title": "Family business with four children (ages 8-14)",
       "business_name": "Van Pelt Vending",
       "previous_experience": "zero vending knowledge",
+      "job_type": "entrepreneurs_business_owners",
       "timeline": "about a year",
       "results": {
         "machines": "30+"
@@ -135,6 +140,7 @@
       "title": "Car dealership employee, family man",
       "business_name": "Vendingpreneur Platinum Member",
       "previous_experience": "zero",
+      "job_type": "real_estate_sales",
       "timeline": "8 months",
       "results": {
         "locations": 2,
@@ -166,6 +172,7 @@
       "location": "Milwaukee, WI",
       "business_name": "Brugge City Bites",
       "previous_experience": "none",
+      "job_type": "entrepreneurs_business_owners",
       "timeline": "3 months",
       "results": {
         "monthly_revenue": 7700,
