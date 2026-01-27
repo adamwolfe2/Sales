@@ -1,8 +1,9 @@
 {
   "metadata": {
     "description": "Sales rep training quiz with heavy focus on financing knowledge",
-    "version": "1.0.0",
-    "last_updated": "2026-01-27"
+    "version": "1.1.0",
+    "last_updated": "2026-01-27",
+    "total_questions": 128
   },
   "categories": [
     {
@@ -1334,6 +1335,308 @@
       ],
       "correct": 1,
       "explanation": "Longer terms mean more total interest. A client who CAN afford higher payments might want to pay less overall by choosing shorter terms."
+    },
+    {
+      "id": "fin_101",
+      "category": "financing_basics",
+      "difficulty": "easy",
+      "question": "Which option has no additional fees and is the best overall value?",
+      "options": ["Split It", "Payva", "Pay in Full (PIF)", "Elective"],
+      "correct": 2,
+      "explanation": "Pay in Full (PIF) has no additional fees - no origination fee, no APR, nothing. It's the best overall value if the client can afford it."
+    },
+    {
+      "id": "fin_102",
+      "category": "financing_basics",
+      "difficulty": "easy",
+      "question": "Which options include the 15% origination fee?",
+      "options": [
+        "Payva & Coach",
+        "Split It, Elective, Klarna",
+        "Klarna & PayPal",
+        "Payva only"
+      ],
+      "correct": 1,
+      "explanation": "Split It, Elective, and Klarna all have a 15% origination fee. Payva and Coach have no initiation fee - they use APR instead."
+    },
+    {
+      "id": "fin_103",
+      "category": "financing_eligibility",
+      "difficulty": "easy",
+      "question": "Which option approves anyone regardless of credit?",
+      "options": ["Klarna", "Elective", "Payva", "Split It"],
+      "correct": 2,
+      "explanation": "Payva approves anyone regardless of credit score. It's the go-to option for clients with bad or no credit."
+    },
+    {
+      "id": "fin_104",
+      "category": "financing_basics",
+      "difficulty": "easy",
+      "question": "Which financing option can go up to 144 months?",
+      "options": ["Klarna", "Coach Financing", "Payva", "PayPal Monthly"],
+      "correct": 1,
+      "explanation": "Coach Financing offers up to 144 months (12 years!), making it the longest-term option for keeping monthly payments extremely low."
+    },
+    {
+      "id": "fin_105",
+      "category": "financing_eligibility",
+      "difficulty": "easy",
+      "question": "Which option does not affect the customer's credit score?",
+      "options": ["Split It", "Klarna", "Elective", "Coach"],
+      "correct": 0,
+      "explanation": "Split It does NOT affect credit score - it uses a credit card hold system instead of a credit check."
+    },
+    {
+      "id": "fin_106",
+      "category": "financing_eligibility",
+      "difficulty": "easy",
+      "question": "Which provider is not available to California residents?",
+      "options": ["Payva", "Klarna", "Elective", "Coach"],
+      "correct": 2,
+      "explanation": "California residents cannot use Elective due to state regulations. Recommend Klarna or Payva instead."
+    },
+    {
+      "id": "fin_107",
+      "category": "financing_basics",
+      "difficulty": "medium",
+      "question": "Klarna is best described as:",
+      "options": [
+        "3–12 months, no credit needed",
+        "Up to 24 months, 600+ credit, can be clunky",
+        "Up to 144 months, personal loan",
+        "4 payments, no fees"
+      ],
+      "correct": 1,
+      "explanation": "Klarna offers up to 24 months, requires 600+ credit score, and the process can be clunky for some tech-challenged clients."
+    },
+    {
+      "id": "fin_108",
+      "category": "financing_advanced",
+      "difficulty": "medium",
+      "question": "Payva differences by credit score:",
+      "options": [
+        "Everyone is funded upfront",
+        "CS 600+ is funded upfront; below 600 is serviced monthly",
+        "Only works for US clients",
+        "Requires a credit card"
+      ],
+      "correct": 1,
+      "explanation": "With Payva, clients with 600+ credit are FUNDED upfront. Below 600, payments are collected monthly (Servicing model)."
+    },
+    {
+      "id": "fin_109",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "Prospect has a 720 credit score and wants the lowest total cost. What do you offer first?",
+      "options": ["Klarna", "Split It", "Elective", "Coach"],
+      "correct": 2,
+      "explanation": "For 720 credit wanting lowest total cost, Elective is best - they get the best terms, potentially 0% APR with the 15% fee."
+    },
+    {
+      "id": "fin_110",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "Prospect has a 630 score and needs 12 months. What's the correct order?",
+      "options": [
+        "Klarna → Coach → Payva",
+        "Elective or Klarna → Payva → Coach",
+        "Payva → Coach",
+        "Split It → Klarna"
+      ],
+      "correct": 1,
+      "explanation": "For 630 credit (600-650 range): Start with Elective or Klarna, then Payva as backup, then Coach if needed for extended terms."
+    },
+    {
+      "id": "fin_111",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "Prospect has a 540 score. What do you lead with?",
+      "options": ["Klarna", "Split It", "Payva", "Elective"],
+      "correct": 2,
+      "explanation": "For below 600 credit, Payva is the go-to - they approve anyone regardless of credit score. Follow with Coach if needed."
+    },
+    {
+      "id": "fin_112",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "Prospect needs 24 months and has a 670 score. Best fit?",
+      "options": ["Elective", "Payva", "Klarna", "Coach"],
+      "correct": 2,
+      "explanation": "Klarna offers up to 24 months and requires 600+ credit. With a 670 score, they qualify and get the extended terms they need."
+    },
+    {
+      "id": "fin_113",
+      "category": "financing_scenarios",
+      "difficulty": "easy",
+      "question": "Prospect is in California with a 700 score. Which option is off the table?",
+      "options": ["Payva", "Klarna", "Elective", "Split It"],
+      "correct": 2,
+      "explanation": "California residents cannot use Elective due to state regulations. They can use Klarna, Payva, or other options instead."
+    },
+    {
+      "id": "fin_114",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "A client can put $3,000 down but can't finance the full balance. What's a creative solution?",
+      "options": [
+        "Tell them it's not possible",
+        "Use PayPal only",
+        "Partial pay + finance the remainder",
+        "Coach only"
+      ],
+      "correct": 2,
+      "explanation": "Clients can make a partial payment and finance the remainder - the 15% fee ONLY applies to the financed portion! This reduces total cost."
+    },
+    {
+      "id": "fin_115",
+      "category": "financing_basics",
+      "difficulty": "easy",
+      "question": "True or False: Split It charges the full amount monthly.",
+      "options": ["True", "False"],
+      "correct": 1,
+      "explanation": "False. Split It places a HOLD for the full amount but only CHARGES the monthly installment. The hold reduces as balance is paid."
+    },
+    {
+      "id": "fin_116",
+      "category": "financing_basics",
+      "difficulty": "easy",
+      "question": "True or False: Klarna requires a debit card for the first payment.",
+      "options": ["True", "False"],
+      "correct": 0,
+      "explanation": "True. Klarna requires a DEBIT card for the first payment - credit cards won't work for the initial payment."
+    },
+    {
+      "id": "fin_117",
+      "category": "financing_eligibility",
+      "difficulty": "easy",
+      "question": "True or False: Canadian residents can use Elective.",
+      "options": ["True", "False"],
+      "correct": 0,
+      "explanation": "True. Canadian residents can use Elective and Payva. Klarna and Coach are US only."
+    },
+    {
+      "id": "fin_118",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "Which option is 'best when everything else is declined'?",
+      "options": ["Klarna", "PayPal", "Coach", "Payva"],
+      "correct": 2,
+      "explanation": "Coach Financing is the best last resort - it offers extended terms up to 144 months and works well for previously declined clients."
+    },
+    {
+      "id": "fin_119",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "A prospect says their credit score is 720 and they want the lowest total cost over 12 months. What option should you recommend first?",
+      "options": ["Klarna", "Split It", "Elective", "Payva"],
+      "correct": 2,
+      "explanation": "For 720 credit wanting lowest total cost: Elective offers the best terms for high credit scores, potentially 0% APR."
+    },
+    {
+      "id": "fin_120",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "A prospect estimates their credit score is around 640 and they can't do Pay in Full. What is the correct recommendation path?",
+      "options": [
+        "Payva → Coach",
+        "Split It → Klarna",
+        "Elective or Klarna → Payva → Coach",
+        "Klarna only"
+      ],
+      "correct": 2,
+      "explanation": "For 640 credit (600-650 range): Start with Elective or Klarna, then Payva as backup, then Coach if needed. This is the decision tree for fair credit."
+    },
+    {
+      "id": "fin_121",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "A prospect believes their credit score is 585 and says, 'I've been denied before.' What should you lead with?",
+      "options": ["Klarna", "Split It", "Payva", "Elective"],
+      "correct": 2,
+      "explanation": "For below 600 credit with previous denials: Payva approves ANYONE regardless of credit. Follow with Coach if needed."
+    },
+    {
+      "id": "fin_122",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "A prospect has a 660 credit score but needs 24 months to make it work. What is the best fit?",
+      "options": ["Elective", "Payva", "Klarna", "Coach"],
+      "correct": 2,
+      "explanation": "Klarna offers up to 24 months and requires 600+ credit. With 660, they qualify for the extended terms they need."
+    },
+    {
+      "id": "fin_123",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "A prospect has a 610 score and is nervous about hard credit pulls. What path do you take?",
+      "options": [
+        "Elective → Klarna",
+        "Split It → Payva",
+        "Klarna → Coach",
+        "Payva → Coach"
+      ],
+      "correct": 3,
+      "explanation": "For 610 credit nervous about pulls: Payva → Coach. Payva approves anyone (soft or minimal pull impact), Coach is backup for extended terms."
+    },
+    {
+      "id": "fin_124",
+      "category": "financing_scenarios",
+      "difficulty": "easy",
+      "question": "A prospect has a 700 score but lives in California. Which option should you not recommend?",
+      "options": ["Payva", "Klarna", "Elective", "Split It"],
+      "correct": 2,
+      "explanation": "California residents cannot use Elective due to state regulations. For 700 credit in CA, recommend Klarna first."
+    },
+    {
+      "id": "fin_125",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "A prospect has a 630 score, can handle 12 months, but is worried about APR. What is your best first recommendation?",
+      "options": ["Payva", "Elective", "Klarna", "Coach"],
+      "correct": 1,
+      "explanation": "For 630 credit worried about APR: Elective is best - they offer potentially 0% APR for those with good finances, plus the 15% fee."
+    },
+    {
+      "id": "fin_126",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "A prospect says, 'My credit is probably in the low 500s, but I really want to move forward.' What is the correct flow?",
+      "options": [
+        "Klarna → Coach",
+        "Payva → Coach",
+        "Elective → Klarna",
+        "Split It → Klarna"
+      ],
+      "correct": 1,
+      "explanation": "For low 500s credit: Payva approves anyone regardless of credit (Servicing model). Coach is backup for extended terms if needed."
+    },
+    {
+      "id": "fin_127",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "A prospect has a 650 score and asks, 'What gives me the most flexibility if one option declines?' What do you say?",
+      "options": [
+        "Split It only",
+        "Elective only",
+        "We start with Elective or Klarna, then move to Payva, then Coach if needed",
+        "Coach is your only option"
+      ],
+      "correct": 2,
+      "explanation": "For 650 credit wanting flexibility: 'We start with Elective or Klarna, then move to Payva, then Coach if needed.' This shows the full decision tree."
+    },
+    {
+      "id": "fin_128",
+      "category": "financing_scenarios",
+      "difficulty": "medium",
+      "question": "A prospect is unsure of their score but says they've never missed a payment and recently bought a car. What is the best framing?",
+      "options": [
+        "Let's assume low credit and start with Payva.",
+        "We'll start with Elective or Klarna and step down only if needed.",
+        "Coach is safest.",
+        "Split It only works for perfect credit."
+      ],
+      "correct": 1,
+      "explanation": "Never missed a payment + recent car purchase suggests decent credit. Start optimistic with Elective or Klarna, then step down only if needed."
     }
   ]
 }
