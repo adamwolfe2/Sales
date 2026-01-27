@@ -261,6 +261,19 @@ function setupIpcHandlers() {
     }
   });
 
+  // Load live coaching data for enhanced detection
+  ipcMain.handle('load-live-coaching-data', async () => {
+    try {
+      const fs = require('fs');
+      const dataPath = path.join(__dirname, '../../data/live-coaching.json');
+      const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+      return { success: true, data, source: 'local' };
+    } catch (error) {
+      console.error('Failed to load live coaching data:', error);
+      return { success: false, error: error.message };
+    }
+  });
+
   // Load testimonials from server
   ipcMain.handle('load-testimonial-data', async () => {
     try {

@@ -1,0 +1,872 @@
+{
+  "metadata": {
+    "version": "2.0",
+    "purpose": "Real-time live coaching keyword detection and quick responses",
+    "last_updated": "2025-01-27",
+    "usage": "Optimized for 45-60 minute sales calls with instant popup suggestions"
+  },
+  "categories": {
+    "price_budget": {
+      "id": "price_budget",
+      "name": "Price/Budget",
+      "icon": "$",
+      "color": "#ef4444",
+      "priority": 1
+    },
+    "authority": {
+      "id": "authority",
+      "name": "Authority/Decision",
+      "icon": "users",
+      "color": "#f97316",
+      "priority": 2
+    },
+    "timing": {
+      "id": "timing",
+      "name": "Timing/Readiness",
+      "icon": "clock",
+      "color": "#eab308",
+      "priority": 3
+    },
+    "trust": {
+      "id": "trust",
+      "name": "Trust/Credibility",
+      "icon": "shield",
+      "color": "#22c55e",
+      "priority": 4
+    },
+    "diy": {
+      "id": "diy",
+      "name": "DIY/Self-Sufficiency",
+      "icon": "tool",
+      "color": "#3b82f6",
+      "priority": 5
+    },
+    "competition": {
+      "id": "competition",
+      "name": "Market/Competition",
+      "icon": "target",
+      "color": "#8b5cf6",
+      "priority": 6
+    },
+    "value": {
+      "id": "value",
+      "name": "Value/ROI",
+      "icon": "trending-up",
+      "color": "#06b6d4",
+      "priority": 7
+    },
+    "logistics": {
+      "id": "logistics",
+      "name": "Logistics/Practical",
+      "icon": "map",
+      "color": "#64748b",
+      "priority": 8
+    }
+  },
+  "detection_patterns": {
+    "price_budget": {
+      "keywords": [
+        "expensive", "cost", "afford", "money", "capital", "funds", "budget",
+        "price", "pricing", "cheaper", "discount", "deal", "savings",
+        "cash", "credit", "loan", "finance", "financing", "payment",
+        "investment", "invest", "spend", "spending", "tight", "stretch",
+        "six thousand", "6000", "6k", "five thousand", "5000", "5k",
+        "lot of money", "big chunk", "too much", "can't swing",
+        "out of my range", "more than I expected", "higher than I thought",
+        "sticker shock", "wasn't expecting", "bank account", "credit card",
+        "credit limit", "debt", "don't want debt", "savings account",
+        "rainy day", "emergency fund", "paycheck", "bills"
+      ],
+      "phrases": [
+        "don't have the capital",
+        "don't have the funds",
+        "don't have the money",
+        "can't afford",
+        "funds are tight",
+        "cash is tight",
+        "more than I was expecting",
+        "higher than I thought",
+        "big chunk of my savings",
+        "lot of money for me",
+        "out of my budget",
+        "where would I get",
+        "how am I supposed to",
+        "don't have that kind of",
+        "maxed out my credit",
+        "credit card limit",
+        "don't want to go into debt",
+        "need to save",
+        "just paid off",
+        "other financial obligations",
+        "kids' college fund",
+        "mortgage payment",
+        "car payment due"
+      ],
+      "regex_patterns": [
+        "don'?t have (the )?(capital|funds|money|cash)",
+        "(can'?t|cannot) afford",
+        "(expensive|pricey|costly)",
+        "(too much|a lot) (of )?(money|to spend)",
+        "more than (I )?(was |)expect",
+        "(big|huge|large) (chunk|amount|investment)",
+        "out of (my |)(budget|range|reach)",
+        "(credit|debit) card (limit|maxed)",
+        "don'?t want (to go into |)(debt|a loan)"
+      ]
+    },
+    "authority": {
+      "keywords": [
+        "wife", "husband", "spouse", "partner", "married", "marriage",
+        "family", "parents", "mom", "dad", "father", "mother",
+        "business partner", "co-founder", "investor", "stakeholder",
+        "discuss", "talk", "conversation", "permission", "blessing",
+        "approval", "sign off", "check with", "run it by", "consult"
+      ],
+      "phrases": [
+        "talk to my wife",
+        "talk to my husband",
+        "talk to my spouse",
+        "talk to my partner",
+        "discuss with my wife",
+        "discuss with my husband",
+        "check with my spouse",
+        "run it by my partner",
+        "need my wife's approval",
+        "need my husband's blessing",
+        "my wife handles the finances",
+        "my husband handles the money",
+        "make this decision together",
+        "we decide together",
+        "need to involve my partner",
+        "my business partner needs to see",
+        "can't make this alone",
+        "she needs to be on board",
+        "he needs to agree",
+        "family decision",
+        "talk to my parents",
+        "my dad would kill me"
+      ],
+      "regex_patterns": [
+        "(talk|speak|check|discuss|consult|run it by) (to |with )?(my )?(wife|husband|spouse|partner)",
+        "(need|want) (my )?(wife|husband|spouse|partner)('s| to)",
+        "(she|he) (needs|has) to (agree|approve|be on board|see this)",
+        "we (decide|do things|make decisions) together",
+        "(family|joint|shared) decision"
+      ]
+    },
+    "timing": {
+      "keywords": [
+        "later", "wait", "delay", "postpone", "hold off", "pause",
+        "next month", "next year", "few months", "few weeks",
+        "not ready", "not right now", "not yet", "someday",
+        "eventually", "down the road", "future", "timing",
+        "busy", "hectic", "crazy", "swamped", "overwhelmed",
+        "holiday", "vacation", "trip", "travel", "moving",
+        "new job", "starting", "transition", "life change"
+      ],
+      "phrases": [
+        "not the right time",
+        "not ready yet",
+        "need more time",
+        "maybe later",
+        "start later",
+        "few months from now",
+        "after the holidays",
+        "after the new year",
+        "next quarter",
+        "when things settle down",
+        "when I'm less busy",
+        "when work slows down",
+        "let me think about it",
+        "sleep on it",
+        "get back to you",
+        "circle back",
+        "touch base later",
+        "not in a rush",
+        "take my time",
+        "no hurry",
+        "going through a lot right now",
+        "lot on my plate",
+        "too much going on"
+      ],
+      "regex_patterns": [
+        "not (the )?(right|good|best) time",
+        "(maybe|perhaps|possibly) (later|next|in a few)",
+        "need (more |some |)(time|to think)",
+        "(sleep|think|sit) on it",
+        "(let me|I('ll| will)) get back",
+        "after (the |)(holiday|new year|vacation|move)",
+        "(busy|hectic|crazy|swamped) (right now|at the moment|lately)",
+        "(few|couple|several) (weeks|months|days) (from now|out|away)"
+      ]
+    },
+    "trust": {
+      "keywords": [
+        "scam", "scammy", "legit", "legitimate", "real", "fake",
+        "trust", "believe", "proof", "prove", "evidence", "verify",
+        "skeptical", "suspicious", "fishy", "shady", "sketchy",
+        "too good to be true", "catch", "scheme", "pyramid",
+        "mlm", "multi-level", "reviews", "testimonials", "references",
+        "guarantee", "promised", "claims", "credibility", "reputation"
+      ],
+      "phrases": [
+        "is this legit",
+        "is this real",
+        "sounds too good to be true",
+        "what's the catch",
+        "is this a scam",
+        "feels like a scam",
+        "seen things like this",
+        "burned before",
+        "been scammed",
+        "don't trust",
+        "hard to trust",
+        "how do I know",
+        "can you prove",
+        "show me proof",
+        "need to see evidence",
+        "verify this",
+        "do your research",
+        "looked you up",
+        "googled you",
+        "read some reviews",
+        "people say",
+        "heard bad things",
+        "not sure I believe"
+      ],
+      "regex_patterns": [
+        "(is|are) (this|you) (legit|legitimate|real|for real)",
+        "(sounds|seems|feels) (too good|like a scam|fishy|sketchy)",
+        "what'?s the catch",
+        "(been |got )?(burned|scammed|tricked) before",
+        "(hard to|don'?t|can'?t) (trust|believe)",
+        "(prove|show me|verify|evidence)",
+        "(pyramid|mlm|scheme|ponzi)",
+        "too good to be true"
+      ]
+    },
+    "diy": {
+      "keywords": [
+        "myself", "own", "alone", "solo", "independent", "self",
+        "figure out", "learn", "research", "youtube", "google",
+        "free", "information", "online", "internet", "forums",
+        "reddit", "facebook groups", "free resources", "library",
+        "diy", "do it yourself", "bootstrap", "grind", "hustle"
+      ],
+      "phrases": [
+        "figure it out myself",
+        "do it on my own",
+        "learn on my own",
+        "teach myself",
+        "watch youtube",
+        "read books",
+        "find free information",
+        "free resources online",
+        "don't need a program",
+        "don't need help",
+        "don't need coaching",
+        "why pay for this",
+        "information is free",
+        "google it",
+        "figure this out",
+        "trial and error",
+        "learn by doing",
+        "make my own mistakes",
+        "been doing this alone",
+        "self-taught"
+      ],
+      "regex_patterns": [
+        "(figure|work|do) (it |this )?(out )?(myself|on my own|alone)",
+        "(learn|teach) (myself|on my own)",
+        "(don'?t|won'?t) need (a |)(program|help|coaching|community)",
+        "(free|youtube|google|reddit) (information|resources|videos)",
+        "why (would I |should I |)(pay|spend money)",
+        "information is (free|out there|available)"
+      ]
+    },
+    "competition": {
+      "keywords": [
+        "saturated", "competition", "competitors", "crowded", "oversaturated",
+        "other vendors", "other people", "everyone", "too many",
+        "market", "area", "region", "city", "location",
+        "already doing", "someone else", "taken", "covered"
+      ],
+      "phrases": [
+        "market is saturated",
+        "too much competition",
+        "everyone's doing this",
+        "other vendors in my area",
+        "already vending machines here",
+        "locations are taken",
+        "all the good spots",
+        "too crowded",
+        "late to the game",
+        "ship has sailed",
+        "missed the boat",
+        "oversaturated market",
+        "red ocean",
+        "someone already doing this",
+        "my area is covered"
+      ],
+      "regex_patterns": [
+        "(market|area|industry) (is |)(saturated|crowded|full|competitive)",
+        "too (much|many) (competition|competitors|vendors|people)",
+        "(everyone|everybody)('s| is) (doing|in|already)",
+        "(late to|missed) the (game|boat|party)",
+        "(all|most) (the |)(good |)(spots|locations|places) (are |)(taken|covered|gone)"
+      ]
+    },
+    "value": {
+      "keywords": [
+        "worth", "value", "roi", "return", "investment", "profit",
+        "make money", "revenue", "income", "earnings", "results",
+        "guarantee", "promised", "realistic", "achievable", "typical",
+        "average", "expect", "expectations", "projections"
+      ],
+      "phrases": [
+        "is it worth it",
+        "what's the roi",
+        "what's the return",
+        "how much can I make",
+        "what can I expect",
+        "realistic expectations",
+        "typical results",
+        "average earnings",
+        "guaranteed income",
+        "promise I'll make money",
+        "does this actually work",
+        "actually profitable",
+        "really make money",
+        "prove the numbers",
+        "show me the math",
+        "what's the profit margin",
+        "how long to make money back",
+        "recoup my investment",
+        "break even"
+      ],
+      "regex_patterns": [
+        "(is it|it'?s it) worth (it|the)",
+        "what'?s the (roi|return|profit|margin)",
+        "how (much|long) (can I|to|until|before) (make|earn|profit|break even|recoup)",
+        "(does|will) (this|it) (actually|really) (work|make money|profit)",
+        "(realistic|typical|average|guaranteed) (results|earnings|income|returns)",
+        "(prove|show me) the (numbers|math|results)"
+      ]
+    },
+    "logistics": {
+      "keywords": [
+        "where", "location", "space", "storage", "garage", "warehouse",
+        "transportation", "vehicle", "truck", "van", "car",
+        "deliver", "delivery", "pickup", "move", "moving",
+        "heavy", "weight", "lift", "install", "installation",
+        "technical", "technology", "software", "app", "complicated",
+        "manage", "maintenance", "service", "restock", "inventory"
+      ],
+      "phrases": [
+        "where do I put it",
+        "don't have space",
+        "no room in my garage",
+        "need a warehouse",
+        "how do I transport",
+        "don't have a truck",
+        "machines are heavy",
+        "can't lift that",
+        "how do I install",
+        "is it complicated",
+        "not tech savvy",
+        "don't understand technology",
+        "how often restock",
+        "how much time to manage",
+        "live far from locations",
+        "travel too much",
+        "what if it breaks",
+        "who fixes it",
+        "maintenance issues"
+      ],
+      "regex_patterns": [
+        "(where|how) (do I|would I|can I) (put|store|keep|transport|move|install)",
+        "(don'?t have|no) (space|room|garage|truck|van|vehicle)",
+        "(machines|it'?s|they'?re) (are |)(heavy|big|large|bulky)",
+        "(not |)(tech|technology|software) (savvy|literate|person)",
+        "how (much|often|long) (time|to) (manage|restock|service|maintain)",
+        "(what if|when) (it |they |)(breaks?|stops?|malfunctions?)"
+      ]
+    }
+  },
+  "quick_responses": {
+    "price_budget": [
+      {
+        "id": "pb_spread",
+        "trigger_context": "general price concern",
+        "one_liner": "We can spread it out.",
+        "script": "I get it. There's not much we can do on discounting, but we can spread it out so you can start moving. A path a lot of people take is installments--so you enroll now, execute, and by month 2-3 the business is producing and covering the expense.",
+        "follow_ups": ["What's your comfort monthly number?", "Do you prefer part-upfront + part-monthly?"],
+        "technique": "No Discount + Payment Plan"
+      },
+      {
+        "id": "pb_three_path",
+        "trigger_context": "no capital/funds",
+        "one_liner": "Let me ask you a quick question about your situation.",
+        "script": "Is it the case you've got the full amount that's just a little bit difficult or scary to invest? Or do you have some of it when we break it into a manageable structure? Or you've got none of it at all and we need to explore financing options.",
+        "follow_ups": ["If God dropped $6K in your lap right now, would you be ready to move forward?", "What do you have able and willing to invest today?"],
+        "technique": "Three-Path Question"
+      },
+      {
+        "id": "pb_no_discount",
+        "trigger_context": "asking for discount/deal",
+        "one_liner": "Everyone comes in at the same price.",
+        "script": "We don't discount the price--everyone comes in at the same number so there's no community drama later. What I can do, since you're enrolling today, is add a bonus: extra months of access or bonus leads.",
+        "follow_ups": ["If I add a bonus today, are you comfortable moving forward?"],
+        "technique": "No Discount + Bonus"
+      },
+      {
+        "id": "pb_scared",
+        "trigger_context": "hesitant/scared about price",
+        "one_liner": "Best things are on the other side of fear.",
+        "script": "Makes sense--this is a real decision. The best things in life are on the other side of fear. Picture the version of you 12 months from now that took the leap and executed--what would they tell you right now?",
+        "follow_ups": ["What specifically makes you hesitant?", "What would remove the risk for you?"],
+        "technique": "Future Pacing"
+      },
+      {
+        "id": "pb_investment",
+        "trigger_context": "debt concern",
+        "one_liner": "This is investment, not debt.",
+        "script": "It's really hard to lose money with something like this because unlike a car loan... you spend the money, you don't get it back. With this, you still OWN THE BUSINESS. The business pays for the business.",
+        "follow_ups": ["Does that distinction make sense?", "What's your thought process on that?"],
+        "technique": "Reframe Investment"
+      },
+      {
+        "id": "pb_tax",
+        "trigger_context": "money concern",
+        "one_liner": "This is a business expense, fully tax deductible.",
+        "script": "This is a business expense, fully tax deductible. Your CPA will love this--it's good debt, not bad debt. You're building an asset that generates income.",
+        "follow_ups": ["Have you factored in the tax benefits?"],
+        "technique": "Tax Deduction Angle"
+      }
+    ],
+    "authority": [
+      {
+        "id": "auth_discussed",
+        "trigger_context": "need to talk to spouse",
+        "one_liner": "Have you two discussed what a yes looks like?",
+        "script": "Totally. Have you two already discussed this and what a yes would look like? If they need to weigh in, we can do a quick 3-way call or I'll send a tight recap for you both to review together.",
+        "follow_ups": ["Are they supportive in principle?", "Can we loop them in for 10 min?"],
+        "technique": "3-Way Call Protocol"
+      },
+      {
+        "id": "auth_responsibility",
+        "trigger_context": "spouse handles finances",
+        "one_liner": "Is it something the two of you have discussed?",
+        "script": "No worries. Just to make sure it doesn't become a surprise later--are you two on the same page about you doing this? I don't want you going home and getting in trouble.",
+        "follow_ups": ["Are they aware of the investment amount?", "What would they need to see?"],
+        "technique": "Gentle Probe"
+      },
+      {
+        "id": "auth_loopthem",
+        "trigger_context": "can't decide alone",
+        "one_liner": "Let's get them on the phone.",
+        "script": "I totally respect that. Rather than you trying to explain everything secondhand, why don't we get them on a quick 10-minute call? That way they can ask their questions directly and you two can make the decision together.",
+        "follow_ups": ["Are they available right now?", "What's a good time today to loop them in?"],
+        "technique": "Direct 3-Way"
+      },
+      {
+        "id": "auth_support",
+        "trigger_context": "partner support check",
+        "one_liner": "Are they supportive of you building something?",
+        "script": "That's great you include them. Generally speaking, are they supportive of you building something on the side? Or is this going to be an uphill battle?",
+        "follow_ups": ["What concerns might they have?", "What would make them excited about this?"],
+        "technique": "Temperature Check"
+      }
+    ],
+    "timing": [
+      {
+        "id": "time_think",
+        "trigger_context": "need to think about it",
+        "one_liner": "What specifically do you need to think about?",
+        "script": "Totally. Before you go, help me out--what specifically do you need to think about? Is it trust, cashflow, or fit? If we can get clarity on that one thing right now, you won't need to carry it into tomorrow.",
+        "follow_ups": ["What's the one concern?", "Who else needs to weigh in?"],
+        "technique": "Isolate Objection"
+      },
+      {
+        "id": "time_delay",
+        "trigger_context": "want to start later",
+        "one_liner": "No problem--I'll add a bonus month.",
+        "script": "No problem. We can delay your start. To keep it a win-win, I'll add a bonus month of membership so you're not losing time. Enroll now, lock in the bonus, start when your schedule opens up.",
+        "follow_ups": ["When exactly do you want your start date?"],
+        "technique": "Flexibility + Bonus"
+      },
+      {
+        "id": "time_busy",
+        "trigger_context": "too busy right now",
+        "one_liner": "That's exactly why this makes sense.",
+        "script": "I hear you. But here's the thing--when will you NOT be busy? The beauty of vending is you can build it around your schedule. Most members spend 6-8 hours a week. And the sooner you start, the sooner it's generating income while you do other things.",
+        "follow_ups": ["What does your typical week look like?", "When do you have 6-8 hours?"],
+        "technique": "Urgency Reframe"
+      },
+      {
+        "id": "time_perfect",
+        "trigger_context": "waiting for perfect time",
+        "one_liner": "The perfect time is a myth.",
+        "script": "I totally get wanting the timing to be right. But here's what I've seen--there's never a 'perfect' time. Life always has something. The people who succeed are the ones who start anyway and figure it out.",
+        "follow_ups": ["What would 'perfect timing' look like for you?", "What's really holding you back?"],
+        "technique": "Challenge the Premise"
+      }
+    ],
+    "trust": [
+      {
+        "id": "trust_verify",
+        "trigger_context": "scam concern",
+        "one_liner": "Please verify us--I want you confident.",
+        "script": "Totally get it--world's shady. Please do your due diligence. Look us up, check the community, and I'll send verification info. I'd rather you feel 100% solid than pressured.",
+        "follow_ups": ["What would prove legitimacy for you?", "Want verification info now?"],
+        "technique": "Transparency + Verification"
+      },
+      {
+        "id": "trust_nervous",
+        "trigger_context": "feeling nervous/scared",
+        "one_liner": "I would not expect you to not feel nervous.",
+        "script": "That's normal--part of the process. I'd be surprised if you weren't nervous. Most people are. Everyone on the other side felt the exact same thing and still executed.",
+        "follow_ups": ["What's the fear specifically?", "What's the smallest first step you're comfortable with?"],
+        "technique": "Normalization"
+      },
+      {
+        "id": "trust_proof",
+        "trigger_context": "need proof/evidence",
+        "one_liner": "Let me show you the receipts.",
+        "script": "Fair enough. Let me share some specifics: Mac hit $7,700/month in 3 months. Brian D. does $8,300/month on 12 machines. Charles Wheeler went from zero to 5 markets while teaching full-time. Want me to connect you with any of them?",
+        "follow_ups": ["Would talking to a current member help?", "What proof would move you forward?"],
+        "technique": "Social Proof Stack"
+      },
+      {
+        "id": "trust_comparison",
+        "trigger_context": "comparing options",
+        "one_liner": "Let's compare on outcomes, not vibes.",
+        "script": "Makes sense to compare. Let's do it cleanly: what's the other option, how do they help you get your first location, what's their cost-of-goods advantage? Let's compare apples to apples.",
+        "follow_ups": ["What are you comparing to?", "What matters most to you?"],
+        "technique": "Criteria Comparison"
+      }
+    ],
+    "diy": [
+      {
+        "id": "diy_mistakes",
+        "trigger_context": "can figure it out myself",
+        "one_liner": "You can--but what will it cost you?",
+        "script": "You absolutely can figure it out. But here's the math: most DIYers spend 6-12 months making expensive mistakes--wrong machines, bad locations, inventory issues. One bad $4,000 machine decision and you've already paid for the program. The community helps you skip all that.",
+        "follow_ups": ["What's your time worth?", "How much would one avoided mistake save you?"],
+        "technique": "Cost of DIY"
+      },
+      {
+        "id": "diy_youtube",
+        "trigger_context": "free info online",
+        "one_liner": "YouTube shows you what. We show you how.",
+        "script": "The information is definitely out there. But there's a difference between knowing what to do and actually executing. YouTube can't give you VentHub pricing, negotiated machine discounts, tested scripts, or accountability. And you can't text YouTube at 10pm when you're stuck.",
+        "follow_ups": ["What's been your experience learning from free resources?", "What do you still not know after researching?"],
+        "technique": "Information vs Implementation"
+      },
+      {
+        "id": "diy_time",
+        "trigger_context": "learn on my own",
+        "one_liner": "Time is the one thing you can't get back.",
+        "script": "I respect the hustle. But here's the question: do you want to spend 2 years figuring this out, or do you want to compress that into 3-4 months and actually be making money? The program isn't about information--it's about speed to revenue.",
+        "follow_ups": ["How much is 2 years of your time worth?", "What's your timeline for replacing your income?"],
+        "technique": "Time Compression"
+      }
+    ],
+    "competition": [
+      {
+        "id": "comp_saturated",
+        "trigger_context": "market is saturated",
+        "one_liner": "There are millions of locations, and most are underserved.",
+        "script": "I hear this a lot, but here's the reality: there are millions of potential locations in the US. Most have old machines, bad service, or no machines at all. The competition isn't other vendors--it's decision-maker apathy. Our scripts and approach cut through that.",
+        "follow_ups": ["Have you actually looked at locations in your area?", "How many businesses within 10 miles of you have vending?"],
+        "technique": "Reality Check"
+      },
+      {
+        "id": "comp_late",
+        "trigger_context": "late to the game",
+        "one_liner": "The best time to start was yesterday. Second best is today.",
+        "script": "Vending isn't crypto or a trend--it's been around for decades and will be here for decades more. The 'gold rush' mentality doesn't apply. What matters is execution. People are signing locations every single day in the community.",
+        "follow_ups": ["What makes you think it's too late?", "Do you think demand for snacks is going down?"],
+        "technique": "Evergreen Business"
+      }
+    ],
+    "value": [
+      {
+        "id": "value_roi",
+        "trigger_context": "what's the ROI",
+        "one_liner": "Most members break even within 90 days.",
+        "script": "Great question. Here's the math: you save $500 per machine through VentHub. Buy 2 machines, and the program pays for itself. Then factor in avoided mistakes, better locations, and faster placement. Most active members break even within 90 days of placing their first machine.",
+        "follow_ups": ["Does that math make sense?", "How many machines are you planning to start with?"],
+        "technique": "Concrete ROI"
+      },
+      {
+        "id": "value_work",
+        "trigger_context": "does this actually work",
+        "one_liner": "Let me show you who it's working for.",
+        "script": "I get the skepticism. Here's what's happening right now in the community: Mac hit $7,700/month in 3 months. Charles Wheeler has 5 markets while teaching full-time. Justin signed his first location in 2 weeks. Want to see more wins from this week?",
+        "follow_ups": ["What would 'working' look like for you?", "What monthly number are you targeting?"],
+        "technique": "Proof Stack"
+      },
+      {
+        "id": "value_income",
+        "trigger_context": "how much can I make",
+        "one_liner": "It depends on your hustle. Let's map it out.",
+        "script": "Honestly, it depends on how hard you push. Average machine does $200-400/month profit. Get 10 machines, you're looking at $2,000-4,000/month. Some members like Brian D. do $8,300/month on 12 machines. What's your target?",
+        "follow_ups": ["What income would be life-changing for you?", "How many machines can you realistically manage?"],
+        "technique": "Backsolve Method"
+      }
+    ],
+    "logistics": [
+      {
+        "id": "log_space",
+        "trigger_context": "don't have space/storage",
+        "one_liner": "You don't store them--they go straight to locations.",
+        "script": "Here's the thing--machines don't sit in your garage. They get delivered directly to the location. You find the location first, sign the deal, then order the machine. It goes from warehouse to site. No storage needed.",
+        "follow_ups": ["Does that clear things up?", "What did you think the process was?"],
+        "technique": "Process Clarification"
+      },
+      {
+        "id": "log_technical",
+        "trigger_context": "not tech savvy",
+        "one_liner": "If you can use a smartphone, you can do this.",
+        "script": "I hear you. But modern vending is actually simpler than you'd think. Machines have touchscreens. Inventory is tracked by app. Payments are automatic. If you can use a smartphone and spreadsheet, you've got all the tech skills you need.",
+        "follow_ups": ["What specifically concerns you about the technology?", "Do you use apps on your phone?"],
+        "technique": "Simplification"
+      },
+      {
+        "id": "log_time",
+        "trigger_context": "how much time to manage",
+        "one_liner": "Most members spend 6-8 hours per week.",
+        "script": "Once machines are placed, it's about 6-8 hours per week total--restocking, collecting, and checking in. Some members batch it all into one day. The beauty is it's flexible around your schedule, not the other way around.",
+        "follow_ups": ["What's your schedule like?", "When could you carve out 6-8 hours?"],
+        "technique": "Time Reality"
+      },
+      {
+        "id": "log_breaks",
+        "trigger_context": "what if machine breaks",
+        "one_liner": "Support is built in--you're not alone.",
+        "script": "Machines are reliable, but when something does happen, you've got options. Manufacturer warranties cover most issues. The community has troubleshooting guides for common fixes. And many issues are simple--jammed products, card reader reset. Nothing you can't handle.",
+        "follow_ups": ["What's your comfort level with basic troubleshooting?", "Do you know anyone handy?"],
+        "technique": "Support System"
+      }
+    ]
+  },
+  "testimonial_snippets": {
+    "price_budget": [
+      {
+        "name": "Mac",
+        "snippet": "$7,700/month in 3 months",
+        "context": "ROI proof - fast results"
+      },
+      {
+        "name": "Brian D.",
+        "snippet": "$8,300/month on 12 machines",
+        "context": "Scalable income proof"
+      },
+      {
+        "name": "Charles Wheeler",
+        "snippet": "5 markets while teaching full-time",
+        "context": "Side income while working"
+      }
+    ],
+    "authority": [
+      {
+        "name": "Kyle Sharp (Oceanside Vending)",
+        "snippet": "My wife and I did this together--huge risk but one with reward",
+        "context": "Couples success story"
+      },
+      {
+        "name": "Dennis & Michelle Dewitt",
+        "snippet": "We make decisions together and joined as a team",
+        "context": "Joint decision success"
+      },
+      {
+        "name": "Abby C (Van Pelt Vending)",
+        "snippet": "Family of 6, kids ages 8-14 all involved, 30+ machines",
+        "context": "Family business model"
+      }
+    ],
+    "timing": [
+      {
+        "name": "Cory S.",
+        "snippet": "Sat on sidelines 6 months, landed 2 locations within 30 days of joining",
+        "context": "Regret waiting"
+      },
+      {
+        "name": "Justin Krakow",
+        "snippet": "First location in just 2 weeks",
+        "context": "Fast start"
+      },
+      {
+        "name": "Colby M.",
+        "snippet": "First week: locked in 2 locations with 150+ employees each",
+        "context": "Immediate results"
+      }
+    ],
+    "trust": [
+      {
+        "name": "Michael Hoffmann",
+        "snippet": "Was skeptical at first--$435 in one day, doubt 'put to rest'",
+        "context": "Skeptic converted"
+      },
+      {
+        "name": "Nolan Mayfield",
+        "snippet": "Saved us from buying wrong machines--countless mistakes avoided",
+        "context": "Mistake prevention value"
+      },
+      {
+        "name": "Adam S (Emporio Vending)",
+        "snippet": "Knew nothing, community welcomed us, multiple locations now",
+        "context": "Community support"
+      }
+    ],
+    "diy": [
+      {
+        "name": "Nolan Mayfield",
+        "snippet": "Had ATM experience, still saved from buying wrong machines",
+        "context": "Even experienced people benefit"
+      },
+      {
+        "name": "George Zhang",
+        "snippet": "1,050 leads for $149 via Vendinglocator--50+ hours saved",
+        "context": "Time savings proof"
+      },
+      {
+        "name": "Ben Sanders",
+        "snippet": "Zero knowledge to fully functional business with community help",
+        "context": "Accelerated learning"
+      }
+    ],
+    "competition": [
+      {
+        "name": "Mason Romero",
+        "snippet": "50 pop-ins + 350 cold calls = 3 locations in 2 months",
+        "context": "Locations are available"
+      },
+      {
+        "name": "Chase Phelps",
+        "snippet": "Targeted luxury apartments/offices--multiple micromarkets installed",
+        "context": "Niche strategy works"
+      },
+      {
+        "name": "Wendy Gans",
+        "snippet": "4 contracts signed, pipeline of 18 machines",
+        "context": "Abundant opportunity"
+      }
+    ],
+    "value": [
+      {
+        "name": "Mac",
+        "snippet": "$7,700/month within 3 months of joining",
+        "context": "Fast ROI"
+      },
+      {
+        "name": "Brian D.",
+        "snippet": "$8,300/month on 12 machines--'starting to feel real'",
+        "context": "Scalable proof"
+      },
+      {
+        "name": "Anthony (Eric's example)",
+        "snippet": "$85,000/month, $50,000 net in 18 months",
+        "context": "Scale potential"
+      }
+    ],
+    "logistics": [
+      {
+        "name": "Joe Natoli",
+        "snippet": "Works at car dealership 12-13 hrs/day, still built 2 locations + 6-8 more coming",
+        "context": "Busy schedule success"
+      },
+      {
+        "name": "Charles Wheeler",
+        "snippet": "Football coach + teacher, 5 markets live",
+        "context": "Part-time management"
+      },
+      {
+        "name": "Abby C",
+        "snippet": "Kids (ages 8-14) help with restocking, cleaning, counting",
+        "context": "Family delegation"
+      }
+    ]
+  },
+  "danger_combos": [
+    {
+      "categories": ["price_budget", "authority"],
+      "win_rate": 0.18,
+      "alert": "DANGER: Price + Authority = 18% win rate",
+      "protocol": [
+        "Address authority FIRST",
+        "Loop in spouse with 3-way call",
+        "Only THEN discuss pricing options",
+        "Never send info to 'review together'"
+      ]
+    },
+    {
+      "categories": ["trust", "price_budget"],
+      "win_rate": 0.22,
+      "alert": "DANGER: Trust + Price = 22% win rate",
+      "protocol": [
+        "Build trust before discussing ROI",
+        "Use local testimonials and verification",
+        "Offer to connect with current members",
+        "Don't push price until trust is established"
+      ]
+    },
+    {
+      "categories": ["timing", "authority"],
+      "win_rate": 0.25,
+      "alert": "WARNING: Timing + Authority = 25% win rate",
+      "protocol": [
+        "Isolate which is the real objection",
+        "Often timing is a mask for authority",
+        "Probe: 'If your spouse said yes, would timing still be an issue?'"
+      ]
+    }
+  ],
+  "emotional_triggers": {
+    "family_time": {
+      "keywords": ["daughter", "son", "kids", "children", "family", "daycare", "present", "miss", "missing"],
+      "phrases": ["more time with my kids", "miss my family", "avoid daycare", "be present", "watch them grow"],
+      "leverage_response": "Family involvement is huge. Many members have their kids helping--counting money, testing snacks. It becomes a family activity, not just a business."
+    },
+    "physical_exhaustion": {
+      "keywords": ["tired", "exhausted", "body", "wearing down", "physically", "demanding", "back", "feet", "hours"],
+      "phrases": ["body is wearing down", "18-hour days", "physically demanding", "can't keep this up"],
+      "leverage_response": "The beauty of vending is it's not dependent on your body. Once machines are placed, they work while you recover."
+    },
+    "job_instability": {
+      "keywords": ["laid off", "fired", "downsizing", "uncertain", "unstable", "job security", "layoffs"],
+      "phrases": ["might get laid off", "job feels uncertain", "company is downsizing", "no job security"],
+      "leverage_response": "That uncertainty is exactly why this makes sense--you control it, it's recession-proof, and it cash-flows from day one."
+    },
+    "autonomy": {
+      "keywords": ["own boss", "myself", "W2", "corporate", "control", "freedom", "independent"],
+      "phrases": ["work for myself", "be my own boss", "sick of corporate", "want control", "not relying on W2"],
+      "leverage_response": "That's the mindset. You're not trading time for money--you're building an asset that works whether you show up or not."
+    },
+    "generational_wealth": {
+      "keywords": ["legacy", "inheritance", "kids' future", "generational", "pass down", "family business"],
+      "phrases": ["leave something for my kids", "build generational wealth", "family legacy", "pass down to children"],
+      "leverage_response": "This is exactly what Andre & Nivea talk about--they're most excited about creating something their kids can grow into. It's not just income, it's legacy."
+    },
+    "financial_stress": {
+      "keywords": ["bills", "paycheck", "debt", "struggling", "behind", "stress", "worried"],
+      "phrases": ["living paycheck to paycheck", "drowning in debt", "can barely pay bills", "financially stressed"],
+      "leverage_response": "I hear you. That stress is real. The question is: do you want to keep feeling that way, or do you want to build something that breaks that cycle?"
+    }
+  },
+  "closing_signals": {
+    "positive": [
+      "how do I sign up",
+      "what's the next step",
+      "how do I get started",
+      "I'm ready",
+      "let's do it",
+      "I'm in",
+      "where do I pay",
+      "send me the link",
+      "how do I enroll"
+    ],
+    "response": "Let me get you set up right now. I'll send you the enrollment link and we'll get you access to the community today."
+  }
+}

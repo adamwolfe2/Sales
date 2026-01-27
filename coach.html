@@ -397,8 +397,152 @@
     .copy-btn:hover {
       background: var(--surface-hover);
       color: var(--text);
-      border-color: var(--border-light);
-      transform: translateY(-1px);
+    }
+
+    /* Quick Response Cards - Clean, Easy to Read */
+    .quick-response-card {
+      animation: slideIn 0.3s ease;
+    }
+
+    .quick-response-card .one-liner {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--green);
+      margin-bottom: 16px;
+      padding: 12px 16px;
+      background: var(--green-soft);
+      border-radius: 8px;
+      border-left: 3px solid var(--green);
+    }
+
+    .quick-response-card .say-this {
+      margin-bottom: 16px;
+    }
+
+    .quick-response-card .say-this strong {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .quick-response-card .say-this p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    .quick-response-card .follow-ups {
+      margin-bottom: 16px;
+      padding: 12px 16px;
+      background: var(--amber-soft);
+      border-radius: 8px;
+    }
+
+    .quick-response-card .follow-ups strong {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--amber);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .quick-response-card .follow-ups ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .quick-response-card .follow-ups li {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .quick-response-card .testimonial-snippet {
+      padding: 12px 16px;
+      background: rgba(59, 130, 246, 0.1);
+      border-radius: 8px;
+      border-left: 3px solid #3b82f6;
+    }
+
+    .quick-response-card .testimonial-snippet strong {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #3b82f6;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .quick-response-card .testimonial-snippet p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* Emotional Trigger Card */
+    .emotional-trigger-card {
+      animation: slideIn 0.3s ease;
+    }
+
+    .emotional-trigger-card .trigger-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #8b5cf6;
+      margin-bottom: 12px;
+      padding: 10px 14px;
+      background: rgba(139, 92, 246, 0.1);
+      border-radius: 8px;
+      border-left: 3px solid #8b5cf6;
+    }
+
+    .emotional-trigger-card .leverage-response strong {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .emotional-trigger-card .leverage-response p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    /* Closing Signal Card */
+    .closing-signal-card {
+      animation: slideIn 0.3s ease;
+    }
+
+    .closing-signal-card .signal-alert {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--green);
+      margin-bottom: 12px;
+      padding: 12px 16px;
+      background: var(--green-soft);
+      border-radius: 8px;
+      text-align: center;
+      animation: breathe 1s ease-in-out infinite;
+    }
+
+    .closing-signal-card .close-now strong {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .closing-signal-card .close-now p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text);
     }
 
     .copy-btn:active {
@@ -944,6 +1088,34 @@ RESPONSE FORMAT (JSON):
     let category = 'all';
     let analyzing = false;
 
+    // ============ LIVE COACHING DATA ============
+    let liveCoachingData = null;
+    let compiledPatterns = {}; // Pre-compiled regex patterns for performance
+
+    async function loadLiveCoachingData() {
+      try {
+        const response = await fetch('data/live-coaching.json');
+        if (response.ok) {
+          liveCoachingData = await response.json();
+          compilePatterns();
+          console.log('Live coaching data loaded:', Object.keys(liveCoachingData.detection_patterns).length, 'categories');
+        }
+      } catch (e) {
+        console.warn('Could not load live-coaching.json, using fallback:', e);
+      }
+    }
+
+    function compilePatterns() {
+      if (!liveCoachingData) return;
+      for (const [category, data] of Object.entries(liveCoachingData.detection_patterns)) {
+        compiledPatterns[category] = {
+          keywords: data.keywords.map(k => k.toLowerCase()),
+          phrases: data.phrases.map(p => p.toLowerCase()),
+          regexes: data.regex_patterns.map(p => new RegExp(p, 'i'))
+        };
+      }
+    }
+
     // ============ DOM ============
     const $ = id => document.getElementById(id);
     const setup = $('setup');
@@ -958,7 +1130,8 @@ RESPONSE FORMAT (JSON):
     const toast = $('toast');
 
     // ============ INIT ============
-    function init() {
+    async function init() {
+      await loadLiveCoachingData();
       renderScripts();
       startBtn.onclick = startListening;
       stopBtn.onclick = stopListening;
@@ -1088,9 +1261,48 @@ RESPONSE FORMAT (JSON):
 
     // Track detected categories for danger combo detection
     let detectedCategories = new Set();
+    let lastDetectedCategory = null;
+    let detectionHistory = []; // Track what we've detected for context
 
     function quickMatch(text) {
       const lower = text.toLowerCase();
+
+      // Use enhanced detection if live coaching data is loaded
+      if (liveCoachingData && Object.keys(compiledPatterns).length > 0) {
+        const detected = enhancedDetection(lower);
+        if (detected) {
+          detectedCategories.add(detected.category);
+          lastDetectedCategory = detected.category;
+          detectionHistory.push({ category: detected.category, time: Date.now(), text: text.substring(0, 100) });
+
+          // Show quick response card
+          showQuickResponse(detected);
+          checkDangerCombosEnhanced();
+          return;
+        }
+
+        // Check emotional triggers from live coaching data
+        if (liveCoachingData.emotional_triggers) {
+          for (const [key, trigger] of Object.entries(liveCoachingData.emotional_triggers)) {
+            const hasKeyword = trigger.keywords.some(k => lower.includes(k.toLowerCase()));
+            const hasPhrase = trigger.phrases.some(p => lower.includes(p.toLowerCase()));
+            if (hasKeyword || hasPhrase) {
+              showEmotionalTriggerCard(key, trigger);
+              return;
+            }
+          }
+        }
+
+        // Check for closing signals
+        if (liveCoachingData.closing_signals) {
+          if (liveCoachingData.closing_signals.positive.some(s => lower.includes(s.toLowerCase()))) {
+            showClosingSignal();
+            return;
+          }
+        }
+      }
+
+      // Fallback to original detection
       for (const obj of Object.values(OBJECTIONS)) {
         if (obj.triggers.some(t => lower.includes(t.toLowerCase()))) {
           showToast(`Detected: ${obj.oneLiner}`);
@@ -1100,13 +1312,159 @@ RESPONSE FORMAT (JSON):
         }
       }
 
-      // Also check for emotional triggers
+      // Also check for emotional triggers (fallback)
       for (const [key, trigger] of Object.entries(EMOTIONAL_TRIGGERS)) {
         if (trigger.phrases.some(p => lower.includes(p.toLowerCase()))) {
           showToast(`Emotional trigger: ${key.replace(/_/g, ' ')}`);
           return;
         }
       }
+    }
+
+    function enhancedDetection(text) {
+      const words = text.split(/\s+/);
+
+      for (const [category, patterns] of Object.entries(compiledPatterns)) {
+        // Check regex patterns first (most specific)
+        for (const regex of patterns.regexes) {
+          if (regex.test(text)) {
+            return { category, matchType: 'regex', confidence: 'high' };
+          }
+        }
+
+        // Check phrases (multi-word matches)
+        for (const phrase of patterns.phrases) {
+          if (text.includes(phrase)) {
+            return { category, matchType: 'phrase', confidence: 'high' };
+          }
+        }
+
+        // Check keywords (single word matches - lower confidence)
+        const keywordMatches = patterns.keywords.filter(k => words.includes(k) || text.includes(k));
+        if (keywordMatches.length >= 2) {
+          return { category, matchType: 'keywords', confidence: 'medium', matches: keywordMatches };
+        }
+      }
+
+      return null;
+    }
+
+    function showQuickResponse(detected) {
+      if (!liveCoachingData) return;
+
+      const categoryData = liveCoachingData.categories[detected.category];
+      const responses = liveCoachingData.quick_responses[detected.category];
+      const testimonials = liveCoachingData.testimonial_snippets[detected.category];
+
+      if (!responses || responses.length === 0) {
+        showToast(`Detected: ${categoryData?.name || detected.category}`);
+        return;
+      }
+
+      // Pick the most relevant response (first one for now, could be smarter)
+      const response = responses[0];
+      const testimonial = testimonials && testimonials.length > 0 ? testimonials[Math.floor(Math.random() * testimonials.length)] : null;
+
+      // Update suggestion card with quick response
+      $('suggestion-type').textContent = response.technique;
+
+      let html = `
+        <div class="quick-response-card">
+          <div class="one-liner">"${response.one_liner}"</div>
+          <div class="say-this">
+            <strong>Say This:</strong>
+            <p>${response.script}</p>
+          </div>
+          <div class="follow-ups">
+            <strong>Follow-up Questions:</strong>
+            <ul>
+              ${response.follow_ups.map(q => `<li>${q}</li>`).join('')}
+            </ul>
+          </div>
+          ${testimonial ? `
+          <div class="testimonial-snippet">
+            <strong>Social Proof:</strong>
+            <p><em>"${testimonial.snippet}"</em> - ${testimonial.name}</p>
+          </div>
+          ` : ''}
+        </div>
+      `;
+
+      $('say-this').innerHTML = html;
+      $('follow-up-questions').innerHTML = '';
+
+      // Show toast notification
+      showToast(`${categoryData?.icon || '!'} ${categoryData?.name}: "${response.one_liner}"`);
+    }
+
+    function showEmotionalTriggerCard(key, trigger) {
+      const name = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+
+      $('suggestion-type').textContent = 'Emotional Trigger';
+      $('say-this').innerHTML = `
+        <div class="emotional-trigger-card">
+          <div class="trigger-name">Detected: ${name}</div>
+          <div class="leverage-response">
+            <strong>Leverage This:</strong>
+            <p>${trigger.leverage_response}</p>
+          </div>
+        </div>
+      `;
+      $('follow-up-questions').innerHTML = '';
+
+      showToast(`Emotional trigger: ${name}`);
+    }
+
+    function showClosingSignal() {
+      $('suggestion-type').textContent = 'CLOSING SIGNAL';
+      $('say-this').innerHTML = `
+        <div class="closing-signal-card">
+          <div class="signal-alert">Buying signal detected!</div>
+          <div class="close-now">
+            <strong>Close Now:</strong>
+            <p>${liveCoachingData.closing_signals.response}</p>
+          </div>
+        </div>
+      `;
+      $('follow-up-questions').innerHTML = '';
+
+      showToast('CLOSING SIGNAL - They are ready!');
+    }
+
+    function checkDangerCombosEnhanced() {
+      if (!liveCoachingData || !liveCoachingData.danger_combos) {
+        checkDangerCombos();
+        return;
+      }
+
+      for (const combo of liveCoachingData.danger_combos) {
+        if (combo.categories.every(c => detectedCategories.has(c))) {
+          showDangerAlertEnhanced(combo);
+          break;
+        }
+      }
+    }
+
+    function showDangerAlertEnhanced(combo) {
+      const existing = document.querySelector('.danger-alert');
+      if (existing) existing.remove();
+
+      const alert = document.createElement('div');
+      alert.className = 'danger-alert';
+      alert.innerHTML = `
+        <div class="danger-alert-content">
+          <div class="danger-alert-header">
+            <span class="danger-icon">WARNING</span>
+            <strong>${combo.alert}</strong>
+          </div>
+          <div class="danger-protocol">
+            <strong>Protocol:</strong>
+            ${combo.protocol.map((p, i) => `<div>${i + 1}. ${p}</div>`).join('')}
+          </div>
+          <button onclick="this.parentElement.parentElement.remove()" style="background: transparent; border: 1px solid rgba(239, 68, 68, 0.5); color: #ef4444; padding: 6px 12px; border-radius: 6px; cursor: pointer; margin-top: 8px;">Got it</button>
+        </div>
+      `;
+      document.body.appendChild(alert);
     }
 
     function checkDangerCombos() {
