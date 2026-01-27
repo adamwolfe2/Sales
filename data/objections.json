@@ -11,65 +11,49 @@
       "id": "price_budget",
       "name": "Price/Budget Objections",
       "frequency": 387,
-      "percentage": 26,
-      "win_rate": 0.42,
-      "difficulty": "challenging"
+      "percentage": 26
     },
     {
       "id": "authority",
       "name": "Authority/Decision-Maker",
       "frequency": 298,
-      "percentage": 20,
-      "win_rate": 0.54,
-      "difficulty": "moderate"
+      "percentage": 20
     },
     {
       "id": "timing",
       "name": "Timing/Readiness",
       "frequency": 224,
-      "percentage": 15,
-      "win_rate": 0.48,
-      "difficulty": "moderate"
+      "percentage": 15
     },
     {
       "id": "trust",
       "name": "Trust/Credibility",
       "frequency": 194,
-      "percentage": 13,
-      "win_rate": 0.61,
-      "difficulty": "manageable"
+      "percentage": 13
     },
     {
       "id": "diy",
       "name": "DIY/Self-Sufficiency",
       "frequency": 149,
-      "percentage": 10,
-      "win_rate": 0.76,
-      "difficulty": "favorable"
+      "percentage": 10
     },
     {
       "id": "market",
       "name": "Market/Competition",
       "frequency": 119,
-      "percentage": 8,
-      "win_rate": 0.58,
-      "difficulty": "moderate"
+      "percentage": 8
     },
     {
       "id": "value",
       "name": "Value/ROI Concerns",
       "frequency": 75,
-      "percentage": 5,
-      "win_rate": 0.52,
-      "difficulty": "moderate"
+      "percentage": 5
     },
     {
       "id": "logistics",
       "name": "Logistics/Practical",
       "frequency": 45,
-      "percentage": 3,
-      "win_rate": 0.67,
-      "difficulty": "favorable"
+      "percentage": 3
     }
   ],
   "objections": [
@@ -80,8 +64,6 @@
       "name": "No Capital/Funds",
       "frequency": 387,
       "percentage": 26,
-      "win_rate": 0.42,
-      "difficulty": "challenging",
       "variations": [
         "I don't have the capital right now",
         "I don't have the funds",
@@ -93,7 +75,6 @@
       "responses": {
         "matt": {
           "name": "Matt Chubb",
-          "win_rate": 0.61,
           "philosophy": "Finances are a precious conversation. Naturally, their guard is going to be a little bit up.",
           "primary_script": "Is it a case, let's say we're doing Bronze, right? Is it the case you've got the full $6,000 that's, you know, just a little bit difficult or scary to invest? Or do you have some of it when you look at breaking it up into a more manageable structure? Or you've got none of it at all, and we need to go to the bank or something.",
           "why_it_works": "That last bit takes the air out of the room. Immediately categorizes the situation into three clear paths. Reduces defensiveness by normalizing all three scenarios.",
@@ -133,7 +114,6 @@
         },
         "scott": {
           "name": "Scott Seymour",
-          "win_rate": 0.58,
           "philosophy": "I don't want anyone to force the money out. The key question is whether they have a source.",
           "primary_script": "First thing I want to see... do you have a source? Do you have it in the bank? Do you have access to credit? Do you have a family member that can lend it to you? I don't need to know who, I don't need to know what... I just want to know if you have a source or not.",
           "pathway_scripts": {
@@ -165,8 +145,7 @@
           "script_scott": "It's really hard to lose money with something like this because unlike a car loan... you spend the money, you don't get it back. With this, you still OWN THE BUSINESS.",
           "note": "Reframe debt as investment that generates returns"
         }
-      ],
-      "warning": "Only qualify out if someone is truly unable to invest - dead broke. Otherwise, keep working."
+      ]
     },
     {
       "id": "sticker_shock",
@@ -175,8 +154,6 @@
       "name": "Sticker Shock / More Expensive Than Expected",
       "frequency": 245,
       "percentage": 16,
-      "win_rate": 0.38,
-      "difficulty": "challenging",
       "variations": [
         "It's more expensive than I thought",
         "That's a lot of money",
@@ -217,8 +194,6 @@
       "name": "Need to Talk to Spouse",
       "frequency": 298,
       "percentage": 20,
-      "win_rate": 0.54,
-      "difficulty": "moderate",
       "variations": [
         "I need to talk to my wife first",
         "I need to discuss with my husband",
@@ -265,16 +240,6 @@
           "three_way_call": "Would it help if we got them on a quick call together? I'm happy to answer any questions they might have.",
           "key_insight": "If they won't do a three-way call, it's usually not really about the spouse"
         }
-      },
-      "danger_combo": {
-        "with": "price_budget",
-        "combined_win_rate": 0.18,
-        "protocol": [
-          "Address financing FIRST with specific numbers",
-          "IMMEDIATELY schedule three-way call with spouse",
-          "DO NOT send info and wait",
-          "48-hour max before three-way call"
-        ]
       }
     },
     {
@@ -284,8 +249,6 @@
       "name": "Not Ready to Start Right Now",
       "frequency": 224,
       "percentage": 15,
-      "win_rate": 0.48,
-      "difficulty": "moderate",
       "variations": [
         "I'm not ready to start right now",
         "I want to wait a few months",
@@ -341,8 +304,6 @@
       "name": "Need Time to Think",
       "frequency": 187,
       "percentage": 12.5,
-      "win_rate": 0.31,
-      "difficulty": "challenging",
       "variations": [
         "I need time to think about it",
         "Let me sleep on it",
@@ -369,8 +330,7 @@
           "discovery": "What specifically do you need to think about? Is it the money, the time commitment, or something else?",
           "reframe": "I get wanting to think about it. But here's what I've found - most people who say they need to think about it never come back. Not because they don't want to, but because life gets in the way. What would help you make a decision today?"
         }
-      },
-      "warning": "31% win rate on 'think about it' - one of the hardest objections. Must crack the mask immediately."
+      }
     },
     {
       "id": "diy_myself",
@@ -379,8 +339,6 @@
       "name": "I Can Do This Myself",
       "frequency": 149,
       "percentage": 10,
-      "win_rate": 0.76,
-      "difficulty": "favorable",
       "variations": [
         "I can figure this out on my own",
         "I'll just learn from YouTube",
@@ -402,10 +360,6 @@
           "response": "You absolutely can do this yourself. The question is - do you want to spend the next 2 years figuring it out through trial and error, or do you want to compress that into 90 days with someone who's already made all the mistakes?",
           "cost_calculation": "What's your time worth? If you value your time at even $25/hour, and you spend 200 hours figuring things out that we could teach you in 20 hours, that's $4,500 in time alone. Plus all the mistakes you'll make along the way."
         }
-      },
-      "rep_performance": {
-        "note": "Lyle struggles here - 25% win rate vs 76% team average",
-        "lyle_coaching": "DO NOT offer VenHub-only on this objection. Defend full program value."
       }
     },
     {
@@ -415,8 +369,6 @@
       "name": "Want Business to Pay For It",
       "frequency": 112,
       "percentage": 7.5,
-      "win_rate": 0.45,
-      "difficulty": "moderate",
       "variations": [
         "I want to wait until my business can pay for it",
         "Let me get started and pay later",
@@ -444,8 +396,6 @@
       "name": "How Does Financing Work?",
       "frequency": 98,
       "percentage": 6.5,
-      "win_rate": 0.52,
-      "difficulty": "moderate",
       "variations": [
         "How does financing work exactly?",
         "What are the payment options?",
@@ -482,8 +432,6 @@
       "name": "Expected More for the Price",
       "frequency": 75,
       "percentage": 5,
-      "win_rate": 0.41,
-      "difficulty": "challenging",
       "variations": [
         "For that price, I'd expect you to find locations for me",
         "What if I just want to pay less and do it myself?",
@@ -513,8 +461,6 @@
       "name": "Need to Talk to Business Partner/Consultant",
       "frequency": 67,
       "percentage": 4.5,
-      "win_rate": 0.49,
-      "difficulty": "moderate",
       "variations": [
         "I need to talk to my business partner",
         "Let me discuss with my consultant",
@@ -536,49 +482,6 @@
       }
     }
   ],
-  "patterns": {
-    "multiple_objections": {
-      "two_objections": {
-        "win_rate": 0.38,
-        "note": "38% win rate with 2 objections vs 54% with single objection"
-      },
-      "three_plus_objections": {
-        "win_rate": 0.31,
-        "action": "Re-qualify the prospect",
-        "script": "On a scale of 1-10, how serious are you about starting a vending business in the next 90 days?",
-        "threshold": "IF BELOW 7: Qualify out. IF 7+: Let's identify the ONE thing really holding you back"
-      }
-    },
-    "dangerous_combos": [
-      {
-        "objections": ["price_budget", "authority"],
-        "win_rate": 0.18,
-        "protocol": [
-          "Address financing FIRST with specific numbers",
-          "IMMEDIATELY schedule three-way call with spouse",
-          "DO NOT send info and wait",
-          "48-hour max before three-way call"
-        ]
-      },
-      {
-        "objections": ["timing", "authority"],
-        "win_rate": 0.23,
-        "protocol": [
-          "Lock down a specific date/commitment",
-          "Get spouse on three-way before ending call",
-          "Create artificial deadline"
-        ]
-      }
-    ],
-    "objection_clustering": {
-      "description": "Certain objections tend to appear together",
-      "common_clusters": [
-        ["price_no_capital", "authority_spouse"],
-        ["timing_not_ready", "think_about_it"],
-        ["diy_myself", "business_pay"]
-      ]
-    }
-  },
   "best_practices": {
     "matt_principles": [
       "Cook their logic - find the flaw in their reasoning",
@@ -601,8 +504,7 @@
       "Never skip discovery - most objections come from poor discovery",
       "Urgency must be built in discovery, not objection handling",
       "Always try to close TODAY",
-      "Three-way calls beat sending info",
-      "Multiple objections = re-qualification needed"
+      "Three-way calls beat sending info"
     ]
   },
   "advanced_tactics": {

@@ -11,6 +11,8 @@ class SalesCommandCenter {
     this.reps = null;
     this.pricing = null;
     this.callAnalytics = null;
+    this.jobSuperpowers = null;
+    this.financing = null;
     this.currentView = 'objections';
     this.searchIndex = [];
   }
@@ -30,12 +32,15 @@ class SalesCommandCenter {
 
   async loadData() {
     const [objections, playbooks, testimonials, reps, pricing, callAnalytics] = await Promise.all([
+    const [objections, playbooks, testimonials, reps, jobSuperpowers, financing] = await Promise.all([
       fetch('data/objections.json').then(r => r.json()),
       fetch('data/playbooks.json').then(r => r.json()),
       fetch('data/testimonials.json').then(r => r.json()),
       fetch('data/reps.json').then(r => r.json()),
       fetch('data/pricing.json').then(r => r.json()),
       fetch('data/call-analytics.json').then(r => r.json())
+      fetch('data/job-superpowers.json').then(r => r.json()).catch(() => null),
+      fetch('data/financing.json').then(r => r.json()).catch(() => null)
     ]);
 
     this.objections = objections;
@@ -44,6 +49,8 @@ class SalesCommandCenter {
     this.reps = reps;
     this.pricing = pricing;
     this.callAnalytics = callAnalytics;
+    this.jobSuperpowers = jobSuperpowers;
+    this.financing = financing;
   }
 
   buildSearchIndex() {
@@ -117,6 +124,20 @@ class SalesCommandCenter {
             key
           ].join(' ').toLowerCase(),
           data: pkg
+    // Index job superpowers
+    if (this.jobSuperpowers && this.jobSuperpowers.job_superpowers) {
+      this.jobSuperpowers.job_superpowers.forEach(job => {
+        this.searchIndex.push({
+          type: 'job',
+          id: job.id,
+          name: job.title,
+          category: job.category,
+          searchText: [
+            job.title,
+            job.category,
+            ...job.superpowers.map(s => s.skill + ' ' + s.vending_application)
+          ].join(' ').toLowerCase(),
+          data: job
         });
       });
     }
@@ -170,6 +191,20 @@ class SalesCommandCenter {
             trigger.response
           ].join(' ').toLowerCase(),
           data: trigger
+    if (this.financing && this.financing.payment_options) {
+      this.financing.payment_options.forEach(option => {
+        this.searchIndex.push({
+          type: 'financing',
+          id: option.id,
+          name: option.name,
+          searchText: [
+            option.name,
+            option.short_name,
+            option.best_for,
+            ...(option.keywords || []),
+            ...(option.highlights || [])
+          ].join(' ').toLowerCase(),
+          data: option
         });
       });
     }
@@ -231,6 +266,8 @@ class SalesCommandCenter {
         break;
       case 'reps':
         this.renderReps(content);
+      case 'prospects':
+        this.renderProspectProfiles(content);
         break;
       case 'testimonials':
         this.renderTestimonials(content);
@@ -240,6 +277,9 @@ class SalesCommandCenter {
         break;
       case 'analyzer':
         this.renderAnalyzer(content);
+        break;
+      case 'financing':
+        this.renderFinancing(content);
         break;
       default:
         this.renderObjections(content);
@@ -408,16 +448,16 @@ class SalesCommandCenter {
 
       <div class="stats-bar">
         <div class="stat">
-          <span class="stat-value">${this.objections.metadata?.total_calls_analyzed || 0}</span>
-          <span class="stat-label">Calls Analyzed</span>
-        </div>
-        <div class="stat">
           <span class="stat-value">${objectionsList.length}</span>
-          <span class="stat-label">Objections Indexed</span>
+          <span class="stat-label">Objections Covered</span>
         </div>
         <div class="stat">
           <span class="stat-value">${categories.length}</span>
           <span class="stat-label">Categories</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">2</span>
+          <span class="stat-label">Expert Approaches</span>
         </div>
       </div>
 
@@ -426,7 +466,6 @@ class SalesCommandCenter {
         ${categories.map(cat => `
           <button class="filter-btn" data-category="${cat.id}">
             ${cat.name.replace(' Objections', '').replace('/Decision-Maker', '')}
-            <span class="filter-count">${cat.frequency}</span>
           </button>
         `).join('')}
       </div>
@@ -441,20 +480,12 @@ class SalesCommandCenter {
   }
 
   renderObjectionCard(obj) {
-    const difficultyClass = this.getDifficultyClass(obj.win_rate);
-    const winRatePercent = Math.round((obj.win_rate || 0) * 100);
-
     return `
-      <div class="objection-card ${difficultyClass}" data-objection-id="${obj.id}" data-category="${obj.category}">
+      <div class="objection-card" data-objection-id="${obj.id}" data-category="${obj.category}">
         <div class="card-header">
-          <span class="card-rank">#${obj.rank || '-'}</span>
-          <span class="win-rate">${winRatePercent}%</span>
+          <span class="card-category-tag">${this.getCategoryName(obj.category).replace(' Objections', '').replace('/Decision-Maker', '')}</span>
         </div>
         <h3 class="card-title">${obj.name}</h3>
-        <div class="card-meta">
-          <span class="frequency">${obj.frequency || 0} occurrences</span>
-          <span class="difficulty ${difficultyClass}">${obj.difficulty || 'unknown'}</span>
-        </div>
         <div class="card-preview">
           ${(obj.variations || []).slice(0, 2).map(v => `<span class="variation">"${v}"</span>`).join('')}
         </div>
@@ -511,7 +542,6 @@ class SalesCommandCenter {
 
     const mattResponse = obj.responses?.matt;
     const scottResponse = obj.responses?.scott;
-    const winRatePercent = Math.round((obj.win_rate || 0) * 100);
 
     modalContent.innerHTML = `
       <div class="modal-header">
@@ -520,21 +550,6 @@ class SalesCommandCenter {
           <h2>${obj.name}</h2>
         </div>
         <button class="modal-close" onclick="app.closeModal()">&times;</button>
-      </div>
-
-      <div class="modal-stats">
-        <div class="modal-stat">
-          <span class="stat-value ${this.getDifficultyClass(obj.win_rate)}">${winRatePercent}%</span>
-          <span class="stat-label">Win Rate</span>
-        </div>
-        <div class="modal-stat">
-          <span class="stat-value">${obj.frequency || 0}</span>
-          <span class="stat-label">Occurrences</span>
-        </div>
-        <div class="modal-stat">
-          <span class="stat-value">${obj.difficulty || 'N/A'}</span>
-          <span class="stat-label">Difficulty</span>
-        </div>
       </div>
 
       <div class="modal-section">
@@ -548,7 +563,6 @@ class SalesCommandCenter {
         <div class="modal-section response-section">
           <div class="response-header">
             <h3>Matt Chubb's Approach</h3>
-            ${mattResponse.win_rate ? `<span class="response-win-rate">${Math.round(mattResponse.win_rate * 100)}% win rate</span>` : ''}
           </div>
           ${mattResponse.philosophy ? `<p class="philosophy"><strong>Philosophy:</strong> "${mattResponse.philosophy}"</p>` : ''}
           ${mattResponse.primary_script ? `
@@ -578,7 +592,6 @@ class SalesCommandCenter {
         <div class="modal-section response-section">
           <div class="response-header">
             <h3>Scott Seymour's Approach</h3>
-            ${scottResponse.win_rate ? `<span class="response-win-rate">${Math.round(scottResponse.win_rate * 100)}% win rate</span>` : ''}
           </div>
           ${scottResponse.philosophy ? `<p class="philosophy"><strong>Philosophy:</strong> "${scottResponse.philosophy}"</p>` : ''}
           ${scottResponse.primary_script ? `
@@ -596,25 +609,6 @@ class SalesCommandCenter {
           ` : ''}
         </div>
       ` : ''}
-
-      ${obj.warning ? `
-        <div class="modal-section warning-section">
-          <h3>Warning</h3>
-          <p>${obj.warning}</p>
-        </div>
-      ` : ''}
-
-      ${obj.danger_combo ? `
-        <div class="modal-section danger-section">
-          <h3>Danger Combination</h3>
-          <p><strong>When combined with:</strong> ${this.getCategoryName(obj.danger_combo.with)}</p>
-          <p><strong>Combined win rate:</strong> ${Math.round(obj.danger_combo.combined_win_rate * 100)}%</p>
-          <div class="protocol">
-            <strong>Protocol:</strong>
-            <ol>${obj.danger_combo.protocol.map(p => `<li>${p}</li>`).join('')}</ol>
-          </div>
-        </div>
-      ` : ''}
     `;
 
     modal.classList.add('open');
@@ -624,6 +618,12 @@ class SalesCommandCenter {
   showTestimonialModal(test) {
     const modal = document.getElementById('modal');
     const modalContent = document.getElementById('modal-content');
+
+    // Check if there's a matching job profile
+    let jobProfile = null;
+    if (test.job_profile && this.jobSuperpowers) {
+      jobProfile = this.jobSuperpowers.job_superpowers.find(j => j.id === test.job_profile);
+    }
 
     modalContent.innerHTML = `
       <div class="modal-header">
@@ -640,11 +640,17 @@ class SalesCommandCenter {
         ${test.location ? `<p>${test.location}</p>` : ''}
       </div>
 
+      ${test.image ? `
+        <div class="testimonial-image-container">
+          <img src="${this.testimonials.metadata?.image_base_path || 'images/testimonials/'}${test.image}" alt="${test.name}'s testimonial" class="testimonial-image" onerror="this.style.display='none'">
+        </div>
+      ` : ''}
+
       ${test.results ? `
         <div class="modal-stats">
-          ${test.results.locations ? `
+          ${test.results.locations || test.results.markets_live ? `
             <div class="modal-stat">
-              <span class="stat-value">${test.results.locations}</span>
+              <span class="stat-value">${test.results.locations || test.results.markets_live}</span>
               <span class="stat-label">Locations</span>
             </div>
           ` : ''}
@@ -660,6 +666,12 @@ class SalesCommandCenter {
               <span class="stat-label">Monthly Revenue</span>
             </div>
           ` : ''}
+          ${test.timeline ? `
+            <div class="modal-stat">
+              <span class="stat-value">${test.timeline}</span>
+              <span class="stat-label">Timeline</span>
+            </div>
+          ` : ''}
         </div>
       ` : ''}
 
@@ -668,6 +680,22 @@ class SalesCommandCenter {
         <blockquote class="testimonial-quote">${test.quote}</blockquote>
         <button class="copy-btn" onclick="app.copyToClipboard(\`${this.escapeForJs(test.quote)}\`)">Copy Quote</button>
       </div>
+
+      ${jobProfile ? `
+        <div class="modal-section">
+          <h3>Background Superpowers</h3>
+          <p class="section-intro">As a ${jobProfile.title.toLowerCase()}, ${test.name.split(' ')[0]} has transferable skills:</p>
+          <div class="superpowers-list">
+            ${jobProfile.superpowers.slice(0, 3).map(s => `
+              <div class="superpower-item">
+                <div class="skill-name">${s.skill}</div>
+                <div class="skill-arrow">→</div>
+                <div class="skill-application">${s.vending_application}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : ''}
 
       ${test.objection_counters && test.objection_counters.length ? `
         <div class="modal-section">
@@ -865,52 +893,26 @@ class SalesCommandCenter {
     if (!this.reps) return;
 
     const repsList = this.reps.reps || [];
-    const teamAverages = this.reps.team_averages || {};
-    const criticalGaps = this.reps.critical_gaps || [];
 
     container.innerHTML = `
       <div class="view-header">
-        <h2>Rep Performance Dashboard</h2>
-        <p>Individual scorecards, gap analysis, and coaching recommendations.</p>
+        <h2>Team Resources</h2>
+        <p>Team member profiles and strengths. Click any member to see their expertise areas.</p>
       </div>
 
       <div class="stats-bar">
         <div class="stat">
-          <span class="stat-value">${this.reps.metadata?.total_calls_analyzed || 0}</span>
-          <span class="stat-label">Total Calls</span>
-        </div>
-        <div class="stat">
-          <span class="stat-value">${Math.round((teamAverages.overall_win_rate || 0) * 100)}%</span>
-          <span class="stat-label">Team Win Rate</span>
-        </div>
-        <div class="stat">
           <span class="stat-value">${repsList.length}</span>
-          <span class="stat-label">Reps Tracked</span>
+          <span class="stat-label">Team Members</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">Active</span>
+          <span class="stat-label">Status</span>
         </div>
       </div>
 
-      ${criticalGaps.length ? `
-        <div class="critical-gaps">
-          <h3>Critical Gaps Requiring Attention</h3>
-          <div class="gaps-list">
-            ${criticalGaps.map(gap => `
-              <div class="gap-item ${gap.priority.toLowerCase()}">
-                <span class="gap-rep">${gap.rep}</span>
-                <span class="gap-objection">${gap.objection}</span>
-                <span class="gap-rates">
-                  <span class="current">${Math.round(gap.current_rate * 100)}%</span>
-                  <span class="arrow">vs</span>
-                  <span class="average">${Math.round(gap.team_average * 100)}% avg</span>
-                </span>
-                <span class="gap-diff">-${Math.round(gap.gap * 100)}%</span>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      ` : ''}
-
       <div class="reps-grid">
-        ${repsList.map(rep => this.renderRepCard(rep, teamAverages)).join('')}
+        ${repsList.map(rep => this.renderRepCard(rep)).join('')}
       </div>
     `;
 
@@ -918,143 +920,53 @@ class SalesCommandCenter {
       card.addEventListener('click', () => {
         const id = card.dataset.repId;
         const rep = repsList.find(r => r.id === id);
-        if (rep) this.showRepModal(rep, teamAverages);
+        if (rep) this.showRepModal(rep);
       });
     });
   }
 
-  renderRepCard(rep, teamAverages) {
-    const winRateClass = rep.overall_win_rate >= teamAverages.overall_win_rate ? 'above' : 'below';
-
+  renderRepCard(rep) {
     return `
       <div class="rep-card" data-rep-id="${rep.id}">
         <div class="rep-header">
           <h3>${rep.name}</h3>
-          ${rep.status ? `<span class="rep-status">${rep.status}</span>` : ''}
-        </div>
-        <div class="rep-stats">
-          <div class="rep-stat">
-            <span class="stat-value ${winRateClass}">${Math.round(rep.overall_win_rate * 100)}%</span>
-            <span class="stat-label">Win Rate</span>
-          </div>
-          <div class="rep-stat">
-            <span class="stat-value">${rep.total_calls}</span>
-            <span class="stat-label">Calls</span>
-          </div>
+          <span class="rep-status">Active</span>
         </div>
         <div class="rep-strengths">
-          ${rep.strengths ? rep.strengths.slice(0, 1).map(s => `<span class="strength">${s.substring(0, 50)}...</span>`).join('') : ''}
+          ${rep.strengths ? rep.strengths.slice(0, 2).map(s => `<span class="strength">${s}</span>`).join('') : '<span class="strength">Sales Expert</span>'}
         </div>
-        ${rep.development_areas && rep.development_areas.some(d => d.includes('CRITICAL')) ? `
-          <div class="rep-alert">Has critical gap</div>
-        ` : ''}
       </div>
     `;
   }
 
-  showRepModal(rep, teamAverages) {
+  showRepModal(rep) {
     const modal = document.getElementById('modal');
     const modalContent = document.getElementById('modal-content');
-    const winRateClass = rep.overall_win_rate >= teamAverages.overall_win_rate ? 'above' : 'below';
 
     modalContent.innerHTML = `
       <div class="modal-header">
         <div class="modal-title-group">
-          <span class="modal-category">Rep Profile</span>
+          <span class="modal-category">Team Member</span>
           <h2>${rep.name}</h2>
         </div>
         <button class="modal-close" onclick="app.closeModal()">&times;</button>
       </div>
 
-      <div class="modal-stats">
-        <div class="modal-stat">
-          <span class="stat-value ${winRateClass}">${Math.round(rep.overall_win_rate * 100)}%</span>
-          <span class="stat-label">Win Rate</span>
-        </div>
-        <div class="modal-stat">
-          <span class="stat-value">${rep.total_calls}</span>
-          <span class="stat-label">Total Calls</span>
-        </div>
-        <div class="modal-stat">
-          <span class="stat-value">${rep.total_objections_faced}</span>
-          <span class="stat-label">Objections</span>
-        </div>
-        <div class="modal-stat">
-          <span class="stat-value">${rep.objections_per_call}</span>
-          <span class="stat-label">Per Call</span>
-        </div>
-      </div>
-
-      ${rep.top_objections ? `
-        <div class="modal-section">
-          <h3>Top Objections Faced</h3>
-          <table class="objections-table">
-            <thead>
-              <tr>
-                <th>Objection</th>
-                <th>Count</th>
-                <th>Win Rate</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${rep.top_objections.map(obj => `
-                <tr>
-                  <td>${obj.objection}</td>
-                  <td>${obj.count}</td>
-                  <td class="${this.getDifficultyClass(obj.win_rate)}">${Math.round(obj.win_rate * 100)}%</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </div>
-      ` : ''}
-
       ${rep.strengths ? `
         <div class="modal-section">
-          <h3>Strengths</h3>
+          <h3>Strengths & Expertise</h3>
           <ul class="strengths-list">
             ${rep.strengths.map(s => `<li>${s}</li>`).join('')}
           </ul>
         </div>
       ` : ''}
 
-      ${rep.development_areas ? `
-        <div class="modal-section">
-          <h3>Development Areas</h3>
-          <ul class="development-list">
-            ${rep.development_areas.map(d => `<li class="${d.includes('CRITICAL') ? 'critical' : ''}">${d}</li>`).join('')}
-          </ul>
-        </div>
-      ` : ''}
-
-      ${rep.critical_issue ? `
-        <div class="modal-section warning-section">
-          <h3>Critical Issue</h3>
-          <p>${rep.critical_issue}</p>
-        </div>
-      ` : ''}
-
       ${rep.coaching_recommendations ? `
         <div class="modal-section">
-          <h3>Coaching Recommendations</h3>
+          <h3>Focus Areas</h3>
           <ol class="coaching-list">
             ${rep.coaching_recommendations.map(c => `<li>${c}</li>`).join('')}
           </ol>
-        </div>
-      ` : ''}
-
-      ${rep.shadowing ? `
-        <div class="modal-section">
-          <h3>Shadowing Assignment</h3>
-          <p><strong>Should shadow:</strong> ${rep.shadowing.should_shadow}</p>
-          <p><strong>Focus:</strong> ${rep.shadowing.reason}</p>
-        </div>
-      ` : ''}
-
-      ${rep.target_improvement ? `
-        <div class="modal-section">
-          <h3>Target</h3>
-          <p>${rep.target_improvement}</p>
         </div>
       ` : ''}
     `;
@@ -1255,52 +1167,316 @@ class SalesCommandCenter {
     });
   }
 
-  renderAnalyzer(container) {
-    const patterns = this.objections?.patterns || {};
+  renderProspectProfiles(container) {
+    if (!this.jobSuperpowers) {
+      container.innerHTML = '<div class="empty-state"><h3>Prospect profiles not available</h3></div>';
+      return;
+    }
+
+    const jobs = this.jobSuperpowers.job_superpowers || [];
+    const categories = this.jobSuperpowers.categories || [];
 
     container.innerHTML = `
       <div class="view-header">
+        <h2>Prospect Profiles</h2>
+        <p>Understand how prospects' existing skills translate to vending success. Use this to relate to their background.</p>
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat">
+          <span class="stat-value">${jobs.length}</span>
+          <span class="stat-label">Job Profiles</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">${categories.length}</span>
+          <span class="stat-label">Categories</span>
+        </div>
+      </div>
+
+      <div class="category-filters">
+        <button class="filter-btn active" data-job-category="all">All Profiles</button>
+        ${categories.map(cat => `
+          <button class="filter-btn" data-job-category="${cat.id}">
+            ${cat.name}
+          </button>
+        `).join('')}
+      </div>
+
+      <div class="prospects-grid" id="prospects-grid">
+        ${jobs.map(job => this.renderJobCard(job)).join('')}
+      </div>
+    `;
+
+    // Bind filter events
+    document.querySelectorAll('[data-job-category]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('[data-job-category]').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+
+        const category = e.target.dataset.jobCategory;
+        document.querySelectorAll('.job-card').forEach(card => {
+          if (category === 'all' || card.dataset.category === category) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Bind card click events
+    document.querySelectorAll('.job-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.dataset.jobId;
+        const job = jobs.find(j => j.id === id);
+        if (job) this.showJobModal(job);
+      });
+    });
+  }
+
+  renderJobCard(job) {
+    const topSkills = job.superpowers.slice(0, 2);
+    return `
+      <div class="job-card" data-job-id="${job.id}" data-category="${job.category}">
+        <h3 class="job-title">${job.title}</h3>
+        <div class="job-skills-preview">
+          ${topSkills.map(s => `<span class="skill-tag">${s.skill}</span>`).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  showJobModal(job) {
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+
+    modalContent.innerHTML = `
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-category">Prospect Profile</span>
+          <h2>${job.title}</h2>
+        </div>
+        <button class="modal-close" onclick="app.closeModal()">&times;</button>
+      </div>
+
+      <div class="modal-section">
+        <h3>Vending Superpowers</h3>
+        <p class="section-intro">How their existing skills translate to vending success:</p>
+        <div class="superpowers-list">
+          ${job.superpowers.map(s => `
+            <div class="superpower-item">
+              <div class="skill-name">${s.skill}</div>
+              <div class="skill-arrow">→</div>
+              <div class="skill-application">${s.vending_application}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>Use in Conversation</h3>
+        <div class="script-block">
+          <blockquote class="script">"Based on your background as a ${job.title.toLowerCase()}, you already have incredible skills that translate perfectly to vending. Your ${job.superpowers[0].skill.toLowerCase()} means you'll naturally ${job.superpowers[0].vending_application.toLowerCase()}."</blockquote>
+          <button class="copy-btn" onclick="app.copyToClipboard('Based on your background as a ${job.title.toLowerCase()}, you already have incredible skills that translate perfectly to vending. Your ${job.superpowers[0].skill.toLowerCase()} means you\\'ll naturally ${job.superpowers[0].vending_application.toLowerCase()}.')">Copy Script</button>
+        </div>
+      </div>
+    `;
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  renderFinancing(container) {
+    if (!this.financing) {
+      container.innerHTML = '<div class="empty-state"><h3>Financing data not available</h3></div>';
+      return;
+    }
+
+    const options = this.financing.payment_options || [];
+    const creditGuide = this.financing.credit_score_guide || {};
+
+    container.innerHTML = `
+      <div class="view-header">
+        <h2>Financing Options</h2>
+        <p>Quick reference for payment options. Recommend the right financing based on credit score.</p>
+      </div>
+
+      <div class="credit-score-guide">
+        <h3>Credit Score Recommendation</h3>
+        <p class="discovery-question">"${this.financing.discovery_question}"</p>
+        <div class="credit-tiers">
+          ${Object.entries(creditGuide).map(([key, tier]) => `
+            <div class="credit-tier ${key}">
+              <div class="tier-header">
+                <span class="tier-range">${tier.range}</span>
+                <span class="tier-label">${tier.label}</span>
+              </div>
+              <div class="tier-recommendation">
+                ${tier.recommended_order.map((opt, i) => `<span class="rec-option">${this.getFinancingName(opt)}</span>${i < tier.recommended_order.length - 1 ? ' → ' : ''}`).join('')}
+              </div>
+              <p class="tier-note">${tier.note}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="financing-grid">
+        ${options.map(option => this.renderFinancingCard(option)).join('')}
+      </div>
+
+      <div class="creative-options">
+        <h3>Creative Payment Solutions</h3>
+        <ul>
+          ${this.financing.creative_options.map(opt => `<li>${opt}</li>`).join('')}
+        </ul>
+      </div>
+
+      <div class="last-resort">
+        <h3>If Declined by All Options</h3>
+        <div class="last-resort-list">
+          ${this.financing.last_resort_options.map(opt => `<span class="last-resort-tag">${opt}</span>`).join('')}
+        </div>
+      </div>
+    `;
+
+    // Bind card clicks
+    document.querySelectorAll('.financing-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.dataset.financingId;
+        const option = options.find(o => o.id === id);
+        if (option) this.showFinancingModal(option);
+      });
+    });
+  }
+
+  renderFinancingCard(option) {
+    return `
+      <div class="financing-card" data-financing-id="${option.id}">
+        <div class="financing-header">
+          <h3 class="financing-name">${option.name}</h3>
+          <span class="financing-timeline">${option.timeline}</span>
+        </div>
+        <div class="financing-details">
+          <div class="financing-detail">
+            <span class="detail-label">Fee</span>
+            <span class="detail-value">${option.fee}</span>
+          </div>
+          <div class="financing-detail">
+            <span class="detail-label">APR</span>
+            <span class="detail-value">${option.apr}</span>
+          </div>
+        </div>
+        <p class="financing-best-for">${option.best_for}</p>
+        ${option.restrictions && option.restrictions.length ? `
+          <div class="financing-restrictions">
+            ${option.restrictions.map(r => `<span class="restriction-tag">${r}</span>`).join('')}
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }
+
+  showFinancingModal(option) {
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+
+    modalContent.innerHTML = `
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-category">Payment Option</span>
+          <h2>${option.name}</h2>
+        </div>
+        <button class="modal-close" onclick="app.closeModal()">&times;</button>
+      </div>
+
+      <div class="modal-stats">
+        <div class="modal-stat">
+          <span class="stat-value">${option.timeline}</span>
+          <span class="stat-label">Terms</span>
+        </div>
+        <div class="modal-stat">
+          <span class="stat-value">${option.fee}</span>
+          <span class="stat-label">Fee</span>
+        </div>
+        <div class="modal-stat">
+          <span class="stat-value">${option.apr}</span>
+          <span class="stat-label">APR</span>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>Best For</h3>
+        <p>${option.best_for}</p>
+      </div>
+
+      <div class="modal-section">
+        <h3>Key Points</h3>
+        <ul class="highlights-list">
+          ${option.highlights.map(h => `<li>${h}</li>`).join('')}
+        </ul>
+      </div>
+
+      ${option.restrictions && option.restrictions.length ? `
+        <div class="modal-section">
+          <h3>Restrictions</h3>
+          <div class="tags">
+            ${option.restrictions.map(r => `<span class="tag restriction">${r}</span>`).join('')}
+          </div>
+        </div>
+      ` : ''}
+    `;
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  getFinancingName(id) {
+    const names = {
+      'elective': 'Elective',
+      'klarna': 'Klarna',
+      'payva': 'Payva',
+      'coach': 'Coach',
+      'split_it': 'Split It',
+      'pif': 'Pay in Full',
+      'paypal': 'PayPal'
+    };
+    return names[id] || id;
+  }
+
+  renderAnalyzer(container) {
+    container.innerHTML = `
+      <div class="view-header">
         <h2>Call Analyzer</h2>
-        <p>Enter objections from your call to get real-time analysis and recommendations.</p>
+        <p>Enter objections from your call to get instant script recommendations.</p>
       </div>
 
       <div class="analyzer-input">
         <textarea id="analyzer-objections" placeholder="Enter objections you're hearing on this call, one per line...&#10;&#10;Example:&#10;I don't have the capital right now&#10;I need to talk to my spouse"></textarea>
-        <button class="btn-primary" onclick="app.analyzeCall()">Analyze Call</button>
+        <button class="btn-primary" onclick="app.analyzeCall()">Find Scripts</button>
       </div>
 
       <div id="analyzer-results"></div>
 
       <div class="patterns-reference">
-        <h3>Known Patterns</h3>
+        <h3>Quick Tips</h3>
 
         <div class="pattern-section">
-          <h4>Three-Objection Threshold</h4>
-          <p>Win rate drops to <strong>31%</strong> with 3+ objections (vs 68% for 1-2 objections)</p>
+          <h4>Re-qualification Script</h4>
+          <p>Use this when you're hearing multiple objections to find the real concern:</p>
           <div class="script-block">
-            <div class="script-label">Re-qualification Script</div>
-            <blockquote class="script">${patterns.multiple_objections?.three_plus_objections?.script || 'On a scale of 1-10, how serious are you about starting a vending business in the next 90 days?'}</blockquote>
+            <blockquote class="script">On a scale of 1-10, how serious are you about starting a vending business in the next 90 days?</blockquote>
             <button class="copy-btn" onclick="app.copyToClipboard('On a scale of 1-10, how serious are you about starting a vending business in the next 90 days?')">Copy</button>
           </div>
         </div>
 
-        ${patterns.dangerous_combos ? `
-          <div class="pattern-section">
-            <h4>Dangerous Combinations</h4>
-            ${patterns.dangerous_combos.map(combo => `
-              <div class="danger-combo">
-                <div class="combo-header">
-                  <span class="combo-objections">${combo.objections.map(o => this.getCategoryName(o)).join(' + ')}</span>
-                  <span class="combo-rate">${Math.round(combo.win_rate * 100)}% win rate</span>
-                </div>
-                <div class="combo-protocol">
-                  <strong>Protocol:</strong>
-                  <ol>${combo.protocol.map(p => `<li>${p}</li>`).join('')}</ol>
-                </div>
-              </div>
-            `).join('')}
+        <div class="pattern-section">
+          <h4>Finding the Real Objection</h4>
+          <p>Most objections are masks for something else. Key questions to uncover the truth:</p>
+          <div class="script-block">
+            <blockquote class="script">If we could solve that, would you be ready to move forward today?</blockquote>
+            <button class="copy-btn" onclick="app.copyToClipboard('If we could solve that, would you be ready to move forward today?')">Copy</button>
           </div>
-        ` : ''}
+        </div>
       </div>
     `;
   }
@@ -1313,13 +1489,15 @@ class SalesCommandCenter {
 
     const input = textarea.value.trim();
     if (!input) {
-      resultsDiv.innerHTML = '<p class="empty-state">Enter at least one objection to analyze.</p>';
+      resultsDiv.innerHTML = '<p class="empty-state">Enter what the prospect is saying to get instant suggestions.</p>';
       return;
     }
 
+    const inputLower = input.toLowerCase();
     const lines = input.split('\n').filter(l => l.trim());
-    const matchedObjections = [];
 
+    // Match objections
+    const matchedObjections = [];
     lines.forEach(line => {
       const matches = this.searchIndex
         .filter(item => item.type === 'objection')
@@ -1338,80 +1516,223 @@ class SalesCommandCenter {
       }
     });
 
+    // Detect job mentions
+    const matchedJobs = [];
+    if (this.jobSuperpowers) {
+      this.jobSuperpowers.job_superpowers.forEach(job => {
+        const titleWords = job.title.toLowerCase().split(/[\s\/]+/);
+        const matched = titleWords.some(word => word.length > 3 && inputLower.includes(word));
+        if (matched) {
+          matchedJobs.push(job);
+        }
+      });
+    }
+
+    // Detect financing concerns
+    const financingTriggers = this.detectFinancingTriggers(inputLower);
+
+    // Detect testimonial opportunities
+    const matchedTestimonials = this.findRelevantTestimonials(inputLower);
+
     const count = matchedObjections.length;
     const categories = [...new Set(matchedObjections.map(m => m.match.data.category))];
 
-    // Check for dangerous combos
-    let dangerAlert = '';
-    const patterns = this.objections?.patterns?.dangerous_combos || [];
-    patterns.forEach(combo => {
-      const hasAll = combo.objections.every(obj =>
-        categories.some(cat => cat.includes(obj) || obj.includes(cat))
-      );
-      if (hasAll) {
-        dangerAlert = `
-          <div class="analyzer-alert danger">
-            <h4>Danger Combination Detected</h4>
-            <p><strong>${combo.objections.map(o => this.getCategoryName(o)).join(' + ')}</strong></p>
-            <p>Combined win rate: <strong>${Math.round(combo.win_rate * 100)}%</strong></p>
-            <div class="protocol">
-              <strong>Protocol:</strong>
-              <ol>${combo.protocol.map(p => `<li>${p}</li>`).join('')}</ol>
-            </div>
+    // Build results HTML
+    let html = `
+      <div class="analyzer-summary">
+        <h3>Real-Time Suggestions</h3>
+        <div class="summary-stats">
+          <div class="summary-stat">
+            <span class="stat-value">${count}</span>
+            <span class="stat-label">Objections</span>
           </div>
-        `;
-      }
-    });
+          <div class="summary-stat">
+            <span class="stat-value">${matchedJobs.length}</span>
+            <span class="stat-label">Job Matches</span>
+          </div>
+          <div class="summary-stat">
+            <span class="stat-value">${financingTriggers.length}</span>
+            <span class="stat-label">Financing Cues</span>
+          </div>
+        </div>
+      </div>
+    `;
 
-    // Three objection alert
-    let threeAlert = '';
+    // Three objection tip
     if (count >= 3) {
-      threeAlert = `
-        <div class="analyzer-alert warning">
-          <h4>Three-Objection Threshold</h4>
-          <p>Win rate drops to <strong>31%</strong> with 3+ objections</p>
-          <p><strong>Recommended:</strong> Re-qualify this prospect</p>
+      html += `
+        <div class="analyzer-alert tip">
+          <h4>Pro Tip: Multiple Objections</h4>
+          <p><strong>Recommended:</strong> Re-qualify this prospect to find their main concern</p>
           <div class="script-block">
             <blockquote class="script">"On a scale of 1-10, how serious are you about starting a vending business in the next 90 days?"</blockquote>
             <button class="copy-btn" onclick="app.copyToClipboard('On a scale of 1-10, how serious are you about starting a vending business in the next 90 days?')">Copy</button>
           </div>
-          <p><strong>If below 7:</strong> Qualify out<br><strong>If 7+:</strong> "Let's identify the ONE thing really holding you back"</p>
         </div>
       `;
     }
 
-    resultsDiv.innerHTML = `
-      <div class="analyzer-summary">
-        <h3>Analysis Results</h3>
-        <div class="summary-stats">
-          <div class="summary-stat">
-            <span class="stat-value">${count}</span>
-            <span class="stat-label">Objections Detected</span>
-          </div>
-          <div class="summary-stat">
-            <span class="stat-value">${categories.length}</span>
-            <span class="stat-label">Categories</span>
-          </div>
-        </div>
-      </div>
-
-      ${dangerAlert}
-      ${threeAlert}
-
-      <div class="matched-objections">
-        <h4>Matched Objections</h4>
-        ${matchedObjections.map(m => `
-          <div class="matched-item">
-            <div class="matched-input">"${m.input}"</div>
-            <div class="matched-result">
-              <span class="matched-name">${m.match.data.name}</span>
-              <span class="matched-rate ${this.getDifficultyClass(m.match.data.win_rate)}">${Math.round((m.match.data.win_rate || 0) * 100)}% win rate</span>
+    // Job profile matches
+    if (matchedJobs.length > 0) {
+      html += `
+        <div class="analyzer-section job-matches">
+          <h4>Background Detected - Use Their Experience</h4>
+          ${matchedJobs.slice(0, 2).map(job => `
+            <div class="suggestion-card job-suggestion" onclick="app.showJobModal(app.jobSuperpowers.job_superpowers.find(j => j.id === '${job.id}'))">
+              <div class="suggestion-header">
+                <span class="suggestion-type">Job Profile</span>
+                <span class="suggestion-title">${job.title}</span>
+              </div>
+              <div class="suggestion-script">
+                <p>"Your experience with <strong>${job.superpowers[0].skill.toLowerCase()}</strong> means you'll naturally <strong>${job.superpowers[0].vending_application.toLowerCase()}</strong>."</p>
+              </div>
+              <button class="copy-btn small" onclick="event.stopPropagation(); app.copyToClipboard('Your experience with ${job.superpowers[0].skill.toLowerCase()} means you\\'ll naturally ${job.superpowers[0].vending_application.toLowerCase()}.')">Copy</button>
             </div>
-            <button class="btn-small" onclick="app.showObjectionModal(app.objections.objections.find(o => o.id === '${m.match.id}'))">View Scripts</button>
-          </div>
-        `).join('')}
-      </div>
-    `;
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // Financing triggers
+    if (financingTriggers.length > 0) {
+      html += `
+        <div class="analyzer-section financing-matches">
+          <h4>Financing Concern Detected</h4>
+          ${financingTriggers.map(trigger => `
+            <div class="suggestion-card financing-suggestion">
+              <div class="suggestion-header">
+                <span class="suggestion-type">${trigger.type}</span>
+                <span class="suggestion-title">${trigger.title}</span>
+              </div>
+              <div class="suggestion-script">
+                <p>${trigger.script}</p>
+              </div>
+              <button class="copy-btn small" onclick="app.copyToClipboard(\`${this.escapeForJs(trigger.script)}\`)">Copy</button>
+              ${trigger.recommended ? `
+                <div class="recommended-options">
+                  <span class="rec-label">Recommend:</span>
+                  ${trigger.recommended.map(opt => `<span class="rec-option">${this.getFinancingName(opt)}</span>`).join(' → ')}
+                </div>
+              ` : ''}
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // Objection matches
+    if (matchedObjections.length > 0) {
+      html += `
+        <div class="analyzer-section objection-matches">
+          <h4>Objections Detected - Click for Scripts</h4>
+          ${matchedObjections.map(m => `
+            <div class="matched-item" onclick="app.showObjectionModal(app.objections.objections.find(o => o.id === '${m.match.id}'))">
+              <div class="matched-input">"${m.input}"</div>
+              <div class="matched-result">
+                <span class="matched-name">${m.match.data.name}</span>
+                <span class="matched-category">${this.getCategoryName(m.match.data.category).replace(' Objections', '')}</span>
+              </div>
+              <button class="btn-small">View Scripts</button>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // Relevant testimonials
+    if (matchedTestimonials.length > 0) {
+      html += `
+        <div class="analyzer-section testimonial-matches">
+          <h4>Relevant Success Stories</h4>
+          ${matchedTestimonials.slice(0, 2).map(test => `
+            <div class="suggestion-card testimonial-suggestion" onclick="app.showTestimonialModal(app.testimonials.full_testimonials.find(t => t.id === '${test.id}'))">
+              <div class="suggestion-header">
+                <span class="suggestion-type">Success Story</span>
+                <span class="suggestion-title">${test.name}</span>
+              </div>
+              <p class="suggestion-preview">${test.title}${test.results?.monthly_revenue ? ` - $${test.results.monthly_revenue.toLocaleString()}/mo` : ''}</p>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    resultsDiv.innerHTML = html;
+  }
+
+  detectFinancingTriggers(input) {
+    const triggers = [];
+
+    if (!this.financing) return triggers;
+
+    // Check for affordability concerns
+    const affordKeywords = ['afford', 'expensive', 'cost', 'budget', 'money', 'price', 'pay'];
+    if (affordKeywords.some(k => input.includes(k))) {
+      triggers.push({
+        type: 'Affordability',
+        title: 'Payment Concern Detected',
+        script: "I totally understand budget is a concern. The good news is we have several flexible payment options. Do you roughly know what your credit score is? That helps me point you to the best fit.",
+        recommended: ['split_it', 'elective', 'payva']
+      });
+    }
+
+    // Check for credit concerns
+    const creditKeywords = ['credit', 'score', 'declined', 'bad credit', 'no credit'];
+    if (creditKeywords.some(k => input.includes(k))) {
+      triggers.push({
+        type: 'Credit Concern',
+        title: 'Credit Score Mentioned',
+        script: "No worries at all - we work with everyone. Payva approves anyone regardless of credit, and Coach Financing offers terms up to 144 months to keep payments low.",
+        recommended: ['payva', 'coach']
+      });
+    }
+
+    // Check for payment term concerns
+    const termKeywords = ['monthly', 'payments', 'month', 'long term', '24', 'longer'];
+    if (termKeywords.some(k => input.includes(k))) {
+      triggers.push({
+        type: 'Payment Terms',
+        title: 'Longer Terms Needed',
+        script: "We can definitely work with that. Klarna offers up to 24 months, and Coach Financing can go up to 144 months if you need really low monthly payments.",
+        recommended: ['klarna', 'coach']
+      });
+    }
+
+    // Check for California
+    if (input.includes('california') || input.includes(' ca ') || input.includes('los angeles') || input.includes('san francisco')) {
+      triggers.push({
+        type: 'Location',
+        title: 'California Resident',
+        script: "Just a heads up - Elective isn't available in California, but we have great alternatives. Klarna and Payva both work great for CA residents.",
+        recommended: ['klarna', 'payva']
+      });
+    }
+
+    return triggers;
+  }
+
+  findRelevantTestimonials(input) {
+    if (!this.testimonials || !this.testimonials.full_testimonials) return [];
+
+    const relevant = [];
+    const keywords = input.split(/\s+/).filter(w => w.length > 3);
+
+    this.testimonials.full_testimonials.forEach(test => {
+      const testText = [
+        test.name,
+        test.title,
+        test.quote,
+        ...(test.tags || []),
+        ...(test.objection_counters || [])
+      ].join(' ').toLowerCase();
+
+      const matchCount = keywords.filter(k => testText.includes(k)).length;
+      if (matchCount >= 2) {
+        relevant.push({ ...test, matchScore: matchCount });
+      }
+    });
+
+    return relevant.sort((a, b) => b.matchScore - a.matchScore);
   }
 
   fuzzyMatch(input, target) {
