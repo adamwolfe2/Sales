@@ -9,6 +9,8 @@ class SalesCommandCenter {
     this.playbooks = null;
     this.testimonials = null;
     this.reps = null;
+    this.pricing = null;
+    this.callAnalytics = null;
     this.currentView = 'objections';
     this.searchIndex = [];
   }
@@ -27,17 +29,21 @@ class SalesCommandCenter {
   }
 
   async loadData() {
-    const [objections, playbooks, testimonials, reps] = await Promise.all([
+    const [objections, playbooks, testimonials, reps, pricing, callAnalytics] = await Promise.all([
       fetch('data/objections.json').then(r => r.json()),
       fetch('data/playbooks.json').then(r => r.json()),
       fetch('data/testimonials.json').then(r => r.json()),
-      fetch('data/reps.json').then(r => r.json())
+      fetch('data/reps.json').then(r => r.json()),
+      fetch('data/pricing.json').then(r => r.json()),
+      fetch('data/call-analytics.json').then(r => r.json())
     ]);
 
     this.objections = objections;
     this.playbooks = playbooks;
     this.testimonials = testimonials;
     this.reps = reps;
+    this.pricing = pricing;
+    this.callAnalytics = callAnalytics;
   }
 
   buildSearchIndex() {
@@ -149,11 +155,17 @@ class SalesCommandCenter {
       case 'playbooks':
         this.renderPlaybooks(content);
         break;
+      case 'pricing':
+        this.renderPricing(content);
+        break;
       case 'reps':
         this.renderReps(content);
         break;
       case 'testimonials':
         this.renderTestimonials(content);
+        break;
+      case 'analytics':
+        this.renderCallAnalytics(content);
         break;
       case 'analyzer':
         this.renderAnalyzer(content);
@@ -1258,6 +1270,373 @@ class SalesCommandCenter {
 
   escapeForJs(text) {
     return (text || '').replace(/`/g, '\\`').replace(/\$/g, '\\$');
+  }
+
+  renderPricing(container) {
+    if (!this.pricing) return;
+
+    const packages = this.pricing.packages;
+    const financing = this.pricing.financing_options;
+    const creditRecs = this.pricing.credit_score_recommendations;
+
+    container.innerHTML = `
+      <div class="view-header">
+        <h2>Pricing Calculator</h2>
+        <p>Complete payment links and financing options. Click any package to see all payment methods.</p>
+      </div>
+
+      <div class="credit-score-guide">
+        <h3>Credit Score Recommendation Guide</h3>
+        <p class="guide-prompt">"${creditRecs.prompt}"</p>
+        <div class="credit-tiers">
+          ${Object.entries(creditRecs.tiers).map(([key, tier]) => `
+            <div class="credit-tier" data-tier="${key}">
+              <h4>${tier.label}</h4>
+              <div class="tier-flow">${tier.priority_order.map(opt =>
+                `<span class="flow-item">${this.getFinancingName(opt)}</span>`
+              ).join('<span class="flow-arrow">→</span>')}</div>
+              <p class="tier-notes">${tier.notes}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="packages-grid">
+        ${Object.entries(packages).map(([key, pkg]) => `
+          <div class="package-card ${pkg.most_popular ? 'popular' : ''}" data-package="${key}">
+            ${pkg.most_popular ? '<div class="popular-badge">MOST POPULAR</div>' : ''}
+            <div class="package-header">
+              <h3>${pkg.name}</h3>
+              <div class="package-price">
+                <span class="price-amount">$${pkg.price.toLocaleString()}</span>
+                <span class="price-duration">/ ${pkg.duration_months} months</span>
+              </div>
+            </div>
+            <p class="package-best-for"><strong>BEST FOR:</strong> ${pkg.best_for}</p>
+            <ul class="package-features">
+              ${pkg.features.map(f => `<li>${f}</li>`).join('')}
+            </ul>
+            <button class="btn-primary view-payments" data-package="${key}">View Payment Options</button>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="addons-section">
+        <h3>Add-Ons</h3>
+        <div class="addons-grid">
+          ${Object.entries(this.pricing.addons).map(([key, addon]) => `
+            <div class="addon-card">
+              <h4>${addon.name}</h4>
+              ${addon.price ? `<div class="addon-price">$${addon.price.toLocaleString()}</div>` : ''}
+              ${addon.savings ? `<div class="addon-savings">Save $${addon.savings}</div>` : ''}
+              <p>${addon.description}</p>
+              <a href="${addon.url}" target="_blank" class="btn-secondary">Checkout Link</a>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="financing-reference">
+        <h3>Financing Options Reference</h3>
+        <div class="financing-grid">
+          ${Object.entries(financing).filter(([k]) => k !== 'paypal').map(([key, opt]) => `
+            <div class="financing-card">
+              <h4>${opt.name}</h4>
+              <div class="financing-timeline">${opt.timeline}</div>
+              ${opt.fee_percentage ? `<div class="financing-fee">+${opt.fee_percentage}% fee</div>` : ''}
+              <ul class="financing-benefits">
+                ${opt.benefits.map(b => `<li>${b}</li>`).join('')}
+              </ul>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    // Bind payment option click events
+    document.querySelectorAll('.view-payments').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const pkgKey = e.target.dataset.package;
+        this.showPaymentOptionsModal(pkgKey);
+      });
+    });
+  }
+
+  getFinancingName(key) {
+    const names = {
+      'elective': 'Elective',
+      'klarna': 'Klarna',
+      'payva': 'Payva',
+      'coach': 'Coach',
+      'pif': 'PIF'
+    };
+    return names[key] || key;
+  }
+
+  showPaymentOptionsModal(packageKey) {
+    const pkg = this.pricing.packages[packageKey];
+    if (!pkg) return;
+
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+
+    modalContent.innerHTML = `
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-category">Payment Options</span>
+          <h2>${pkg.name} - $${pkg.price.toLocaleString()}</h2>
+        </div>
+        <button class="modal-close" onclick="app.closeModal()">&times;</button>
+      </div>
+
+      <div class="modal-section">
+        <p><strong>Best For:</strong> ${pkg.best_for}</p>
+      </div>
+
+      <div class="payment-options-grid">
+        ${Object.entries(pkg.payment_options).map(([key, opt]) => `
+          <div class="payment-option-card">
+            <div class="payment-option-header">
+              <h4>${opt.name}</h4>
+              <span class="payment-price">$${opt.price.toLocaleString()}</span>
+            </div>
+            <p class="payment-desc">${opt.description}</p>
+            <a href="${opt.url}" target="_blank" class="btn-primary payment-link" onclick="app.copyPaymentLink('${opt.url}', event)">
+              Open Checkout
+            </a>
+            <button class="btn-secondary copy-link" onclick="app.copyToClipboard('${opt.url}')">
+              Copy Link
+            </button>
+          </div>
+        `).join('')}
+      </div>
+    `;
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  copyPaymentLink(url, event) {
+    navigator.clipboard.writeText(url).then(() => {
+      this.showToast('Link copied to clipboard');
+    });
+  }
+
+  renderCallAnalytics(container) {
+    if (!this.callAnalytics) return;
+
+    const analytics = this.callAnalytics.analytics;
+    const jobPatterns = this.callAnalytics.job_type_patterns;
+    const creditPatterns = this.callAnalytics.credit_score_patterns;
+    const emotionalTriggers = this.callAnalytics.emotional_triggers;
+    const winningCloses = this.callAnalytics.winning_closes;
+
+    container.innerHTML = `
+      <div class="view-header">
+        <h2>Call Analytics</h2>
+        <p>Patterns from ${this.callAnalytics.metadata.total_calls_analyzed} calls analyzed. Use these insights to improve close rates.</p>
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat">
+          <span class="stat-value">${this.callAnalytics.metadata.total_calls_analyzed}</span>
+          <span class="stat-label">Calls Analyzed</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">${Math.round(analytics.outcome_summary.followup_rate * 100)}%</span>
+          <span class="stat-label">Follow-up Rate</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">${analytics.objection_frequency.PRICE}</span>
+          <span class="stat-label">Price Objections</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">${analytics.objection_frequency.SPOUSE}</span>
+          <span class="stat-label">Spouse Objections</span>
+        </div>
+      </div>
+
+      <div class="analytics-section">
+        <h3>Objection Frequency</h3>
+        <div class="objection-bars">
+          ${Object.entries(analytics.objection_frequency)
+            .sort((a, b) => b[1] - a[1])
+            .map(([obj, count]) => {
+              const maxCount = Math.max(...Object.values(analytics.objection_frequency));
+              const percentage = (count / maxCount) * 100;
+              return `
+                <div class="objection-bar-item">
+                  <span class="bar-label">${obj}</span>
+                  <div class="bar-container">
+                    <div class="bar-fill" style="width: ${percentage}%"></div>
+                  </div>
+                  <span class="bar-count">${count}</span>
+                </div>
+              `;
+            }).join('')}
+        </div>
+      </div>
+
+      <div class="analytics-section">
+        <h3>Patterns by Job Type</h3>
+        <p class="section-desc">Click any job category to see detailed approach and testimonials.</p>
+        <div class="job-patterns-grid">
+          ${Object.entries(jobPatterns).map(([key, pattern]) => `
+            <div class="job-pattern-card" data-job="${key}">
+              <h4>${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h4>
+              <div class="job-examples">${pattern.jobs.slice(0, 4).join(', ')}${pattern.jobs.length > 4 ? '...' : ''}</div>
+              <div class="job-motivation"><strong>Motivation:</strong> ${pattern.motivation}</div>
+              <div class="job-objections"><strong>Common:</strong> ${pattern.common_objections.join(', ')}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="analytics-section">
+        <h3>Emotional Triggers</h3>
+        <p class="section-desc">Identify these triggers in discovery to build urgency and close deals.</p>
+        <div class="triggers-grid">
+          ${Object.entries(emotionalTriggers).map(([key, trigger]) => `
+            <div class="trigger-card">
+              <h4>${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h4>
+              <div class="trigger-phrases">
+                ${trigger.phrases.map(p => `<span class="trigger-phrase">"${p}"</span>`).join('')}
+              </div>
+              <p class="trigger-response"><strong>Response:</strong> ${trigger.response}</p>
+              ${trigger.testimonials ? `<p class="trigger-testimonials"><strong>Use:</strong> ${trigger.testimonials.join(', ')}</p>` : ''}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="analytics-section">
+        <h3>Credit Score Patterns</h3>
+        <div class="credit-patterns-grid">
+          ${Object.entries(creditPatterns).map(([key, pattern]) => `
+            <div class="credit-pattern-card ${pattern.win_rate_correlation.toLowerCase().replace(/[- ]/g, '_')}">
+              <h4>${key.replace(/_/g, ' ')}</h4>
+              <p><strong>Behavior:</strong> ${pattern.behavior}</p>
+              <p><strong>Approach:</strong> ${pattern.approach}</p>
+              <span class="correlation-badge">${pattern.win_rate_correlation}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="analytics-section">
+        <h3>Winning Close Signals</h3>
+        <p class="section-desc">When you hear these, move to close immediately.</p>
+        <div class="winning-closes-grid">
+          ${Object.entries(winningCloses).map(([key, close]) => `
+            <div class="close-signal-card">
+              <h4>${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h4>
+              <div class="close-signal">"${close.signal}"</div>
+              <p><strong>Meaning:</strong> ${close.meaning}</p>
+              <p class="close-action"><strong>Action:</strong> ${close.action}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="analytics-section">
+        <h3>Lost Deal Reasons</h3>
+        <div class="lost-deals-grid">
+          ${Object.entries(this.callAnalytics.lost_deal_reasons).map(([key, reason]) => `
+            <div class="lost-deal-card">
+              <h4>${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h4>
+              <p><strong>Pattern:</strong> "${reason.pattern}"</p>
+              <p><strong>Solution:</strong> ${reason.solution}</p>
+              <p class="prevention"><strong>Prevention:</strong> ${reason.prevention}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    // Bind job pattern click events
+    document.querySelectorAll('.job-pattern-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const jobKey = card.dataset.job;
+        this.showJobPatternModal(jobKey);
+      });
+    });
+  }
+
+  showJobPatternModal(jobKey) {
+    const pattern = this.callAnalytics.job_type_patterns[jobKey];
+    if (!pattern) return;
+
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+
+    modalContent.innerHTML = `
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-category">Job Type Pattern</span>
+          <h2>${jobKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h2>
+        </div>
+        <button class="modal-close" onclick="app.closeModal()">&times;</button>
+      </div>
+
+      <div class="modal-section">
+        <h3>Job Titles</h3>
+        <div class="tags">
+          ${pattern.jobs.map(j => `<span class="tag">${j}</span>`).join('')}
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>Motivation</h3>
+        <p>${pattern.motivation}</p>
+      </div>
+
+      <div class="modal-section">
+        <h3>Common Objections</h3>
+        <div class="tags">
+          ${pattern.common_objections.map(o => `<span class="tag warning">${o}</span>`).join('')}
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>Recommended Approach</h3>
+        <p>${pattern.approach}</p>
+      </div>
+
+      ${pattern.emotional_trigger ? `
+        <div class="modal-section">
+          <h3>Emotional Trigger</h3>
+          <blockquote>"${pattern.emotional_trigger}"</blockquote>
+        </div>
+      ` : ''}
+
+      ${pattern.win_signals ? `
+        <div class="modal-section">
+          <h3>Win Signals</h3>
+          <ul>
+            ${pattern.win_signals.map(s => `<li>${s}</li>`).join('')}
+          </ul>
+        </div>
+      ` : ''}
+
+      ${pattern.testimonials_to_use ? `
+        <div class="modal-section">
+          <h3>Testimonials to Use</h3>
+          <ul>
+            ${pattern.testimonials_to_use.map(t => `<li>${t}</li>`).join('')}
+          </ul>
+        </div>
+      ` : ''}
+
+      ${pattern.caution ? `
+        <div class="modal-section warning-section">
+          <h3>Caution</h3>
+          <p>${pattern.caution}</p>
+        </div>
+      ` : ''}
+    `;
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
   }
 }
 

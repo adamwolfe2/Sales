@@ -1,0 +1,300 @@
+{
+  "metadata": {
+    "last_updated": "2026-01-27",
+    "data_source": "Attention call analysis",
+    "total_calls_analyzed": 75,
+    "date_range": "2026-01-22 to 2026-01-26"
+  },
+  "call_data": [
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "genetic scientist", "credit_score": "HIGH", "objections": ["TIMING", "RESEARCH", "CAPITAL"], "financing_discussed": true, "close_reason": "need time to decide and check finances"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "technical manager", "credit_score": "HIGH", "objections": ["SPOUSE", "LOCATION", "CAPITAL"], "financing_discussed": true, "close_reason": "needs to talk to spouse before deciding"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": [], "financing_discussed": true, "close_reason": "prospect will complete onboarding tomorrow"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "sales", "credit_score": "NONE", "objections": ["RESEARCH", "TIMING"], "financing_discussed": true, "close_reason": "needs to finalize LLC and paperwork"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": ["SPOUSE", "PRICE"], "financing_discussed": true, "close_reason": "needs to talk to parents first"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "sales rep", "credit_score": "NONE", "objections": [], "financing_discussed": true, "close_reason": "need to discuss together before deciding"},
+    {"date": "2026-01-26", "outcome": "WON", "job": "costco manager", "credit_score": "HIGH", "objections": ["TIMING", "RESEARCH"], "financing_discussed": true, "close_reason": "community support and 50 free leads offer"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "sales", "credit_score": "NONE", "objections": ["RESEARCH"], "financing_discussed": true, "close_reason": "needs to confirm apartment locations before committing"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": [], "financing_discussed": false, "close_reason": "not enough information provided"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "technician", "credit_score": "710", "objections": ["PRICE", "CAPITAL", "SPOUSE"], "financing_discussed": true, "close_reason": "need to discuss and consider financing options"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "teacher", "credit_score": "HIGH", "objections": ["PRICE", "SPOUSE", "CAPITAL", "LOCATION"], "financing_discussed": true, "close_reason": "needs to discuss with spouse before deciding"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "teacher", "credit_score": "HIGH", "objections": ["PRICE", "RESEARCH"], "financing_discussed": true, "close_reason": "needs to review numbers and payment options"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": [], "financing_discussed": false, "close_reason": "not enough information"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "tech", "credit_score": "NONE", "objections": ["PRICE", "RESEARCH"], "financing_discussed": true, "close_reason": "needs to consider ROI and cost"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": ["TRUST", "TIMING"], "financing_discussed": true, "close_reason": "needs more time to decide"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "private equity", "credit_score": "NONE", "objections": ["PRICE", "SPOUSE", "TIMING", "RESEARCH"], "financing_discussed": true, "close_reason": "needs time talk to fiance evaluate price"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "senior manager", "credit_score": "NONE", "objections": ["LOCATION", "RESEARCH"], "financing_discussed": false, "close_reason": "need to review info and check zip codes"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": [], "financing_discussed": false, "close_reason": "no response reschedule suggested"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "maintenance worker", "credit_score": "NONE", "objections": ["CAPITAL", "TIMING", "LOCATION"], "financing_discussed": true, "close_reason": "needs to secure business funding"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": [], "financing_discussed": false, "close_reason": "no response follow-up needed"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "small business owner", "credit_score": "NONE", "objections": ["RESEARCH", "LOCATION"], "financing_discussed": true, "close_reason": "needs more research and references"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "advertising agency", "credit_score": "NONE", "objections": ["SPOUSE", "TIMING", "RESEARCH"], "financing_discussed": true, "close_reason": "needs to discuss with spouse and evaluate timing"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "military", "credit_score": "NONE", "objections": ["PRICE", "CAPITAL", "RESEARCH", "TIMING"], "financing_discussed": true, "close_reason": "needs time to process and budget"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "retail manager", "credit_score": "LOW", "objections": ["PRICE", "CAPITAL", "LOCATION"], "financing_discussed": true, "close_reason": "waiting for insurance check and prioritizing expenses"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": ["TIMING"], "financing_discussed": true, "close_reason": "needs time to make payment wednesday"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "engineering manager", "credit_score": "NONE", "objections": ["PRICE", "SPOUSE", "TIMING", "CAPITAL"], "financing_discussed": true, "close_reason": "needs time spouse approval capital concerns"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "college student", "credit_score": "NONE", "objections": ["RESEARCH", "TIMING", "CAPITAL"], "financing_discussed": true, "close_reason": "need to discuss and decide on package"},
+    {"date": "2026-01-26", "outcome": "LOST", "job": "IT", "credit_score": "NONE", "objections": ["PRICE", "CAPITAL"], "financing_discussed": true, "close_reason": "too expensive doesn't have 6K upfront"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": [], "financing_discussed": false, "close_reason": "no response follow-up needed"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "flight attendant", "credit_score": "640", "objections": ["PRICE", "CAPITAL", "TIMING", "COMPETITION", "LOCATION"], "financing_discussed": true, "close_reason": "need time to secure funds financing"},
+    {"date": "2026-01-26", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": [], "financing_discussed": false, "close_reason": "prospect did not join the call"},
+    {"date": "2026-01-24", "outcome": "FOLLOWUP", "job": "realtor", "credit_score": "606", "objections": ["PRICE", "CAPITAL", "LOCATION"], "financing_discussed": true, "close_reason": "need time to discuss and decide"},
+    {"date": "2026-01-24", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": ["PRICE", "RESEARCH", "CAPITAL"], "financing_discussed": true, "close_reason": "needs to review costs and details"},
+    {"date": "2026-01-24", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "760", "objections": ["TIMING", "COMPETITION"], "financing_discussed": true, "close_reason": "needs up to 2 weeks to decide"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "military", "credit_score": "NONE", "objections": ["PRICE", "RESEARCH", "TIMING"], "financing_discussed": true, "close_reason": "need to discuss as a group"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": [], "financing_discussed": false, "close_reason": "not enough information"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "quality control", "credit_score": "622", "objections": ["PRICE", "CAPITAL", "SPOUSE"], "financing_discussed": true, "close_reason": "needs to discuss with spouse waiting for paycheck"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": ["LOCATION", "TIMING"], "financing_discussed": true, "close_reason": "needs more info on finding locations"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "oil field", "credit_score": "NONE", "objections": ["TIMING"], "financing_discussed": true, "close_reason": "needs time to think before deciding"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": [], "financing_discussed": false, "close_reason": "prospect missed scheduled call"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "tech sales", "credit_score": "MEDIUM", "objections": ["PRICE", "SPOUSE", "TIMING", "TRUST"], "financing_discussed": true, "close_reason": "needs to discuss with fiancee before deciding"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "state employee", "credit_score": "HIGH", "objections": ["TRUST", "RESEARCH", "LOCATION", "CAPITAL"], "financing_discussed": true, "close_reason": "needs more info will review email"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "truck driver", "credit_score": "NONE", "objections": ["CAPITAL", "LOCATION"], "financing_discussed": true, "close_reason": "needs to arrange payment bank limits"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "cattery owner", "credit_score": "NONE", "objections": ["CAPITAL"], "financing_discussed": true, "close_reason": "need to discuss financing options"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "inspection business", "credit_score": "NONE", "objections": ["RESEARCH", "COMPETITION", "TRUST"], "financing_discussed": false, "close_reason": "needs more info follow-up scheduled"},
+    {"date": "2026-01-23", "outcome": "LOST", "job": "independent contractor", "credit_score": "NONE", "objections": ["PRICE", "CAPITAL"], "financing_discussed": true, "close_reason": "too expensive no available funds"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": ["TIMING"], "financing_discussed": false, "close_reason": "needs to reschedule follow up"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "realtor", "credit_score": "NONE", "objections": ["SPOUSE", "TIMING", "CAPITAL"], "financing_discussed": true, "close_reason": "needs to review with family not ready now"},
+    {"date": "2026-01-23", "outcome": "LOST", "job": "leadership coaching", "credit_score": "NONE", "objections": ["PRICE", "TIMING", "RESEARCH"], "financing_discussed": true, "close_reason": "program too expensive for side business"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": ["TIMING"], "financing_discussed": false, "close_reason": "prospect needed to reschedule"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "independent advisor", "credit_score": "NONE", "objections": ["RESEARCH", "TIMING"], "financing_discussed": true, "close_reason": "needs more info wants to review materials"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": ["TIMING"], "financing_discussed": false, "close_reason": "prospect not available rescheduling"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": [], "financing_discussed": false, "close_reason": "prospect missed meeting reschedule planned"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "surveyor", "credit_score": "LOW", "objections": ["PRICE", "SPOUSE", "CAPITAL"], "financing_discussed": true, "close_reason": "needs spouse's approval and to review finances"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": ["PRICE", "SPOUSE", "CAPITAL", "RESEARCH"], "financing_discussed": true, "close_reason": "needs to discuss with fiance price concern"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "body shop worker", "credit_score": "NONE", "objections": ["LOCATION"], "financing_discussed": true, "close_reason": "needs time to review and follow up"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "real estate banking", "credit_score": "NONE", "objections": ["LOCATION", "PRICE", "TIMING"], "financing_discussed": true, "close_reason": "needs time wants to discuss with cousin"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "insurance agent", "credit_score": "NONE", "objections": ["RESEARCH", "TRUST", "LOCATION", "TIMING"], "financing_discussed": true, "close_reason": "needs more info wants to talk to partner"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "project manager", "credit_score": "NONE", "objections": ["PRICE", "RESEARCH"], "financing_discussed": true, "close_reason": "needs to decide on package and financing"},
+    {"date": "2026-01-23", "outcome": "FOLLOWUP", "job": "public information officer", "credit_score": "770", "objections": ["SPOUSE", "PRICE"], "financing_discussed": true, "close_reason": "needs partner's approval"},
+    {"date": "2026-01-22", "outcome": "FOLLOWUP", "job": "daycare owner", "credit_score": "730", "objections": ["TIMING", "CAPITAL"], "financing_discussed": true, "close_reason": "needs to handle other expenses before starting"},
+    {"date": "2026-01-22", "outcome": "FOLLOWUP", "job": "federal government", "credit_score": "NONE", "objections": ["LOCATION", "SPOUSE"], "financing_discussed": true, "close_reason": "needs to discuss with spouse concerns about locations"},
+    {"date": "2026-01-22", "outcome": "FOLLOWUP", "job": "aviation apprentice", "credit_score": "647", "objections": ["PRICE", "CAPITAL"], "financing_discussed": true, "close_reason": "needs to secure funds investors"},
+    {"date": "2026-01-22", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": [], "financing_discussed": false, "close_reason": "follow-up meeting scheduled"},
+    {"date": "2026-01-22", "outcome": "FOLLOWUP", "job": "supply chain manager", "credit_score": "NONE", "objections": ["PRICE", "SPOUSE", "LOCATION"], "financing_discussed": true, "close_reason": "needs to discuss with spouse price concern"},
+    {"date": "2026-01-22", "outcome": "FOLLOWUP", "job": "business owner", "credit_score": "HIGH", "objections": ["PRICE", "SPOUSE", "RESEARCH", "TIMING"], "financing_discussed": true, "close_reason": "needs to discuss with partner and research more"},
+    {"date": "2026-01-22", "outcome": "FOLLOWUP", "job": "security consultant", "credit_score": "NONE", "objections": ["PRICE", "RESEARCH", "TIMING"], "financing_discussed": true, "close_reason": "needs time to consider and research"},
+    {"date": "2026-01-22", "outcome": "FOLLOWUP", "job": "firefighter", "credit_score": "NONE", "objections": ["PRICE", "RESEARCH"], "financing_discussed": true, "close_reason": "needs time to research price concern"},
+    {"date": "2026-01-22", "outcome": "FOLLOWUP", "job": "security consultant", "credit_score": "NONE", "objections": ["PRICE", "RESEARCH", "TIMING"], "financing_discussed": true, "close_reason": "needs time to decide and review info"},
+    {"date": "2026-01-22", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": [], "financing_discussed": false, "close_reason": "no show decent calls not closed yet"},
+    {"date": "2026-01-22", "outcome": "LOST", "job": "life coach", "credit_score": "NONE", "objections": ["PRICE", "RESEARCH"], "financing_discussed": true, "close_reason": "too expensive for intended use"},
+    {"date": "2026-01-22", "outcome": "FOLLOWUP", "job": "IT consultant", "credit_score": "750", "objections": ["PRICE", "SPOUSE", "RESEARCH", "CAPITAL"], "financing_discussed": true, "close_reason": "needs to review with spouse and consider budget"},
+    {"date": "2026-01-22", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": ["PRICE", "SPOUSE", "TIMING", "RESEARCH"], "financing_discussed": true, "close_reason": "needs to discuss with spouse evaluate cost"},
+    {"date": "2026-01-22", "outcome": "FOLLOWUP", "job": "UNKNOWN", "credit_score": "NONE", "objections": ["RESEARCH", "TRUST", "LOCATION"], "financing_discussed": true, "close_reason": "needs more time to research"}
+  ],
+  "analytics": {
+    "outcome_summary": {
+      "WON": 1,
+      "LOST": 4,
+      "FOLLOWUP": 70,
+      "win_rate": 0.013,
+      "loss_rate": 0.053,
+      "followup_rate": 0.933
+    },
+    "objection_frequency": {
+      "PRICE": 37,
+      "SPOUSE": 21,
+      "TIMING": 26,
+      "RESEARCH": 28,
+      "CAPITAL": 24,
+      "LOCATION": 17,
+      "TRUST": 7,
+      "COMPETITION": 3
+    },
+    "credit_score_distribution": {
+      "HIGH": 8,
+      "MEDIUM": 1,
+      "LOW": 2,
+      "SPECIFIC_700_PLUS": 5,
+      "SPECIFIC_600_700": 4,
+      "NONE_OR_UNKNOWN": 60
+    },
+    "financing_correlation": {
+      "discussed_with_won": 1,
+      "discussed_with_lost": 4,
+      "discussed_with_followup": 56,
+      "not_discussed_followups": 14
+    }
+  },
+  "job_type_patterns": {
+    "corporate": {
+      "jobs": ["costco manager", "technical manager", "engineering manager", "senior manager", "supply chain manager", "project manager", "IT", "IT consultant"],
+      "common_objections": ["PRICE", "SPOUSE", "TIMING", "RESEARCH"],
+      "motivation": "Escape 9-5, autonomy, upside potential",
+      "approach": "Emphasize ROI, tax benefits, building equity outside W2",
+      "win_signals": ["community support", "50 free leads offer", "concrete numbers"]
+    },
+    "healthcare_education": {
+      "jobs": ["teacher", "dentist", "nurse", "physical therapist"],
+      "common_objections": ["PRICE", "SPOUSE", "CAPITAL", "TIMING"],
+      "motivation": "Flexibility, reduce hours, family time",
+      "approach": "Emphasize time freedom, 6-8 hrs/week commitment, family involvement",
+      "testimonials_to_use": ["Charles Wheeler - Teacher/Coach", "Matthew DeGiacomo - Teacher"]
+    },
+    "trades_physical": {
+      "jobs": ["maintenance worker", "oil field", "truck driver", "body shop worker", "firefighter", "technician"],
+      "common_objections": ["CAPITAL", "LOCATION", "TIMING"],
+      "motivation": "Less physical demand, retirement prep, body wearing down",
+      "approach": "Emphasize passive nature, less physically demanding than current work",
+      "emotional_trigger": "18-hour days walking on my feet, body wearing down"
+    },
+    "real_estate_sales": {
+      "jobs": ["realtor", "sales", "sales rep", "tech sales", "real estate banking", "insurance agent"],
+      "common_objections": ["RESEARCH", "TIMING", "PRICE", "LOCATION"],
+      "motivation": "Diversification, stable income during slow cycles",
+      "approach": "Complement existing skills, use sales experience, network advantage",
+      "win_signals": ["understand cyclical nature", "want stability"]
+    },
+    "military_government": {
+      "jobs": ["military", "federal government", "state employee", "public information officer"],
+      "common_objections": ["PRICE", "RESEARCH", "TIMING", "CAPITAL"],
+      "motivation": "Entrepreneurship, family business, generational wealth",
+      "approach": "Veteran testimonials, discipline advantage, security + independence",
+      "testimonials_to_use": ["Military members in community"]
+    },
+    "entrepreneurs_business_owners": {
+      "jobs": ["small business owner", "business owner", "cattery owner", "daycare owner", "inspection business", "leadership coaching", "independent contractor", "independent advisor"],
+      "common_objections": ["PRICE", "RESEARCH", "CAPITAL", "COMPETITION"],
+      "motivation": "Diversification, additional revenue stream, scale existing skills",
+      "approach": "Business expansion angle, leverage existing experience",
+      "caution": "May try to DIY - emphasize shortcut value"
+    },
+    "finance_professional": {
+      "jobs": ["private equity", "advertising agency"],
+      "common_objections": ["RESEARCH", "TIMING", "PRICE", "SPOUSE"],
+      "motivation": "Asset building, ROI-focused, analytical approach",
+      "approach": "Hard numbers, ROI calculations, tax deduction angle"
+    },
+    "aviation_travel": {
+      "jobs": ["flight attendant", "aviation apprentice"],
+      "common_objections": ["PRICE", "CAPITAL", "TIMING", "LOCATION"],
+      "motivation": "Flexible schedule complement, passive income during travel",
+      "approach": "Works with irregular schedule, service while traveling"
+    },
+    "students": {
+      "jobs": ["college student"],
+      "common_objections": ["RESEARCH", "TIMING", "CAPITAL"],
+      "motivation": "Build business while studying, early entrepreneurship",
+      "approach": "Thomas Rolander testimonial - sold route before graduating",
+      "caution": "Check capital/support situation early, may be wrong fit"
+    }
+  },
+  "credit_score_patterns": {
+    "800_plus": {
+      "behavior": "Fast decision, confident, rarely mentions financing",
+      "approach": "Present PIF first, emphasize value not financing",
+      "win_rate_correlation": "HIGH"
+    },
+    "700_799": {
+      "behavior": "Mentioned casually, no major concern about financing",
+      "approach": "Multiple options available, present Elective/Klarna confidently",
+      "win_rate_correlation": "MEDIUM-HIGH"
+    },
+    "640_699": {
+      "behavior": "Hesitant, asks about financing options first",
+      "approach": "Lead with Payva (anyone approved), have backup options",
+      "win_rate_correlation": "MEDIUM"
+    },
+    "below_640": {
+      "behavior": "Major barrier, often avoiding topic",
+      "approach": "Payva or Coach Financing, SBA loans, business credit options",
+      "win_rate_correlation": "LOW - requires creative solutions"
+    },
+    "not_mentioned": {
+      "interpretation": "Either very high (no concern) or very low (avoiding topic)",
+      "approach": "Proactively ask: 'Do you roughly know what your credit score is?'"
+    }
+  },
+  "emotional_triggers": {
+    "family_time": {
+      "phrases": ["More time with my daughter", "avoid daycare costs", "be present for kids"],
+      "response": "Emphasize 6-8 hrs/week, family business involvement, creating memories",
+      "testimonials": ["Joe Natoli - missed kids, regrets working 12-13 hour days", "Abby C - 4 kids involved ages 8-14"]
+    },
+    "physical_exhaustion": {
+      "phrases": ["18-hour days walking on my feet", "body wearing down", "less physically demanding"],
+      "response": "Vending is not dependent on your body/time, passive income",
+      "testimonials": ["Trades workers success stories"]
+    },
+    "job_instability": {
+      "phrases": ["Laid off while pregnant", "career uncertainty", "real estate cycles", "company downsizing"],
+      "response": "Recession-proof, cash-flowing, you control it",
+      "testimonials": ["Members who started after layoffs"]
+    },
+    "autonomy": {
+      "phrases": ["Work for myself", "not relying on W2", "build my own asset", "immigration status"],
+      "response": "Own the business, not dependent on employers, build equity",
+      "testimonials": ["Immigrant success stories"]
+    },
+    "generational_wealth": {
+      "phrases": ["Set up my son for college", "teach financial literacy", "leave something behind", "special needs child"],
+      "response": "Family business, involving kids, long-term legacy",
+      "testimonials": ["Andre & Nivea - family legacy", "Dentist with special needs son"]
+    },
+    "college_costs": {
+      "phrases": ["$20K profit before summer to cover college costs", "Five kids, sports expenses"],
+      "response": "Supplemental income for specific family goals, timeline-focused",
+      "approach": "Show ROI math for their specific goal"
+    }
+  },
+  "winning_closes": {
+    "definitely_towards_10": {
+      "signal": "Rep asks 1-10 readiness, prospect says 'Definitely towards the 10'",
+      "meaning": "Objections handled, vision clear, ready to close",
+      "action": "Move to payment options immediately"
+    },
+    "love_everything_seeing": {
+      "signal": "'I love the support, the contracts, the templates, being able to talk to you guys'",
+      "meaning": "Enthusiasm present even if they claim skepticism",
+      "action": "Address remaining skepticism, don't re-sell value"
+    },
+    "lets_talk_pricing": {
+      "signal": "'If all that's included, let's talk pricing'",
+      "meaning": "Mentally bought, now logistics only",
+      "action": "Present options clearly, offer flexibility"
+    },
+    "family_meeting": {
+      "signal": "'We should have a family meeting this Sunday to decide'",
+      "meaning": "Real buying process, not a stall",
+      "action": "Send materials, offer to join call, schedule follow-up"
+    }
+  },
+  "lost_deal_reasons": {
+    "budget_mismatch": {
+      "pattern": "I have $5K budget, program costs $6K, nothing left for machines",
+      "solution": "Extended financing or downgrade to bronze",
+      "prevention": "Qualify budget early in discovery"
+    },
+    "competing_priorities": {
+      "pattern": "I'm in debt, having another kid, can't commit this year",
+      "solution": "Don't push, stay in touch for future",
+      "prevention": "Qualify life situation in discovery"
+    },
+    "analysis_paralysis": {
+      "pattern": "I need to do more research, compare other opportunities",
+      "solution": "Provide comparison framework, set specific follow-up",
+      "prevention": "Build urgency in discovery, address research needs proactively"
+    },
+    "wrong_fit": {
+      "pattern": "Student with no income/capital/partner, just looking for money",
+      "solution": "Qualify out early, don't force bad fit",
+      "prevention": "Better qualification questions upfront"
+    }
+  },
+  "followup_patterns": {
+    "weekend_to_think": {
+      "request": "I need a couple days, it's a big investment",
+      "response": "Totally understand. I'll send everything, let's reconnect Monday",
+      "success_rate": "HIGH - they're serious, just need processing time"
+    },
+    "discuss_with_partner": {
+      "request": "I need to talk to my wife/business partner",
+      "response": "Absolutely. Want to schedule a call with both of you?",
+      "success_rate": "MEDIUM - depends on partner buy-in"
+    },
+    "timing_not_right": {
+      "request": "I'm moving/training/busy for 2-3 months",
+      "response": "Let's stay in touch, I'll check in when you're ready",
+      "success_rate": "LOW - often soft no, but some convert later"
+    }
+  }
+}
