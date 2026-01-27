@@ -10,6 +10,7 @@ class SalesCommandCenter {
     this.testimonials = null;
     this.reps = null;
     this.jobSuperpowers = null;
+    this.financing = null;
     this.currentView = 'objections';
     this.searchIndex = [];
   }
@@ -28,12 +29,13 @@ class SalesCommandCenter {
   }
 
   async loadData() {
-    const [objections, playbooks, testimonials, reps, jobSuperpowers] = await Promise.all([
+    const [objections, playbooks, testimonials, reps, jobSuperpowers, financing] = await Promise.all([
       fetch('data/objections.json').then(r => r.json()),
       fetch('data/playbooks.json').then(r => r.json()),
       fetch('data/testimonials.json').then(r => r.json()),
       fetch('data/reps.json').then(r => r.json()),
-      fetch('data/job-superpowers.json').then(r => r.json()).catch(() => null)
+      fetch('data/job-superpowers.json').then(r => r.json()).catch(() => null),
+      fetch('data/financing.json').then(r => r.json()).catch(() => null)
     ]);
 
     this.objections = objections;
@@ -41,6 +43,7 @@ class SalesCommandCenter {
     this.testimonials = testimonials;
     this.reps = reps;
     this.jobSuperpowers = jobSuperpowers;
+    this.financing = financing;
   }
 
   buildSearchIndex() {
@@ -117,6 +120,25 @@ class SalesCommandCenter {
         });
       });
     }
+
+    // Index financing options
+    if (this.financing && this.financing.payment_options) {
+      this.financing.payment_options.forEach(option => {
+        this.searchIndex.push({
+          type: 'financing',
+          id: option.id,
+          name: option.name,
+          searchText: [
+            option.name,
+            option.short_name,
+            option.best_for,
+            ...(option.keywords || []),
+            ...(option.highlights || [])
+          ].join(' ').toLowerCase(),
+          data: option
+        });
+      });
+    }
   }
 
   bindEvents() {
@@ -178,6 +200,9 @@ class SalesCommandCenter {
         break;
       case 'analyzer':
         this.renderAnalyzer(content);
+        break;
+      case 'financing':
+        this.renderFinancing(content);
         break;
       default:
         this.renderObjections(content);
@@ -1049,6 +1074,163 @@ class SalesCommandCenter {
     document.body.style.overflow = 'hidden';
   }
 
+  renderFinancing(container) {
+    if (!this.financing) {
+      container.innerHTML = '<div class="empty-state"><h3>Financing data not available</h3></div>';
+      return;
+    }
+
+    const options = this.financing.payment_options || [];
+    const creditGuide = this.financing.credit_score_guide || {};
+
+    container.innerHTML = `
+      <div class="view-header">
+        <h2>Financing Options</h2>
+        <p>Quick reference for payment options. Recommend the right financing based on credit score.</p>
+      </div>
+
+      <div class="credit-score-guide">
+        <h3>Credit Score Recommendation</h3>
+        <p class="discovery-question">"${this.financing.discovery_question}"</p>
+        <div class="credit-tiers">
+          ${Object.entries(creditGuide).map(([key, tier]) => `
+            <div class="credit-tier ${key}">
+              <div class="tier-header">
+                <span class="tier-range">${tier.range}</span>
+                <span class="tier-label">${tier.label}</span>
+              </div>
+              <div class="tier-recommendation">
+                ${tier.recommended_order.map((opt, i) => `<span class="rec-option">${this.getFinancingName(opt)}</span>${i < tier.recommended_order.length - 1 ? ' → ' : ''}`).join('')}
+              </div>
+              <p class="tier-note">${tier.note}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="financing-grid">
+        ${options.map(option => this.renderFinancingCard(option)).join('')}
+      </div>
+
+      <div class="creative-options">
+        <h3>Creative Payment Solutions</h3>
+        <ul>
+          ${this.financing.creative_options.map(opt => `<li>${opt}</li>`).join('')}
+        </ul>
+      </div>
+
+      <div class="last-resort">
+        <h3>If Declined by All Options</h3>
+        <div class="last-resort-list">
+          ${this.financing.last_resort_options.map(opt => `<span class="last-resort-tag">${opt}</span>`).join('')}
+        </div>
+      </div>
+    `;
+
+    // Bind card clicks
+    document.querySelectorAll('.financing-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.dataset.financingId;
+        const option = options.find(o => o.id === id);
+        if (option) this.showFinancingModal(option);
+      });
+    });
+  }
+
+  renderFinancingCard(option) {
+    return `
+      <div class="financing-card" data-financing-id="${option.id}">
+        <div class="financing-header">
+          <h3 class="financing-name">${option.name}</h3>
+          <span class="financing-timeline">${option.timeline}</span>
+        </div>
+        <div class="financing-details">
+          <div class="financing-detail">
+            <span class="detail-label">Fee</span>
+            <span class="detail-value">${option.fee}</span>
+          </div>
+          <div class="financing-detail">
+            <span class="detail-label">APR</span>
+            <span class="detail-value">${option.apr}</span>
+          </div>
+        </div>
+        <p class="financing-best-for">${option.best_for}</p>
+        ${option.restrictions && option.restrictions.length ? `
+          <div class="financing-restrictions">
+            ${option.restrictions.map(r => `<span class="restriction-tag">${r}</span>`).join('')}
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }
+
+  showFinancingModal(option) {
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+
+    modalContent.innerHTML = `
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-category">Payment Option</span>
+          <h2>${option.name}</h2>
+        </div>
+        <button class="modal-close" onclick="app.closeModal()">&times;</button>
+      </div>
+
+      <div class="modal-stats">
+        <div class="modal-stat">
+          <span class="stat-value">${option.timeline}</span>
+          <span class="stat-label">Terms</span>
+        </div>
+        <div class="modal-stat">
+          <span class="stat-value">${option.fee}</span>
+          <span class="stat-label">Fee</span>
+        </div>
+        <div class="modal-stat">
+          <span class="stat-value">${option.apr}</span>
+          <span class="stat-label">APR</span>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>Best For</h3>
+        <p>${option.best_for}</p>
+      </div>
+
+      <div class="modal-section">
+        <h3>Key Points</h3>
+        <ul class="highlights-list">
+          ${option.highlights.map(h => `<li>${h}</li>`).join('')}
+        </ul>
+      </div>
+
+      ${option.restrictions && option.restrictions.length ? `
+        <div class="modal-section">
+          <h3>Restrictions</h3>
+          <div class="tags">
+            ${option.restrictions.map(r => `<span class="tag restriction">${r}</span>`).join('')}
+          </div>
+        </div>
+      ` : ''}
+    `;
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  getFinancingName(id) {
+    const names = {
+      'elective': 'Elective',
+      'klarna': 'Klarna',
+      'payva': 'Payva',
+      'coach': 'Coach',
+      'split_it': 'Split It',
+      'pif': 'Pay in Full',
+      'paypal': 'PayPal'
+    };
+    return names[id] || id;
+  }
+
   renderAnalyzer(container) {
     container.innerHTML = `
       <div class="view-header">
@@ -1095,13 +1277,15 @@ class SalesCommandCenter {
 
     const input = textarea.value.trim();
     if (!input) {
-      resultsDiv.innerHTML = '<p class="empty-state">Enter at least one objection to analyze.</p>';
+      resultsDiv.innerHTML = '<p class="empty-state">Enter what the prospect is saying to get instant suggestions.</p>';
       return;
     }
 
+    const inputLower = input.toLowerCase();
     const lines = input.split('\n').filter(l => l.trim());
-    const matchedObjections = [];
 
+    // Match objections
+    const matchedObjections = [];
     lines.forEach(line => {
       const matches = this.searchIndex
         .filter(item => item.type === 'objection')
@@ -1120,13 +1304,51 @@ class SalesCommandCenter {
       }
     });
 
+    // Detect job mentions
+    const matchedJobs = [];
+    if (this.jobSuperpowers) {
+      this.jobSuperpowers.job_superpowers.forEach(job => {
+        const titleWords = job.title.toLowerCase().split(/[\s\/]+/);
+        const matched = titleWords.some(word => word.length > 3 && inputLower.includes(word));
+        if (matched) {
+          matchedJobs.push(job);
+        }
+      });
+    }
+
+    // Detect financing concerns
+    const financingTriggers = this.detectFinancingTriggers(inputLower);
+
+    // Detect testimonial opportunities
+    const matchedTestimonials = this.findRelevantTestimonials(inputLower);
+
     const count = matchedObjections.length;
     const categories = [...new Set(matchedObjections.map(m => m.match.data.category))];
 
+    // Build results HTML
+    let html = `
+      <div class="analyzer-summary">
+        <h3>Real-Time Suggestions</h3>
+        <div class="summary-stats">
+          <div class="summary-stat">
+            <span class="stat-value">${count}</span>
+            <span class="stat-label">Objections</span>
+          </div>
+          <div class="summary-stat">
+            <span class="stat-value">${matchedJobs.length}</span>
+            <span class="stat-label">Job Matches</span>
+          </div>
+          <div class="summary-stat">
+            <span class="stat-value">${financingTriggers.length}</span>
+            <span class="stat-label">Financing Cues</span>
+          </div>
+        </div>
+      </div>
+    `;
+
     // Three objection tip
-    let tipAlert = '';
     if (count >= 3) {
-      tipAlert = `
+      html += `
         <div class="analyzer-alert tip">
           <h4>Pro Tip: Multiple Objections</h4>
           <p><strong>Recommended:</strong> Re-qualify this prospect to find their main concern</p>
@@ -1134,42 +1356,171 @@ class SalesCommandCenter {
             <blockquote class="script">"On a scale of 1-10, how serious are you about starting a vending business in the next 90 days?"</blockquote>
             <button class="copy-btn" onclick="app.copyToClipboard('On a scale of 1-10, how serious are you about starting a vending business in the next 90 days?')">Copy</button>
           </div>
-          <p><strong>If below 7:</strong> Ask what would make them a 9 or 10<br><strong>If 7+:</strong> "Let's identify the ONE thing really holding you back"</p>
         </div>
       `;
     }
 
-    resultsDiv.innerHTML = `
-      <div class="analyzer-summary">
-        <h3>Analysis Results</h3>
-        <div class="summary-stats">
-          <div class="summary-stat">
-            <span class="stat-value">${count}</span>
-            <span class="stat-label">Objections Detected</span>
-          </div>
-          <div class="summary-stat">
-            <span class="stat-value">${categories.length}</span>
-            <span class="stat-label">Categories</span>
-          </div>
-        </div>
-      </div>
-
-      ${tipAlert}
-
-      <div class="matched-objections">
-        <h4>Matched Objections - Click for Scripts</h4>
-        ${matchedObjections.map(m => `
-          <div class="matched-item">
-            <div class="matched-input">"${m.input}"</div>
-            <div class="matched-result">
-              <span class="matched-name">${m.match.data.name}</span>
-              <span class="matched-category">${this.getCategoryName(m.match.data.category).replace(' Objections', '')}</span>
+    // Job profile matches
+    if (matchedJobs.length > 0) {
+      html += `
+        <div class="analyzer-section job-matches">
+          <h4>Background Detected - Use Their Experience</h4>
+          ${matchedJobs.slice(0, 2).map(job => `
+            <div class="suggestion-card job-suggestion" onclick="app.showJobModal(app.jobSuperpowers.job_superpowers.find(j => j.id === '${job.id}'))">
+              <div class="suggestion-header">
+                <span class="suggestion-type">Job Profile</span>
+                <span class="suggestion-title">${job.title}</span>
+              </div>
+              <div class="suggestion-script">
+                <p>"Your experience with <strong>${job.superpowers[0].skill.toLowerCase()}</strong> means you'll naturally <strong>${job.superpowers[0].vending_application.toLowerCase()}</strong>."</p>
+              </div>
+              <button class="copy-btn small" onclick="event.stopPropagation(); app.copyToClipboard('Your experience with ${job.superpowers[0].skill.toLowerCase()} means you\\'ll naturally ${job.superpowers[0].vending_application.toLowerCase()}.')">Copy</button>
             </div>
-            <button class="btn-small" onclick="app.showObjectionModal(app.objections.objections.find(o => o.id === '${m.match.id}'))">View Scripts</button>
-          </div>
-        `).join('')}
-      </div>
-    `;
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // Financing triggers
+    if (financingTriggers.length > 0) {
+      html += `
+        <div class="analyzer-section financing-matches">
+          <h4>Financing Concern Detected</h4>
+          ${financingTriggers.map(trigger => `
+            <div class="suggestion-card financing-suggestion">
+              <div class="suggestion-header">
+                <span class="suggestion-type">${trigger.type}</span>
+                <span class="suggestion-title">${trigger.title}</span>
+              </div>
+              <div class="suggestion-script">
+                <p>${trigger.script}</p>
+              </div>
+              <button class="copy-btn small" onclick="app.copyToClipboard(\`${this.escapeForJs(trigger.script)}\`)">Copy</button>
+              ${trigger.recommended ? `
+                <div class="recommended-options">
+                  <span class="rec-label">Recommend:</span>
+                  ${trigger.recommended.map(opt => `<span class="rec-option">${this.getFinancingName(opt)}</span>`).join(' → ')}
+                </div>
+              ` : ''}
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // Objection matches
+    if (matchedObjections.length > 0) {
+      html += `
+        <div class="analyzer-section objection-matches">
+          <h4>Objections Detected - Click for Scripts</h4>
+          ${matchedObjections.map(m => `
+            <div class="matched-item" onclick="app.showObjectionModal(app.objections.objections.find(o => o.id === '${m.match.id}'))">
+              <div class="matched-input">"${m.input}"</div>
+              <div class="matched-result">
+                <span class="matched-name">${m.match.data.name}</span>
+                <span class="matched-category">${this.getCategoryName(m.match.data.category).replace(' Objections', '')}</span>
+              </div>
+              <button class="btn-small">View Scripts</button>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // Relevant testimonials
+    if (matchedTestimonials.length > 0) {
+      html += `
+        <div class="analyzer-section testimonial-matches">
+          <h4>Relevant Success Stories</h4>
+          ${matchedTestimonials.slice(0, 2).map(test => `
+            <div class="suggestion-card testimonial-suggestion" onclick="app.showTestimonialModal(app.testimonials.full_testimonials.find(t => t.id === '${test.id}'))">
+              <div class="suggestion-header">
+                <span class="suggestion-type">Success Story</span>
+                <span class="suggestion-title">${test.name}</span>
+              </div>
+              <p class="suggestion-preview">${test.title}${test.results?.monthly_revenue ? ` - $${test.results.monthly_revenue.toLocaleString()}/mo` : ''}</p>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    resultsDiv.innerHTML = html;
+  }
+
+  detectFinancingTriggers(input) {
+    const triggers = [];
+
+    if (!this.financing) return triggers;
+
+    // Check for affordability concerns
+    const affordKeywords = ['afford', 'expensive', 'cost', 'budget', 'money', 'price', 'pay'];
+    if (affordKeywords.some(k => input.includes(k))) {
+      triggers.push({
+        type: 'Affordability',
+        title: 'Payment Concern Detected',
+        script: "I totally understand budget is a concern. The good news is we have several flexible payment options. Do you roughly know what your credit score is? That helps me point you to the best fit.",
+        recommended: ['split_it', 'elective', 'payva']
+      });
+    }
+
+    // Check for credit concerns
+    const creditKeywords = ['credit', 'score', 'declined', 'bad credit', 'no credit'];
+    if (creditKeywords.some(k => input.includes(k))) {
+      triggers.push({
+        type: 'Credit Concern',
+        title: 'Credit Score Mentioned',
+        script: "No worries at all - we work with everyone. Payva approves anyone regardless of credit, and Coach Financing offers terms up to 144 months to keep payments low.",
+        recommended: ['payva', 'coach']
+      });
+    }
+
+    // Check for payment term concerns
+    const termKeywords = ['monthly', 'payments', 'month', 'long term', '24', 'longer'];
+    if (termKeywords.some(k => input.includes(k))) {
+      triggers.push({
+        type: 'Payment Terms',
+        title: 'Longer Terms Needed',
+        script: "We can definitely work with that. Klarna offers up to 24 months, and Coach Financing can go up to 144 months if you need really low monthly payments.",
+        recommended: ['klarna', 'coach']
+      });
+    }
+
+    // Check for California
+    if (input.includes('california') || input.includes(' ca ') || input.includes('los angeles') || input.includes('san francisco')) {
+      triggers.push({
+        type: 'Location',
+        title: 'California Resident',
+        script: "Just a heads up - Elective isn't available in California, but we have great alternatives. Klarna and Payva both work great for CA residents.",
+        recommended: ['klarna', 'payva']
+      });
+    }
+
+    return triggers;
+  }
+
+  findRelevantTestimonials(input) {
+    if (!this.testimonials || !this.testimonials.full_testimonials) return [];
+
+    const relevant = [];
+    const keywords = input.split(/\s+/).filter(w => w.length > 3);
+
+    this.testimonials.full_testimonials.forEach(test => {
+      const testText = [
+        test.name,
+        test.title,
+        test.quote,
+        ...(test.tags || []),
+        ...(test.objection_counters || [])
+      ].join(' ').toLowerCase();
+
+      const matchCount = keywords.filter(k => testText.includes(k)).length;
+      if (matchCount >= 2) {
+        relevant.push({ ...test, matchScore: matchCount });
+      }
+    });
+
+    return relevant.sort((a, b) => b.matchScore - a.matchScore);
   }
 
   fuzzyMatch(input, target) {
