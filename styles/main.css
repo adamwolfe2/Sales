@@ -151,10 +151,15 @@ ul, ol {
 }
 
 .logo {
-  font-size: var(--font-size-xl);
-  font-weight: 600;
-  color: var(--text-primary);
-  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.logo-img {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
 }
 
 .logo span {
@@ -2041,6 +2046,11 @@ blockquote.testimonial-quote {
 
   .logo {
     text-align: center;
+    justify-content: center;
+  }
+
+  .logo-img {
+    height: 32px;
   }
 
   .search-container {
@@ -2157,11 +2167,11 @@ blockquote.testimonial-quote {
   }
 
   .logo {
-    font-size: var(--font-size-lg);
+    justify-content: center;
   }
 
-  .logo span:last-child {
-    display: none;
+  .logo-img {
+    height: 28px;
   }
 
   .search-container {
