@@ -482,6 +482,118 @@
       color: var(--text-secondary);
     }
 
+    /* Win Screenshots Section */
+    .win-screenshots-section {
+      padding: 12px 16px;
+      background: rgba(34, 197, 94, 0.1);
+      border-radius: 8px;
+      border-left: 3px solid #22c55e;
+      margin-top: 12px;
+    }
+
+    .win-screenshots-section strong {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #22c55e;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .win-screenshot-cards {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .win-screenshot-card {
+      flex: 1;
+      min-width: 140px;
+      max-width: 200px;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid var(--border-color);
+    }
+
+    .win-screenshot-card:hover {
+      border-color: #22c55e;
+      transform: translateY(-2px);
+    }
+
+    .win-screenshot-card img {
+      width: 100%;
+      height: 80px;
+      object-fit: cover;
+      object-position: top;
+    }
+
+    .win-screenshot-info {
+      padding: 8px;
+    }
+
+    .win-screenshot-info .win-name {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .win-screenshot-info .win-headline {
+      display: block;
+      font-size: 10px;
+      color: var(--text-secondary);
+      line-height: 1.3;
+    }
+
+    /* Win Modal Overlay */
+    .win-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .win-modal-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
+    .win-modal-content img {
+      max-width: 100%;
+      max-height: 85vh;
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .win-modal-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 32px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .win-modal-close:hover {
+      opacity: 1;
+    }
+
     /* Emotional Trigger Card */
     .emotional-trigger-card {
       animation: slideIn 0.3s ease;
@@ -1355,6 +1467,7 @@ RESPONSE FORMAT (JSON):
       const categoryData = liveCoachingData.categories[detected.category];
       const responses = liveCoachingData.quick_responses[detected.category];
       const testimonials = liveCoachingData.testimonial_snippets[detected.category];
+      const winScreenshots = liveCoachingData.win_screenshots?.[detected.category] || [];
 
       if (!responses || responses.length === 0) {
         showToast(`Detected: ${categoryData?.name || detected.category}`);
@@ -1364,6 +1477,8 @@ RESPONSE FORMAT (JSON):
       // Pick the most relevant response (first one for now, could be smarter)
       const response = responses[0];
       const testimonial = testimonials && testimonials.length > 0 ? testimonials[Math.floor(Math.random() * testimonials.length)] : null;
+      // Pick 2 random win screenshots to show
+      const shuffledWins = [...winScreenshots].sort(() => Math.random() - 0.5).slice(0, 2);
 
       // Update suggestion card with quick response
       $('suggestion-type').textContent = response.technique;
@@ -1387,6 +1502,22 @@ RESPONSE FORMAT (JSON):
             <p><em>"${testimonial.snippet}"</em> - ${testimonial.name}</p>
           </div>
           ` : ''}
+          ${shuffledWins.length > 0 ? `
+          <div class="win-screenshots-section">
+            <strong>Share These Wins:</strong>
+            <div class="win-screenshot-cards">
+              ${shuffledWins.map(win => `
+                <div class="win-screenshot-card" onclick="openWinScreenshot('${win.image}')">
+                  <img src="assets/wins/${win.image}" alt="${win.name}" onerror="this.parentElement.style.display='none'">
+                  <div class="win-screenshot-info">
+                    <span class="win-name">${win.name}</span>
+                    <span class="win-headline">${win.headline}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          ` : ''}
         </div>
       `;
 
@@ -1395,6 +1526,21 @@ RESPONSE FORMAT (JSON):
 
       // Show toast notification
       showToast(`${categoryData?.icon || '!'} ${categoryData?.name}: "${response.one_liner}"`);
+    }
+
+    function openWinScreenshot(image) {
+      const modal = document.createElement('div');
+      modal.className = 'win-modal-overlay';
+      modal.innerHTML = `
+        <div class="win-modal-content">
+          <button class="win-modal-close" onclick="this.parentElement.parentElement.remove()">&times;</button>
+          <img src="assets/wins/${image}" alt="Win Screenshot">
+        </div>
+      `;
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.remove();
+      });
+      document.body.appendChild(modal);
     }
 
     function showEmotionalTriggerCard(key, trigger) {

@@ -14,6 +14,7 @@ class SalesCommandCenter {
     this.jobSuperpowers = null;
     this.financing = null;
     this.quiz = null;
+    this.wins = null;
     this.currentView = 'objections';
     this.searchIndex = [];
 
@@ -59,7 +60,7 @@ class SalesCommandCenter {
     };
 
     // Load all data with individual error handling
-    const [objections, playbooks, testimonials, reps, pricing, callAnalytics, jobSuperpowers, financing, quiz] = await Promise.all([
+    const [objections, playbooks, testimonials, reps, pricing, callAnalytics, jobSuperpowers, financing, quiz, wins] = await Promise.all([
       safeFetch('data/objections.json', 'objections'),
       safeFetch('data/playbooks.json', 'playbooks'),
       safeFetch('data/testimonials.json', 'testimonials'),
@@ -68,7 +69,8 @@ class SalesCommandCenter {
       safeFetch('data/call-analytics.json', 'call-analytics'),
       safeFetch('data/job-superpowers.json', 'job-superpowers'),
       safeFetch('data/financing.json', 'financing'),
-      safeFetch('data/quiz.json', 'quiz')
+      safeFetch('data/quiz.json', 'quiz'),
+      safeFetch('data/wins.json', 'wins')
     ]);
 
     this.objections = objections || { objections: [], categories: [], patterns: {} };
@@ -80,6 +82,7 @@ class SalesCommandCenter {
     this.jobSuperpowers = jobSuperpowers || {};
     this.financing = financing || {};
     this.quiz = quiz || { categories: [], questions: [] };
+    this.wins = wins || { wins: [], metadata: { categories: [] }, coach_suggestions: {}, featured_wins: [] };
   }
 
   buildSearchIndex() {
@@ -246,6 +249,27 @@ class SalesCommandCenter {
         });
       });
     }
+
+    // Index wins/community screenshots
+    if (this.wins && this.wins.wins) {
+      this.wins.wins.forEach(win => {
+        this.searchIndex.push({
+          type: 'win',
+          id: win.id,
+          name: win.name,
+          searchText: [
+            win.name,
+            win.title,
+            win.summary,
+            win.category,
+            ...(win.tags || []),
+            ...(win.objection_counters || []),
+            ...(win.coach_triggers || [])
+          ].join(' ').toLowerCase(),
+          data: win
+        });
+      });
+    }
   }
 
   bindEvents() {
@@ -322,6 +346,9 @@ class SalesCommandCenter {
         break;
       case 'quiz':
         this.renderQuiz(content);
+        break;
+      case 'wins':
+        this.renderWins(content);
         break;
       default:
         this.renderObjections(content);
@@ -3095,6 +3122,270 @@ class SalesCommandCenter {
   hideQuizResults() {
     this.quizState.showingResults = false;
     this.renderCurrentView();
+  }
+
+  // ========== WINS MODULE ==========
+  renderWins(container) {
+    if (!this.wins || !this.wins.wins) {
+      container.innerHTML = '<div class="empty-state"><h3>No wins data available</h3></div>';
+      return;
+    }
+
+    const categories = this.wins.metadata?.categories || [];
+    const wins = this.wins.wins || [];
+
+    // State for filtering
+    if (!this.winsState) {
+      this.winsState = {
+        selectedCategory: 'all',
+        searchQuery: '',
+        viewMode: 'grid'
+      };
+    }
+
+    // Filter wins based on state
+    let filteredWins = wins;
+    if (this.winsState.selectedCategory !== 'all') {
+      filteredWins = wins.filter(w => w.category === this.winsState.selectedCategory);
+    }
+    if (this.winsState.searchQuery) {
+      const query = this.winsState.searchQuery.toLowerCase();
+      filteredWins = filteredWins.filter(w =>
+        w.name.toLowerCase().includes(query) ||
+        w.title.toLowerCase().includes(query) ||
+        w.summary.toLowerCase().includes(query) ||
+        (w.tags || []).some(t => t.toLowerCase().includes(query))
+      );
+    }
+
+    // Get category counts
+    const categoryCounts = {};
+    wins.forEach(w => {
+      categoryCounts[w.category] = (categoryCounts[w.category] || 0) + 1;
+    });
+
+    container.innerHTML = `
+      <div class="wins-container">
+        <div class="wins-header">
+          <div class="wins-title">
+            <h2>Community Wins</h2>
+            <p class="wins-subtitle">${wins.length} success stories from the VendingPreneurs community</p>
+          </div>
+          <div class="wins-search">
+            <input type="text"
+              id="wins-search-input"
+              placeholder="Search wins by name, location, revenue..."
+              value="${this.winsState.searchQuery}"
+            >
+          </div>
+        </div>
+
+        <div class="wins-filters">
+          <div class="wins-categories">
+            <button class="wins-category-btn ${this.winsState.selectedCategory === 'all' ? 'active' : ''}"
+              data-category="all">
+              All (${wins.length})
+            </button>
+            ${categories.map(cat => `
+              <button class="wins-category-btn ${this.winsState.selectedCategory === cat.id ? 'active' : ''}"
+                data-category="${cat.id}">
+                ${cat.name} (${categoryCounts[cat.id] || 0})
+              </button>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="wins-featured" style="display: ${this.winsState.selectedCategory === 'all' && !this.winsState.searchQuery ? 'block' : 'none'}">
+          <h3>Featured Wins</h3>
+          <div class="featured-wins-grid">
+            ${(this.wins.featured_wins || []).slice(0, 4).map(winId => {
+              const win = wins.find(w => w.id === winId);
+              if (!win) return '';
+              return this.renderWinCard(win, true);
+            }).join('')}
+          </div>
+        </div>
+
+        <div class="wins-grid">
+          ${filteredWins.length > 0
+            ? filteredWins.map(win => this.renderWinCard(win, false)).join('')
+            : '<div class="empty-state"><h3>No wins found</h3><p>Try adjusting your filters</p></div>'
+          }
+        </div>
+
+        <div class="wins-coach-tips">
+          <h3>Using Wins During Calls</h3>
+          <div class="coach-tips-grid">
+            <div class="coach-tip">
+              <strong>Price Objections:</strong>
+              <p>Show revenue screenshots like Kelsey Corcoran ($509 in 15 days) or Graham Parker ($275-325/day)</p>
+            </div>
+            <div class="coach-tip">
+              <strong>Time Concerns:</strong>
+              <p>Share stories of Charles Wheeler (full-time teacher) or Daniel Commarford (works full-time)</p>
+            </div>
+            <div class="coach-tip">
+              <strong>Skepticism:</strong>
+              <p>Use the Wins Board or Weekly Wins to show community momentum</p>
+            </div>
+            <div class="coach-tip">
+              <strong>Cold Calling Fear:</strong>
+              <p>Share Mason Romero's story (3 locations from 50 pop-ins, 350 cold calls)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Bind events
+    container.querySelectorAll('.wins-category-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.winsState.selectedCategory = btn.dataset.category;
+        this.renderWins(container);
+      });
+    });
+
+    const searchInput = container.querySelector('#wins-search-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        this.winsState.searchQuery = e.target.value;
+        this.renderWins(container);
+      });
+    }
+
+    container.querySelectorAll('.win-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const winId = card.dataset.winId;
+        const win = wins.find(w => w.id === winId);
+        if (win) this.showWinModal(win);
+      });
+    });
+  }
+
+  renderWinCard(win, featured = false) {
+    const categoryInfo = this.wins.metadata?.categories?.find(c => c.id === win.category) || {};
+    const imagePath = `${this.wins.metadata?.image_base_path || 'assets/wins/'}${win.filename}`;
+
+    return `
+      <div class="win-card ${featured ? 'featured' : ''}" data-win-id="${win.id}">
+        <div class="win-card-image">
+          <img src="${imagePath}" alt="${win.name}" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <div class="win-card-content">
+          <div class="win-card-header">
+            <span class="win-category-badge">${categoryInfo.name || win.category}</span>
+          </div>
+          <h4 class="win-card-name">${win.name}</h4>
+          <p class="win-card-title">${win.title}</p>
+          ${win.metrics && Object.keys(win.metrics).length > 0 ? `
+            <div class="win-card-metrics">
+              ${Object.entries(win.metrics).slice(0, 2).map(([key, value]) => `
+                <span class="metric">${value}</span>
+              `).join('')}
+            </div>
+          ` : ''}
+          <div class="win-card-tags">
+            ${(win.tags || []).slice(0, 3).map(tag => `
+              <span class="win-tag">${tag.replace(/_/g, ' ')}</span>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  showWinModal(win) {
+    const categoryInfo = this.wins.metadata?.categories?.find(c => c.id === win.category) || {};
+    const imagePath = `${this.wins.metadata?.image_base_path || 'assets/wins/'}${win.filename}`;
+
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+      <div class="modal win-modal">
+        <button class="modal-close">&times;</button>
+        <div class="win-modal-content">
+          <div class="win-modal-image">
+            <img src="${imagePath}" alt="${win.name}">
+          </div>
+          <div class="win-modal-details">
+            <span class="win-category-badge large">${categoryInfo.name || win.category}</span>
+            <h2>${win.name}</h2>
+            <h3>${win.title}</h3>
+            <p class="win-summary">${win.summary}</p>
+
+            ${win.metrics && Object.keys(win.metrics).length > 0 ? `
+              <div class="win-metrics-section">
+                <h4>Key Metrics</h4>
+                <div class="win-metrics-grid">
+                  ${Object.entries(win.metrics).map(([key, value]) => `
+                    <div class="metric-item">
+                      <span class="metric-label">${key.replace(/_/g, ' ')}</span>
+                      <span class="metric-value">${value}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            ${win.objection_counters && win.objection_counters.length > 0 ? `
+              <div class="win-objections-section">
+                <h4>Counters These Objections</h4>
+                <div class="objection-tags">
+                  ${win.objection_counters.map(obj => `
+                    <span class="objection-counter-tag">${obj.replace(/_/g, ' ')}</span>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            <div class="win-tags-section">
+              <h4>Tags</h4>
+              <div class="win-all-tags">
+                ${(win.tags || []).map(tag => `
+                  <span class="win-tag">${tag.replace(/_/g, ' ')}</span>
+                `).join('')}
+              </div>
+            </div>
+
+            ${win.coach_triggers && win.coach_triggers.length > 0 ? `
+              <div class="win-coach-section">
+                <h4>Coach Triggers</h4>
+                <p class="coach-hint">This win will be suggested when these topics come up during calls:</p>
+                <div class="coach-trigger-tags">
+                  ${win.coach_triggers.map(trigger => `
+                    <span class="coach-trigger-tag">${trigger.replace(/_/g, ' ')}</span>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+    modal.querySelector('.modal-close').addEventListener('click', () => modal.remove());
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.remove();
+    });
+  }
+
+  getWinsForObjection(objectionType) {
+    if (!this.wins || !this.wins.coach_suggestions) return [];
+    const winIds = this.wins.coach_suggestions[objectionType] || [];
+    return winIds.map(id => this.wins.wins.find(w => w.id === id)).filter(Boolean);
+  }
+
+  getWinsByLocationType(locationType) {
+    if (!this.wins || !this.wins.by_location_type) return [];
+    const winIds = this.wins.by_location_type[locationType] || [];
+    return winIds.map(id => this.wins.wins.find(w => w.id === id)).filter(Boolean);
+  }
+
+  getWinsByMachineType(machineType) {
+    if (!this.wins || !this.wins.by_machine_type) return [];
+    const winIds = this.wins.by_machine_type[machineType] || [];
+    return winIds.map(id => this.wins.wins.find(w => w.id === id)).filter(Boolean);
   }
 }
 
