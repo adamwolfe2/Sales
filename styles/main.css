@@ -2004,16 +2004,81 @@ blockquote.testimonial-quote {
 }
 
 @media (max-width: 768px) {
+  .header {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: var(--space-3);
+    align-items: stretch;
+  }
+
+  .logo {
+    text-align: center;
+  }
+
+  .search-container {
+    width: 100%;
+    max-width: none;
+  }
+
+  .search-input-wrapper input {
+    width: 100%;
+  }
+
+  .nav {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: var(--space-2);
+    padding-bottom: var(--space-2);
+    justify-content: flex-start;
+  }
+
+  .nav-btn {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
   .main {
     padding: var(--space-4);
   }
 
+  .view-header {
+    flex-direction: column;
+    gap: var(--space-3);
+    align-items: flex-start;
+  }
+
+  .view-header h2 {
+    font-size: var(--font-size-xl);
+  }
+
+  .category-filters {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: var(--space-2);
+    width: 100%;
+  }
+
+  .filter-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
   .stats-bar {
     flex-wrap: wrap;
+    gap: var(--space-3);
   }
 
   .modal {
     padding: var(--space-4);
+    max-width: 95vw;
+    max-height: 90vh;
   }
 
   .modal-stats {
@@ -2045,11 +2110,36 @@ blockquote.testimonial-quote {
   .matched-result {
     text-align: left;
   }
+
+  /* Pricing cards responsive */
+  .packages-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Financing section responsive */
+  .financing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Analytics section responsive */
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Prospect profiles responsive */
+  .prospects-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 480px) {
+  .header {
+    padding: var(--space-2) var(--space-3);
+  }
+
   .header-content {
-    padding: var(--space-3);
+    padding: 0;
+    gap: var(--space-2);
   }
 
   .logo {
@@ -2060,11 +2150,21 @@ blockquote.testimonial-quote {
     display: none;
   }
 
+  .search-container {
+    margin: 0;
+  }
+
+  .search-input-wrapper {
+    padding: var(--space-2) var(--space-3);
+  }
+
   .nav {
     display: flex;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     gap: var(--space-1);
+    margin: 0 calc(-1 * var(--space-3));
+    padding: 0 var(--space-3) var(--space-2);
   }
 
   .nav-btn {
@@ -2079,10 +2179,17 @@ blockquote.testimonial-quote {
     display: none;
   }
 
+  .main {
+    padding: var(--space-3);
+  }
+
   .category-filters {
     overflow-x: auto;
     flex-wrap: nowrap;
     padding-bottom: var(--space-3);
+    margin: 0 calc(-1 * var(--space-3));
+    padding-left: var(--space-3);
+    padding-right: var(--space-3);
   }
 
   .filter-btn {
@@ -2091,12 +2198,37 @@ blockquote.testimonial-quote {
     padding: var(--space-1) var(--space-2);
   }
 
+  .view-header {
+    margin-bottom: var(--space-4);
+  }
+
   .view-header h2 {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-lg);
   }
 
   .view-header p {
     font-size: var(--font-size-sm);
+  }
+
+  /* Cards on mobile */
+  .objection-card,
+  .testimonial-card,
+  .playbook-card,
+  .pricing-card,
+  .rep-card {
+    padding: var(--space-3);
+  }
+
+  /* Modal on very small screens */
+  .modal {
+    padding: var(--space-3);
+    margin: var(--space-2);
+    max-width: calc(100vw - var(--space-4));
+  }
+
+  .modal-close {
+    top: var(--space-2);
+    right: var(--space-2);
   }
 
   /* Quick tools - move to bottom on mobile */
@@ -4593,13 +4725,37 @@ blockquote.testimonial-quote {
 
 /* Responsive Wins */
 @media (max-width: 768px) {
+  .wins-container {
+    padding: var(--space-4);
+  }
+
   .wins-header {
     flex-direction: column;
     align-items: stretch;
   }
 
+  .wins-title h2 {
+    font-size: var(--font-size-xl);
+  }
+
   .wins-search {
     flex: 1;
+    width: 100%;
+  }
+
+  .wins-search input {
+    width: 100%;
+  }
+
+  .wins-categories {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: var(--space-2);
+  }
+
+  .wins-category-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .win-modal-content {
@@ -4616,5 +4772,39 @@ blockquote.testimonial-quote {
 
   .featured-wins-grid {
     grid-template-columns: 1fr;
+  }
+
+  .wins-coach-tips {
+    padding: var(--space-4);
+  }
+
+  .coach-tips-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .win-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .wins-container {
+    padding: var(--space-3);
+  }
+
+  .wins-title h2 {
+    font-size: var(--font-size-lg);
+  }
+
+  .win-card-image {
+    height: 150px;
+  }
+
+  .win-card-content {
+    padding: var(--space-3);
+  }
+
+  .wins-coach-tips {
+    padding: var(--space-3);
   }
 }

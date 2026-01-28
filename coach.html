@@ -927,10 +927,40 @@
     }
 
     /* Responsive */
+    @media (max-width: 768px) {
+      .container { padding: 16px; }
+
+      .sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+        padding: 16px;
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 16px;
+      }
+
+      .suggestion-card {
+        padding: 16px;
+      }
+
+      .win-screenshot-cards {
+        flex-direction: column;
+      }
+
+      .win-screenshot-card {
+        max-width: 100%;
+      }
+    }
+
     @media (max-width: 600px) {
-      .container { padding: 16px 18px; }
-      .setup { padding: 40px 24px; }
-      .setup h1 { font-size: 20px; }
+      .container { padding: 12px; }
+      .setup { padding: 30px 16px; }
+      .setup h1 { font-size: 18px; }
+      .setup p { font-size: 14px; }
+
       .scripts-tabs {
         justify-content: flex-start;
         overflow-x: auto;
@@ -939,6 +969,55 @@
         -webkit-overflow-scrolling: touch;
       }
       .scripts-tabs::-webkit-scrollbar { display: none; }
+
+      .quick-response-card {
+        padding: 12px;
+      }
+
+      .quick-response-card .one-liner {
+        font-size: 14px;
+      }
+
+      .quick-response-card .say-this p {
+        font-size: 13px;
+      }
+
+      .testimonial-snippet,
+      .win-screenshots-section {
+        padding: 10px 12px;
+      }
+
+      .win-screenshot-card img {
+        height: 60px;
+      }
+
+      .win-screenshot-info {
+        padding: 6px;
+      }
+
+      .win-screenshot-info .win-name {
+        font-size: 11px;
+      }
+
+      .win-screenshot-info .win-headline {
+        font-size: 9px;
+      }
+
+      /* Modal adjustments for mobile */
+      .win-modal-content {
+        max-width: 95vw;
+        max-height: 95vh;
+        padding: 8px;
+      }
+
+      .win-modal-content img {
+        max-height: 80vh;
+      }
+
+      .win-modal-close {
+        top: -30px;
+        font-size: 24px;
+      }
     }
 
     /* Focus states for accessibility */
