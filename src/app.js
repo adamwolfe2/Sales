@@ -3295,79 +3295,40 @@ class SalesCommandCenter {
   }
 
   showWinModal(win) {
-    const categoryInfo = this.wins.metadata?.categories?.find(c => c.id === win.category) || {};
     const imagePath = `${this.wins.metadata?.image_base_path || 'assets/wins/'}${win.filename}`;
 
     const modal = document.createElement('div');
-    modal.className = 'modal-overlay';
+    modal.className = 'win-lightbox-overlay';
     modal.innerHTML = `
-      <div class="modal win-modal">
-        <button class="modal-close">&times;</button>
-        <div class="win-modal-content">
-          <div class="win-modal-image">
-            <img src="${imagePath}" alt="${win.name}">
-          </div>
-          <div class="win-modal-details">
-            <span class="win-category-badge large">${categoryInfo.name || win.category}</span>
-            <h2>${win.name}</h2>
-            <h3>${win.title}</h3>
-            <p class="win-summary">${win.summary}</p>
-
-            ${win.metrics && Object.keys(win.metrics).length > 0 ? `
-              <div class="win-metrics-section">
-                <h4>Key Metrics</h4>
-                <div class="win-metrics-grid">
-                  ${Object.entries(win.metrics).map(([key, value]) => `
-                    <div class="metric-item">
-                      <span class="metric-label">${key.replace(/_/g, ' ')}</span>
-                      <span class="metric-value">${value}</span>
-                    </div>
-                  `).join('')}
-                </div>
-              </div>
-            ` : ''}
-
-            ${win.objection_counters && win.objection_counters.length > 0 ? `
-              <div class="win-objections-section">
-                <h4>Counters These Objections</h4>
-                <div class="objection-tags">
-                  ${win.objection_counters.map(obj => `
-                    <span class="objection-counter-tag">${obj.replace(/_/g, ' ')}</span>
-                  `).join('')}
-                </div>
-              </div>
-            ` : ''}
-
-            <div class="win-tags-section">
-              <h4>Tags</h4>
-              <div class="win-all-tags">
-                ${(win.tags || []).map(tag => `
-                  <span class="win-tag">${tag.replace(/_/g, ' ')}</span>
-                `).join('')}
-              </div>
-            </div>
-
-            ${win.coach_triggers && win.coach_triggers.length > 0 ? `
-              <div class="win-coach-section">
-                <h4>Coach Triggers</h4>
-                <p class="coach-hint">This win will be suggested when these topics come up during calls:</p>
-                <div class="coach-trigger-tags">
-                  ${win.coach_triggers.map(trigger => `
-                    <span class="coach-trigger-tag">${trigger.replace(/_/g, ' ')}</span>
-                  `).join('')}
-                </div>
-              </div>
-            ` : ''}
-          </div>
+      <button class="win-lightbox-close">&times;</button>
+      <div class="win-lightbox-content">
+        <img src="${imagePath}" alt="${win.name} - ${win.title}">
+        <div class="win-lightbox-caption">
+          <strong>${win.name}</strong> - ${win.title}
         </div>
       </div>
     `;
 
     document.body.appendChild(modal);
-    modal.querySelector('.modal-close').addEventListener('click', () => modal.remove());
+
+    // Close on X button click
+    modal.querySelector('.win-lightbox-close').addEventListener('click', () => modal.remove());
+
+    // Close on clicking outside the image
     modal.addEventListener('click', (e) => {
-      if (e.target === modal) modal.remove();
+      if (e.target === modal || e.target.classList.contains('win-lightbox-content')) {
+        modal.remove();
+      }
     });
+
+    // Close on Escape key
+    const escHandler = (e) => {
+      if (e.key === 'Escape') {
+        modal.remove();
+        document.removeEventListener('keydown', escHandler);
+      }
+    };
+    document.addEventListener('keydown', escHandler);
   }
 
   getWinsForObjection(objectionType) {
