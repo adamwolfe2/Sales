@@ -1622,8 +1622,8 @@ RESPONSE FORMAT (JSON):
         </div>
       `;
 
-      $('say-this').innerHTML = html;
-      $('follow-up-questions').innerHTML = '';
+      $('suggestion-content').innerHTML = html;
+      $('followup-box').style.display = 'none';
 
       // Show toast notification
       showToast(`${categoryData?.icon || '!'} ${categoryData?.name}: "${response.one_liner}"`);
@@ -1648,7 +1648,7 @@ RESPONSE FORMAT (JSON):
       const name = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
 
       $('suggestion-type').textContent = 'Emotional Trigger';
-      $('say-this').innerHTML = `
+      $('suggestion-content').innerHTML = `
         <div class="emotional-trigger-card">
           <div class="trigger-name">Detected: ${name}</div>
           <div class="leverage-response">
@@ -1657,14 +1657,14 @@ RESPONSE FORMAT (JSON):
           </div>
         </div>
       `;
-      $('follow-up-questions').innerHTML = '';
+      $('followup-box').style.display = 'none';
 
       showToast(`Emotional trigger: ${name}`);
     }
 
     function showClosingSignal() {
       $('suggestion-type').textContent = 'CLOSING SIGNAL';
-      $('say-this').innerHTML = `
+      $('suggestion-content').innerHTML = `
         <div class="closing-signal-card">
           <div class="signal-alert">Buying signal detected!</div>
           <div class="close-now">
@@ -1673,7 +1673,7 @@ RESPONSE FORMAT (JSON):
           </div>
         </div>
       `;
-      $('follow-up-questions').innerHTML = '';
+      $('followup-box').style.display = 'none';
 
       showToast('CLOSING SIGNAL - They are ready!');
     }
