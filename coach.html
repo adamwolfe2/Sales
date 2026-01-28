@@ -115,6 +115,18 @@
     }
 
     .logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .logo-img {
+      height: 32px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .logo-text {
       font-size: 14px;
       font-weight: 500;
       color: var(--text-secondary);
@@ -122,7 +134,7 @@
       transition: color 0.3s ease;
     }
 
-    .logo:hover {
+    .logo:hover .logo-text {
       color: var(--text);
     }
 
@@ -930,6 +942,10 @@
     @media (max-width: 768px) {
       .container { padding: 16px; }
 
+      .logo-img {
+        height: 28px;
+      }
+
       .sidebar {
         width: 100%;
         position: relative;
@@ -960,6 +976,10 @@
       .setup { padding: 30px 16px; }
       .setup h1 { font-size: 18px; }
       .setup p { font-size: 14px; }
+
+      .logo-img {
+        height: 24px;
+      }
 
       .scripts-tabs {
         justify-content: flex-start;
@@ -1082,7 +1102,9 @@
   <div class="container">
     <!-- Header -->
     <header class="header">
-      <div class="logo">Sales Coach</div>
+      <div class="logo">
+        <img src="assets/images/vendingpreneurs-logo.png" alt="VendingPreneurs" class="logo-img">
+      </div>
       <div class="status">
         <span class="status-dot" id="status-dot"></span>
         <span id="status-text">Ready</span>
