@@ -216,6 +216,29 @@ ul, ol {
 .nav {
   display: flex;
   gap: var(--space-1);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  flex-wrap: nowrap;
+  padding-bottom: var(--space-2);
+  margin-bottom: calc(-1 * var(--space-2));
+}
+
+/* Hide scrollbar but keep functionality */
+.nav::-webkit-scrollbar {
+  height: 4px;
+}
+
+.nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.nav::-webkit-scrollbar-thumb {
+  background: var(--border-primary);
+  border-radius: 2px;
+}
+
+.nav::-webkit-scrollbar-thumb:hover {
+  background: var(--border-secondary);
 }
 
 .nav-btn {
@@ -224,6 +247,8 @@ ul, ol {
   color: var(--text-secondary);
   font-weight: 500;
   transition: all var(--transition-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .nav-btn:hover {
@@ -2027,20 +2052,9 @@ blockquote.testimonial-quote {
     width: 100%;
   }
 
-  .nav {
-    display: flex;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    gap: var(--space-2);
-    padding-bottom: var(--space-2);
-    justify-content: flex-start;
-  }
-
   .nav-btn {
     padding: var(--space-2) var(--space-3);
     font-size: var(--font-size-sm);
-    white-space: nowrap;
-    flex-shrink: 0;
   }
 
   .main {
@@ -2158,20 +2172,9 @@ blockquote.testimonial-quote {
     padding: var(--space-2) var(--space-3);
   }
 
-  .nav {
-    display: flex;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    gap: var(--space-1);
-    margin: 0 calc(-1 * var(--space-3));
-    padding: 0 var(--space-3) var(--space-2);
-  }
-
   .nav-btn {
     padding: var(--space-2) var(--space-3);
     font-size: var(--font-size-xs);
-    white-space: nowrap;
-    flex-shrink: 0;
   }
 
   .nav-btn.coach-link span,
