@@ -789,6 +789,50 @@
       }
     ]
   },
+  "win_screenshots": {
+    "description": "Community screenshot wins to share during calls - reference assets/wins/ folder",
+    "price_budget": [
+      {"win_id": "win_016", "name": "Charles Wheeler", "headline": "Micro-market paid off - 6mo 0% financing", "image": "Charles Wheeler.png"},
+      {"win_id": "win_056", "name": "Kelsey Corcoran", "headline": "$509 revenue, $365 profit in 15 days", "image": "Kelsey Corcoran.png"},
+      {"win_id": "win_043", "name": "Graham & Katie Parker", "headline": "$275-325/day at car dealership", "image": "Graham and Katie Parker.png"},
+      {"win_id": "win_046", "name": "John Werts", "headline": "$40/day at elementary school", "image": "John Werts.png"}
+    ],
+    "authority": [
+      {"win_id": "win_035", "name": "Erin & Carney Gillin", "headline": "Couple running business together", "image": "Erin and Carney Gillin.png"},
+      {"win_id": "win_078", "name": "Radhika & Min Ekbote", "headline": "Couple - first 603 unit commitment", "image": "Radhika and Min Ekbote.png"},
+      {"win_id": "win_043", "name": "Graham & Katie Parker", "headline": "Couple scaling to multiple locations", "image": "Graham and Katie Parker.png"}
+    ],
+    "timing": [
+      {"win_id": "win_030", "name": "Daniel Commarford", "headline": "Full-time teacher, $42 first day", "image": "Daniel Cummarford.png"},
+      {"win_id": "win_016", "name": "Charles Wheeler", "headline": "Full-time coach - 5 markets while teaching", "image": "Charles Wheeler.png"},
+      {"win_id": "win_087", "name": "Thomas Rohlader", "headline": "Hired restocker - 25 responses in 24hrs", "image": "Thomas Rohlader.png"}
+    ],
+    "trust": [
+      {"win_id": "win_089", "name": "Weekly Wins", "headline": "Community momentum - 30+ wins in one week", "image": "Weekly Wins 10-28.png.png"},
+      {"win_id": "win_092", "name": "Wins Board", "headline": "Wins Board showing community success", "image": "Wins Board.png"},
+      {"win_id": "win_029", "name": "Crystal Reyes", "headline": "Weekly wins roundup - multiple members", "image": "Crystal Reyes.png"}
+    ],
+    "diy": [
+      {"win_id": "win_034", "name": "Eric Hellewell", "headline": "Persistence paid off - first machine live", "image": "Eric Hellewell.png"},
+      {"win_id": "win_033", "name": "Chase Phelps", "headline": "Strategy for finding luxury locations", "image": "David Filkins.png"},
+      {"win_id": "win_077", "name": "Pogo Roumeliotis", "headline": "Confidence win - first week progress", "image": "Pogo Roumeliotis.png"}
+    ],
+    "competition": [
+      {"win_id": "win_075", "name": "Mason Romero", "headline": "3 locations from 50 pop-ins, 350 cold calls", "image": "Nano Jacobs.png"},
+      {"win_id": "win_058", "name": "Kyle Sharp", "headline": "2 signed locations - 260 + 213 units", "image": "Kyle Sharp.png"},
+      {"win_id": "win_067", "name": "Manuelle Duvall", "headline": "430 units Greystar - micro market opportunity", "image": "Manuelle Duvall.png"}
+    ],
+    "value": [
+      {"win_id": "win_069", "name": "Matt Pflum", "headline": "HAHA machines - on pace for $3,000+", "image": "Matt Pflum.png"},
+      {"win_id": "win_056", "name": "Kelsey Corcoran", "headline": "Detailed P&L - $509 revenue breakdown", "image": "Kelsey Corcoran.png"},
+      {"win_id": "win_044", "name": "Jason Priest", "headline": "Coffee machine - $13 profit first day", "image": "Jason Priest.png"}
+    ],
+    "logistics": [
+      {"win_id": "win_039", "name": "George Jackson", "headline": "First install lessons - $50 day 1", "image": "George Jackson.png"},
+      {"win_id": "win_022", "name": "Courtney Stegall", "headline": "First machine - another in 2 weeks", "image": "Courtney Stegall.png"},
+      {"win_id": "win_036", "name": "Fernando Correia", "headline": "Qualifying lesson - 120 resident facility", "image": "Fernando Correia.png"}
+    ]
+  },
   "danger_combos": [
     {
       "categories": ["price_budget", "authority"],
